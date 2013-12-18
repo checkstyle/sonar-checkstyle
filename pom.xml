@@ -49,8 +49,11 @@
   </issueManagement>
 
   <properties>
+    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
     <checkstyle.version>5.6</checkstyle.version>
     <sonar.version>3.6</sonar.version>
+    <!-- TODO should be 2.0 after release of SQ Java 2.0: -->
+    <sonar-java.version>1.6-SNAPSHOT</sonar-java.version>
   </properties>
 
   <dependencyManagement>
@@ -173,8 +176,8 @@
           <pluginKey>checkstyle</pluginKey>
           <pluginName>Checkstyle</pluginName>
           <pluginClass>org.sonar.plugins.checkstyle.CheckstylePlugin</pluginClass>
-          <pluginDescription>
-            <![CDATA[Analyze Java code with <a href="http://checkstyle.sourceforge.net/">Checkstyle</a>.]]></pluginDescription>
+          <pluginDescription><![CDATA[Analyze Java code with <a href="http://checkstyle.sourceforge.net/">Checkstyle</a>.]]></pluginDescription>
+          <requirePlugins>java:${sonar-java.version}</requirePlugins>
         </configuration>
       </plugin>
       <plugin>
