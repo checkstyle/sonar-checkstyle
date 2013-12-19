@@ -554,24 +554,6 @@
       <key>UNDERSTANDABILITY</key>
       <name>Understandability</name>
       <chc>
-        <rule-repo>common-java</rule-repo>
-        <rule-key>InsufficientCommentDensity</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>3.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
         <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck</rule-key>
         <prop>
@@ -1322,24 +1304,6 @@
       <key>LOGIC_CHANGEABILITY</key>
       <name>Logic</name>
       <chc>
-        <rule-repo>common-java</rule-repo>
-        <rule-key>DuplicatedBlocks</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>1.0</val>
-          <txt>h</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
         <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck</rule-key>
         <prop>
@@ -1991,60 +1955,6 @@
     <chc>
       <key>UNIT_TESTS</key>
       <name>Unit tests coverage</name>
-      <chc>
-        <rule-repo>common-java</rule-repo>
-        <rule-key>InsufficientLineCoverage</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>3.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>common-java</rule-repo>
-        <rule-key>InsufficientBranchCoverage</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>10.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>common-java</rule-repo>
-        <rule-key>FailedUnitTests</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>1.0</val>
-          <txt>h</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
     </chc>
   </chc>
   <chc>
@@ -2057,24 +1967,6 @@
     <chc>
       <key>UNIT_TESTABILITY</key>
       <name>Unit level</name>
-      <chc>
-        <rule-repo>common-java</rule-repo>
-        <rule-key>SkippedUnitTests</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>linear</txt>
-        </prop>
-        <prop>
-          <key>remediationFactor</key>
-          <val>10.0</val>
-          <txt>mn</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>0.0</val>
-          <txt>d</txt>
-        </prop>
-      </chc>
       <chc>
         <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.sizes.ParameterNumberCheck</rule-key>
