@@ -42,7 +42,8 @@
     <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-checkstyle.git</developerConnection>
     <url>https://github.com/SonarCommunity/sonar-checkstyle</url>
     <tag>HEAD</tag>
-  </scm>
+  </scm> 
+  <url>http://docs.codehaus.org/x/7pS7DQ</url>
   <issueManagement>
     <system>JIRA</system>
     <url>https://jira.codehaus.org/browse/SONARPLUGINS/component/16259</url>
