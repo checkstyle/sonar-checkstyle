@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.BatchExtension;
 import org.sonar.api.batch.SensorContext;
-import org.sonar.api.resources.JavaFile;
+import org.sonar.api.resources.File;
 import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Resource;
 import org.sonar.api.rules.Rule;
@@ -90,7 +90,8 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
   private void initResource(AuditEvent event) {
     if (currentResource == null) {
       String absoluteFilename = event.getFileName();
-      currentResource = JavaFile.fromAbsolutePath(absoluteFilename, project.getFileSystem().getSourceDirs(), false);
+
+      currentResource = File.fromIOFile(new java.io.File(absoluteFilename), project);
     }
   }
 
