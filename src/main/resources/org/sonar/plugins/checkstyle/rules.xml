@@ -28,6 +28,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Annotation Use Style]]></name>
+    <tag>formatting</tag>
     <configKey><![CDATA[Checker/TreeWalker/AnnotationUseStyle]]></configKey>
     <param key="elementStyle" type="s[expanded,compact,compact_no_array,ignore]">
     </param>
@@ -101,6 +102,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Javadoc Package]]></name>
+    <tag>comment</tag>
     <configKey><![CDATA[Checker/JavadocPackage]]></configKey>
     <param key="allowLegacy" type="BOOLEAN">
     </param>
@@ -185,6 +187,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.JavaNCSSCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[JavaNCSS]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/JavaNCSS]]></configKey>
     <param key="methodMaximum" type="INTEGER">
     </param>
@@ -204,6 +207,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.AbstractClassNameCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Abstract Class Name]]></name>
+    <tag>naming</tag>
     <configKey><![CDATA[Checker/TreeWalker/AbstractClassName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^Abstract.*$|^.*Factory$</defaultValue>
@@ -220,6 +224,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.AnonInnerLengthCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Anon Inner Length]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/AnonInnerLength]]></configKey>
     <param key="max" type="INTEGER">
     </param>
@@ -273,6 +278,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.BooleanExpressionComplexityCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Boolean Expression Complexity]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/BooleanExpressionComplexity]]></configKey>
     <param key="max" type="INTEGER">
     </param>
@@ -301,6 +307,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Constant Name]]></name>
+    <tag>naming</tag>
     <configKey><![CDATA[Checker/TreeWalker/ConstantName]]></configKey>
     <cardinality>MULTIPLE</cardinality>
     <param key="format" type="REGULAR_EXPRESSION">
@@ -331,6 +338,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Cyclomatic Complexity]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/CyclomaticComplexity]]></configKey>
     <param key="max" type="INTEGER">
     </param>
@@ -398,6 +406,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.EqualsHashCodeCheck">
     <priority>CRITICAL</priority>
     <name><![CDATA[Equals Hash Code]]></name>
+    <tag>bug</tag>
     <configKey><![CDATA[Checker/TreeWalker/EqualsHashCode]]></configKey>
     <status>DEPRECATED</status>
   </rule>
@@ -405,6 +414,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.ExecutableStatementCountCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Executable Statement Count]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/ExecutableStatementCount]]></configKey>
     <param key="max" type="INTEGER">
     </param>
@@ -432,6 +442,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.FileLengthCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[File Length]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/FileLength]]></configKey>
     <param key="max" type="INTEGER">
     </param>
@@ -488,6 +499,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Illegal Catch]]></name>
+    <tag>error-handling</tag>
     <configKey><![CDATA[Checker/TreeWalker/IllegalCatch]]></configKey>
     <param key="illegalClassNames" type="s{}">
     </param>
@@ -513,6 +525,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.IllegalThrowsCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Illegal Throws]]></name>
+    <tag>error-handling</tag>
     <configKey><![CDATA[Checker/TreeWalker/IllegalThrows]]></configKey>
     <param key="illegalClassNames" type="s{}">
     </param>
@@ -579,6 +592,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Indentation]]></name>
+    <tag>formatting</tag>
     <configKey><![CDATA[Checker/TreeWalker/Indentation]]></configKey>
     <param key="basicOffset" type="INTEGER">
       <defaultValue>4</defaultValue>
@@ -617,6 +631,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Javadoc Method]]></name>
+    <tag>comment</tag>
     <configKey><![CDATA[Checker/TreeWalker/JavadocMethod]]></configKey>
     <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
     </param>
@@ -648,6 +663,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Javadoc Style]]></name>
+    <tag>comment</tag>
     <configKey><![CDATA[Checker/TreeWalker/JavadocStyle]]></configKey>
     <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
     </param>
@@ -666,6 +682,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Javadoc Type]]></name>
+    <tag>comment</tag>
     <configKey><![CDATA[Checker/TreeWalker/JavadocType]]></configKey>
     <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
     </param>
@@ -698,6 +715,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Left Curly]]></name>
+    <tag>formatting</tag>
     <configKey><![CDATA[Checker/TreeWalker/LeftCurly]]></configKey>
     <param key="option" type="s[eol,nl,nlow]">
     </param>
@@ -712,6 +730,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Line Length]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/LineLength]]></configKey>
     <param key="ignorePattern" type="REGULAR_EXPRESSION">
     </param>
@@ -764,6 +783,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck">
     <priority>MAJOR</priority>
     <cardinality>MULTIPLE</cardinality>
+    <tag>naming</tag>
     <name><![CDATA[Member name]]></name>
     <configKey><![CDATA[Checker/TreeWalker/MemberName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
@@ -787,6 +807,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.MethodLengthCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Method Length]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/MethodLength]]></configKey>
     <param key="max" type="INTEGER">
     </param>
@@ -800,6 +821,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.MethodNameCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Method Name]]></name>
+    <tag>naming</tag>
     <configKey><![CDATA[Checker/TreeWalker/MethodName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[a-z][a-zA-Z0-9]*$</defaultValue>
@@ -881,6 +903,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.NPathComplexityCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[NPath Complexity]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/NPathComplexity]]></configKey>
     <param key="max" type="INTEGER">
     </param>
@@ -889,6 +912,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Need Braces]]></name>
+    <tag>convention</tag>
     <configKey><![CDATA[Checker/TreeWalker/NeedBraces]]></configKey>
     <param key="tokens" type="s[LITERAL_DO,LITERAL_ELSE,LITERAL_IF,LITERAL_FOR,LITERAL_WHILE]">
     </param>
@@ -1333,6 +1357,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.MethodCountCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Method Count]]></name>
+    <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/MethodCount]]></configKey>
     <param key="maxTotal" type="INTEGER">
       <defaultValue>100</defaultValue>
@@ -1361,6 +1386,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.ClassTypeParameterNameCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Class Type Parameter Name]]></name>
+    <tag>naming</tag>
     <configKey><![CDATA[Checker/TreeWalker/ClassTypeParameterName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[A-Z]$</defaultValue>
@@ -1371,6 +1397,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.MethodTypeParameterNameCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Method Type Parameter Name]]></name>
+    <tag>naming</tag>
     <configKey><![CDATA[Checker/TreeWalker/MethodTypeParameterName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[A-Z]$</defaultValue>
