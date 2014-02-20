@@ -38,7 +38,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -68,7 +68,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -86,7 +86,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.LocalFinalVariableNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -104,7 +104,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.LocalVariableNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -122,7 +122,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -140,7 +140,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.MethodNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -158,7 +158,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.PackageNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -176,7 +176,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -194,7 +194,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.StaticVariableNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -212,7 +212,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.TypeNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -230,7 +230,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.whitespace.OperatorWrapCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -248,7 +248,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.modifier.ModifierOrderCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -266,7 +266,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.blocks.AvoidNestedBlocksCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -284,7 +284,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.blocks.RightCurlyCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -302,7 +302,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.ArrayTypeStyleCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -320,7 +320,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.UpperEllCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -338,7 +338,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.AbstractClassNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -356,7 +356,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.sizes.AnonInnerLengthCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -374,7 +374,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -392,7 +392,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.ArrayTrailingCommaCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -410,7 +410,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.DeclarationOrderCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -428,7 +428,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -446,7 +446,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.MultipleVariableDeclarationsCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -464,7 +464,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -482,7 +482,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.modifier.RedundantModifierCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -500,7 +500,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.TrailingCommentCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -518,7 +518,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.ClassTypeParameterNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -536,7 +536,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.MethodTypeParameterNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -558,7 +558,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -576,7 +576,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -594,7 +594,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -612,7 +612,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -630,7 +630,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -648,7 +648,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.AvoidInlineConditionalsCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -666,7 +666,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.metrics.BooleanExpressionComplexityCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -684,7 +684,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -702,7 +702,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -720,7 +720,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.metrics.JavaNCSSCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -738,7 +738,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -756,7 +756,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.sizes.MethodLengthCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -774,7 +774,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.annotation.MissingDeprecatedCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -792,7 +792,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.PackageDeclarationCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -810,7 +810,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.annotation.PackageAnnotationCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -828,7 +828,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.RedundantThrowsCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -846,7 +846,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanReturnCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -864,7 +864,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.UncommentedMainCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -882,7 +882,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.UnnecessaryParenthesesCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -900,7 +900,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -918,7 +918,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.sizes.ExecutableStatementCountCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -936,7 +936,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.sizes.FileLengthCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -954,7 +954,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.annotation.SuppressWarningsCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -972,7 +972,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -990,7 +990,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenTextCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1008,7 +1008,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.IllegalTypeCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1026,7 +1026,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.sizes.OuterTypeNumberCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1044,7 +1044,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.NestedForDepthCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1062,7 +1062,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.sizes.MethodCountCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1108,7 +1108,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.SuperFinalizeCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1130,7 +1130,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.SuperCloneCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1156,7 +1156,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1174,7 +1174,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.metrics.ClassDataAbstractionCouplingCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1192,7 +1192,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.metrics.ClassFanOutComplexityCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1210,7 +1210,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1228,7 +1228,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.NestedTryDepthCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1250,7 +1250,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1268,7 +1268,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1286,7 +1286,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.MultipleStringLiteralsCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1308,7 +1308,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1326,7 +1326,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.DefaultComesLastCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1344,7 +1344,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.NestedIfDepthCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1362,7 +1362,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.ReturnCountCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1380,7 +1380,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.duplicates.StrictDuplicateCodeCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1398,7 +1398,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.design.ThrowsCountCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1424,7 +1424,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.imports.IllegalImportCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1442,7 +1442,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.imports.AvoidStaticImportCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1460,7 +1460,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.CovariantEqualsCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1478,7 +1478,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.annotation.MissingOverrideCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1500,7 +1500,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.HiddenFieldCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1518,7 +1518,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.IllegalInstantiationCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1536,7 +1536,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.ExplicitInitializationCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1554,7 +1554,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.FinalLocalVariableCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1572,7 +1572,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.FinalParametersCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1590,7 +1590,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.MissingCtorCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1608,7 +1608,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.ParameterAssignmentCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1630,7 +1630,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.IllegalThrowsCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1648,7 +1648,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.design.MutableExceptionCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1670,7 +1670,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1688,7 +1688,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.EqualsAvoidNullCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1710,7 +1710,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.EqualsHashCodeCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1728,7 +1728,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.InnerAssignmentCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1746,7 +1746,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.NoCloneCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1764,7 +1764,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.StringLiteralEqualityCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1782,7 +1782,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1800,7 +1800,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyForIteratorPadCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1818,7 +1818,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyForInitializerPadCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1840,7 +1840,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1858,7 +1858,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.MissingSwitchDefaultCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1876,7 +1876,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.ModifiedControlVariableCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1894,7 +1894,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.FallThroughCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1912,7 +1912,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.NoFinalizerCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1930,7 +1930,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1972,7 +1972,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.sizes.ParameterNumberCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -1990,7 +1990,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
@@ -2008,7 +2008,7 @@
         <rule-key>com.puppycrawl.tools.checkstyle.checks.metrics.NPathComplexityCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
-          <txt>linear</txt>
+          <txt>constant_issue</txt>
         </prop>
         <prop>
           <key>remediationFactor</key>
