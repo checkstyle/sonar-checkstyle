@@ -19,11 +19,25 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import com.google.common.collect.Lists;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.sonar.api.batch.SensorContext;
+import org.sonar.api.resources.Project;
+import org.sonar.api.resources.ProjectFileSystem;
+import org.sonar.api.rule.RuleKey;
+import org.sonar.api.rules.RuleFinder;
+import org.sonar.check.Rule;
+
+import java.io.File;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CheckstyleAuditListenerTest {
   @Test
@@ -46,4 +60,22 @@ public class CheckstyleAuditListenerTest {
     assertThat(CheckstyleAuditListener.getRuleKey(event)).isNull();
   }
 
+
+  @Test
+  public void add_error_test() throws Exception {
+    File xmlFile = new File(getClass().getResource("/org/sonar/plugins/checkstyle/checkstyle-result.xml").getFile());
+    AuditEvent event = new AuditEvent(this, xmlFile.getAbsolutePath(), new LocalizedMessage(0, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
+
+    SensorContext context = mock(SensorContext.class);
+    Project project = mock(Project.class);
+    ProjectFileSystem pfs = mock(ProjectFileSystem.class);
+    when(project.getFileSystem()).thenReturn(pfs);
+    when(pfs.getSourceDirs()).thenReturn(Lists.newArrayList(new File(getClass().getResource("/").getFile())));
+    RuleFinder ruleFinder = mock(RuleFinder.class);
+    when(ruleFinder.findByKey(anyString(), anyString())).thenReturn(org.sonar.api.rules.Rule.create("test", "test"));
+
+    CheckstyleAuditListener listener = new CheckstyleAuditListener(context, project, ruleFinder);
+    listener.addError(event);
+    assertThat(listener.getCurrentResource()).isNotNull();
+  }
 }
