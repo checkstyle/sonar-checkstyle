@@ -19,10 +19,11 @@
  */
 package org.sonar.plugins.checkstyle;
 
-import org.apache.commons.configuration.BaseConfiguration;
-import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Before;
 import org.junit.Test;
+import org.sonar.api.config.PropertyDefinitions;
+import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RulePriority;
@@ -34,17 +35,25 @@ import java.io.StringWriter;
 
 public class CheckstyleProfileExporterTest {
 
+  private Settings settings;
+
+  @Before
+  public void prepare() {
+    settings = new Settings(new PropertyDefinitions(new CheckstylePlugin().getExtensions()));
+  }
+
   @Test
   public void alwaysSetFileContentsHolderAndSuppressionCommentFilter() throws IOException, SAXException {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
 
     StringWriter writer = new StringWriter();
-    new CheckstyleProfileExporter().exportProfile(profile, writer);
+    new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     TestUtils.assertSimilarXml(
-        TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/alwaysSetFileContentsHolderAndSuppressionCommentFilter.xml"),
-        sanitizeForTests(writer.toString()));
+      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/alwaysSetFileContentsHolderAndSuppressionCommentFilter.xml"),
+      sanitizeForTests(writer.toString()));
   }
+
   @Test
   public void noCheckstyleRulesToExport() throws IOException, SAXException {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
@@ -53,11 +62,11 @@ public class CheckstyleProfileExporterTest {
     profile.activateRule(Rule.create("pmd", "PmdRule1", "PMD rule one"), null);
 
     StringWriter writer = new StringWriter();
-    new CheckstyleProfileExporter().exportProfile(profile, writer);
+    new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     TestUtils.assertSimilarXml(
-        TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/noCheckstyleRulesToExport.xml"),
-        sanitizeForTests(writer.toString()));
+      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/noCheckstyleRulesToExport.xml"),
+      sanitizeForTests(writer.toString()));
   }
 
   @Test
@@ -65,68 +74,69 @@ public class CheckstyleProfileExporterTest {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
     profile.activateRule(Rule.create("pmd", "PmdRule1", "PMD rule one"), null);
     profile.activateRule(
-        Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc").setConfigKey("Checker/JavadocPackage"),
-        RulePriority.MAJOR
-    );
+      Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc").setConfigKey("Checker/JavadocPackage"),
+      RulePriority.MAJOR
+      );
     profile.activateRule(Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck", "Line Length").setConfigKey("Checker/TreeWalker/LineLength"),
-        RulePriority.CRITICAL);
-    profile.activateRule(Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.naming.LocalFinalVariableNameCheck", "Local Variable").setConfigKey("Checker/TreeWalker/Checker/TreeWalker/LocalFinalVariableName"),
-        RulePriority.MINOR);
+      RulePriority.CRITICAL);
+    profile.activateRule(
+      Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.naming.LocalFinalVariableNameCheck", "Local Variable").setConfigKey(
+        "Checker/TreeWalker/Checker/TreeWalker/LocalFinalVariableName"),
+      RulePriority.MINOR);
 
     StringWriter writer = new StringWriter();
-    new CheckstyleProfileExporter().exportProfile(profile, writer);
+    new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     TestUtils.assertSimilarXml(
-        TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/singleCheckstyleRulesToExport.xml"),
-        sanitizeForTests(writer.toString()));
+      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/singleCheckstyleRulesToExport.xml"),
+      sanitizeForTests(writer.toString()));
   }
 
   @Test
   public void addTheIdPropertyWhenManyInstancesWithTheSameConfigKey() throws IOException, SAXException {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
     Rule rule1 = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc").setConfigKey("Checker/JavadocPackage");
-    Rule rule2 = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck_12345", "Javadoc").setConfigKey("Checker/JavadocPackage").setParent(rule1);
+    Rule rule2 = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck_12345", "Javadoc").setConfigKey("Checker/JavadocPackage")
+      .setParent(rule1);
 
     profile.activateRule(rule1, RulePriority.MAJOR);
     profile.activateRule(rule2, RulePriority.CRITICAL);
 
     StringWriter writer = new StringWriter();
-    new CheckstyleProfileExporter().exportProfile(profile, writer);
+    new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     TestUtils.assertSimilarXml(
-        TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addTheIdPropertyWhenManyInstancesWithTheSameConfigKey.xml"),
-        sanitizeForTests(writer.toString()));
+      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addTheIdPropertyWhenManyInstancesWithTheSameConfigKey.xml"),
+      sanitizeForTests(writer.toString()));
   }
 
   @Test
   public void exportParameters() throws IOException, SAXException {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
     Rule rule = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
-        .setConfigKey("Checker/JavadocPackage");
+      .setConfigKey("Checker/JavadocPackage");
     rule.createParameter("format");
     rule.createParameter("message"); // not set in the profile and no default value => not exported in checkstyle
     rule.createParameter("ignore");
 
     profile.activateRule(rule, RulePriority.MAJOR)
-        .setParameter("format", "abcde");
+      .setParameter("format", "abcde");
 
     StringWriter writer = new StringWriter();
-    new CheckstyleProfileExporter().exportProfile(profile, writer);
+    new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     TestUtils.assertSimilarXml(
-        TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/exportParameters.xml"),
-        sanitizeForTests(writer.toString()));
+      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/exportParameters.xml"),
+      sanitizeForTests(writer.toString()));
   }
-
 
   @Test
   public void addCustomFilters() throws IOException, SAXException {
-    Configuration conf = new BaseConfiguration();
-    conf.addProperty(CheckstyleConstants.FILTERS_KEY,
-    		"<module name=\"SuppressionCommentFilter\">"
+    settings.setProperty(CheckstyleConstants.FILTERS_KEY,
+      "<module name=\"SuppressionCommentFilter\">"
         + "<property name=\"offCommentFormat\" value=\"BEGIN GENERATED CODE\"/>"
         + "<property name=\"onCommentFormat\" value=\"END GENERATED CODE\"/>" + "</module>"
-        +"<module name=\"SuppressWithNearbyCommentFilter\">"
+        + "<module name=\"SuppressWithNearbyCommentFilter\">"
         + "<property name=\"commentFormat\" value=\"CHECKSTYLE IGNORE (\\w+) FOR NEXT (\\d+) LINES\"/>"
         + "<property name=\"checkFormat\" value=\"$1\"/>"
         + "<property name=\"messageFormat\" value=\"$2\"/>"
@@ -134,13 +144,12 @@ public class CheckstyleProfileExporterTest {
 
     RulesProfile profile = RulesProfile.create("sonar way", "java");
     StringWriter writer = new StringWriter();
-    new CheckstyleProfileExporter(conf).exportProfile(profile, writer);
+    new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     TestUtils.assertSimilarXml(
-        TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addCustomFilters.xml"),
-        sanitizeForTests(writer.toString()));
+      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addCustomFilters.xml"),
+      sanitizeForTests(writer.toString()));
   }
-
 
   private static String sanitizeForTests(String xml) {
     // remove the doctype declaration, else the unit test fails when executed offline

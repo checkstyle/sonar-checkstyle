@@ -21,6 +21,7 @@ package org.sonar.plugins.checkstyle;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
 import org.sonar.api.test.MavenTestUtils;
@@ -46,6 +47,11 @@ public class CheckstyleConfigurationTest {
   }
 
   public class FakeExporter extends CheckstyleProfileExporter {
+
+    public FakeExporter() {
+      super(new Settings());
+    }
+
     @Override
     public void exportProfile(RulesProfile profile, Writer writer) {
       try {
