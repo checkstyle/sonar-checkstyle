@@ -35,11 +35,13 @@ public class CheckstyleSensor implements Sensor {
     this.executor = executor;
   }
 
+  @Override
   public boolean shouldExecuteOnProject(Project project) {
     return !project.getFileSystem().mainFiles(Java.KEY).isEmpty() &&
         !profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY).isEmpty();
   }
 
+  @Override
   public void analyse(Project project, SensorContext context) {
     executor.execute();
   }

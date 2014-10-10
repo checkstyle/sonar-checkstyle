@@ -52,22 +52,27 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
     this.ruleFinder = ruleFinder;
   }
 
+  @Override
   public void auditStarted(AuditEvent event) {
     // nop
   }
 
+  @Override
   public void auditFinished(AuditEvent event) {
     // nop
   }
 
+  @Override
   public void fileStarted(AuditEvent event) {
     // nop
   }
 
+  @Override
   public void fileFinished(AuditEvent event) {
     currentResource = null;
   }
 
+  @Override
   public void addError(AuditEvent event) {
     String ruleKey = getRuleKey(event);
     if (ruleKey != null) {
@@ -140,6 +145,7 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
   /**
    * Note that this method never invoked from Checkstyle 5.5.
    */
+  @Override
   public void addException(AuditEvent event, Throwable throwable) {
     // nop
   }
