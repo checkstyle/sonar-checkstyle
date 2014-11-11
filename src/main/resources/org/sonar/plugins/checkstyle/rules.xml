@@ -768,9 +768,9 @@
     <priority>MINOR</priority>
     <name><![CDATA[Magic Number]]></name>
     <configKey><![CDATA[Checker/TreeWalker/MagicNumber]]></configKey>
-    <param key="tokens" type="s[NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG]">
+    <param key="tokens" type="STRING">
     </param>
-    <param key="ignoreNumbers" type="i{}">
+    <param key="ignoreNumbers" type="STRING">
     </param>
     <param key="ignoreHashCodeMethod" type="BOOLEAN">
       <defaultValue>false</defaultValue>
