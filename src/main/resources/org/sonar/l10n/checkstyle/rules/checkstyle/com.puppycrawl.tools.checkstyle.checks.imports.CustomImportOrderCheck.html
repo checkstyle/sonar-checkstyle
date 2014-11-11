@@ -1,0 +1,49 @@
+        <p>
+          Checks that the groups of import declarations appear in the order specified
+          by the user. If there is an import but its group is not specified in the
+          configuration such an import should be placed at the end of the import list.
+        </p>
+
+        <p>
+          The rule consists of:
+        </p>
+        <p>
+         1) STATIC group. This group sets the ordering of static imports.
+        </p>
+        <p>
+          2) SAME_PACKAGE(n) group. This group sets the ordering of the same package imports.
+          n' - a number of the first package domains. For example:
+        </p>
+        <pre>
+ package java.util.concurrent;
+
+ import java.util.regex.Pattern;
+ import java.util.List;
+ import java.util.StringTokenizer;
+ import java.util.regex.Pattern;
+ import java.util.*;
+ import java.util.concurrent.AbstractExecutorService;
+ import java.util.concurrent.*;
+        </pre>
+        <p>
+          And we have such configuration: SAME_PACKAGE (3).
+          Same package imports are java.util.*, java.util.concurrent.*,
+          java.util.concurrent.AbstractExecutorService,
+          java.util.List and java.util.StringTokenizer
+        </p>
+        <p>
+          3) THIRD_PARTY_PACKAGE group. This group sets ordering of third party imports.
+          Third party imports are all imports except STATIC,
+          SAME_PACKAGE(n) and STANDARD_JAVA_PACKAGE.
+        </p>
+        <p>
+          4) STANDARD_JAVA_PACKAGE group. This group sets ordering of standard java (java|javax) imports.
+        </p>
+        <p>
+          5) SPECIAL_IMPORTS group. This group may contains some imports
+          that have particular meaning for the user.
+        </p>
+
+        <p>
+          Use the separator '###' between rules.
+        </p>

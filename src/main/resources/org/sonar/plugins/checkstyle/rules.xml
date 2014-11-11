@@ -1405,4 +1405,173 @@
     <status>DEPRECATED</status>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.UniquePropertiesCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/UniqueProperties]]></configKey>
+    <param key="fileExtensions" type="s{}">
+      <defaultValue>properties</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/AbbreviationAsWordInName]]></configKey>
+    <param key="allowedAbbreviationLength" type="INTEGER">
+      <defaultValue>3</defaultValue>
+    </param>
+    <param key="allowedAbbreviations" type="s{}">
+      <defaultValue></defaultValue>
+    </param>
+    <param key="ignoreFinal" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="ignoreStatic" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="ignoreOverriddenMethods" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.AvoidEscapedUnicodeCharactersCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/AvoidEscapedUnicodeCharacters]]></configKey>
+    <param key="allowEscapesForControlCharacters" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowByTailComment" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowIfAllCharactersEscaped" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowNonPrintableEscapes" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/CustomImportOrder]]></configKey>
+    <param key="customImportOrderRules" type="STRING">
+    </param>
+    <param key="standardPackageRegExp" type="REGULAR_EXPRESSION">
+      <defaultValue>java|javax</defaultValue>
+    </param>
+    <param key="thirdPartyPackageRegExp" type="REGULAR_EXPRESSION">
+      <defaultValue>^$</defaultValue>
+    </param>
+    <param key="specialImportsRegExp" type="REGULAR_EXPRESSION">
+      <defaultValue>^$</defaultValue>
+    </param>
+    <param key="separateLineBetweenGroups" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="sortImportsInGroupAlphabetically" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/EmptyLineSeparator]]></configKey>
+    <param key="tokens" type="s[PACKAGE_DEF,IMPORT,CLASS_DEF,ENUM_DEF,INTERFACE_DEF,CTOR_DEF,METHOD_DEF,STATIC_INIT,INSTANCE_INIT,VARIABLE_DEF]">
+    </param>
+    <param key="allowNoEmptyLineBetweenFields" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.naming.InterfaceTypeParameterNameCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/InterfaceTypeParameterName]]></configKey>
+    <param key="format" type="REGULAR_EXPRESSION">
+      <defaultValue>^[A-Z]$</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.NoLineWrapCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/NoLineWrap]]></configKey>
+    <param key="tokens" type="s[PACKAGE_DEF,IMPORT,CLASS_DEF,ENUM_DEF,INTERFACE_DEF,CTOR_DEF,METHOD_DEF]">
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.design.OneTopLevelClassCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/OneTopLevelClass]]></configKey>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.coding.OverloadMethodsDeclarationOrderCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/OverloadMethodsDeclarationOrder]]></configKey>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/VariableDeclarationUsageDistance]]></configKey>
+    <param key="allowedDistance" type="INTEGER">
+      <defaultValue>3</defaultValue>
+    </param>
+    <param key="ignoreVariablePattern" type="REGULAR_EXPRESSION">
+    </param>
+    <param key="validateBetweenScopes" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="ignoreFinal" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.AnnotationLocationCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/AnnotationLocation]]></configKey>
+    <param key="allowSamelineMultipleAnnotations" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowSameLineSingleParrametterlessAnnotation" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowSamelineParametrizedAnnotation" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/AtclauseOrder]]></configKey>
+    <!-- 
+    Should be s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF] 
+    but Checkstyle 6.0 splits the string with ", "
+    -->
+    <param key="target" type="STRING">
+    </param>
+    <param key="tagOrder" type="STRING">
+      <defaultValue>@author, @version, @param, @return, @throws, @exception, @see, @since, @serial, @serialField, @serialData, @deprecated</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/NonEmptyAtclauseDescription]]></configKey>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocParagraphCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/JavadocParagraph]]></configKey>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/JavadocTagContinuationIndentation]]></configKey>
+    <param key="offset" type="INTEGER">
+      <defaultValue>4</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/SingleLineJavadoc]]></configKey>
+  </rule>
+
 </rules>
