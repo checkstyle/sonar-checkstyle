@@ -22,7 +22,6 @@ package org.sonar.plugins.checkstyle;
 import org.sonar.api.batch.Sensor;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
 
 public class CheckstyleSensor implements Sensor {
@@ -37,7 +36,7 @@ public class CheckstyleSensor implements Sensor {
 
   @Override
   public boolean shouldExecuteOnProject(Project project) {
-    return !project.getFileSystem().mainFiles(Java.KEY).isEmpty() &&
+    return !project.getFileSystem().mainFiles(CheckstyleConstants.JAVA_KEY).isEmpty() &&
         !profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY).isEmpty();
   }
 

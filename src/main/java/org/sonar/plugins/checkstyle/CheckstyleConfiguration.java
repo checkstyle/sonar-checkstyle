@@ -31,7 +31,6 @@ import org.sonar.api.BatchExtension;
 import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.InputFileUtils;
-import org.sonar.api.resources.Java;
 import org.sonar.api.resources.ProjectFileSystem;
 import org.sonar.api.utils.SonarException;
 
@@ -79,7 +78,7 @@ public class CheckstyleConfiguration implements BatchExtension {
   }
 
   public List<File> getSourceFiles() {
-    return InputFileUtils.toFiles(fileSystem.mainFiles(Java.KEY));
+    return InputFileUtils.toFiles(fileSystem.mainFiles(CheckstyleConstants.JAVA_KEY));
   }
 
   public File getTargetXMLReport() {

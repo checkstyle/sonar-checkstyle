@@ -26,7 +26,6 @@ import org.codehaus.staxmate.SMInputFactory;
 import org.codehaus.staxmate.in.SMInputCursor;
 import org.sonar.api.profiles.ProfileImporter;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Java;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
@@ -55,7 +54,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
   public CheckstyleProfileImporter(RuleFinder ruleFinder) {
     super(CheckstyleConstants.REPOSITORY_KEY, CheckstyleConstants.PLUGIN_NAME);
-    setSupportedLanguages(Java.KEY);
+    setSupportedLanguages(CheckstyleConstants.JAVA_KEY);
     this.ruleFinder = ruleFinder;
   }
 

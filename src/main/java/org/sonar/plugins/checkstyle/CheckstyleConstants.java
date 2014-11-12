@@ -30,6 +30,8 @@ public final class CheckstyleConstants {
 
   public static final String FILTERS_DEFAULT_VALUE = "<module name=\"SuppressionCommentFilter\"/>";
 
+  public static final String JAVA_KEY = "java";
+
   private CheckstyleConstants() {
   }
 }

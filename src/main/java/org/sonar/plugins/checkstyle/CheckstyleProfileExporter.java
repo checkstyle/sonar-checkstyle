@@ -26,7 +26,6 @@ import org.apache.commons.lang.StringUtils;
 import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Java;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.RuleParam;
 import org.sonar.api.utils.SonarException;
@@ -43,7 +42,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
   public CheckstyleProfileExporter(Settings settings) {
     super(CheckstyleConstants.REPOSITORY_KEY, CheckstyleConstants.PLUGIN_NAME);
     this.settings = settings;
-    setSupportedLanguages(Java.KEY);
+    setSupportedLanguages(CheckstyleConstants.JAVA_KEY);
     setMimeType("application/xml");
   }
 

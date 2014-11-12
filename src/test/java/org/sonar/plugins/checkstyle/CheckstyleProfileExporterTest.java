@@ -27,7 +27,6 @@ import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RulePriority;
-import org.sonar.test.TestUtils;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
@@ -49,8 +48,8 @@ public class CheckstyleProfileExporterTest {
     StringWriter writer = new StringWriter();
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
-    TestUtils.assertSimilarXml(
-      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/alwaysSetFileContentsHolderAndSuppressionCommentFilter.xml"),
+    CheckstyleTestUtils.assertSimilarXmlWithResource(
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/alwaysSetFileContentsHolderAndSuppressionCommentFilter.xml",
       sanitizeForTests(writer.toString()));
   }
 
@@ -64,8 +63,8 @@ public class CheckstyleProfileExporterTest {
     StringWriter writer = new StringWriter();
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
-    TestUtils.assertSimilarXml(
-      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/noCheckstyleRulesToExport.xml"),
+    CheckstyleTestUtils.assertSimilarXmlWithResource(
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/noCheckstyleRulesToExport.xml",
       sanitizeForTests(writer.toString()));
   }
 
@@ -87,8 +86,8 @@ public class CheckstyleProfileExporterTest {
     StringWriter writer = new StringWriter();
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
-    TestUtils.assertSimilarXml(
-      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/singleCheckstyleRulesToExport.xml"),
+    CheckstyleTestUtils.assertSimilarXmlWithResource(
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/singleCheckstyleRulesToExport.xml",
       sanitizeForTests(writer.toString()));
   }
 
@@ -105,8 +104,8 @@ public class CheckstyleProfileExporterTest {
     StringWriter writer = new StringWriter();
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
-    TestUtils.assertSimilarXml(
-      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addTheIdPropertyWhenManyInstancesWithTheSameConfigKey.xml"),
+    CheckstyleTestUtils.assertSimilarXmlWithResource(
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addTheIdPropertyWhenManyInstancesWithTheSameConfigKey.xml",
       sanitizeForTests(writer.toString()));
   }
 
@@ -125,8 +124,8 @@ public class CheckstyleProfileExporterTest {
     StringWriter writer = new StringWriter();
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
-    TestUtils.assertSimilarXml(
-      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/exportParameters.xml"),
+    CheckstyleTestUtils.assertSimilarXmlWithResource(
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/exportParameters.xml",
       sanitizeForTests(writer.toString()));
   }
 
@@ -146,8 +145,8 @@ public class CheckstyleProfileExporterTest {
     StringWriter writer = new StringWriter();
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
-    TestUtils.assertSimilarXml(
-      TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addCustomFilters.xml"),
+    CheckstyleTestUtils.assertSimilarXmlWithResource(
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addCustomFilters.xml",
       sanitizeForTests(writer.toString()));
   }
 

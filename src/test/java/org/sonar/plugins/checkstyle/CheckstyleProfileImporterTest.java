@@ -31,8 +31,8 @@ import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RulePriority;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
-import org.sonar.test.TestUtils;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -63,8 +63,8 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void importSimpleProfile() {
-    Reader reader = new StringReader(TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
+  public void importSimpleProfile() throws IOException {
+    Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
     assertThat(profile.getActiveRules().size()).isEqualTo(2);
@@ -74,8 +74,8 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void importParameters() {
-    Reader reader = new StringReader(TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
+  public void importParameters() throws IOException {
+    Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
     ActiveRule javadocCheck = profile.getActiveRuleByConfigKey("checkstyle", "Checker/JavadocPackage");
@@ -86,8 +86,8 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void properties_should_be_inherited() {
-    Reader reader = new StringReader(TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/inheritance_of_properties.xml"));
+  public void properties_should_be_inherited() throws IOException {
+    Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/inheritance_of_properties.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
     ActiveRule activeRule = profile.getActiveRuleByConfigKey("checkstyle", "Checker/TreeWalker/MissingOverride");
@@ -96,8 +96,8 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void importPriorities() {
-    Reader reader = new StringReader(TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
+  public void importPriorities() throws IOException {
+    Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
     ActiveRule javadocCheck = profile.getActiveRuleByConfigKey("checkstyle", "Checker/JavadocPackage");
@@ -105,8 +105,8 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void priorityIsOptional() {
-    Reader reader = new StringReader(TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
+  public void priorityIsOptional() throws IOException {
+    Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
     ActiveRule activeRule = profile.getActiveRuleByConfigKey("checkstyle", "Checker/TreeWalker/EqualsHashCode");
@@ -114,8 +114,8 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void idPropertyShouldBeTheRuleKey() {
-    Reader reader = new StringReader(TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/idPropertyShouldBeTheRuleKey.xml"));
+  public void idPropertyShouldBeTheRuleKey() throws IOException {
+    Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/idPropertyShouldBeTheRuleKey.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
     assertNull(profile.getActiveRuleByConfigKey("checkstyle", "Checker/JavadocPackage"));
@@ -123,8 +123,8 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void shouldUseTheIdPropertyToFindRule() {
-    Reader reader = new StringReader(TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/shouldUseTheIdPropertyToFindRule.xml"));
+  public void shouldUseTheIdPropertyToFindRule() throws IOException {
+    Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/shouldUseTheIdPropertyToFindRule.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
     assertNotNull(profile.getActiveRuleByConfigKey("checkstyle", "Checker/JavadocPackage"));
@@ -141,8 +141,8 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void importingFiltersIsNotSupported() {
-    Reader reader = new StringReader(TestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/importingFiltersIsNotSupported.xml"));
+  public void importingFiltersIsNotSupported() throws IOException {
+    Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/importingFiltersIsNotSupported.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
     assertNull(profile.getActiveRuleByConfigKey("checkstyle", "Checker/SuppressionCommentFilter"));
@@ -154,6 +154,7 @@ public class CheckstyleProfileImporterTest {
   private RuleFinder newRuleFinder() {
     RuleFinder ruleFinder = mock(RuleFinder.class);
     when(ruleFinder.find(any(RuleQuery.class))).thenAnswer(new Answer<Rule>() {
+      @Override
       public Rule answer(InvocationOnMock iom) throws Throwable {
         RuleQuery query = (RuleQuery) iom.getArguments()[0];
         Rule rule = null;
