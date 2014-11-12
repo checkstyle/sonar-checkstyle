@@ -293,6 +293,8 @@
     <configKey><![CDATA[Checker/TreeWalker/ClassDataAbstractionCoupling]]></configKey>
     <param key="max" type="INTEGER">
     </param>
+    <param key="excludedClasses" type="STRING">
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.ClassFanOutComplexityCheck">
