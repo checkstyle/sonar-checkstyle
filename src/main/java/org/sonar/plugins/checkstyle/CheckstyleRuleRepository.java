@@ -19,14 +19,12 @@
  */
 package org.sonar.plugins.checkstyle;
 
-import com.google.common.collect.Lists;
 import org.sonar.api.platform.ServerFileSystem;
 import org.sonar.api.resources.Java;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleRepository;
 import org.sonar.api.rules.XMLRuleParser;
 
-import java.io.File;
 import java.util.List;
 
 public final class CheckstyleRuleRepository extends RuleRepository {
@@ -42,11 +40,6 @@ public final class CheckstyleRuleRepository extends RuleRepository {
 
   @Override
   public List<Rule> createRules() {
-    List<Rule> rules = Lists.newArrayList();
-    rules.addAll(xmlRuleParser.parse(getClass().getResourceAsStream("/org/sonar/plugins/checkstyle/rules.xml")));
-    for (File userExtensionXml : fileSystem.getExtensions(CheckstyleConstants.REPOSITORY_KEY, "xml")) {
-      rules.addAll(xmlRuleParser.parse(userExtensionXml));
-    }
-    return rules;
+    return xmlRuleParser.parse(getClass().getResourceAsStream("/org/sonar/plugins/checkstyle/rules.xml"));
   }
 }
