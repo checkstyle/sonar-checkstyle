@@ -61,7 +61,7 @@ public class CheckstyleRuleRepositoryTest {
     assertThat(rules).onProperty("description").excludes(null, "");
   }
 
-  public static List<Rule> createRulesWithNameAndDescription(String pluginKey, RuleRepository repository) throws IOException {
+  public static List<Rule> createRulesWithNameAndDescription(String pluginKey, RuleRepository repository) {
     Properties props = loadProperties(String.format("/org/sonar/l10n/%s.properties", pluginKey));
 
     List<Rule> rules = repository.createRules();

@@ -27,9 +27,7 @@ import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RulePriority;
-import org.xml.sax.SAXException;
 
-import java.io.IOException;
 import java.io.StringWriter;
 
 public class CheckstyleProfileExporterTest {
@@ -42,7 +40,7 @@ public class CheckstyleProfileExporterTest {
   }
 
   @Test
-  public void alwaysSetFileContentsHolderAndSuppressionCommentFilter() throws IOException, SAXException {
+  public void alwaysSetFileContentsHolderAndSuppressionCommentFilter() {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
 
     StringWriter writer = new StringWriter();
@@ -54,7 +52,7 @@ public class CheckstyleProfileExporterTest {
   }
 
   @Test
-  public void noCheckstyleRulesToExport() throws IOException, SAXException {
+  public void noCheckstyleRulesToExport() {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
 
     // this is a PMD rule
@@ -69,7 +67,7 @@ public class CheckstyleProfileExporterTest {
   }
 
   @Test
-  public void singleCheckstyleRulesToExport() throws IOException, SAXException {
+  public void singleCheckstyleRulesToExport() {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
     profile.activateRule(Rule.create("pmd", "PmdRule1", "PMD rule one"), null);
     profile.activateRule(
@@ -92,7 +90,7 @@ public class CheckstyleProfileExporterTest {
   }
 
   @Test
-  public void addTheIdPropertyWhenManyInstancesWithTheSameConfigKey() throws IOException, SAXException {
+  public void addTheIdPropertyWhenManyInstancesWithTheSameConfigKey() {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
     Rule rule1 = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc").setConfigKey("Checker/JavadocPackage");
     Rule rule2 = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck_12345", "Javadoc").setConfigKey("Checker/JavadocPackage")
@@ -110,7 +108,7 @@ public class CheckstyleProfileExporterTest {
   }
 
   @Test
-  public void exportParameters() throws IOException, SAXException {
+  public void exportParameters() {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
     Rule rule = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
       .setConfigKey("Checker/JavadocPackage");
@@ -130,7 +128,7 @@ public class CheckstyleProfileExporterTest {
   }
 
   @Test
-  public void addCustomFilters() throws IOException, SAXException {
+  public void addCustomFilters() {
     settings.setProperty(CheckstyleConstants.FILTERS_KEY,
       "<module name=\"SuppressionCommentFilter\">"
         + "<property name=\"offCommentFormat\" value=\"BEGIN GENERATED CODE\"/>"

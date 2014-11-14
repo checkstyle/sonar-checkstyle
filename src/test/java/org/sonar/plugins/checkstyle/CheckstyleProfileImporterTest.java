@@ -32,7 +32,6 @@ import org.sonar.api.rules.RulePriority;
 import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -63,7 +62,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void importSimpleProfile() throws IOException {
+  public void importSimpleProfile() {
     Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
@@ -74,7 +73,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void importParameters() throws IOException {
+  public void importParameters() {
     Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
@@ -86,7 +85,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void properties_should_be_inherited() throws IOException {
+  public void properties_should_be_inherited() {
     Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/inheritance_of_properties.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
@@ -96,7 +95,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void importPriorities() throws IOException {
+  public void importPriorities() {
     Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
@@ -105,7 +104,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void priorityIsOptional() throws IOException {
+  public void priorityIsOptional() {
     Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
@@ -114,7 +113,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void idPropertyShouldBeTheRuleKey() throws IOException {
+  public void idPropertyShouldBeTheRuleKey() {
     Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/idPropertyShouldBeTheRuleKey.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
@@ -123,7 +122,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void shouldUseTheIdPropertyToFindRule() throws IOException {
+  public void shouldUseTheIdPropertyToFindRule() {
     Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/shouldUseTheIdPropertyToFindRule.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 
@@ -141,7 +140,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void importingFiltersIsNotSupported() throws IOException {
+  public void importingFiltersIsNotSupported() {
     Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/importingFiltersIsNotSupported.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 

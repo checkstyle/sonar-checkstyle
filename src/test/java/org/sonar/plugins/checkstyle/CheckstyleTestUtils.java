@@ -32,18 +32,29 @@ import static org.junit.Assert.assertTrue;
 
 public class CheckstyleTestUtils {
 
-  public static String getResourceContent(String path) throws IOException {
-    return Resources.toString(Resources.getResource(CheckstyleTestUtils.class, path), Charsets.UTF_8);
+  public static String getResourceContent(String path) {
+    try {
+      return Resources.toString(Resources.getResource(CheckstyleTestUtils.class, path), Charsets.UTF_8);
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Could not load resource " + path, e);
+    }
   }
 
-  public static void assertSimilarXml(String expectedXml, String xml) throws SAXException, IOException {
+  public static void assertSimilarXml(String expectedXml, String xml) {
     XMLUnit.setIgnoreWhitespace(true);
-    Diff diff = XMLUnit.compareXML(xml, expectedXml);
+    Diff diff;
+    try {
+      diff = XMLUnit.compareXML(xml, expectedXml);
+    } catch (SAXException e) {
+      throw new IllegalArgumentException("Could not run XML comparison", e);
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Could not run XML comparison", e);
+    }
     String message = "Diff: " + diff.toString() + CharUtils.LF + "XML: " + xml;
     assertTrue(message, diff.similar());
   }
 
-  public static void assertSimilarXmlWithResource(String expectedXmlResourcePath, String xml) throws SAXException, IOException {
+  public static void assertSimilarXmlWithResource(String expectedXmlResourcePath, String xml) {
     assertSimilarXml(getResourceContent(expectedXmlResourcePath), xml);
   }
 
