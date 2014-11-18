@@ -1526,14 +1526,14 @@
     </param>
   </rule>
 
-  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.AnnotationLocationCheck">
+  <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck">
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/AnnotationLocation]]></configKey>
     <param key="allowSamelineMultipleAnnotations" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="allowSameLineSingleParrametterlessAnnotation" type="BOOLEAN">
-      <defaultValue>false</defaultValue>
+    <param key="allowSamelineSingleParameterlessAnnotation" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
     <param key="allowSamelineParametrizedAnnotation" type="BOOLEAN">
       <defaultValue>false</defaultValue>

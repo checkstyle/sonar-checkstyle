@@ -51,7 +51,7 @@
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
 
-    <checkstyle.version>6.0</checkstyle.version>
+    <checkstyle.version>6.1</checkstyle.version>
     <sonar.version>4.5.1</sonar.version>
     <sonar-java.version>2.1</sonar-java.version>
   </properties>
