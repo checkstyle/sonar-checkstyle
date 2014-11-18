@@ -20,13 +20,15 @@
 package org.sonar.plugins.checkstyle;
 
 import com.google.common.collect.ImmutableList;
-import org.junit.Before;
 import org.junit.Test;
+import org.sonar.api.batch.fs.InputFile.Type;
+import org.sonar.api.batch.fs.internal.DefaultFileSystem;
+import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.Project;
-import org.sonar.api.resources.ProjectFileSystem;
 import org.sonar.api.rules.ActiveRule;
+
+import java.io.File;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -35,15 +37,10 @@ import static org.mockito.Mockito.when;
 public class CheckstyleSensorTest {
 
   private RulesProfile profile = mock(RulesProfile.class);
-  private CheckstyleSensor sensor = new CheckstyleSensor(profile, null);
+  private DefaultFileSystem fileSystem = new DefaultFileSystem();
+  private CheckstyleSensor sensor = new CheckstyleSensor(profile, null, fileSystem);
 
   private Project project = new Project("projectKey");
-  private ProjectFileSystem fs = mock(ProjectFileSystem.class);
-
-  @Before
-  public void before() {
-    project.setFileSystem(fs);
-  }
 
   @Test
   public void shouldExecuteOnProject_without_java_file_and_with_rule() throws Exception {
@@ -65,7 +62,9 @@ public class CheckstyleSensorTest {
   }
 
   private void addOneJavaFile() {
-    when(fs.mainFiles("java")).thenReturn(ImmutableList.of(mock(InputFile.class)));
+    File file = new File("MyClass.java");
+    fileSystem.add(new DefaultInputFile(
+      file.getName()).setAbsolutePath(file.getAbsolutePath()).setLanguage("java").setType(Type.MAIN));
   }
 
   private void addOneActiveRule() {

@@ -19,24 +19,36 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import com.google.common.collect.Iterables;
 import org.sonar.api.batch.Sensor;
 import org.sonar.api.batch.SensorContext;
+import org.sonar.api.batch.fs.FilePredicates;
+import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
 
+import java.io.File;
+
 public class CheckstyleSensor implements Sensor {
 
-  private RulesProfile profile;
-  private CheckstyleExecutor executor;
+  private final RulesProfile profile;
+  private final CheckstyleExecutor executor;
+  private final FileSystem fs;
 
-  public CheckstyleSensor(RulesProfile profile, CheckstyleExecutor executor) {
+  public CheckstyleSensor(RulesProfile profile, CheckstyleExecutor executor, FileSystem fs) {
     this.profile = profile;
     this.executor = executor;
+    this.fs = fs;
   }
 
   @Override
   public boolean shouldExecuteOnProject(Project project) {
-    return !project.getFileSystem().mainFiles(CheckstyleConstants.JAVA_KEY).isEmpty() &&
+    FilePredicates predicates = fs.predicates();
+    Iterable<File> mainFiles = fs.files(predicates.and(
+      predicates.hasLanguage(CheckstyleConstants.JAVA_KEY),
+      predicates.hasType(Type.MAIN)));
+    return !Iterables.isEmpty(mainFiles) &&
         !profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY).isEmpty();
   }
 

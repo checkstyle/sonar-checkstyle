@@ -21,20 +21,42 @@ package org.sonar.plugins.checkstyle;
 
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
+import org.junit.Before;
 import org.junit.Test;
-import org.sonar.api.batch.SensorContext;
-import org.sonar.api.resources.Project;
-import org.sonar.api.resources.ProjectFileSystem;
+import org.sonar.api.batch.fs.internal.DefaultFileSystem;
+import org.sonar.api.batch.fs.internal.DefaultInputFile;
+import org.sonar.api.component.ResourcePerspectives;
+import org.sonar.api.issue.Issuable;
+import org.sonar.api.issue.Issuable.IssueBuilder;
+import org.sonar.api.issue.Issue;
+import org.sonar.api.rule.RuleKey;
+import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 
 import java.io.File;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 public class CheckstyleAuditListenerTest {
+
+  private File file = new File("file1");
+  private AuditEvent event =
+    new AuditEvent(this, file.getAbsolutePath(), new LocalizedMessage(42, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
+  private DefaultFileSystem fs = new DefaultFileSystem();
+  private RuleFinder ruleFinder = mock(RuleFinder.class);
+  private DefaultInputFile inputFile = new DefaultInputFile(file.getPath());
+  private ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
+
+  @Before
+  public void before() {
+    inputFile.setAbsolutePath(file.getAbsolutePath());
+    fs.add(inputFile);
+  }
+
   @Test
   public void testUtilityMethods() {
     AuditEvent event;
@@ -58,19 +80,57 @@ public class CheckstyleAuditListenerTest {
 
   @Test
   public void add_error_test() throws Exception {
-    File xmlFile = new File(getClass().getResource("/org/sonar/plugins/checkstyle/checkstyle-result.xml").getFile());
-    AuditEvent event = new AuditEvent(this, xmlFile.getAbsolutePath(), new LocalizedMessage(0, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
+    Rule rule = setupRule("repo", "key");
 
-    SensorContext context = mock(SensorContext.class);
-    Project project = mock(Project.class);
-    ProjectFileSystem pfs = mock(ProjectFileSystem.class);
-    when(project.getFileSystem()).thenReturn(pfs);
-    when(pfs.getBasedir()).thenReturn(new File(getClass().getResource("/").getFile()));
-    RuleFinder ruleFinder = mock(RuleFinder.class);
-    when(ruleFinder.findByKey(anyString(), anyString())).thenReturn(org.sonar.api.rules.Rule.create("test", "test"));
+    Issuable issuable = setupIssuable();
+    IssueBuilder issueBuilder = mock(IssueBuilder.class);
+    Issue issue = mock(Issue.class);
+    when(issuable.newIssueBuilder()).thenReturn(issueBuilder);
+    when(issueBuilder.ruleKey(RuleKey.of("repo", "key"))).thenReturn(issueBuilder);
+    when(issueBuilder.message(event.getMessage())).thenReturn(issueBuilder);
+    when(issueBuilder.line(event.getLine())).thenReturn(issueBuilder);
+    when(issueBuilder.build()).thenReturn(issue);
 
-    CheckstyleAuditListener listener = new CheckstyleAuditListener(context, project, ruleFinder);
+    addErrorToListener();
+
+    verify(issuable).addIssue(issue);
+    verify(issueBuilder).ruleKey(RuleKey.of("repo", "key"));
+    verify(issueBuilder).message(event.getMessage());
+    verify(issueBuilder).line(event.getLine());
+    verify(rule).ruleKey();
+  }
+
+  @Test
+  public void add_error_on_unknown_rule() throws Exception {
+    Issuable issuable = setupIssuable();
+    addErrorToListener();
+    verifyZeroInteractions(issuable);
+  }
+
+  @Test
+  public void add_error_on_unknown_file() throws Exception {
+    Rule rule = setupRule("repo", "key");
+    addErrorToListener();
+    verifyZeroInteractions(rule);
+  }
+
+  private CheckstyleAuditListener addErrorToListener() {
+    CheckstyleAuditListener listener = new CheckstyleAuditListener(ruleFinder, fs, perspectives);
     listener.addError(event);
-    assertThat(listener.getCurrentResource()).isNotNull();
+    return listener;
+  }
+
+  private Rule setupRule(String repo, String key) {
+    Rule rule = mock(Rule.class);
+    when(rule.ruleKey()).thenReturn(RuleKey.of(repo, key));
+    when(ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY, CheckstyleAuditListenerTest.class.getCanonicalName()))
+      .thenReturn(rule);
+    return rule;
+  }
+
+  private Issuable setupIssuable() {
+    Issuable issuable = mock(Issuable.class);
+    when(perspectives.as(Issuable.class, org.sonar.api.resources.File.create(inputFile.relativePath()))).thenReturn(issuable);
+    return issuable;
   }
 }

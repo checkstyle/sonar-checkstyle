@@ -26,13 +26,14 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.BatchExtension;
-import org.sonar.api.batch.SensorContext;
+import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.component.ResourcePerspectives;
+import org.sonar.api.issue.Issuable;
+import org.sonar.api.issue.Issuable.IssueBuilder;
 import org.sonar.api.resources.File;
-import org.sonar.api.resources.Project;
-import org.sonar.api.resources.Resource;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
-import org.sonar.api.rules.Violation;
 
 /**
  * @since 2.3
@@ -41,15 +42,15 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
 
   private static final Logger LOG = LoggerFactory.getLogger(CheckstyleAuditListener.class);
 
-  private final SensorContext context;
-  private final Project project;
   private final RuleFinder ruleFinder;
-  private Resource currentResource = null;
+  private final FileSystem fs;
+  private final ResourcePerspectives perspectives;
+  private InputFile currentResource = null;
 
-  public CheckstyleAuditListener(SensorContext context, Project project, RuleFinder ruleFinder) {
-    this.context = context;
-    this.project = project;
+  public CheckstyleAuditListener(RuleFinder ruleFinder, FileSystem fs, ResourcePerspectives perspectives) {
     this.ruleFinder = ruleFinder;
+    this.fs = fs;
+    this.perspectives = perspectives;
   }
 
   @Override
@@ -81,13 +82,15 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
       if ("com.puppycrawl.tools.checkstyle.TreeWalker".equals(ruleKey)) {
         LOG.warn(event.getFileName() + ": " + message);
       }
+      initResource(event);
+      Issuable issuable = perspectives.as(Issuable.class, File.create(currentResource.relativePath()));
       Rule rule = ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY, ruleKey);
-      if (rule != null) {
-        initResource(event);
-        Violation violation = Violation.create(rule, currentResource)
-            .setLineId(getLineId(event))
-            .setMessage(message);
-        context.saveViolation(violation);
+      if (rule != null && issuable != null) {
+        IssueBuilder issueBuilder = issuable.newIssueBuilder()
+          .ruleKey(rule.ruleKey())
+          .message(message)
+          .line(getLineId(event));
+        issuable.addIssue(issueBuilder.build());
       }
     }
   }
@@ -95,8 +98,7 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
   private void initResource(AuditEvent event) {
     if (currentResource == null) {
       String absoluteFilename = event.getFileName();
-
-      currentResource = File.fromIOFile(new java.io.File(absoluteFilename), project);
+      currentResource = fs.inputFile(fs.predicates().hasAbsolutePath(absoluteFilename));
     }
   }
 
@@ -150,7 +152,4 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
     // nop
   }
 
-  Resource getCurrentResource() {
-    return currentResource;
-  }
 }

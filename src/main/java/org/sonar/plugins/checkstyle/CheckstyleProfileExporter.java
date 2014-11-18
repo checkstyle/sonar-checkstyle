@@ -128,7 +128,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     writer.append("<module name=\"");
     StringEscapeUtils.escapeXml(writer, moduleName);
     writer.append("\">");
-    if (activeRule.getRule().getParent() != null) {
+    if (activeRule.getRule().getTemplate() != null) {
       appendModuleProperty(writer, "id", activeRule.getRuleKey());
     }
     appendModuleProperty(writer, "severity", CheckstyleSeverityUtils.toSeverity(activeRule.getSeverity()));
