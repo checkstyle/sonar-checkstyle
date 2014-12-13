@@ -41,8 +41,8 @@
     <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-checkstyle.git</developerConnection>
     <url>https://github.com/SonarCommunity/sonar-checkstyle</url>
     <tag>HEAD</tag>
-  </scm> 
-  <url>http://docs.codehaus.org/x/7pS7DQ</url>
+  </scm>
+  <url>http://redirect.sonarsource.com/plugins/checkstyle.html</url>
   <issueManagement>
     <system>JIRA</system>
     <url>https://jira.codehaus.org/browse/SONARCHKST</url>
