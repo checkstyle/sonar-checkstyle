@@ -1,0 +1,13 @@
+<p>Controls what can be imported in each package.
+Useful for ensuring that application layering rules are not violated, especially on large projects.</p>
+
+<p>The DTD for a import control XML document is at <a href="http://www.puppycrawl.com/dtds/import_control_1_1.dtd"
+target="_blank">http://www.puppycrawl.com/dtds/import_control_1_1.dtd</a>. It contains documentation on each of the
+elements and attributes.</p>
+
+<p>The check validates a XML document when it loads the document. To validate against the above DTD, include the
+following document type declaration in your XML document:</p>
+
+<pre>&lt;!DOCTYPE import-control PUBLIC
+    "-//Puppy Crawl//DTD Import Control 1.1//EN"
+    "http://www.puppycrawl.com/dtds/import_control_1_1.dtd"&gt;</pre>

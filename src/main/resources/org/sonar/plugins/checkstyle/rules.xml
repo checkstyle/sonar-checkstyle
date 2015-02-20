@@ -1555,8 +1555,8 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/AtclauseOrder]]></configKey>
-    <!-- 
-    Should be s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF] 
+    <!--
+    Should be s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF]
     but Checkstyle 6.0 splits the string with ", "
     -->
     <param key="target" type="STRING">
@@ -1606,6 +1606,16 @@
     </param>
     <param key="commentFormat" type="REGULAR_EXPRESSION">
       <defaultValue>.*</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheck">
+    <priority>BLOCKER</priority>
+    <name><![CDATA[Import Control]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/ImportControl]]></configKey>
+    <param key="file" type="STRING">
+    </param>
+    <param key="url" type="STRING">
     </param>
   </rule>
 
