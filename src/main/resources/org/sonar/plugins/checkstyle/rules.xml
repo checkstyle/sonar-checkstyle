@@ -210,7 +210,7 @@
     <tag>naming</tag>
     <configKey><![CDATA[Checker/TreeWalker/AbstractClassName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
-      <defaultValue>^Abstract.*$|^.*Factory$</defaultValue>
+      <defaultValue>^Abstract.+$|^.*Factory$</defaultValue>
     </param>
     <param key="ignoreModifier" type="BOOLEAN">
       <defaultValue>false</defaultValue>
@@ -471,6 +471,8 @@
     <configKey><![CDATA[Checker/TreeWalker/FinalParameters]]></configKey>
     <param key="tokens" type="s[METHOD_DEF,CTOR_DEF,LITERAL_CATCH]">
     </param>
+    <param key="ignorePrimitiveTypes" type="BOOLEAN">
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -487,6 +489,8 @@
     <param key="ignoreSetter" type="BOOLEAN">
     </param>
     <param key="ignoreAbstractMethods" type="BOOLEAN">
+    </param>
+    <param key="setterCanReturnItsClass" type="BOOLEAN">
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -533,6 +537,9 @@
     </param>
     <param key="ignoredMethodNames" type="s{}">
     </param>
+    <param key="ignoreOverriddenMethods" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -573,6 +580,12 @@
     </param>
     <param key="format" type="REGULAR_EXPRESSION">
     </param>
+    <!-- 
+      Should be s[LITERAL_PUBLIC,LITERAL_PROTECTED,LITERAL_PRIVATE,ABSTRACT,LITERAL_STATIC,FINAL,LITERAL_TRANSIENT,LITERAL_VOLATILE,LITERAL_SYNCHRONIZED,LITERAL_NATIVE,STRICTFP,ANNOTATION,LITERAL_DEFAULT]
+      but Checkstyle 6.4 splits the string with ", "
+    -->
+    <param key="memberModifiers" type="STRING">
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck">
@@ -607,6 +620,18 @@
     </param>
     <param key="tabWidth" type="INTEGER">
       <defaultValue>8</defaultValue>
+    </param>
+    <param key="arrayInitIndent" type="INTEGER">
+      <defaultValue>4</defaultValue>
+    </param>
+    <param key="lineWrappingIndentation" type="INTEGER">
+      <defaultValue>4</defaultValue>
+    </param>
+    <param key="throwsIndent" type="INTEGER">
+      <defaultValue>4</defaultValue>
+    </param>
+    <param key="forceStrictCondition" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -658,6 +683,8 @@
     <param key="suppressLoadErrors" type="BOOLEAN">
       <!-- Note that default value in Checkstyle 5.5 is false -->
       <defaultValue>true</defaultValue>
+    </param>
+    <param key="ignoreMethodNamesRegex" type="REGULAR_EXPRESSION">
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -919,6 +946,8 @@
     <configKey><![CDATA[Checker/TreeWalker/NeedBraces]]></configKey>
     <param key="tokens" type="s[LITERAL_DO,LITERAL_ELSE,LITERAL_IF,LITERAL_FOR,LITERAL_WHILE]">
     </param>
+    <param key="allowSingleLineStatement" type="BOOLEAN">
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -986,7 +1015,6 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Package Declaration]]></name>
     <configKey><![CDATA[Checker/TreeWalker/PackageDeclaration]]></configKey>
-    <param key="ignoreDirectoryName" type="BOOLEAN"/>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1023,8 +1051,8 @@
     <configKey><![CDATA[Checker/TreeWalker/ParameterNumber]]></configKey>
     <cardinality>MULTIPLE</cardinality>
     <param key="max" type="INTEGER"/>
-    <param key="tokens" type="s[METHOD_DEF,CTOR_DEF]">
-    </param>
+    <param key="tokens" type="s[METHOD_DEF,CTOR_DEF]" />
+    <param key="ignoreOverriddenMethods" type="BOOLEAN" />
     <status>DEPRECATED</status>
   </rule>
 
@@ -1148,16 +1176,6 @@
     </param>
   </rule>
 
-  <rule key="com.puppycrawl.tools.checkstyle.checks.duplicates.StrictDuplicateCodeCheck">
-    <priority>MAJOR</priority>
-    <name><![CDATA[Strict Duplicate Code]]></name>
-    <configKey><![CDATA[Checker/StrictDuplicateCode]]></configKey>
-    <param key="min" type="INTEGER">
-    </param>
-    <param key="charset" type="STRING">
-    </param>
-  </rule>
-
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.StringLiteralEqualityCheck">
     <priority>CRITICAL</priority>
     <name><![CDATA[String Literal Equality]]></name>
@@ -1218,6 +1236,8 @@
     <name><![CDATA[Translation]]></name>
     <configKey><![CDATA[Checker/Translation]]></configKey>
     <param key="fileExtensions" type="s{}">
+    </param>
+    <param key="basenameSeparator" type="STRING">
     </param>
   </rule>
   -->
@@ -1298,6 +1318,9 @@
     <param key="protectedAllowed" type="BOOLEAN">
     </param>
     <param key="publicMemberPattern" type="REGULAR_EXPRESSION">
+    </param>
+    <param key="allowPublicImmutableFields" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1483,6 +1506,9 @@
     <param key="allowNoEmptyLineBetweenFields" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
+    <param key="allowMultipleEmptyLines" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.InterfaceTypeParameterNameCheck">
@@ -1535,7 +1561,7 @@
     <param key="allowSamelineSingleParameterlessAnnotation" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <param key="allowSamelineParametrizedAnnotation" type="BOOLEAN">
+    <param key="allowSamelineParameterizedAnnotation" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
   </rule>
@@ -1575,6 +1601,26 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheck">
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/SingleLineJavadoc]]></configKey>
+  </rule>
+  
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/SummaryJavadocCheck]]></configKey>
+    <param key="forbiddenSummaryFragments" type="REGULAR_EXPRESSION">
+    </param>
+    <param key="period" type="STRING">
+    </param>
+  </rule>
+  
+  <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.EmptyCatchBlockCheck">
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/EmptyCatchBlockCheck]]></configKey>
+    <param key="exceptionVariableName" type="REGULAR_EXPRESSION">
+      <defaultValue>^$</defaultValue>
+    </param>
+    <param key="commentFormat" type="REGULAR_EXPRESSION">
+      <defaultValue>.*</defaultValue>
+    </param>
   </rule>
 
 </rules>

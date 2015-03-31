@@ -50,7 +50,7 @@ public class CheckstyleRuleRepositoryTest {
     List<Rule> rules = repository.createRules();
 
     assertThat(repository.getKey()).isEqualTo("checkstyle");
-    assertThat(rules.size()).isEqualTo(144);
+    assertThat(rules.size()).isEqualTo(145);
   }
 
   @Test
