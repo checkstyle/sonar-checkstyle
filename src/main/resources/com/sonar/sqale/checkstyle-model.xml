@@ -138,6 +138,19 @@
       </chc>
       <chc>
         <rule-repo>checkstyle</rule-repo>
+        <rule-key>com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>10</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.PackageNameCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -1416,19 +1429,6 @@
       </chc>
       <chc>
         <rule-repo>checkstyle</rule-repo>
-        <rule-key>com.puppycrawl.tools.checkstyle.checks.duplicates.StrictDuplicateCodeCheck</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>30</val>
-          <txt>min</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -1900,6 +1900,19 @@
       <chc>
         <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>10</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>checkstyle</rule-repo>
+        <rule-key>com.puppycrawl.tools.checkstyle.checks.blocks.EmptyCatchBlockCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
           <txt>CONSTANT_ISSUE</txt>
