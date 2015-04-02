@@ -35,14 +35,16 @@ public final class CheckstylePlugin extends SonarPlugin {
   @Override
   public List getExtensions() {
     return ImmutableList.of(
-      PropertyDefinition.builder(CheckstyleConstants.FILTERS_KEY)
+      PropertyDefinition
+        .builder(CheckstyleConstants.FILTERS_KEY)
         .defaultValue(CheckstyleConstants.FILTERS_DEFAULT_VALUE)
         .category(CoreProperties.CATEGORY_JAVA)
         .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
         .name("Filters")
-        .description("Checkstyle support three error filtering mechanisms : SuppressionCommentFilter, SuppressWithNearbyCommentFilter and SuppressionFilter."
-          + "This property allows to configure all those filters with a native XML format."
-          + " See <a href='http://checkstyle.sourceforge.net/config.html'>Checkstyle configuration page</a> to get more information on those filters.")
+        .description(
+          "Checkstyle support four error filtering mechanisms : SuppressionCommentFilter, SuppressWithNearbyCommentFilter, SuppressionFilter and SuppressWarningsFilter."
+            + "This property allows to configure all those filters with a native XML format."
+            + " See <a href='http://checkstyle.sourceforge.net/config.html'>Checkstyle configuration page</a> to get more information on those filters.")
         .type(PropertyType.TEXT)
         .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
         .build(),
