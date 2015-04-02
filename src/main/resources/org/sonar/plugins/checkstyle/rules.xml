@@ -1074,21 +1074,6 @@
     </param>
   </rule>
 
-  <rule key="com.puppycrawl.tools.checkstyle.checks.coding.RedundantThrowsCheck">
-    <priority>MINOR</priority>
-    <name><![CDATA[Redundant Throws]]></name>
-    <configKey><![CDATA[Checker/TreeWalker/RedundantThrows]]></configKey>
-    <param key="allowUnchecked" type="BOOLEAN">
-    </param>
-    <param key="allowSubclasses" type="BOOLEAN">
-    </param>
-    <param key="suppressLoadErrors" type="BOOLEAN">
-      <!-- Note that default value in Checkstyle 5.5 is false -->
-      <defaultValue>true</defaultValue>
-    </param>
-    <status>DEPRECATED</status>
-  </rule>
-
   <rule key="com.puppycrawl.tools.checkstyle.checks.RegexpCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Regexp]]></name>

@@ -1117,19 +1117,6 @@
       </chc>
       <chc>
         <rule-repo>checkstyle</rule-repo>
-        <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.RedundantThrowsCheck</rule-key>
-        <prop>
-          <key>remediationFunction</key>
-          <txt>CONSTANT_ISSUE</txt>
-        </prop>
-        <prop>
-          <key>offset</key>
-          <val>1</val>
-          <txt>h</txt>
-        </prop>
-      </chc>
-      <chc>
-        <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.PackageDeclarationCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
