@@ -5,8 +5,10 @@
   <module name="SuppressionFilter"/>
   <module name="SuppressWithNearbyCommentFilter"/>
   <module name="JavadocPackage"/>
+  <module name="SuppressWarningsFilter"/>
   <module name="TreeWalker">
     <module name="FileContentsHolder"/>
     <module name="EqualsHashCode"/>
+    <module name="SuppressWarningsHolder"/>
   </module>
 </module>

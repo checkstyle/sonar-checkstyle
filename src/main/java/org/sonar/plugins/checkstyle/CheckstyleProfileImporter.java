@@ -123,14 +123,16 @@ public class CheckstyleProfileImporter extends ProfileImporter {
   }
 
   static boolean isIgnored(String configKey) {
-    return StringUtils.equals(configKey, "FileContentsHolder");
+    return StringUtils.equals(configKey, "FileContentsHolder") ||
+      StringUtils.equals(configKey, "SuppressWarningsHolder");
   }
 
   static boolean isFilter(String configKey) {
     return StringUtils.equals(configKey, "SuppressionCommentFilter") ||
       StringUtils.equals(configKey, "SeverityMatchFilter") ||
       StringUtils.equals(configKey, "SuppressionFilter") ||
-      StringUtils.equals(configKey, "SuppressWithNearbyCommentFilter");
+      StringUtils.equals(configKey, "SuppressWithNearbyCommentFilter") ||
+      StringUtils.equals(configKey, "SuppressWarningsFilter");
   }
 
   private void processRule(RulesProfile profile, String path, String moduleName, Map<String, String> properties, ValidationMessages messages) throws XMLStreamException {

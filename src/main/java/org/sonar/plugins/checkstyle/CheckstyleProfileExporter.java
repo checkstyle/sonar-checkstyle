@@ -94,6 +94,9 @@ public class CheckstyleProfileExporter extends ProfileExporter {
   private void appendTreeWalker(Writer writer, ListMultimap<String, ActiveRule> activeRulesByConfigKey) throws IOException {
     writer.append("<module name=\"TreeWalker\">");
     writer.append("<module name=\"FileContentsHolder\"/> ");
+    if (isSuppressWarningsEnabled()) {
+      writer.append("<module name=\"SuppressWarningsHolder\"/> ");
+    }
     for (String configKey : activeRulesByConfigKey.keySet()) {
       if (isInTreeWalker(configKey)) {
         List<ActiveRule> activeRules = activeRulesByConfigKey.get(configKey);
@@ -103,6 +106,11 @@ public class CheckstyleProfileExporter extends ProfileExporter {
       }
     }
     writer.append("</module>");
+  }
+
+  private boolean isSuppressWarningsEnabled() {
+    String filtersXML = settings.getString(CheckstyleConstants.FILTERS_KEY);
+    return filtersXML.contains("<module name=\"SuppressWarningsFilter\" />");
   }
 
   private void appendXmlFooter(Writer writer) throws IOException {

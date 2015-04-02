@@ -28,7 +28,9 @@ public final class CheckstyleConstants {
 
   public static final String FILTERS_KEY = "sonar.checkstyle.filters";
 
-  public static final String FILTERS_DEFAULT_VALUE = "<module name=\"SuppressionCommentFilter\"/>";
+  public static final String FILTERS_DEFAULT_VALUE =
+    "<module name=\"SuppressionCommentFilter\" />" +
+      "<module name=\"SuppressWarningsFilter\" />";
 
   public static final String JAVA_KEY = "java";
 
