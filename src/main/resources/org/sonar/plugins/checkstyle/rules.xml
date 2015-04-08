@@ -1617,6 +1617,7 @@
     </param>
     <param key="url" type="STRING">
     </param>
+    <status>DEPRECATED</status>
   </rule>
 
 </rules>
