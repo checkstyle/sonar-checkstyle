@@ -24,6 +24,8 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.staxmate.SMInputFactory;
 import org.codehaus.staxmate.in.SMInputCursor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.profiles.ProfileImporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -41,9 +43,18 @@ import java.util.Map;
 
 public class CheckstyleProfileImporter extends ProfileImporter {
 
+  private static final Logger LOG = LoggerFactory.getLogger(CheckstyleProfileImporter.class);
+
   private static final String CHECKER_MODULE = "Checker";
   private static final String TREEWALKER_MODULE = "TreeWalker";
   private static final String MODULE_NODE = "module";
+  private static final String[] FILTERS = new String[] {
+    "SeverityMatchFilter",
+    "SuppressionFilter",
+    "SuppressWarningsFilter",
+    "SuppressionCommentFilter",
+    "SuppressWithNearbyCommentFilter"
+  };
   private final RuleFinder ruleFinder;
 
   private static class Module {
@@ -99,7 +110,9 @@ public class CheckstyleProfileImporter extends ProfileImporter {
       }
 
     } catch (XMLStreamException e) {
-      messages.addErrorText("XML is not valid: " + e.getMessage());
+      String message = "XML is not valid: " + e.getMessage();
+      LOG.error(message);
+      messages.addErrorText(message);
     }
     return profile;
   }
@@ -123,16 +136,16 @@ public class CheckstyleProfileImporter extends ProfileImporter {
   }
 
   static boolean isIgnored(String configKey) {
-    return StringUtils.equals(configKey, "FileContentsHolder") ||
-      StringUtils.equals(configKey, "SuppressWarningsHolder");
+    return StringUtils.equals(configKey, "FileContentsHolder") || StringUtils.equals(configKey, "SuppressWarningsHolder");
   }
 
   static boolean isFilter(String configKey) {
-    return StringUtils.equals(configKey, "SuppressionCommentFilter") ||
-      StringUtils.equals(configKey, "SeverityMatchFilter") ||
-      StringUtils.equals(configKey, "SuppressionFilter") ||
-      StringUtils.equals(configKey, "SuppressWithNearbyCommentFilter") ||
-      StringUtils.equals(configKey, "SuppressWarningsFilter");
+    for (String filter : FILTERS) {
+      if (StringUtils.equals(configKey, filter)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void processRule(RulesProfile profile, String path, String moduleName, Map<String, String> properties, ValidationMessages messages) throws XMLStreamException {
