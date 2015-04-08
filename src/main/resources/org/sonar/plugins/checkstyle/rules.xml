@@ -3,14 +3,13 @@
   <rule>
     <key>com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck</key>
     <priority>MAJOR</priority>
-    <configKey>Checker/Header</configKey>
-    <param>
-      <key>header</key>
-      <type>s</type>
+    <name><![CDATA[Header]]></name>
+    <configKey><![CDATA[Checker/Header]]></configKey>
+    <param key="headerFile" type="STRING">
     </param>
-    <param>
-      <key>ignoreLines</key>
-      <type>s</type>
+    <param key="header" type="TEXT">
+    </param>
+    <param key="ignoreLines" type="STRING">
     </param>
   </rule>
 
@@ -19,9 +18,11 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Regexp Header]]></name>
     <configKey><![CDATA[Checker/RegexpHeader]]></configKey>
+    <param key="headerFile" type="STRING">
+    </param>
     <param key="header" type="TEXT">
     </param>
-    <param key="multiLines" type="TEXT">
+    <param key="multiLines" type="STRING">
     </param>
   </rule>
 
