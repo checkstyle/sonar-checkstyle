@@ -13,6 +13,6 @@ else
 
   installTravisTools
 
-  # travis_run_its "SONAR_VERSION" ["DEPENCENCY1"] ["DEPENCENCY2"]
+  # travis_run_its "SONAR_VERSION" ["DEPENDENCY1"] ["DEPENDENCY2"]
   travis_run_its "${TESTS}" "SonarSource/sonar-java"
 fi
