@@ -1,0 +1,13 @@
+<rules>
+  <rule>
+    <key>org.sonar.samples.checkstyle.MethodsCountCheck</key>
+    <name>Methods Count Check</name>
+    <configKey>Checker/TreeWalker/org.sonar.samples.checkstyle.MethodsCountCheck</configKey>
+    <category name="Usability"/>
+    <description>Count methods</description>
+    <param>
+      <key>maxMethodsCount</key>
+      <description>Maximum number of methods. Default is 10.</description>
+    </param>
+  </rule>
+ </rules>
