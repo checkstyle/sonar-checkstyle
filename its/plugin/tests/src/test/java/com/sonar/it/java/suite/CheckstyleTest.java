@@ -72,11 +72,7 @@ public class CheckstyleTest {
       .find(ResourceQuery.createForMetrics("com.sonarsource.it.projects:checkstyle-suppress-warnings-filter", "violations"));
 
     // there should be 4 violations, but 3 are disabled using @SuppressWarnings
-    int nbViolations = 4;
-    if (CheckstyleTestSuite.isCheckstyleAtLeast_2_3()) {
-      nbViolations = 1;
-    }
-    assertThat(project.getMeasureIntValue("violations")).isEqualTo(nbViolations);
+    assertThat(project.getMeasureIntValue("violations")).isEqualTo(1);
   }
 
   /**

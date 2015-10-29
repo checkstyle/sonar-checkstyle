@@ -41,8 +41,7 @@ public class CheckstyleTestSuite {
   static {
     OrchestratorBuilder orchestratorBuilder = Orchestrator.builderEnv()
       .addPlugin("java")
-      .addPlugin("checkstyle")
-      .setMainPluginKey("checkstyle")
+      .addPlugin(FileLocation.of("../../../target/sonar-checkstyle-plugin.jar"))
       .addPlugin(FileLocation.of(pluginJar("checkstyle-extension-plugin")))
       .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleExtensionsTest/extension-backup.xml"))
       .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleTest/checkstyle-backup.xml"))
@@ -58,10 +57,6 @@ public class CheckstyleTestSuite {
 
   public static File projectPom(String projectName) {
     return new File("../projects/" + projectName + "/pom.xml");
-  }
-
-  public static boolean isCheckstyleAtLeast_2_3() {
-    return ORCHESTRATOR.getConfiguration().getPluginVersion("checkstyle").isGreaterThanOrEquals("2.3");
   }
 
 }
