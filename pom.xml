@@ -3,12 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.codehaus.sonar-plugins</groupId>
+    <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>19</version>
+    <version>24</version>
   </parent>
 
-  <groupId>org.codehaus.sonar-plugins.java</groupId>
+  <groupId>org.sonarsource.checkstyle</groupId>
   <artifactId>sonar-checkstyle-plugin</artifactId>
   <version>2.4-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
@@ -45,7 +45,7 @@
   <url>http://redirect.sonarsource.com/plugins/checkstyle.html</url>
   <issueManagement>
     <system>JIRA</system>
-    <url>https://jira.codehaus.org/browse/SONARCHKST</url>
+    <url>https://jira.sonarsource.com/browse/SONARCHKST</url>
   </issueManagement>
 
   <properties>
@@ -54,6 +54,13 @@
     <checkstyle.version>6.4.1</checkstyle.version>
     <sonar.version>4.5.1</sonar.version>
     <sonar-java.version>2.1</sonar-java.version>
+
+    <!-- Configuration for sonar-packaging-maven-plugin -->
+    <sonar.pluginKey>checkstyle</sonar.pluginKey>
+    <sonar.pluginName>Checkstyle</sonar.pluginName>
+    <sonar.pluginClass>org.sonar.plugins.checkstyle.CheckstylePlugin</sonar.pluginClass>
+    <sonar.pluginDescription><![CDATA[Analyze Java code with <a href="http://checkstyle.sourceforge.net/">Checkstyle</a>.]]></sonar.pluginDescription>
+    <sonar.requiresPlugin>java:${sonar-java.version}</sonar.requiresPlugin>
   </properties>
 
   <dependencyManagement>
@@ -167,17 +174,6 @@
     </resources>
 
     <plugins>
-      <plugin>
-        <groupId>org.codehaus.sonar</groupId>
-        <artifactId>sonar-packaging-maven-plugin</artifactId>
-        <configuration>
-          <pluginKey>checkstyle</pluginKey>
-          <pluginName>Checkstyle</pluginName>
-          <pluginClass>org.sonar.plugins.checkstyle.CheckstylePlugin</pluginClass>
-          <pluginDescription><![CDATA[Analyze Java code with <a href="http://checkstyle.sourceforge.net/">Checkstyle</a>.]]></pluginDescription>
-          <requirePlugins>java:${sonar-java.version}</requirePlugins>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>

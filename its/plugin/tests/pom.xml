@@ -32,7 +32,7 @@
     <dependency>
       <groupId>org.codehaus.sonar</groupId>
       <artifactId>sonar-plugin-api</artifactId>
-      <version>3.6</version>
+      <version>4.5.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
