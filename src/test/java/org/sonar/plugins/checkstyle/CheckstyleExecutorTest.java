@@ -111,7 +111,7 @@ public class CheckstyleExecutorTest {
     CheckstyleConfiguration conf = mock(CheckstyleConfiguration.class);
     when(conf.getCharset()).thenReturn(Charset.defaultCharset());
     when(conf.getCheckstyleConfiguration()).thenReturn(CheckstyleConfiguration.toCheckstyleConfiguration(new File("test-resources/checkstyle-conf.xml")));
-    when(conf.getSourceFiles()).thenReturn(Arrays.<File> asList(new File("test-resources/Hello.java"), new File("test-resources/World.java")));
+    when(conf.getSourceFiles()).thenReturn(Arrays.asList(new File("test-resources/Hello.java"), new File("test-resources/World.java")));
     return conf;
   }
 

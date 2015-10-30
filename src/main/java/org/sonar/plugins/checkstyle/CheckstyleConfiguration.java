@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import com.google.common.collect.ImmutableList;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
@@ -27,10 +28,11 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.BatchExtension;
+import org.sonar.api.batch.fs.FilePredicates;
+import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.InputFileUtils;
-import org.sonar.api.resources.ProjectFileSystem;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,9 +52,9 @@ public class CheckstyleConfiguration implements BatchExtension {
   private final CheckstyleProfileExporter confExporter;
   private final RulesProfile profile;
   private final Settings conf;
-  private final ProjectFileSystem fileSystem;
+  private final FileSystem fileSystem;
 
-  public CheckstyleConfiguration(Settings conf, CheckstyleProfileExporter confExporter, RulesProfile profile, ProjectFileSystem fileSystem) {
+  public CheckstyleConfiguration(Settings conf, CheckstyleProfileExporter confExporter, RulesProfile profile, FileSystem fileSystem) {
     this.conf = conf;
     this.confExporter = confExporter;
     this.profile = profile;
@@ -61,7 +63,7 @@ public class CheckstyleConfiguration implements BatchExtension {
 
   public File getXMLDefinitionFile() {
     Writer writer = null;
-    File xmlFile = new File(fileSystem.getSonarWorkingDirectory(), "checkstyle.xml");
+    File xmlFile = new File(fileSystem.workDir(), "checkstyle.xml");
     try {
       writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false), StandardCharsets.UTF_8);
       confExporter.exportProfile(profile, writer);
@@ -77,12 +79,16 @@ public class CheckstyleConfiguration implements BatchExtension {
   }
 
   public List<File> getSourceFiles() {
-    return InputFileUtils.toFiles(fileSystem.mainFiles(CheckstyleConstants.JAVA_KEY));
+    FilePredicates predicates = fileSystem.predicates();
+    Iterable<File> files = fileSystem.files(predicates.and(
+      predicates.hasLanguage(CheckstyleConstants.JAVA_KEY),
+      predicates.hasType(InputFile.Type.MAIN)));
+    return ImmutableList.<File>builder().addAll(files).build();
   }
 
   public File getTargetXMLReport() {
     if (conf.getBoolean(PROPERTY_GENERATE_XML)) {
-      return new File(fileSystem.getSonarWorkingDirectory(), "checkstyle-result.xml");
+      return new File(fileSystem.workDir(), "checkstyle-result.xml");
     }
     return null;
   }
@@ -112,7 +118,7 @@ public class CheckstyleConfiguration implements BatchExtension {
   }
 
   public Charset getCharset() {
-    Charset charset = fileSystem.getSourceCharset();
+    Charset charset = fileSystem.encoding();
     if (charset == null) {
       String charsetName = System.getProperty("file.encoding");
       if (charsetName != null) {

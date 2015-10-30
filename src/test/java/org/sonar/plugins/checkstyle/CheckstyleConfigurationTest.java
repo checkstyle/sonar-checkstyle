@@ -21,10 +21,9 @@ package org.sonar.plugins.checkstyle;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Project;
-import org.sonar.api.test.MavenTestUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,14 +35,13 @@ public class CheckstyleConfigurationTest {
 
   @Test
   public void writeConfigurationToWorkingDir() throws IOException {
-    Project project = MavenTestUtils.loadProjectFromPom(getClass(), "writeConfigurationToWorkingDir/pom.xml");
-
     CheckstyleProfileExporter exporter = new FakeExporter();
-    CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter, null, project.getFileSystem());
+    CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter, null, new DefaultFileSystem());
     File xmlFile = configuration.getXMLDefinitionFile();
 
     assertThat(xmlFile.exists()).isTrue();
     assertThat(FileUtils.readFileToString(xmlFile)).isEqualTo("<conf/>");
+    FileUtils.forceDelete(xmlFile);
   }
 
   public class FakeExporter extends CheckstyleProfileExporter {
