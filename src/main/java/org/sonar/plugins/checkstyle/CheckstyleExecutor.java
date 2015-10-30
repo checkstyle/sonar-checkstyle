@@ -19,39 +19,40 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Lists;
+import com.google.common.io.Closeables;
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
 import com.puppycrawl.tools.checkstyle.XMLLogger;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.BatchExtension;
-import org.sonar.api.batch.ProjectClasspath;
 import org.sonar.api.utils.SonarException;
 import org.sonar.api.utils.TimeProfiler;
+import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 public class CheckstyleExecutor implements BatchExtension {
   private static final Logger LOG = LoggerFactory.getLogger(CheckstyleExecutor.class);
 
   private final CheckstyleConfiguration configuration;
-  private final ClassLoader projectClassloader;
   private final CheckstyleAuditListener listener;
+  private final JavaResourceLocator javaResourceLocator;
 
-  public CheckstyleExecutor(CheckstyleConfiguration configuration, CheckstyleAuditListener listener, ProjectClasspath classpath) {
+  public CheckstyleExecutor(CheckstyleConfiguration configuration, CheckstyleAuditListener listener, JavaResourceLocator javaResourceLocator) {
     this.configuration = configuration;
     this.listener = listener;
-    this.projectClassloader = classpath.getClassloader();
-  }
-
-  CheckstyleExecutor(CheckstyleConfiguration configuration, CheckstyleAuditListener listener, ClassLoader projectClassloader) {
-    this.configuration = configuration;
-    this.listener = listener;
-    this.projectClassloader = projectClassloader;
+    this.javaResourceLocator = javaResourceLocator;
   }
 
   /**
@@ -61,6 +62,7 @@ public class CheckstyleExecutor implements BatchExtension {
     TimeProfiler profiler = new TimeProfiler().start("Execute Checkstyle " + CheckstyleVersion.getVersion());
     ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
     Thread.currentThread().setContextClassLoader(PackageNamesLoader.class.getClassLoader());
+    URLClassLoader projectClassloader = createClassloader();
 
     Locale initialLocale = Locale.getDefault();
     Locale.setDefault(Locale.ENGLISH);
@@ -93,10 +95,25 @@ public class CheckstyleExecutor implements BatchExtension {
       if (checker != null) {
         checker.destroy();
       }
-      IOUtils.closeQuietly(xmlOutput);
+      Closeables.closeQuietly(xmlOutput);
       Thread.currentThread().setContextClassLoader(initialClassLoader);
       Locale.setDefault(initialLocale);
+      Closeables.closeQuietly(projectClassloader);
     }
+  }
+
+  @VisibleForTesting
+  URLClassLoader createClassloader() {
+    Collection<File> classpathElements = javaResourceLocator.classpath();
+    List<URL> urls = Lists.newArrayList();
+    for (File file : classpathElements) {
+      try {
+        urls.add(file.toURI().toURL());
+      } catch (MalformedURLException e) {
+        throw new IllegalStateException("Fail to create the project classloader. Classpath element is invalid: " + file, e);
+      }
+    }
+    return new URLClassLoader(urls.toArray(new URL[urls.size()]), null);
   }
 
 }

@@ -53,7 +53,7 @@
 
     <checkstyle.version>6.4.1</checkstyle.version>
     <sonar.version>4.5.1</sonar.version>
-    <sonar-java.version>2.1</sonar-java.version>
+    <sonar-java.version>3.7</sonar-java.version>
 
     <!-- Configuration for sonar-packaging-maven-plugin -->
     <sonar.pluginKey>checkstyle</sonar.pluginKey>
@@ -91,6 +91,13 @@
       <artifactId>sonar-deprecated</artifactId>
       <scope>provided</scope>
       <version>${sonar.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.java</groupId>
+      <artifactId>sonar-java-plugin</artifactId>
+      <type>sonar-plugin</type>
+      <version>${sonar-java.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.codehaus.sonar</groupId>

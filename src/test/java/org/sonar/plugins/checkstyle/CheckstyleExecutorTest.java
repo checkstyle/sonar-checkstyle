@@ -19,12 +19,16 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import com.google.common.collect.ImmutableList;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
+import org.sonar.java.DefaultJavaResourceLocator;
+import org.sonar.java.JavaClasspath;
+import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -47,7 +51,7 @@ public class CheckstyleExecutorTest {
   public void execute() throws Exception {
     CheckstyleConfiguration conf = mockConf();
     CheckstyleAuditListener listener = mockListener();
-    CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener, getClass().getClassLoader());
+    CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
     executor.execute();
 
     verify(listener, times(1)).auditStarted(any(AuditEvent.class));
@@ -69,6 +73,12 @@ public class CheckstyleExecutorTest {
     assertThat(event.getSourceName()).matches("com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck");
   }
 
+  private static JavaResourceLocator createJavaResourceLocator() {
+    JavaClasspath javaClasspath = mock(JavaClasspath.class);
+    when(javaClasspath.getElements()).thenReturn(ImmutableList.of(new File(".")));
+    return new DefaultJavaResourceLocator(null, javaClasspath, null);
+  }
+
   @Test
   public void canGenerateXMLReport_in_english() throws Exception {
     Locale initialLocale = Locale.getDefault();
@@ -79,7 +89,7 @@ public class CheckstyleExecutorTest {
       File report = new File("target/test-tmp/checkstyle-report.xml");
       when(conf.getTargetXMLReport()).thenReturn(report);
       CheckstyleAuditListener listener = mockListener();
-      CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener, getClass().getClassLoader());
+      CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
       executor.execute();
 
       assertThat(report.exists(), is(true));
