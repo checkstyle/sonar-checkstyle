@@ -22,6 +22,8 @@ package org.sonar.plugins.checkstyle;
 import org.junit.Test;
 import org.sonar.api.rules.RulePriority;
 
+import java.lang.reflect.Constructor;
+
 import static org.fest.assertions.Assertions.assertThat;
 
 public class CheckstyleSeverityUtilsTest {
@@ -41,6 +43,14 @@ public class CheckstyleSeverityUtilsTest {
     assertThat(CheckstyleSeverityUtils.fromSeverity("warning")).isEqualTo(RulePriority.MAJOR);
     assertThat(CheckstyleSeverityUtils.fromSeverity("info")).isEqualTo(RulePriority.INFO);
     assertThat(CheckstyleSeverityUtils.fromSeverity("")).isNull();
+  }
+
+  @Test
+  public void private_constructor() throws Exception {
+    Constructor constructor = CheckstyleSeverityUtils.class.getDeclaredConstructor();
+    assertThat(constructor.isAccessible()).isFalse();
+    constructor.setAccessible(true);
+    constructor.newInstance();
   }
 
 }

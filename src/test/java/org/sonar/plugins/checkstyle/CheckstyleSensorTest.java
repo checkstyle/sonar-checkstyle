@@ -61,6 +61,11 @@ public class CheckstyleSensorTest {
     assertThat(sensor.shouldExecuteOnProject(project)).isTrue();
   }
 
+  @Test
+  public void testToString() {
+    assertThat(new CheckstyleSensor(null, null, null).toString()).isEqualTo("CheckstyleSensor");
+  }
+
   private void addOneJavaFile() {
     File file = new File("MyClass.java");
     fileSystem.add(new DefaultInputFile(
