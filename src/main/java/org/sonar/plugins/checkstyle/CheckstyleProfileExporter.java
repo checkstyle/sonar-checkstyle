@@ -28,7 +28,6 @@ import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.RuleParam;
-import org.sonar.api.utils.SonarException;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -55,7 +54,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
       generateXML(writer, activeRulesByConfigKey);
 
     } catch (IOException e) {
-      throw new SonarException("Fail to export the profile " + profile, e);
+      throw new IllegalStateException("Fail to export the profile " + profile, e);
     }
 
   }

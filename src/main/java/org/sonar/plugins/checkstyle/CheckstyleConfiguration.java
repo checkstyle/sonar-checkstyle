@@ -31,7 +31,6 @@ import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.InputFileUtils;
 import org.sonar.api.resources.ProjectFileSystem;
-import org.sonar.api.utils.SonarException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -70,7 +69,7 @@ public class CheckstyleConfiguration implements BatchExtension {
       return xmlFile;
 
     } catch (IOException e) {
-      throw new SonarException("Fail to save the Checkstyle configuration to " + xmlFile.getPath(), e);
+      throw new IllegalStateException("Fail to save the Checkstyle configuration to " + xmlFile.getPath(), e);
 
     } finally {
       IOUtils.closeQuietly(writer);

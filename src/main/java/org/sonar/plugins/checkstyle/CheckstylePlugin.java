@@ -63,7 +63,7 @@ public final class CheckstylePlugin extends SonarPlugin {
       CheckstyleAuditListener.class,
       CheckstyleProfileExporter.class,
       CheckstyleProfileImporter.class,
-      CheckstyleRuleRepository.class);
+      CheckstyleRulesDefinition.class);
   }
 
 }

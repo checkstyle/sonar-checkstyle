@@ -29,7 +29,6 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.BatchExtension;
-import org.sonar.api.utils.SonarException;
 import org.sonar.api.utils.TimeProfiler;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
@@ -89,7 +88,7 @@ public class CheckstyleExecutor implements BatchExtension {
       profiler.stop();
 
     } catch (Exception e) {
-      throw new SonarException("Can not execute Checkstyle", e);
+      throw new IllegalStateException("Can not execute Checkstyle", e);
 
     } finally {
       if (checker != null) {

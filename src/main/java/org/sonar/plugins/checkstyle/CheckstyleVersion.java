@@ -32,11 +32,7 @@ public enum CheckstyleVersion {
   private static final String PROPERTIES_PATH = "/org/sonar/plugins/checkstyle/checkstyle-plugin.properties";
   private String version;
 
-  public static String getVersion() {
-    return INSTANCE.version;
-  }
-
-  private CheckstyleVersion() {
+  CheckstyleVersion() {
     InputStream input = getClass().getResourceAsStream(PROPERTIES_PATH);
     try {
       Properties properties = new Properties();
@@ -44,11 +40,14 @@ public enum CheckstyleVersion {
       this.version = properties.getProperty("checkstyle.version");
 
     } catch (IOException e) {
-      LoggerFactory.getLogger(getClass()).warn("Can not load the Checkstyle version from the file " + PROPERTIES_PATH);
+      LoggerFactory.getLogger(getClass()).warn("Can not load the Checkstyle version from the file " + PROPERTIES_PATH, e);
       this.version = "";
-
     } finally {
       IOUtils.closeQuietly(input);
     }
+  }
+
+  public static String getVersion() {
+    return INSTANCE.version;
   }
 }
