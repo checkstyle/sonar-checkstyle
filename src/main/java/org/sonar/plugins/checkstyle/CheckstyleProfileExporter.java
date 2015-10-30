@@ -32,6 +32,8 @@ import org.sonar.api.utils.SonarException;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CheckstyleProfileExporter extends ProfileExporter {
@@ -97,7 +99,9 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     if (isSuppressWarningsEnabled()) {
       writer.append("<module name=\"SuppressWarningsHolder\"/> ");
     }
-    for (String configKey : activeRulesByConfigKey.keySet()) {
+    List<String> ruleSet = new ArrayList<>(activeRulesByConfigKey.keySet());
+    Collections.sort(ruleSet);
+    for (String configKey : ruleSet) {
       if (isInTreeWalker(configKey)) {
         List<ActiveRule> activeRules = activeRulesByConfigKey.get(configKey);
         for (ActiveRule activeRule : activeRules) {
