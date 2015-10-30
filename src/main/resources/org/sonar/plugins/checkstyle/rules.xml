@@ -274,6 +274,7 @@
     <param key="allowStaticMemberImports" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.BooleanExpressionComplexityCheck">
@@ -429,6 +430,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Explicit Initialization]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ExplicitInitialization]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.FallThroughCheck">
@@ -456,6 +458,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Final Class]]></name>
     <configKey><![CDATA[Checker/TreeWalker/FinalClass]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.FinalLocalVariableCheck">
@@ -920,6 +923,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Multiple Variable Declarations]]></name>
     <configKey><![CDATA[Checker/TreeWalker/MultipleVariableDeclarations]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.MutableExceptionCheck">
@@ -1160,6 +1164,7 @@
     <param key="applyToPrivate" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.StringLiteralEqualityCheck">
