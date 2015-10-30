@@ -252,6 +252,7 @@
     <priority>MINOR</priority>
     <name><![CDATA[Avoid Inline Conditionals]]></name>
     <configKey><![CDATA[Checker/TreeWalker/AvoidInlineConditionals]]></configKey>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.AvoidNestedBlocksCheck">
