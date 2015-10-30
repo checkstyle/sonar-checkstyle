@@ -117,7 +117,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     return profile;
   }
 
-  private SMInputFactory initStax() {
+  private static SMInputFactory initStax() {
     XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
     xmlFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.TRUE);
     xmlFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, Boolean.FALSE);
@@ -171,7 +171,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     }
   }
 
-  private void activateProperties(ActiveRule activeRule, Map<String, String> properties) {
+  private static void activateProperties(ActiveRule activeRule, Map<String, String> properties) {
     for (Map.Entry<String, String> property : properties.entrySet()) {
       if (StringUtils.equals("severity", property.getKey())) {
         activeRule.setSeverity(CheckstyleSeverityUtils.fromSeverity(property.getValue()));
