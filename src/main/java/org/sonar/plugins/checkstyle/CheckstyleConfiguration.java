@@ -24,7 +24,6 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.BatchExtension;
@@ -40,6 +39,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Properties;
 
@@ -64,7 +64,7 @@ public class CheckstyleConfiguration implements BatchExtension {
     Writer writer = null;
     File xmlFile = new File(fileSystem.getSonarWorkingDirectory(), "checkstyle.xml");
     try {
-      writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false), CharEncoding.UTF_8);
+      writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false), StandardCharsets.UTF_8);
       confExporter.exportProfile(profile, writer);
       writer.flush();
       return xmlFile;
@@ -115,7 +115,12 @@ public class CheckstyleConfiguration implements BatchExtension {
   public Charset getCharset() {
     Charset charset = fileSystem.getSourceCharset();
     if (charset == null) {
-      charset = Charset.forName(System.getProperty("file.encoding", CharEncoding.UTF_8));
+      String charsetName = System.getProperty("file.encoding");
+      if (charsetName != null) {
+        charset = Charset.forName(charsetName);
+      } else {
+        charset = StandardCharsets.UTF_8;
+      }
     }
     return charset;
   }
