@@ -20,7 +20,6 @@
 package com.sonar.it.java.suite;
 
 import com.sonar.orchestrator.Orchestrator;
-import com.sonar.orchestrator.OrchestratorBuilder;
 import com.sonar.orchestrator.locator.FileLocation;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
@@ -36,20 +35,16 @@ import java.io.File;
 public class CheckstyleTestSuite {
 
   @ClassRule
-  public static final Orchestrator ORCHESTRATOR;
-
-  static {
-    OrchestratorBuilder orchestratorBuilder = Orchestrator.builderEnv()
-      .addPlugin("java")
-      .addPlugin(FileLocation.of("../../../target/sonar-checkstyle-plugin.jar"))
-      .addPlugin(FileLocation.of(pluginJar("checkstyle-extension-plugin")))
-      .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleExtensionsTest/extension-backup.xml"))
-      .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleTest/checkstyle-backup.xml"))
-      .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleTest/suppression-comment-filter.xml"))
-      .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleTest/suppress-warnings-filter.xml"))
-      .restoreProfileAtStartup(FileLocation.ofClasspath("/sonar-way-2.7.xml"));
-    ORCHESTRATOR = orchestratorBuilder.build();
-  }
+  public static final Orchestrator ORCHESTRATOR = Orchestrator.builderEnv()
+    .addPlugin("java")
+    .addPlugin(FileLocation.of("../../../target/sonar-checkstyle-plugin.jar"))
+    .addPlugin(FileLocation.of(pluginJar("checkstyle-extension-plugin")))
+    .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleExtensionsTest/extension-backup.xml"))
+    .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleTest/checkstyle-backup.xml"))
+    .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleTest/suppression-comment-filter.xml"))
+    .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleTest/suppress-warnings-filter.xml"))
+    .restoreProfileAtStartup(FileLocation.ofClasspath("/sonar-way-2.7.xml"))
+    .build();
 
   private static File pluginJar(String artifactId) {
     return new File("../plugins/" + artifactId + "/target/" + artifactId + "-1.0-SNAPSHOT.jar");

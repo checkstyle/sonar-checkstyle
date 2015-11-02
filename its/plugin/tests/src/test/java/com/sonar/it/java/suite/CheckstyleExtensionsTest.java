@@ -46,7 +46,8 @@ public class CheckstyleExtensionsTest {
     orchestrator.executeBuild(build);
 
     IssueClient issueClient = orchestrator.getServer().wsClient().issueClient();
-    List<Issue> issues = issueClient.find(IssueQuery.create()
+    List<Issue> issues = issueClient.find(
+      IssueQuery.create()
         .componentRoots("com.sonarsource.it.projects:checkstyle-extension")
         .rules("checkstyle:org.sonar.samples.checkstyle.MethodsCountCheck")).list();
     assertThat(issues).hasSize(1);

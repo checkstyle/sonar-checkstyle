@@ -5,14 +5,8 @@
   <rules>
     <rule>
       <repositoryKey>checkstyle</repositoryKey>
-      <key>com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck</key>
+      <key>com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck</key>
       <priority>MAJOR</priority>
-      <parameters>
-        <parameter>
-          <key>tokens</key>
-          <value>LITERAL_CATCH</value>
-        </parameter>
-      </parameters>
     </rule>
   </rules>
 </profile>
