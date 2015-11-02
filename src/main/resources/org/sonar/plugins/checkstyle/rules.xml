@@ -136,14 +136,22 @@
     <configKey><![CDATA[Checker/RegexpSingleline]]></configKey>
     <cardinality>MULTIPLE</cardinality>
     <param key="format" type="STRING">
+      <defaultValue>^$</defaultValue>
     </param>
     <param key="message" type="STRING">
+      <defaultValue></defaultValue>
     </param>
     <param key="ignoreCase" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="minimum" type="INTEGER">
+      <defaultValue>0</defaultValue>
     </param>
     <param key="maximum" type="INTEGER">
+      <defaultValue>0</defaultValue>
+    </param>
+    <param key="fileExtensions" type="s{}">
+      <defaultValue></defaultValue>
     </param>
   </rule>
 
