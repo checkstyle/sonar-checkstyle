@@ -64,9 +64,12 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Suppress Warnings]]></name>
     <configKey><![CDATA[Checker/TreeWalker/SuppressWarnings]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="format" type="STRING">
+      <defaultValue>^$|^\s+$</defaultValue>
     </param>
     <param key="tokens" type="STRING">
+      <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,ENUM_CONSTANT_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF,CTOR_DEF</defaultValue>
     </param>
   </rule>
 
@@ -284,9 +287,12 @@
     <name><![CDATA[Boolean Expression Complexity]]></name>
     <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/BooleanExpressionComplexity]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="max" type="INTEGER">
+      <defaultValue>3</defaultValue>
     </param>
     <param key="tokens" type="s[LAND,BAND,LOR,BOR,BXOR]">
+      <defaultValue>LAND,BAND,LOR,BOR,BXOR</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -379,9 +385,11 @@
     <name><![CDATA[Empty Block]]></name>
     <configKey><![CDATA[Checker/TreeWalker/EmptyBlock]]></configKey>
     <param key="option" type="s[text,stmt]">
+      <defaultValue>stmt</defaultValue>
     </param>
     <param key="tokens"
-           type="s[LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,INSTANCE_INIT,STATIC_INIT,LITERAL_SWITCH,LITERAL_CASE,LITERAL_SWITCH,LITERAL_DEFAULT,ARRAY_INIT]">
+           type="s[LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,INSTANCE_INIT,STATIC_INIT,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_CASE,LITERAL_DEFAULT,ARRAY_INIT]">
+      <defaultValue>LITERAL_WHILE,LITERAL_TRY,LITERAL_FINALLY,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,INSTANCE_INIT,STATIC_INIT,LITERAL_SWITCH,LITERAL_SYNCHRONIZED</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -422,9 +430,12 @@
     <name><![CDATA[Executable Statement Count]]></name>
     <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/ExecutableStatementCount]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="max" type="INTEGER">
+      <defaultValue>30</defaultValue>
     </param>
     <param key="tokens" type="s[CTOR_DEF,METHOD_DEF,INSTANCE_INIT,STATIC_INIT]">
+      <defaultValue>CTOR_DEF, METHOD_DEF, INSTANCE_INIT, STATIC_INIT</defaultValue>
     </param>
   </rule>
 
@@ -467,7 +478,12 @@
     <priority>MINOR</priority>
     <name><![CDATA[Final Local Variable]]></name>
     <configKey><![CDATA[Checker/TreeWalker/FinalLocalVariable]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
+    <param key="validateEnhancedForLoopVariable" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
     <param key="tokens" type="s[PARAMETER_DEF,VARIABLE_DEF]">
+      <defaultValue>VARIABLE_DEF</defaultValue>
     </param>
   </rule>
 
@@ -475,9 +491,12 @@
     <priority>MINOR</priority>
     <name><![CDATA[Final Parameters]]></name>
     <configKey><![CDATA[Checker/TreeWalker/FinalParameters]]></configKey>
-    <param key="tokens" type="s[METHOD_DEF,CTOR_DEF,LITERAL_CATCH]">
+    <cardinality>MULTIPLE</cardinality>
+    <param key="tokens" type="s[METHOD_DEF,CTOR_DEF,LITERAL_CATCH,FOR_EACH_CLAUSE]">
+      <defaultValue>METHOD_DEF,CTOR_DEF</defaultValue>
     </param>
     <param key="ignorePrimitiveTypes" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -486,17 +505,23 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Hidden Field]]></name>
     <configKey><![CDATA[Checker/TreeWalker/HiddenField]]></configKey>
-    <param key="tokens" type="s[PARAMETER_DEF,VARIABLE_DEF]">
+    <cardinality>MULTIPLE</cardinality>
+    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF,LAMBDA]">
+      <defaultValue>VARIABLE_DEF,PARAMETER_DEF,LAMBDA</defaultValue>
     </param>
     <param key="ignoreFormat" type="REGULAR_EXPRESSION">
     </param>
     <param key="ignoreConstructorParameter" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="ignoreSetter" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="ignoreAbstractMethods" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="setterCanReturnItsClass" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -553,7 +578,9 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Illegal Token]]></name>
     <configKey><![CDATA[Checker/TreeWalker/IllegalToken]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="tokens" type="s{}">
+      <defaultValue>LABELED_STAT</defaultValue>
     </param>
   </rule>
 
@@ -576,19 +603,27 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Illegal Type]]></name>
     <configKey><![CDATA[Checker/TreeWalker/IllegalType]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
+    <param key="validateAbstractClassNames" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
     <param key="tokens" type="s[PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF]">
+      <defaultValue>VARIABLE_DEF,PARAMETER_DEF,METHOD_DEF</defaultValue>
     </param>
     <param key="illegalClassNames" type="s{}">
+      <defaultValue>"java.util.HashSet, java.util.HashMap, java.util.LinkedHashMap, java.util.LinkedHashSet, java.util.TreeSet, java.util.TreeMap"</defaultValue>
     </param>
     <param key="legalAbstractClassNames" type="s{}">
     </param>
     <param key="ignoredMethodNames" type="s{}">
+      <defaultValue>"getInitialContext, getEnvironment"</defaultValue>
     </param>
     <param key="format" type="REGULAR_EXPRESSION">
+      <defaultValue>^(.*[\\.])?Abstract.*$</defaultValue>
     </param>
     <!-- 
       Should be s[LITERAL_PUBLIC,LITERAL_PROTECTED,LITERAL_PRIVATE,ABSTRACT,LITERAL_STATIC,FINAL,LITERAL_TRANSIENT,LITERAL_VOLATILE,LITERAL_SYNCHRONIZED,LITERAL_NATIVE,STRICTFP,ANNOTATION,LITERAL_DEFAULT]
-      but Checkstyle 6.4 splits the string with ", "
+      but Checkstyle 6.4 splits the string with ","
     -->
     <param key="memberModifiers" type="STRING">
     </param>
@@ -646,6 +681,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Inner Assignment]]></name>
     <configKey><![CDATA[Checker/TreeWalker/InnerAssignment]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="tokens"
            type="s[ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN]">
     </param>
@@ -666,25 +702,47 @@
     <name><![CDATA[Javadoc Method]]></name>
     <tag>comment</tag>
     <configKey><![CDATA[Checker/TreeWalker/JavadocMethod]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
+    <param key="minLineCount" type="INTEGER">
+      <defaultValue>-1</defaultValue>
+    </param>
+    <param key="allowedAnnotations" type="s{}">
+      <defaultValue>Override</defaultValue>
+    </param>
+    <param key="validateThrows" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
     <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
+      <defaultValue>private</defaultValue>
     </param>
     <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
     </param>
     <param key="allowUndeclaredRTE" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="allowThrowsTagsForSubclasses" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="allowMissingParamTags" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="allowMissingThrowsTags" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="allowMissingReturnTag" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="allowMissingJavadoc" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="allowMissingPropertyJavadoc" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[METHOD_DEF,CTOR_DEF]">
+    <param key="logLoadErrors" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="tokens" type="s[METHOD_DEF,CTOR_DEF,ANNOTATION_FIELD_DEF]">
+      <defaultValue>METHOD_DEF,CTOR_DEF,ANNOTATION_FIELD_DEF</defaultValue>
     </param>
     <param key="suppressLoadErrors" type="BOOLEAN">
       <!-- Note that default value in Checkstyle 5.5 is false -->
@@ -700,15 +758,20 @@
     <name><![CDATA[Javadoc Style]]></name>
     <tag>comment</tag>
     <configKey><![CDATA[Checker/TreeWalker/JavadocStyle]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
+      <defaultValue>private</defaultValue>
     </param>
     <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
     </param>
     <param key="checkFirstSentence" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
     <param key="checkEmptyJavadoc" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="checkHtml" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
     <param key="tokens" type="s[INTERFACE_DEF,CLASS_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF]">
     </param>
@@ -719,7 +782,9 @@
     <name><![CDATA[Javadoc Type]]></name>
     <tag>comment</tag>
     <configKey><![CDATA[Checker/TreeWalker/JavadocType]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
+      <defaultValue>private</defaultValue>
     </param>
     <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
     </param>
@@ -728,10 +793,13 @@
     <param key="versionFormat" type="REGULAR_EXPRESSION">
     </param>
     <param key="allowMissingParamTags" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="allowUnknownTags" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[INTERFACE_DEF,CLASS_DEF]">
+    <param key="tokens" type="s[INTERFACE_DEF,CLASS_DEF,ENUM_DEF,ANNOTATION_DEF]">
+      <defaultValue>INTERFACE_DEF,CLASS_DEF,ENUM_DEF,ANNOTATION_DEF</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -740,9 +808,16 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Javadoc Variable]]></name>
     <configKey><![CDATA[Checker/TreeWalker/JavadocVariable]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
+      <defaultValue>private</defaultValue>
     </param>
     <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
+    </param>
+    <param key="ignoreNamePattern" type="STRING">
+    </param>
+    <param key="tokens" type="s[ENUM_CONSTANT_DEF]">
+      <defaultValue>ENUM_CONSTANT_DEF</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -752,12 +827,19 @@
     <name><![CDATA[Left Curly]]></name>
     <tag>formatting</tag>
     <configKey><![CDATA[Checker/TreeWalker/LeftCurly]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="option" type="s[eol,nl,nlow]">
+      <defaultValue>eol</defaultValue>
     </param>
     <param key="maxLineLength" type="INTEGER">
+      <defaultValue>80</defaultValue>
+    </param>
+    <param key="ignoreEnums" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
     <param key="tokens"
-           type="s[CLASS_DEF,CTOR_DEF,INTERFACE_DEF,LITERAL_CATCH,LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_FOR,LITERAL_IF,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_TRY,LITERAL_WHILE,METHOD_DEF]">
+           type="s[INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK]">
+      <defaultValue>INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -791,10 +873,15 @@
     <cardinality>MULTIPLE</cardinality>
     <name><![CDATA[Local Variable Name]]></name>
     <configKey><![CDATA[Checker/TreeWalker/LocalVariableName]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[a-z][a-zA-Z0-9]*$</defaultValue>
     </param>
     <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF]">
+      <defaultValue>VARIABLE_DEF,PARAMETER_DEF</defaultValue>
+    </param>
+    <param key="allowOneCharVarInForLoop" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -803,14 +890,23 @@
     <priority>MINOR</priority>
     <name><![CDATA[Magic Number]]></name>
     <configKey><![CDATA[Checker/TreeWalker/MagicNumber]]></configKey>
-    <param key="tokens" type="STRING">
+    <cardinality>MULTIPLE</cardinality>
+    <param key="tokens" type="s[NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG]">
+      <defaultValue>NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG</defaultValue>
+    </param>
+    <param key="constantWaiverParentToken" type="s[ASSIGN,ARRAY_INIT,EXPR,UNARY_PLUS,UNARY_MINUS,TYPECAST,ELIST,LITERAL_NEW,METHOD_CALL,STAR,DIV,PLUS,MINUS]">
+      <defaultValue>ASSIGN,ARRAY_INIT,EXPR,UNARY_PLUS,UNARY_MINUS,TYPECAST,ELIST,LITERAL_NEW,METHOD_CALL,STAR,DIV,PLUS,MINUS</defaultValue>
     </param>
     <param key="ignoreNumbers" type="STRING">
+      <defaultValue>-1,0,1,2</defaultValue>
     </param>
     <param key="ignoreHashCodeMethod" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
     <param key="ignoreAnnotation" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="ignoreFieldDeclaration" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
     <status>DEPRECATED</status>
@@ -845,11 +941,15 @@
     <name><![CDATA[Method Length]]></name>
     <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/MethodLength]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="max" type="INTEGER">
+      <defaultValue>150</defaultValue>
     </param>
     <param key="countEmpty" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
     <param key="tokens" type="s[METHOD_DEF,CTOR_DEF]">
+      <defaultValue>METHOD_DEF,CTOR_DEF</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -872,11 +972,15 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Method Param Pad]]></name>
     <configKey><![CDATA[Checker/TreeWalker/MethodParamPad]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="allowLineBreaks" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="option" type="s[nospace,space]">
+      <defaultValue>nospace</defaultValue>
     </param>
     <param key="tokens" type="s[CTOR_DEF,LITERAL_NEW,METHOD_CALL,METHOD_DEF,SUPER_CTOR_CALL]">
+      <defaultValue>CTOR_DEF,LITERAL_NEW,METHOD_CALL,METHOD_DEF,SUPER_CTOR_CALL</defaultValue>
     </param>
   </rule>
 
@@ -951,9 +1055,12 @@
     <name><![CDATA[Need Braces]]></name>
     <tag>convention</tag>
     <configKey><![CDATA[Checker/TreeWalker/NeedBraces]]></configKey>
-    <param key="tokens" type="s[LITERAL_DO,LITERAL_ELSE,LITERAL_IF,LITERAL_FOR,LITERAL_WHILE]">
+    <cardinality>MULTIPLE</cardinality>
+    <param key="tokens" type="s[LITERAL_DO,LITERAL_ELSE,LITERAL_FOR,LITERAL_IF,LITERAL_WHILE,LITERAL_CASE,LITERAL_DEFAULT,LAMBDA]">
+      <defaultValue>LITERAL_DO,LITERAL_ELSE,LITERAL_FOR,LITERAL_IF,LITERAL_WHILE</defaultValue>
     </param>
     <param key="allowSingleLineStatement" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -991,9 +1098,12 @@
     <priority>MINOR</priority>
     <name><![CDATA[No Whitespace After]]></name>
     <configKey><![CDATA[Checker/TreeWalker/NoWhitespaceAfter]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="allowLineBreaks" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
-    <param key="tokens" type="s[ARRAY_INIT,BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS,TYPECAST]">
+    <param key="tokens" type="s[ARRAY_INIT,INC,DEC,UNARY_MINUS,UNARY_PLUS,BNOT,LNOT,DOT,TYPECAST,ARRAY_DECLARATOR,INDEX_OP]">
+      <defaultValue>ARRAY_INIT,INC,DEC,UNARY_MINUS,UNARY_PLUS,BNOT,LNOT,DOT,ARRAY_DECLARATOR,INDEX_OP</defaultValue>
     </param>
   </rule>
 
@@ -1001,9 +1111,12 @@
     <priority>MINOR</priority>
     <name><![CDATA[No Whitespace Before]]></name>
     <configKey><![CDATA[Checker/TreeWalker/NoWhitespaceBefore]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="allowLineBreaks" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[SEMI,DOT,POST_DEC,POST_INC]">
+    <param key="tokens" type="s[COMMA,SEMI,POST_INC,POST_DEC,DOT,GENERIC_START,GENERIC_END]">
+      <defaultValue>COMMA,SEMI,POST_INC,POST_DEC</defaultValue>
     </param>
   </rule>
 
@@ -1011,10 +1124,13 @@
     <priority>MINOR</priority>
     <name><![CDATA[Operator Wrap]]></name>
     <configKey><![CDATA[Checker/TreeWalker/OperatorWrap]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="option" type="s[nl,eol]">
+      <defaultValue>nl</defaultValue>
     </param>
     <param key="tokens"
-           type="s[ASSIGN,BAND,BAND_ASSIGN,BOR,BOR_ASSIGN,BSR,BSR_ASSIGN,BXOR,BXOR_ASSIGN,COLON,DIV,DIV_ASSIGN,EQUAL,GE,GT,LAND,LE,LITERAL_INSTANCEOF,LOR,LT,MINUS,MINUS_ASSIGN,MOD,MOD_ASSIGN,NOT_EQUAL,PLUS,PLUS_ASSIGN,QUESTION,SL,SL_ASSIGN,SR,SR_ASSIGN,STAR,STAR_ASSIGN]">
+           type="s[QUESTION,COLON,EQUAL,NOT_EQUAL,DIV,PLUS,MINUS,STAR,MOD,SR,BSR,GE,GT,SL,LE,LT,BXOR,BOR,LOR,BAND,LAND,LITERAL_INSTANCEOF,TYPE_EXTENSION_AND,ASSIGN,DIV_ASSIGN,PLUS_ASSIGN,MINUS_ASSIGN,STAR_ASSIGN,MOD_ASSIGN,SR_ASSIGN,BSR_ASSIGN,SL_ASSIGN,BXOR_ASSIGN,BOR_ASSIGN,BAND_ASSIGN]">
+      <defaultValue>QUESTION,COLON,EQUAL,NOT_EQUAL,DIV,PLUS,MINUS,STAR,MOD,SR,BSR,GE,GT,SL,LE,LT,BXOR,BOR,LOR,BAND,LAND,TYPE_EXTENSION_AND,LITERAL_INSTANCEOF</defaultValue>
     </param>
   </rule>
 
@@ -1067,9 +1183,12 @@
     <priority>MINOR</priority>
     <name><![CDATA[Paren Pad]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ParenPad]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="option" type="s[nospace,space]">
+      <defaultValue>nospace</defaultValue>
     </param>
-    <param key="tokens" type="s[CTOR_CALL,LPAREN,METHOD_CALL,RPAREN,SUPER_CTOR_CALL]">
+    <param key="tokens" type="s[ANNOTATION,ANNOTATION_FIELD_DEF,CTOR_CALL,CTOR_DEF,ENUM_CONSTANT_DEF,EXPR,LITERAL_CATCH,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_NEW,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_WHILE,METHOD_CALL,METHOD_DEF,QUESTION,RESOURCE_SPECIFICATION,SUPER_CTOR_CALL]">
+      <defaultValue>ANNOTATION,ANNOTATION_FIELD_DEF,CTOR_CALL,CTOR_DEF,ENUM_CONSTANT_DEF,EXPR,LITERAL_CATCH,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_NEW,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_WHILE,METHOD_CALL,METHOD_DEF,QUESTION,RESOURCE_SPECIFICATION,SUPER_CTOR_CALL</defaultValue>
     </param>
   </rule>
 
@@ -1077,7 +1196,9 @@
     <priority>MINOR</priority>
     <name><![CDATA[Redundant Modifier]]></name>
     <configKey><![CDATA[Checker/TreeWalker/RedundantModifier]]></configKey>
-    <param key="tokens" type="s[METHOD_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,INTERFACE_DEF]">
+    <cardinality>MULTIPLE</cardinality>
+    <param key="tokens" type="s[METHOD_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,INTERFACE_DEF,CTOR_DEF,CLASS_DEF,ENUM_DEF]">
+      <defaultValue>METHOD_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,INTERFACE_DEF,CTOR_DEF,CLASS_DEF,ENUM_DEF</defaultValue>
     </param>
   </rule>
 
@@ -1125,9 +1246,15 @@
     <priority>MINOR</priority>
     <name><![CDATA[Right Curly]]></name>
     <configKey><![CDATA[Checker/TreeWalker/RightCurly]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="option" type="s[same,alone]">
+      <defaultValue>same</defaultValue>
     </param>
-    <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE]">
+    <param key="shouldStartLine" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE,CLASS_DEF,METHOD_DEF,CTOR_DEF,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,STATIC_INIT,INSTANCE_INIT]">
+      <defaultValue>LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1264,7 +1391,9 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Typecast Paren Pad]]></name>
     <configKey><![CDATA[Checker/TreeWalker/TypecastParenPad]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="option" type="s[nospace,space]">
+      <defaultValue>nospace</defaultValue>
     </param>
     <param key="tokens" type="s[TYPECAST,RPAREN]">
     </param>
@@ -1322,7 +1451,9 @@
     <priority>MINOR</priority>
     <name><![CDATA[Whitespace After]]></name>
     <configKey><![CDATA[Checker/TreeWalker/WhitespaceAfter]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="tokens" type="s[COMMA,SEMI,TYPECAST]">
+      <defaultValue>COMMA,SEMI,TYPECAST</defaultValue>
     </param>
   </rule>
 
@@ -1330,12 +1461,24 @@
     <priority>MINOR</priority>
     <name><![CDATA[Whitespace Around]]></name>
     <configKey><![CDATA[Checker/TreeWalker/WhitespaceAround]]></configKey>
-    <param key="tokens"
-           type="s[ASSIGN,BAND,BAND_ASSIGN,BOR,BOR_ASSIGN,BSR,BSR_ASSIGN,BXOR,BXOR_ASSIGN,COLON,DIV,DIV_ASSIGN,EQUAL,GE,GT,LAND,LCURLY,LE,LITERAL_ASSERT,LITERAL_CATCH,LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_FOR,LITERAL_IF,LITERAL_RETURN,LITERAL_SYNCHRONIZED,LITERAL_TRY,LITERAL_WHILE,LOR,LT,MINUS,MINUS_ASSIGN,MOD,MOD_ASSIGN,NOT_EQUAL,PLUS,PLUS_ASSIGN,QUESTION,RCURLY,SL,SLIST,SL_ASSIGN,SR,SR_ASSIGN,STAR,STAR_ASSIGN,GENERIC_START,GENERIC_END,TYPE_EXTENSION_AND,WILDCARD_TYPE]">
+    <cardinality>MULTIPLE</cardinality>
+    <param key="tokens" type="s{}">
+      <defaultValue>ASSIGN,BAND,BAND_ASSIGN,BOR,BOR_ASSIGN,BSR,BSR_ASSIGN,BXOR,BXOR_ASSIGN,COLON,DIV,DIV_ASSIGN,DO_WHILE,EQUAL,GE,GT,LAND,LCURLY,LE,LITERAL_CATCH,LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_FOR,LITERAL_IF,LITERAL_RETURN,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_TRY,LITERAL_WHILE,LOR,LT,MINUS,MINUS_ASSIGN,MOD,MOD_ASSIGN,NOT_EQUAL,PLUS,PLUS_ASSIGN,QUESTION,RCURLY,SL,SLIST,SL_ASSIGN,SR,SR_ASSIGN,STAR,STAR_ASSIGN,LITERAL_ASSERT,TYPE_EXTENSION_AND,WILDCARD_TYPE,GENERIC_START,GENERIC_END</defaultValue>
     </param>
     <param key="allowEmptyConstructors" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="allowEmptyMethods" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowEmptyTypes" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowEmptyLoops" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="ignoreEnhancedForColon" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
     </param>
   </rule>
 
@@ -1494,7 +1637,9 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck">
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/EmptyLineSeparator]]></configKey>
-    <param key="tokens" type="s[PACKAGE_DEF,IMPORT,CLASS_DEF,ENUM_DEF,INTERFACE_DEF,CTOR_DEF,METHOD_DEF,STATIC_INIT,INSTANCE_INIT,VARIABLE_DEF]">
+    <cardinality>MULTIPLE</cardinality>
+    <param key="tokens" type="s[PACKAGE_DEF,IMPORT,CLASS_DEF,INTERFACE_DEF,ENUM_DEF,STATIC_INIT,INSTANCE_INIT,METHOD_DEF,CTOR_DEF,VARIABLE_DEF]">
+      <defaultValue>PACKAGE_DEF,IMPORT,CLASS_DEF,INTERFACE_DEF,ENUM_DEF,STATIC_INIT,INSTANCE_INIT,METHOD_DEF,CTOR_DEF,VARIABLE_DEF</defaultValue>
     </param>
     <param key="allowNoEmptyLineBetweenFields" type="BOOLEAN">
       <defaultValue>false</defaultValue>
@@ -1515,7 +1660,9 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.NoLineWrapCheck">
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/NoLineWrap]]></configKey>
-    <param key="tokens" type="s[PACKAGE_DEF,IMPORT,CLASS_DEF,ENUM_DEF,INTERFACE_DEF,CTOR_DEF,METHOD_DEF]">
+    <cardinality>MULTIPLE</cardinality>
+    <param key="tokens" type="s[IMPORT,PACKAGE_DEF,CLASS_DEF,METHOD_DEF,CTOR_DEF,ENUM_DEF,INTERFACE_DEF]">
+      <defaultValue>IMPORT,PACKAGE_DEF,CLASS_DEF,METHOD_DEF,CTOR_DEF,ENUM_DEF,INTERFACE_DEF</defaultValue>
     </param>
   </rule>
 
@@ -1569,7 +1716,7 @@
     <param key="target" type="STRING">
     </param>
     <param key="tagOrder" type="STRING">
-      <defaultValue>@author, @version, @param, @return, @throws, @exception, @see, @since, @serial, @serialField, @serialData, @deprecated</defaultValue>
+      <defaultValue>@author,@version,@param,@return,@throws,@exception,@see,@since,@serial,@serialField,@serialData,@deprecated</defaultValue>
     </param>
   </rule>
 
