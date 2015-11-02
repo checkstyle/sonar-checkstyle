@@ -42,6 +42,7 @@ public class CheckstyleSeverityUtilsTest {
     assertThat(CheckstyleSeverityUtils.fromSeverity("error")).isEqualTo(RulePriority.BLOCKER);
     assertThat(CheckstyleSeverityUtils.fromSeverity("warning")).isEqualTo(RulePriority.MAJOR);
     assertThat(CheckstyleSeverityUtils.fromSeverity("info")).isEqualTo(RulePriority.INFO);
+    assertThat(CheckstyleSeverityUtils.fromSeverity("ignore")).isEqualTo(RulePriority.INFO);
     assertThat(CheckstyleSeverityUtils.fromSeverity("")).isNull();
   }
 

@@ -19,7 +19,6 @@
  */
 package org.sonar.plugins.checkstyle;
 
-import org.apache.commons.lang.StringUtils;
 import org.sonar.api.rules.RulePriority;
 
 public final class CheckstyleSeverityUtils {
@@ -29,28 +28,31 @@ public final class CheckstyleSeverityUtils {
   }
 
   public static String toSeverity(RulePriority priority) {
-    if (RulePriority.BLOCKER.equals(priority) || RulePriority.CRITICAL.equals(priority)) {
-      return "error";
+    switch (priority) {
+      case BLOCKER:
+      case CRITICAL:
+        return "error";
+      case MAJOR:
+        return "warning";
+      case MINOR:
+      case INFO:
+        return "info";
+      default:
+        throw new IllegalArgumentException("Priority not supported: " + priority);
     }
-    if (RulePriority.MAJOR.equals(priority)) {
-      return "warning";
-    }
-    if (RulePriority.MINOR.equals(priority) || RulePriority.INFO.equals(priority)) {
-      return "info";
-    }
-    throw new IllegalArgumentException("Priority not supported: " + priority);
   }
 
   public static RulePriority fromSeverity(String severity) {
-    if (StringUtils.equals(severity, "error")) {
-      return RulePriority.BLOCKER;
+    switch (severity) {
+      case "error":
+        return RulePriority.BLOCKER;
+      case "warning":
+        return RulePriority.MAJOR;
+      case "info":
+      case "ignore":
+        return RulePriority.INFO;
+      default:
+        return null;
     }
-    if (StringUtils.equals(severity, "warning")) {
-      return RulePriority.MAJOR;
-    }
-    if (StringUtils.equals(severity, "info")) {
-      return RulePriority.INFO;
-    }
-    return null;
   }
 }
