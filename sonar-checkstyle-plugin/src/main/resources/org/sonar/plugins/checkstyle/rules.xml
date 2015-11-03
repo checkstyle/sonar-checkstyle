@@ -646,10 +646,16 @@
     <param key="groups" type="s{}">
     </param>
     <param key="ordered" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
     </param>
     <param key="separated" type="BOOLEAN">
+        <defaultValue>false</defaultValue>
     </param>
     <param key="caseSensitive" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
+    </param>
+    <param key="sortStaticImportsAlphabetically" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
   </rule>
 
@@ -1444,13 +1450,19 @@
     <name><![CDATA[Visibility Modifier]]></name>
     <configKey><![CDATA[Checker/TreeWalker/VisibilityModifier]]></configKey>
     <param key="packageAllowed" type="BOOLEAN">
+        <defaultValue>false</defaultValue>
     </param>
     <param key="protectedAllowed" type="BOOLEAN">
+        <defaultValue>false</defaultValue>
     </param>
     <param key="publicMemberPattern" type="REGULAR_EXPRESSION">
+        <defaultValue>^serialVersionUID$</defaultValue>
     </param>
     <param key="allowPublicImmutableFields" type="BOOLEAN">
         <defaultValue>true</defaultValue>
+    </param>
+    <param key="ignoreAnnotationCanonicalNames" types="s{}">
+        <defaultValue>org.junit.Rule,com.google.common.annotations.VisibleForTesting</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
