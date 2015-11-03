@@ -39,6 +39,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
 
   static final String DOCTYPE_DECLARATION = "<!DOCTYPE module PUBLIC \"-//Puppy Crawl//DTD Check Configuration 1.2//EN\" \"http://www.puppycrawl.com/dtds/configuration_1_2.dtd\">";
   private Settings settings;
+  private static final String CLOSE_MODULE = "</module>";
 
   public CheckstyleProfileExporter(Settings settings) {
     super(CheckstyleConstants.REPOSITORY_KEY, CheckstyleConstants.PLUGIN_NAME);
@@ -108,7 +109,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
         }
       }
     }
-    writer.append("</module>");
+    writer.append(CLOSE_MODULE);
   }
 
   private boolean isSuppressWarningsEnabled() {
@@ -117,7 +118,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
   }
 
   private static void appendXmlFooter(Writer writer) throws IOException {
-    writer.append("</module>");
+    writer.append(CLOSE_MODULE);
   }
 
   static boolean isInTreeWalker(String configKey) {
@@ -144,7 +145,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
     appendModuleProperty(writer, "severity", CheckstyleSeverityUtils.toSeverity(activeRule.getSeverity()));
     appendRuleParameters(writer, activeRule);
-    writer.append("</module>");
+    writer.append(CLOSE_MODULE);
   }
 
   private static void appendRuleParameters(Writer writer, ActiveRule activeRule) throws IOException {

@@ -111,7 +111,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
     } catch (XMLStreamException e) {
       String message = "XML is not valid: " + e.getMessage();
-      LOG.error(message);
+      LOG.error(message, e);
       messages.addErrorText(message);
     }
     return profile;
