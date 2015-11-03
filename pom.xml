@@ -61,7 +61,7 @@
   </issueManagement>
 
   <properties>
-    <checkstyle.version>6.9</checkstyle.version>
+    <checkstyle.version>6.10.1</checkstyle.version>
     <sonar.version>4.5.2</sonar.version>
     <sonar-java.version>3.7</sonar-java.version>
   </properties>
