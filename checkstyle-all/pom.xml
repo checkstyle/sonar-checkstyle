@@ -3,18 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonarsource.parent</groupId>
-    <artifactId>parent</artifactId>
-    <version>24</version>
+    <groupId>org.sonarsource.checkstyle</groupId>
+    <artifactId>checkstyle</artifactId>
+    <version>2.4-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.sonarsource.checkstyle</groupId>
+  <name>SonarQube Checkstyle Dependency Shading</name>
   <artifactId>checkstyle-all</artifactId>
-  <version>2.4-SNAPSHOT</version>
-
-  <properties>
-    <checkstyle.version>6.12</checkstyle.version>
-  </properties>
 
   <dependencies>
     <dependency>

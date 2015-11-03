@@ -37,7 +37,7 @@ public class CheckstyleTestSuite {
   @ClassRule
   public static final Orchestrator ORCHESTRATOR = Orchestrator.builderEnv()
     .addPlugin("java")
-    .addPlugin(FileLocation.of("../../../target/sonar-checkstyle-plugin.jar"))
+    .addPlugin(FileLocation.of("../../../sonar-checkstyle-plugin/target/sonar-checkstyle-plugin.jar"))
     .addPlugin(FileLocation.of(pluginJar("checkstyle-extension-plugin")))
     .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleExtensionsTest/extension-backup.xml"))
     .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleTest/checkstyle-backup.xml"))

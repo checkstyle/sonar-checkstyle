@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.sonarsource.checkstyle</groupId>
+    <artifactId>checkstyle</artifactId>
+    <version>2.4-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>sonar-checkstyle-plugin</artifactId>
+  <packaging>sonar-plugin</packaging>
+
+  <name>SonarQube Checkstyle Plugin</name>
+  <description>Checkstyle is a code analyser to help programmers write Java code that adheres to a coding standard.</description>
+  <url>http://redirect.sonarsource.com/plugins/checkstyle.html</url>
+  <scm>
+    <connection>scm:git:git@github.com:SonarCommunity/sonar-checkstyle.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-checkstyle.git</developerConnection>
+    <url>https://github.com/SonarCommunity/sonar-checkstyle</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+    <!-- Configuration for sonar-packaging-maven-plugin -->
+    <sonar.pluginKey>checkstyle</sonar.pluginKey>
+    <sonar.pluginName>Checkstyle</sonar.pluginName>
+    <sonar.pluginClass>org.sonar.plugins.checkstyle.CheckstylePlugin</sonar.pluginClass>
+    <sonar.pluginDescription><![CDATA[Analyze Java code with <a href="http://checkstyle.sourceforge.net/">Checkstyle</a>.]]></sonar.pluginDescription>
+    <sonar.requiresPlugin>java:${sonar-java.version}</sonar.requiresPlugin>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.6</version>
+      </dependency>
+      <dependency>
+        <!-- See SONAR-2512 -->
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.8.3</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.codehaus.sonar</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <scope>provided</scope>
+      <version>${sonar.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.java</groupId>
+      <artifactId>sonar-java-plugin</artifactId>
+      <type>sonar-plugin</type>
+      <version>${sonar-java.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.sonar.sslr-squid-bridge</groupId>
+      <artifactId>sslr-squid-bridge</artifactId>
+      <version>2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.sonar</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <version>${sonar.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+      <scope>test</scope>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>checkstyle-all</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
+    We need following dependency, otherwise we will receive
+    java.lang.NoClassDefFoundError: org/apache/maven/project/MavenProject
+    during call mock(org.sonar.api.resources.Project.class)
+    -->
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-project</artifactId>
+      <version>2.0.7</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.sonar</groupId>
+      <artifactId>sonar-testing-harness</artifactId>
+      <scope>test</scope>
+      <version>${sonar.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.easytesting</groupId>
+      <artifactId>fest-assert</artifactId>
+      <scope>test</scope>
+      <version>1.4</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/checkstyle-plugin.properties</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>**/checkstyle-plugin.properties</exclude>
+        </excludes>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-plugin-size</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <phase>verify</phase>
+            <configuration>
+              <rules>
+                <requireFilesSize>
+                  <maxsize>5000000</maxsize>
+                  <minsize>2500000</minsize>
+                  <files>
+                    <file>${project.build.directory}/${project.build.finalName}.jar</file>
+                  </files>
+                </requireFilesSize>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Running JUnit tests in parallel -->
+      <!--
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <parallel>methods</parallel>
+          <threadCount>3</threadCount>
+          <perCoreThreadCount>true</perCoreThreadCount>
+        </configuration>
+      </plugin>
+      -->
+    </plugins>
+  </build>
+
+</project>
