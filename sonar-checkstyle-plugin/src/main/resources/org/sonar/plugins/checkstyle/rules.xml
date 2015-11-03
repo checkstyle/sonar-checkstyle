@@ -1104,7 +1104,8 @@
     <priority>MINOR</priority>
     <name><![CDATA[Newline At End Of File]]></name>
     <configKey><![CDATA[Checker/NewlineAtEndOfFile]]></configKey>
-    <param key="lineSeparator" type="s[system,crlf,cr,lf]">
+    <param key="lineSeparator" type="s[system,crlf,cr,lf,lf_cr_crlf]">
+        <defaultValue>system</defaultValue>
     </param>
     <param key="fileExtensions" type="s{}">
     </param>
@@ -1339,6 +1340,10 @@
     <name><![CDATA[Throws Count]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ThrowsCount]]></configKey>
     <param key="max" type="INTEGER">
+        <defaultValue>4</defaultValue>
+    </param>
+    <param key="ignorePrivateMethods" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
