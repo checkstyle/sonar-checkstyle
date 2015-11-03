@@ -130,7 +130,7 @@ public class CheckstyleAuditListenerTest {
 
   private Issuable setupIssuable() {
     Issuable issuable = mock(Issuable.class);
-    when(perspectives.as(Issuable.class, org.sonar.api.resources.File.create(inputFile.relativePath()))).thenReturn(issuable);
+    when(perspectives.as(Issuable.class, inputFile)).thenReturn(issuable);
     return issuable;
   }
 }

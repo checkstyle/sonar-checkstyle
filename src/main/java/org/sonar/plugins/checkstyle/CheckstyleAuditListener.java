@@ -31,7 +31,6 @@ import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.component.ResourcePerspectives;
 import org.sonar.api.issue.Issuable;
 import org.sonar.api.issue.Issuable.IssueBuilder;
-import org.sonar.api.resources.File;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
 
@@ -83,7 +82,7 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
         LOG.warn(event.getFileName() + ": " + message);
       }
       initResource(event);
-      Issuable issuable = perspectives.as(Issuable.class, File.create(currentResource.relativePath()));
+      Issuable issuable = perspectives.as(Issuable.class, currentResource);
       Rule rule = ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY, ruleKey);
       if (rule != null && issuable != null) {
         IssueBuilder issueBuilder = issuable.newIssueBuilder()
