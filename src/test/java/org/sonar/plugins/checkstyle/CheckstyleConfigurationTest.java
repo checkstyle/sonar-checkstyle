@@ -35,6 +35,7 @@ import org.sonar.api.rules.Rule;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -89,6 +90,7 @@ public class CheckstyleConfigurationTest {
 
   @Test
   public void getCheckstyleConfiguration() throws IOException, CheckstyleException {
+    fileSystem.setEncoding(StandardCharsets.UTF_8);
     Settings settings = new Settings(new PropertyDefinitions(new CheckstylePlugin().getExtensions()));
     settings.setProperty(CheckstyleConstants.FILTERS_KEY, CheckstyleConstants.FILTERS_DEFAULT_VALUE);
 
