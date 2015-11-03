@@ -223,7 +223,7 @@
     <tag>naming</tag>
     <configKey><![CDATA[Checker/TreeWalker/AbstractClassName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
-      <defaultValue>^Abstract.+$|^.*Factory$</defaultValue>
+      <defaultValue>^Abstract.+$</defaultValue>
     </param>
     <param key="ignoreModifier" type="BOOLEAN">
       <defaultValue>false</defaultValue>
@@ -1265,7 +1265,7 @@
     <name><![CDATA[Right Curly]]></name>
     <configKey><![CDATA[Checker/TreeWalker/RightCurly]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="option" type="s[same,alone]">
+    <param key="option" type="s[same,alone,alone_or_singleline]">
       <defaultValue>same</defaultValue>
     </param>
     <param key="shouldStartLine" type="BOOLEAN">
