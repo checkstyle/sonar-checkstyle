@@ -112,23 +112,9 @@
       <version>1.4</version>
     </dependency>
     <dependency>
-      <groupId>com.puppycrawl.tools</groupId>
-      <artifactId>checkstyle</artifactId>
-      <version>${checkstyle.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-cli</groupId>
-          <artifactId>commons-cli</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.abego.treelayout</groupId>
-          <artifactId>org.abego.treelayout.core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>checkstyle-all</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
