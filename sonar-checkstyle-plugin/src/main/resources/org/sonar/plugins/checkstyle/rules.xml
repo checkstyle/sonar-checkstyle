@@ -1015,6 +1015,9 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Modified Control Variable]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ModifiedControlVariable]]></configKey>
+    <param key="skipEnhancedForLoopVariable" type="BOOLEAN">
+        <defaultValue>false</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
