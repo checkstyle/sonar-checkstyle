@@ -22,7 +22,9 @@ package org.sonar.plugins.checkstyle;
 import com.google.common.collect.ImmutableList;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import org.apache.commons.io.FileUtils;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -31,6 +33,7 @@ import org.sonar.java.JavaClasspath;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import java.io.File;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Locale;
@@ -46,6 +49,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class CheckstyleExecutorTest {
+
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void execute() throws Exception {
@@ -71,6 +77,23 @@ public class CheckstyleExecutorTest {
     AuditEvent event = captor.getValue();
     assertThat(event.getFileName()).matches(".*Hello.java");
     assertThat(event.getSourceName()).matches("com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck");
+  }
+
+  @Test
+  public void execute_exception() throws Exception {
+    thrown.expect(IllegalStateException.class);
+    thrown.expectMessage("Can not execute Checkstyle");
+    CheckstyleConfiguration conf = mockConf();
+    CheckstyleExecutor executor = new CheckstyleExecutor(conf, null, createJavaResourceLocator());
+    executor.execute();
+  }
+
+  @Test
+  public void getURL_exception() throws Exception {
+    thrown.expect(IllegalStateException.class);
+    thrown.expectMessage("Fail to create the project classloader. Classpath element is invalid: htp://aa");
+    CheckstyleExecutor executor = new CheckstyleExecutor(null, null, createJavaResourceLocator());
+    executor.getURL(new URI("htp://aa"));
   }
 
   private static JavaResourceLocator createJavaResourceLocator() {

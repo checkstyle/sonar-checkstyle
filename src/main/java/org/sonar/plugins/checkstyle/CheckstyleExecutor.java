@@ -35,6 +35,7 @@ import org.sonar.plugins.java.api.JavaResourceLocator;
 import java.io.File;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collection;
@@ -89,7 +90,6 @@ public class CheckstyleExecutor implements BatchExtension {
 
     } catch (Exception e) {
       throw new IllegalStateException("Can not execute Checkstyle", e);
-
     } finally {
       if (checker != null) {
         checker.destroy();
@@ -102,15 +102,19 @@ public class CheckstyleExecutor implements BatchExtension {
   }
 
   @VisibleForTesting
-  URLClassLoader createClassloader() {
+  URL getURL(URI uri) {
+    try {
+      return uri.toURL();
+    } catch (MalformedURLException e) {
+      throw new IllegalStateException("Fail to create the project classloader. Classpath element is invalid: " + uri, e);
+    }
+  }
+
+  private URLClassLoader createClassloader() {
     Collection<File> classpathElements = javaResourceLocator.classpath();
     List<URL> urls = Lists.newArrayList();
     for (File file : classpathElements) {
-      try {
-        urls.add(file.toURI().toURL());
-      } catch (MalformedURLException e) {
-        throw new IllegalStateException("Fail to create the project classloader. Classpath element is invalid: " + file, e);
-      }
+      urls.add(getURL(file.toURI()));
     }
     return new URLClassLoader(urls.toArray(new URL[urls.size()]), null);
   }

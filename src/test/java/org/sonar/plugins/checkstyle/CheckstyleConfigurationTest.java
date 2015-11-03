@@ -19,11 +19,18 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import com.puppycrawl.tools.checkstyle.api.Configuration;
 import org.apache.commons.io.FileUtils;
+import org.junit.Before;
 import org.junit.Test;
+import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
+import org.sonar.api.batch.fs.internal.DefaultInputFile;
+import org.sonar.api.config.PropertyDefinitions;
 import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
+import org.sonar.api.rules.Rule;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,14 +40,71 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class CheckstyleConfigurationTest {
 
+  private DefaultFileSystem fileSystem;
+
+  @Before
+  public void beforeClass() {
+    fileSystem = new DefaultFileSystem();
+    DefaultInputFile inputFile = new DefaultInputFile("mainFile");
+    inputFile.setAbsolutePath("mainFile");
+    inputFile.setLanguage("java");
+    inputFile.setType(InputFile.Type.MAIN);
+    fileSystem.add(inputFile);
+    DefaultInputFile testFile = new DefaultInputFile("testFile");
+    testFile.setAbsolutePath("testFile");
+    testFile.setLanguage("java");
+    testFile.setType(InputFile.Type.TEST);
+    fileSystem.add(testFile);
+  }
+
+  @Test
+  public void getSourceFiles() throws IOException {
+    CheckstyleProfileExporter exporter = new FakeExporter();
+    CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter, null, fileSystem);
+    assertThat(configuration.getSourceFiles()).hasSize(1);
+    assertThat(configuration.getSourceFiles().iterator().next().toString()).contains("mainFile");
+  }
+
+  @Test
+  public void getTargetXMLReport() throws IOException {
+    Settings conf = new Settings();
+    CheckstyleConfiguration configuration = new CheckstyleConfiguration(conf, null, null, fileSystem);
+    assertThat(configuration.getTargetXMLReport()).isNull();
+
+    conf.setProperty(CheckstyleConfiguration.PROPERTY_GENERATE_XML, "true");
+    configuration = new CheckstyleConfiguration(conf, null, null, fileSystem);
+    assertThat(configuration.getTargetXMLReport()).isEqualTo(new File(fileSystem.workDir(), "checkstyle-result.xml"));
+  }
+
   @Test
   public void writeConfigurationToWorkingDir() throws IOException {
     CheckstyleProfileExporter exporter = new FakeExporter();
-    CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter, null, new DefaultFileSystem());
+    CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter, null, fileSystem);
     File xmlFile = configuration.getXMLDefinitionFile();
 
     assertThat(xmlFile.exists()).isTrue();
     assertThat(FileUtils.readFileToString(xmlFile)).isEqualTo("<conf/>");
+    FileUtils.forceDelete(xmlFile);
+  }
+
+  @Test
+  public void getCheckstyleConfiguration() throws IOException, CheckstyleException {
+    Settings settings = new Settings(new PropertyDefinitions(new CheckstylePlugin().getExtensions()));
+    settings.setProperty(CheckstyleConstants.FILTERS_KEY, CheckstyleConstants.FILTERS_DEFAULT_VALUE);
+
+    RulesProfile profile = RulesProfile.create("sonar way", "java");
+
+    Rule rule = Rule.create("checkstyle", "CheckStyleRule1", "checkstyle rule one");
+    rule.setConfigKey("checkstyle/rule1");
+    profile.activateRule(rule, null);
+
+    CheckstyleConfiguration configuration = new CheckstyleConfiguration(settings, new CheckstyleProfileExporter(settings), profile, fileSystem);
+    Configuration checkstyleConfiguration = configuration.getCheckstyleConfiguration();
+    assertThat(checkstyleConfiguration).isNotNull();
+    assertThat(checkstyleConfiguration.getAttribute("charset")).isEqualTo("UTF-8");
+    File xmlFile = new File("checkstyle.xml");
+    assertThat(xmlFile.exists()).isTrue();
+
     FileUtils.forceDelete(xmlFile);
   }
 

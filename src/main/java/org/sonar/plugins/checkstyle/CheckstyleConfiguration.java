@@ -24,6 +24,7 @@ import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import com.puppycrawl.tools.checkstyle.api.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,27 +108,22 @@ public class CheckstyleConfiguration implements BatchExtension {
   }
 
   private void defineCharset(com.puppycrawl.tools.checkstyle.api.Configuration configuration) {
-    com.puppycrawl.tools.checkstyle.api.Configuration[] modules = configuration.getChildren();
-    for (com.puppycrawl.tools.checkstyle.api.Configuration module : modules) {
-      if (("Checker".equals(module.getName()) || "com.puppycrawl.tools.checkstyle.Checker".equals(module.getName())) && module instanceof DefaultConfiguration) {
-        Charset charset = getCharset();
-        LOG.info("Checkstyle charset: " + charset.name());
-        ((DefaultConfiguration) module).addAttribute("charset", charset.name());
-      }
+    defineModuleCharset(configuration);
+    for (com.puppycrawl.tools.checkstyle.api.Configuration module : configuration.getChildren()) {
+      defineModuleCharset(module);
+    }
+  }
+
+  private void defineModuleCharset(Configuration module) {
+    if (("Checker".equals(module.getName()) || "com.puppycrawl.tools.checkstyle.Checker".equals(module.getName())) && module instanceof DefaultConfiguration) {
+      Charset charset = getCharset();
+      LOG.info("Checkstyle charset: " + charset.name());
+      ((DefaultConfiguration) module).addAttribute("charset", charset.name());
     }
   }
 
   public Charset getCharset() {
-    Charset charset = fileSystem.encoding();
-    if (charset == null) {
-      String charsetName = System.getProperty("file.encoding");
-      if (charsetName != null) {
-        charset = Charset.forName(charsetName);
-      } else {
-        charset = StandardCharsets.UTF_8;
-      }
-    }
-    return charset;
+    return fileSystem.encoding();
   }
 
 }
