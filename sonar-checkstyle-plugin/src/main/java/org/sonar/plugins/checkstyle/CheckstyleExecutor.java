@@ -71,7 +71,7 @@ public class CheckstyleExecutor implements BatchExtension {
     try {
 
       checker = new Checker();
-      checker.setClassloader(projectClassloader);
+      checker.setClassLoader(projectClassloader);
       checker.setModuleClassLoader(Thread.currentThread().getContextClassLoader());
       checker.addListener(listener);
 
