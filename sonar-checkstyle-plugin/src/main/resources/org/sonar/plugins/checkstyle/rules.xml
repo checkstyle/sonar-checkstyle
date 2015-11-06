@@ -1193,6 +1193,9 @@
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[a-z][a-zA-Z0-9]*$</defaultValue>
     </param>
+    <param key="ignoreOverridden" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1452,7 +1455,7 @@
     <name><![CDATA[Unused Imports]]></name>
     <configKey><![CDATA[Checker/TreeWalker/UnusedImports]]></configKey>
     <param key="processJavadoc" type="BOOLEAN">
-      <defaultValue>false</defaultValue>
+      <defaultValue>true</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
