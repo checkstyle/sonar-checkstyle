@@ -19,6 +19,7 @@
  */
 package com.sonar.it.java.suite;
 
+import com.google.common.collect.Iterables;
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.locator.FileLocation;
 import org.junit.ClassRule;
@@ -26,6 +27,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Arrays;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -37,7 +40,12 @@ public class CheckstyleTestSuite {
   @ClassRule
   public static final Orchestrator ORCHESTRATOR = Orchestrator.builderEnv()
     .addPlugin("java")
-    .addPlugin(FileLocation.of("../../../sonar-checkstyle-plugin/target/sonar-checkstyle-plugin.jar"))
+    .addPlugin(FileLocation.of(Iterables.getOnlyElement(Arrays.asList(new File("../../../sonar-checkstyle-plugin/target/").listFiles(new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+          return name.endsWith(".jar") && !name.endsWith("-sources.jar");
+        }
+      }))).getAbsolutePath()))
     .addPlugin(FileLocation.of(pluginJar("checkstyle-extension-plugin")))
     .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleExtensionsTest/extension-backup.xml"))
     .restoreProfileAtStartup(FileLocation.ofClasspath("/com/sonar/it/java/CheckstyleTest/checkstyle-backup.xml"))
