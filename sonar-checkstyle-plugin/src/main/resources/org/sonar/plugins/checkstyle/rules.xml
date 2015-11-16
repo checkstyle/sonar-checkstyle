@@ -24,6 +24,7 @@
     </param>
     <param key="multiLines" type="STRING">
     </param>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck">
@@ -111,6 +112,7 @@
     <configKey><![CDATA[Checker/JavadocPackage]]></configKey>
     <param key="allowLegacy" type="BOOLEAN">
     </param>
+    <status>DEPRECATED</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheck">
