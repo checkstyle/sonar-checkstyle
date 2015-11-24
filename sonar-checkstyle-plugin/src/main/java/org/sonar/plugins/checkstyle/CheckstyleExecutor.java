@@ -66,11 +66,9 @@ public class CheckstyleExecutor implements BatchExtension {
 
     Locale initialLocale = Locale.getDefault();
     Locale.setDefault(Locale.ENGLISH);
-    Checker checker = null;
+    Checker checker = new Checker();
     OutputStream xmlOutput = null;
     try {
-
-      checker = new Checker();
       checker.setClassLoader(projectClassloader);
       checker.setModuleClassLoader(Thread.currentThread().getContextClassLoader());
       checker.addListener(listener);
@@ -91,9 +89,7 @@ public class CheckstyleExecutor implements BatchExtension {
     } catch (Exception e) {
       throw new IllegalStateException("Can not execute Checkstyle", e);
     } finally {
-      if (checker != null) {
-        checker.destroy();
-      }
+      checker.destroy();
       Closeables.closeQuietly(xmlOutput);
       Thread.currentThread().setContextClassLoader(initialClassLoader);
       Locale.setDefault(initialLocale);
