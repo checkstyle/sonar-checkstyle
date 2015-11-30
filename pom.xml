@@ -49,9 +49,9 @@
   </modules>
 
   <scm>
-    <connection>scm:git:git@github.com:SonarCommunity/sonar-checkstyle.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-checkstyle.git</developerConnection>
-    <url>https://github.com/SonarCommunity/sonar-checkstyle</url>
+    <connection>scm:git:git@github.com:SonarSource/sonar-checkstyle.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarSource/sonar-checkstyle.git</developerConnection>
+    <url>https://github.com/SonarSource/sonar-checkstyle</url>
     <tag>HEAD</tag>
   </scm>
   <url>http://redirect.sonarsource.com/plugins/checkstyle.html</url>
