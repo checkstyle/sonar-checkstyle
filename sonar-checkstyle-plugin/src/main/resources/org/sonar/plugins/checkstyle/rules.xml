@@ -842,8 +842,8 @@
     </param>
     <param key="ignoreNamePattern" type="STRING">
     </param>
-    <param key="tokens" type="s[ENUM_CONSTANT_DEF]">
-      <defaultValue>ENUM_CONSTANT_DEF</defaultValue>
+    <param key="tokens" type="s[VARIABLE_DEF,ENUM_CONSTANT_DEF]">
+      <defaultValue>VARIABLE_DEF,ENUM_CONSTANT_DEF</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
