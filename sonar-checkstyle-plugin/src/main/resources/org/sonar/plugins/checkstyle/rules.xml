@@ -455,7 +455,7 @@
       <defaultValue>30</defaultValue>
     </param>
     <param key="tokens" type="s[CTOR_DEF,METHOD_DEF,INSTANCE_INIT,STATIC_INIT]">
-      <defaultValue>CTOR_DEF, METHOD_DEF, INSTANCE_INIT, STATIC_INIT</defaultValue>
+      <defaultValue>CTOR_DEF,METHOD_DEF,INSTANCE_INIT,STATIC_INIT</defaultValue>
     </param>
   </rule>
 
@@ -641,7 +641,7 @@
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^(.*[\\.])?Abstract.*$</defaultValue>
     </param>
-    <!-- 
+    <!--
       Should be s[LITERAL_PUBLIC,LITERAL_PROTECTED,LITERAL_PRIVATE,ABSTRACT,LITERAL_STATIC,FINAL,LITERAL_TRANSIENT,LITERAL_VOLATILE,LITERAL_SYNCHRONIZED,LITERAL_NATIVE,STRICTFP,ANNOTATION,LITERAL_DEFAULT]
       but Checkstyle 6.4 splits the string with ","
     -->
@@ -1791,7 +1791,7 @@
         <defaultValue>true</defaultValue>
     </param>
   </rule>
-  
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck">
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/SummaryJavadocCheck]]></configKey>
@@ -1800,7 +1800,7 @@
     <param key="period" type="STRING">
     </param>
   </rule>
-  
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.EmptyCatchBlockCheck">
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/EmptyCatchBlockCheck]]></configKey>
@@ -1822,7 +1822,7 @@
     </param>
     <status>DEPRECATED</status>
   </rule>
-  
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Comments Indentation]]></name>
