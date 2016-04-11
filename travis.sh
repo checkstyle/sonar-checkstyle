@@ -2,33 +2,10 @@
 
 set -euo pipefail
 
-function installTravisTools {
-  mkdir ~/.local
-  curl -sSL https://github.com/SonarSource/travis-utils/tarball/v21 | tar zx --strip-components 1 -C ~/.local
-  source ~/.local/bin/install
-}
-
 case "$TEST" in
 
 ci)
   mvn verify -B -e -V
-  ;;
-
-plugin)
-  installTravisTools
-
-  mvn package -T2 -Dsource.skip=true -Denforcer.skip=true -Danimal.sniffer.skip=true -Dmaven.test.skip=true
-
-  if [ "$SQ_VERSION" = "DEV" ] ; then
-    build_snapshot "SonarSource/sonarqube"
-  fi
-
-  cd its/$TEST
-  mvn package -Dsonar.runtimeVersion="$SQ_VERSION" -DjavaVersion="LATEST_RELEASE" -Dmaven.test.redirectTestOutputToFile=false
-
-  find ~/.m2/repository -type d -name \*-SNAPSHOT -prune -exec rm -rf {} \;
-  find ~/.m2/repository -name maven-metadata-\* -prune -exec rm {} \;
-  find ~/.m2/repository -name resolver-status.properties -prune -exec rm {} \;
   ;;
 
 *)

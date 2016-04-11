@@ -7,18 +7,7 @@ jdk:
 install: true
 script: ./travis.sh
 env:
-  matrix:
   - TEST=ci
-  - TEST=plugin SQ_VERSION=DEV
-  - TEST=plugin SQ_VERSION=LATEST_RELEASE
-  - TEST=plugin SQ_VERSION=LTS
-
-matrix:
-  fast_finish: true
-
-cache:
-  directories:
-    - '$HOME/.m2/repository'
 
 notifications:
   email: false
