@@ -43,15 +43,15 @@
   </modules>
 
   <scm>
-    <connection>scm:git:git@github.com:SonarSource/sonar-checkstyle.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarSource/sonar-checkstyle.git</developerConnection>
-    <url>https://github.com/SonarSource/sonar-checkstyle</url>
+    <connection>scm:git:git@github.com:SonarQubeCommunity/sonar-checkstyle.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-checkstyle.git</developerConnection>
+    <url>https://github.com/SonarQubeCommunity/sonar-checkstyle</url>
     <tag>HEAD</tag>
   </scm>
-  <url>http://redirect.sonarsource.com/plugins/checkstyle.html</url>
+  <url>https://github.com/SonarQubeCommunity/sonar-checkstyle</url>
   <issueManagement>
-    <system>JIRA</system>
-    <url>https://jira.sonarsource.com/browse/SONARCHKST</url>
+    <system>GitHub Issues</system>
+    <url>https://github.com/SonarQubeCommunity/sonar-checkstyle/issues</url>
   </issueManagement>
 
   <properties>
