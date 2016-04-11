@@ -13,3 +13,6 @@ A majority of the Checkstyle rules have been rewritten in the Java plugin. Rewri
 
 ## Usage
 In the quality profile, activate some rules from Checkstyle and run an analysis on your project.
+
+## Continuous Integration
+[![Build Status](https://travis-ci.org/SonarQubeCommunity/sonar-checkstyle.svg?branch=master)](https://travis-ci.org/SonarQubeCommunity/sonar-checkstyle)
