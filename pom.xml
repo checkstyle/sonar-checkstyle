@@ -4,7 +4,7 @@
 
   <groupId>org.sonarsource.checkstyle</groupId>
   <artifactId>checkstyle</artifactId>
-  <version>2.5-SNAPSHOT</version>
+  <version>3.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>SonarQube Checkstyle</name>
@@ -55,7 +55,7 @@
   </issueManagement>
 
   <properties>
-    <checkstyle.version>6.12.1</checkstyle.version>
+    <checkstyle.version>7.1</checkstyle.version>
     <sonar.version>4.5.2</sonar.version>
     <sonar-java.version>3.7</sonar-java.version>
   </properties>
