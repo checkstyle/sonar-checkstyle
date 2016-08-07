@@ -132,6 +132,24 @@
     </param>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpOnFilenameCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Regexp On Filename]]></name>
+    <configKey><![CDATA[Checker/RegexpMultiline]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
+    <param key="folderPattern" type="REGULAR_EXPRESSION"/>
+    <param key="fileNamePattern" type="REGULAR_EXPRESSION"/>
+    <param key="match" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="ignoreFileNameExtensions" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="fileExtensions" type="s{}">
+      <defaultValue></defaultValue>
+    </param>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Regexp Singleline]]></name>
@@ -305,6 +323,16 @@
       <defaultValue>LAND,BAND,LOR,BOR,BXOR</defaultValue>
     </param>
     <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.naming.CatchParameterNameCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Catch Parameter Name]]></name>
+    <tag>naming</tag>
+    <configKey><![CDATA[Checker/TreeWalker/CatchParameterNameCheck]]></configKey>
+    <param key="format" type="REGULAR_EXPRESSION">
+      <defaultValue>^(e|t|ex|[a-z][a-z][a-zA-Z]+)$</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.ClassDataAbstractionCouplingCheck">
@@ -669,6 +697,12 @@
     <param key="sortStaticImportsAlphabetically" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
+    <param key="useContainerOrderingForStatic" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="tokens" type="s[STATIC_IMPORT]">
+      <defaultValue>STATIC_IMPORT</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck">
@@ -1005,8 +1039,8 @@
     <param key="option" type="s[nospace,space]">
       <defaultValue>nospace</defaultValue>
     </param>
-    <param key="tokens" type="s[CTOR_DEF,LITERAL_NEW,METHOD_CALL,METHOD_DEF,SUPER_CTOR_CALL]">
-      <defaultValue>CTOR_DEF,LITERAL_NEW,METHOD_CALL,METHOD_DEF,SUPER_CTOR_CALL</defaultValue>
+    <param key="tokens" type="s[CTOR_DEF,LITERAL_NEW,METHOD_CALL,METHOD_DEF,SUPER_CTOR_CALL,ENUM_CONSTANT_DEF]">
+      <defaultValue>CTOR_DEF,LITERAL_NEW,METHOD_CALL,METHOD_DEF,SUPER_CTOR_CALL,ENUM_CONSTANT_DEF</defaultValue>
     </param>
   </rule>
 
@@ -1208,7 +1242,9 @@
     <cardinality>MULTIPLE</cardinality>
     <param key="max" type="INTEGER"/>
     <param key="tokens" type="s[METHOD_DEF,CTOR_DEF]" />
-    <param key="ignoreOverriddenMethods" type="BOOLEAN" />
+    <param key="ignoreOverriddenMethods" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1269,8 +1305,16 @@
     <name><![CDATA[Return Count]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ReturnCount]]></configKey>
     <param key="max" type="INTEGER">
+      <defaultValue>2</defaultValue>
+    </param>
+    <param key="maxForVoid" type="INTEGER">
+      <defaultValue>1</defaultValue>
     </param>
     <param key="format" type="REGULAR_EXPRESSION">
+      <defaultValue>^equals$</defaultValue>
+    </param>
+    <param key="tokens" type="s[LCTOR_DEF,METHOD_DEF,LAMBDA]">
+      <defaultValue>CTOR_DEF,METHOD_DEF,LAMBDA</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1385,20 +1429,19 @@
     <status>DEPRECATED</status>
   </rule>
 
-  <!--
-   Deactivated. See http://jira.codehaus.org/browse/SONAR-1698.
-   TranslationCheck only look for property files, not java files.
-
    <rule key="com.puppycrawl.tools.checkstyle.checks.TranslationCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Translation]]></name>
     <configKey><![CDATA[Checker/Translation]]></configKey>
     <param key="fileExtensions" type="s{}">
+      <defaultValue>properties</defaultValue>
     </param>
-    <param key="basenameSeparator" type="STRING">
+    <param key="baseName" type="REGULAR_EXPRESSION">
+      <defaultValue>^messages.*$</defaultValue>
+    </param>
+    <param key="requiredTranslations" type="s{}">
     </param>
   </rule>
-  -->
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.TypeNameCheck">
     <priority>MAJOR</priority>
@@ -1423,6 +1466,15 @@
       <defaultValue>true</defaultValue>
     </param>
     <status>DEPRECATED</status>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.SingleSpaceSeparatorCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Single Space Separator]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/SingleSpaceSeparator]]></configKey>
+    <param key="validateComments" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.TypecastParenPadCheck">
@@ -1482,11 +1534,17 @@
     <param key="publicMemberPattern" type="REGULAR_EXPRESSION">
         <defaultValue>^serialVersionUID$</defaultValue>
     </param>
+    <param key="allowPublicFinalFields" type="BOOLEAN">
+        <defaultValue>false</defaultValue>
+    </param>
     <param key="allowPublicImmutableFields" type="BOOLEAN">
         <defaultValue>true</defaultValue>
     </param>
+    <param key="immutableClassCanonicalNames" types="s{}">
+        <defaultValue>java.lang.String,java.lang.Integer,java.lang.Byte,java.lang.Character,java.lang.Short,java.lang.Boolean,java.lang.Long,java.lang.Double,java.lang.Float,java.lang.StackTraceElement,java.math.BigInteger,java.math.BigDecimal,java.io.File,java.util.Locale,java.util.UUID,java.net.URL,java.net.URI,java.net.Inet4Address,java.net.Inet6Address,java.net.InetSocketAddress</defaultValue>
+    </param>
     <param key="ignoreAnnotationCanonicalNames" types="s{}">
-        <defaultValue>org.junit.Rule,com.google.common.annotations.VisibleForTesting</defaultValue>
+        <defaultValue>org.junit.Rule,org.junit.ClassRule,com.google.common.annotations.VisibleForTesting</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -1519,6 +1577,9 @@
       <defaultValue>false</defaultValue>
     </param>
     <param key="allowEmptyLoops" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowEmptyLambdas" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
     <param key="ignoreEnhancedForColon" type="BOOLEAN">
