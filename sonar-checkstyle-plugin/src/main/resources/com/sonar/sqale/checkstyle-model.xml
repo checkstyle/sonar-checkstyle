@@ -437,6 +437,19 @@
       </chc>
       <chc>
         <rule-repo>checkstyle</rule-repo>
+        <rule-key>com.puppycrawl.tools.checkstyle.checks.naming.CatchParameterNameCheck</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>10</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
@@ -529,6 +542,19 @@
       <chc>
         <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>1</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>checkstyle</rule-repo>
+        <rule-key>com.puppycrawl.tools.checkstyle.checks.whitespace.SingleSpaceSeparatorCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
           <txt>CONSTANT_ISSUE</txt>

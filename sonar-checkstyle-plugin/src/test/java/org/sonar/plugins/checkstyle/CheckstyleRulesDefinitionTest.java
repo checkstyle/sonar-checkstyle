@@ -30,14 +30,16 @@ import static org.fest.assertions.Assertions.assertThat;
 public class CheckstyleRulesDefinitionTest {
 
   List<String> NO_SQALE = ImmutableList.of(
+    "com.puppycrawl.tools.checkstyle.checks.TranslationCheck",
     "com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck",
     "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck",
+    "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck",
     "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheck",
-    "com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck",
+    "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpOnFilenameCheck",
     "com.puppycrawl.tools.checkstyle.checks.RegexpCheck",
+    "com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck",
     "com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheck",
-    "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck",
-    "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck"
+    "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck"
   );
 
   @Test
@@ -51,7 +53,7 @@ public class CheckstyleRulesDefinitionTest {
     assertThat(repository.language()).isEqualTo("java");
 
     List<RulesDefinition.Rule> rules = repository.rules();
-    assertThat(rules).hasSize(146);
+    assertThat(rules).hasSize(150);
 
     for (RulesDefinition.Rule rule : rules) {
       assertThat(rule.key()).isNotNull();
