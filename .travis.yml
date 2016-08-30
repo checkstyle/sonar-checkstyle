@@ -7,7 +7,7 @@ script: ./travis.sh
 matrix:
   fast_finish: true
   include:
-    # test verify
+    # verify
     - jdk: oraclejdk8
       TEST=ci
 
