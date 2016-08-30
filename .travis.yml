@@ -1,13 +1,16 @@
 language: java
 sudo: false
 
-jdk:
-  - oraclejdk7
-
 install: true
 script: ./travis.sh
-env:
-  - TEST=ci
 
-notifications:
-  email: false
+matrix:
+  fast_finish: true
+  include:
+    # test verify
+    - jdk: oraclejdk8
+      TEST=ci
+
+    # package
+    - jdk: oraclejdk8
+      TEST=package
