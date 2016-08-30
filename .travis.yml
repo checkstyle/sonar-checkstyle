@@ -9,8 +9,8 @@ matrix:
   include:
     # verify
     - jdk: oraclejdk8
-      TEST=ci
+      env: TEST=ci
 
     # package
     - jdk: oraclejdk8
-      TEST=package
+      env: TEST=package
