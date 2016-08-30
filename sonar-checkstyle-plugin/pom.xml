@@ -83,6 +83,7 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>checkstyle-all</artifactId>
       <version>${project.version}</version>
+      <classifier>shaded</classifier>
     </dependency>
 
     <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
