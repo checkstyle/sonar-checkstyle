@@ -17,6 +17,8 @@ A majority of the Checkstyle rules have been introduced in the Sonar Java plugin
 
 ## Usage
 In the quality profile, activate some rules from Checkstyle and run an analysis on your project.
+![checkstlye rules in sonar](https://github.com/checkstyle/resources/raw/master/img/sonar-in-docker.PNG)
 
 [travis]:https://travis-ci.org/checkstyle/sonar-checkstyle/builds
 [travis img]:https://secure.travis-ci.org/checkstyle/sonar-checkstyle.png
+
