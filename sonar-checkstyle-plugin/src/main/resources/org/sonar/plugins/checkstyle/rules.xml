@@ -10,6 +10,11 @@
     </param>
     <param key="ignoreLines" type="STRING">
     </param>
+    <param key="charset" type="STRING">
+    </param>
+    <param key="fileExtensions" type="s{}">
+      <defaultValue></defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck">
@@ -21,6 +26,11 @@
     <param key="header" type="TEXT">
     </param>
     <param key="multiLines" type="STRING">
+    </param>
+    <param key="charset" type="STRING">
+    </param>
+    <param key="fileExtensions" type="s{}">
+      <defaultValue></defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -42,6 +52,8 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Missing Deprecated]]></name>
     <configKey><![CDATA[Checker/TreeWalker/MissingDeprecated]]></configKey>
+    <param key="skipNoJavadoc" type="BOOLEAN">
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -110,6 +122,9 @@
     <configKey><![CDATA[Checker/JavadocPackage]]></configKey>
     <param key="allowLegacy" type="BOOLEAN">
     </param>
+    <param key="fileExtensions" type="s{}">
+      <defaultValue></defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -128,12 +143,15 @@
     </param>
     <param key="maximum" type="INTEGER">
     </param>
+    <param key="fileExtensions" type="s{}">
+      <defaultValue></defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpOnFilenameCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Regexp On Filename]]></name>
-    <configKey><![CDATA[Checker/RegexpMultiline]]></configKey>
+    <configKey><![CDATA[Checker/RegexpOnFilename]]></configKey>
     <cardinality>MULTIPLE</cardinality>
     <param key="folderPattern" type="REGULAR_EXPRESSION"/>
     <param key="fileNamePattern" type="REGULAR_EXPRESSION"/>
@@ -205,6 +223,9 @@
     <name><![CDATA[File Tab Character]]></name>
     <configKey><![CDATA[Checker/FileTabCharacter]]></configKey>
     <param key="eachLine" type="BOOLEAN">
+    </param>
+    <param key="fileExtensions" type="s{}">
+      <defaultValue></defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -327,7 +348,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Catch Parameter Name]]></name>
     <tag>naming</tag>
-    <configKey><![CDATA[Checker/TreeWalker/CatchParameterNameCheck]]></configKey>
+    <configKey><![CDATA[Checker/TreeWalker/CatchParameterName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^(e|t|ex|[a-z][a-z][a-zA-Z]+)$</defaultValue>
     </param>
@@ -348,6 +369,8 @@
     <name><![CDATA[Class Fan Out Complexity]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ClassFanOutComplexity]]></configKey>
     <param key="max" type="INTEGER">
+    </param>
+    <param key="excludedClasses" type="s{}">
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -510,6 +533,9 @@
     <configKey><![CDATA[Checker/FileLength]]></configKey>
     <param key="max" type="INTEGER">
     </param>
+    <param key="fileExtensions" type="s{}">
+      <defaultValue></defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -601,6 +627,9 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Illegal Instantiation]]></name>
     <configKey><![CDATA[Checker/TreeWalker/IllegalInstantiation]]></configKey>
+    <param key="tokens" type="STRING">
+      <defaultValue>CLASS_DEF</defaultValue>
+    </param>
     <param key="classes" type="s{}">
     </param>
   </rule>
@@ -717,9 +746,6 @@
     <param key="caseIndent" type="INTEGER">
       <defaultValue>4</defaultValue>
     </param>
-    <param key="tabWidth" type="INTEGER">
-      <defaultValue>8</defaultValue>
-    </param>
     <param key="arrayInitIndent" type="INTEGER">
       <defaultValue>4</defaultValue>
     </param>
@@ -740,9 +766,6 @@
     <name><![CDATA[Inner Assignment]]></name>
     <configKey><![CDATA[Checker/TreeWalker/InnerAssignment]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="tokens"
-           type="s[ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN]">
-    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -833,6 +856,7 @@
     </param>
     <param key="tokens" type="s[INTERFACE_DEF,CLASS_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF]">
     </param>
+    <param key="endOfSentenceFormat" type="REGULAR_EXPRESSION"/>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck">
@@ -911,8 +935,6 @@
     </param>
     <param key="max" type="INTEGER">
     </param>
-    <param key="tabWidth" type="INTEGER">
-    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -922,6 +944,9 @@
     <configKey><![CDATA[Checker/TreeWalker/LocalFinalVariableName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[a-z][a-zA-Z0-9]*$</defaultValue>
+    </param>
+    <param key="tokens" type="STRING">
+      <defaultValue>VARIABLE_DEF,PARAMETER_DEF</defaultValue>
     </param>
     <status>DEPRECATED</status>
   </rule>
@@ -934,9 +959,6 @@
     <cardinality>MULTIPLE</cardinality>
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[a-z][a-zA-Z0-9]*$</defaultValue>
-    </param>
-    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF]">
-      <defaultValue>VARIABLE_DEF,PARAMETER_DEF</defaultValue>
     </param>
     <param key="allowOneCharVarInForLoop" type="BOOLEAN">
       <defaultValue>false</defaultValue>
@@ -1023,6 +1045,18 @@
     <param key="allowClassName" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
+    <param key="applyToPackage" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="applyToPrivate" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="applyToProtected" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="applyToPublic" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1099,6 +1133,8 @@
     <configKey><![CDATA[Checker/TreeWalker/MutableException]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
     </param>
+    <param key="extendedClassNameFormat" type="REGULAR_EXPRESSION">
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1108,6 +1144,9 @@
     <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/NPathComplexity]]></configKey>
     <param key="max" type="INTEGER">
+    </param>
+    <param key="tokens" type="STRING">
+      <defaultValue>LITERAL_WHILE,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_ELSE,LITERAL_SWITCH,LITERAL_CASE,LITERAL_TRY,LITERAL_CATCH,QUESTION</defaultValue>
     </param>
   </rule>
 
@@ -1121,6 +1160,9 @@
       <defaultValue>LITERAL_DO,LITERAL_ELSE,LITERAL_FOR,LITERAL_IF,LITERAL_WHILE</defaultValue>
     </param>
     <param key="allowSingleLineStatement" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowEmptyLoopBody" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
     <status>DEPRECATED</status>
@@ -1269,7 +1311,7 @@
     </param>
   </rule>
 
-  <rule key="com.puppycrawl.tools.checkstyle.checks.RegexpCheck">
+  <rule key="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Regexp]]></name>
     <configKey><![CDATA[Checker/TreeWalker/Regexp]]></configKey>
@@ -1295,6 +1337,8 @@
     <param key="checkFields" type="BOOLEAN">
     </param>
     <param key="checkMethods" type="BOOLEAN">
+    </param>
+    <param key="validateOnlyOverlapping" type="BOOLEAN">
     </param>
   </rule>
 
@@ -1483,8 +1527,6 @@
     <param key="option" type="s[nospace,space]">
       <defaultValue>nospace</defaultValue>
     </param>
-    <param key="tokens" type="s[TYPECAST,RPAREN]">
-    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.UncommentedMainCheck">
@@ -1499,6 +1541,9 @@
     <priority>MINOR</priority>
     <name><![CDATA[Unnecessary Parentheses]]></name>
     <configKey><![CDATA[Checker/TreeWalker/UnnecessaryParentheses]]></configKey>
+    <param key="tokens" type="STRING">
+      <defaultValue>EXPR,IDENT,NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,STRING_LITERAL,LITERAL_NULL,LITERAL_FALSE,LITERAL_TRUE,ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN</defaultValue>
+    </param>
     <status>DEPRECATED</status>
   </rule>
 
@@ -1595,6 +1640,9 @@
     </param>
     <param key="tagSeverity" type="s[ignore,info,warning,error]">
     </param>
+    <param key="tokens" type="STRING">
+      <defaultValue>INTERFACE_DEF,CLASS_DEF,ENUM_DEF,ANNOTATION_DEF</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.InnerTypeLastCheck">
@@ -1639,6 +1687,9 @@
     <param key="maxPublic" type="INTEGER">
       <defaultValue>100</defaultValue>
     </param>
+    <param key="tokens" type="STRING">
+      <defaultValue>CLASS_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.OneStatementPerLineCheck">
@@ -1671,6 +1722,7 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.UniquePropertiesCheck">
+    <name><![CDATA[Unique Properties]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/UniqueProperties]]></configKey>
     <param key="fileExtensions" type="s{}">
@@ -1679,6 +1731,7 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck">
+    <name><![CDATA[Abbreviation as Word in Name]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/AbbreviationAsWordInName]]></configKey>
     <param key="allowedAbbreviationLength" type="INTEGER">
@@ -1696,9 +1749,13 @@
     <param key="ignoreOverriddenMethods" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
+    <param key="tokens" type="STRING">
+      <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.AvoidEscapedUnicodeCharactersCheck">
+    <name><![CDATA[Avoid Escaped Unicode Characters]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/AvoidEscapedUnicodeCharacters]]></configKey>
     <param key="allowEscapesForControlCharacters" type="BOOLEAN">
@@ -1716,6 +1773,7 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck">
+    <name><![CDATA[Custom Import Order]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/CustomImportOrder]]></configKey>
     <param key="customImportOrderRules" type="STRING">
@@ -1738,6 +1796,7 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck">
+    <name><![CDATA[Empty Line Separator]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/EmptyLineSeparator]]></configKey>
     <cardinality>MULTIPLE</cardinality>
@@ -1750,9 +1809,13 @@
     <param key="allowMultipleEmptyLines" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
+    <param key="allowMultipleEmptyLinesInsideClassMembers" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.InterfaceTypeParameterNameCheck">
+    <name><![CDATA[Interface Type Parameter Name]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/InterfaceTypeParameterName]]></configKey>
     <param key="format" type="REGULAR_EXPRESSION">
@@ -1761,6 +1824,7 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.NoLineWrapCheck">
+    <name><![CDATA[No Line Wrap]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/NoLineWrap]]></configKey>
     <cardinality>MULTIPLE</cardinality>
@@ -1770,16 +1834,19 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.OneTopLevelClassCheck">
+    <name><![CDATA[One Top Level Class]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/OneTopLevelClass]]></configKey>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.OverloadMethodsDeclarationOrderCheck">
+    <name><![CDATA[Overload Methods Declaration Order]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/OverloadMethodsDeclarationOrder]]></configKey>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck">
+    <name><![CDATA[Variable Declaration Usage Distance]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/VariableDeclarationUsageDistance]]></configKey>
     <param key="allowedDistance" type="INTEGER">
@@ -1796,6 +1863,7 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck">
+    <name><![CDATA[Annotation Location]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/AnnotationLocation]]></configKey>
     <param key="allowSamelineMultipleAnnotations" type="BOOLEAN">
@@ -1807,9 +1875,13 @@
     <param key="allowSamelineParameterizedAnnotation" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
+    <param key="tokens" type="STRING">
+      <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
+    <name><![CDATA[Atclause Order]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/AtclauseOrder]]></configKey>
     <!--
@@ -1824,16 +1896,22 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck">
+    <name><![CDATA[Non-Empty Atclause Description]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/NonEmptyAtclauseDescription]]></configKey>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocParagraphCheck">
+    <name><![CDATA[Javadoc Paragraph]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/JavadocParagraph]]></configKey>
+    <param key="allowNewlineParagraph" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck">
+    <name><![CDATA[Javadoc Tag Continuation Indentation]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/JavadocTagContinuationIndentation]]></configKey>
     <param key="offset" type="INTEGER">
@@ -1842,6 +1920,7 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheck">
+    <name><![CDATA[Single Line Javadoc]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/SingleLineJavadoc]]></configKey>
     <param key="ignoredTags" type="STRING">
@@ -1852,8 +1931,9 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck">
+    <name><![CDATA[Summary Javadoc]]></name>
     <priority>MAJOR</priority>
-    <configKey><![CDATA[Checker/TreeWalker/SummaryJavadocCheck]]></configKey>
+    <configKey><![CDATA[Checker/TreeWalker/SummaryJavadoc]]></configKey>
     <param key="forbiddenSummaryFragments" type="REGULAR_EXPRESSION">
     </param>
     <param key="period" type="STRING">
@@ -1861,8 +1941,9 @@
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.EmptyCatchBlockCheck">
+    <name><![CDATA[Empty Catch Block]]></name>
     <priority>MAJOR</priority>
-    <configKey><![CDATA[Checker/TreeWalker/EmptyCatchBlockCheck]]></configKey>
+    <configKey><![CDATA[Checker/TreeWalker/EmptyCatchBlock]]></configKey>
     <param key="exceptionVariableName" type="REGULAR_EXPRESSION">
       <defaultValue>^$</defaultValue>
     </param>
@@ -1888,6 +1969,55 @@
     <configKey><![CDATA[Checker/TreeWalker/CommentsIndentation]]></configKey>
     <param key="tokens" type="s[SINGLE_LINE_COMMENT,BLOCK_COMMENT_BEGIN]">
       <defaultValue>SINGLE_LINE_COMMENT,BLOCK_COMMENT_BEGIN</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.FileContentsHolder">
+    <priority>MINOR</priority>
+    <name><![CDATA[File Contents Holder]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/FileContentsHolder]]></configKey>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.SeparatorWrapCheck">
+    <priority>MINOR</priority>
+    <name><![CDATA[Separator Wrap]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/SeparatorWrap]]></configKey>
+    <param key="option" type="s[eol,nl]">
+      <defaultValue>eol</defaultValue>
+    </param>
+    <param key="tokens" type="STRING">
+      <defaultValue>DOT,COMMA</defaultValue>
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.DescendantTokenCheck">
+    <priority>MINOR</priority>
+    <name><![CDATA[Descendant Token]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/DescendantToken]]></configKey>
+    <param key="limitedTokens" type="STRING">
+    </param>
+    <param key="minimumDepth" type="INTEGER">
+    </param>
+    <param key="maximumDepth" type="INTEGER">
+    </param>
+    <param key="minimumNumber" type="INTEGER">
+    </param>
+    <param key="maximumNumber" type="INTEGER">
+    </param>
+    <param key="sumTokenCounts" type="BOOLEAN">
+        <defaultValue>false</defaultValue>
+    </param>
+    <param key="minimumMessage" type="STRING">
+    </param>
+    <param key="maximumMessage" type="STRING">
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder">
+    <priority>MINOR</priority>
+    <name><![CDATA[Suppress Warnings Holder]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/SuppressWarningsHolder]]></configKey>
+    <param key="aliasList" type="STRING">
     </param>
   </rule>
 
