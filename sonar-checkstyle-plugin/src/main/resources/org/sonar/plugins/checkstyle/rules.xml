@@ -1,7 +1,6 @@
 <rules>
 
-  <rule>
-    <key>com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck</key>
+  <rule key="com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Header]]></name>
     <configKey><![CDATA[Checker/Header]]></configKey>
@@ -13,8 +12,7 @@
     </param>
   </rule>
 
-  <rule>
-    <key>com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck</key>
+  <rule key="com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Regexp Header]]></name>
     <configKey><![CDATA[Checker/RegexpHeader]]></configKey>
