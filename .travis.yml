@@ -4,6 +4,17 @@ sudo: false
 install: true
 script: ./travis.sh
 
+cache:
+  apt: true
+  directories:
+    - ~/.m2
+
+addons:
+  apt:
+    packages:
+      - xsltproc
+      - xmlstarlet
+
 matrix:
   fast_finish: true
   include:
