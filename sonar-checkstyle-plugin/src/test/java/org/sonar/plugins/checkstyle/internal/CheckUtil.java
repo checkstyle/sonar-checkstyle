@@ -28,8 +28,6 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.reflect.ClassPath;
 import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 import com.puppycrawl.tools.checkstyle.api.Filter;
 
@@ -49,18 +47,18 @@ public final class CheckUtil {
     public static Set<Class<?>> getCheckstyleModules() throws IOException {
         final Set<Class<?>> checkstyleModules = new HashSet<>();
 
-        final ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        final ClassPath classpath = ClassPath.from(loader);
-        final String packageName = "com.puppycrawl.tools.checkstyle.checks";
-        final ImmutableSet<ClassPath.ClassInfo> checkstyleClasses = classpath
-                .getTopLevelClassesRecursive(packageName);
-
-        for (ClassPath.ClassInfo clazz : checkstyleClasses) {
-            final Class<?> loadedClass = clazz.load();
-            if (isCheckstyleModule(loadedClass)) {
-                checkstyleModules.add(loadedClass);
-            }
-        }
+//        final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+//        final ClassPath classpath = ClassPath.from(loader);
+//        final String packageName = "com.puppycrawl.tools.checkstyle.checks";
+//        final ImmutableSet<ClassPath.ClassInfo> checkstyleClasses = classpath
+//                .getTopLevelClassesRecursive(packageName);
+//
+//        for (ClassPath.ClassInfo clazz : checkstyleClasses) {
+//            final Class<?> loadedClass = clazz.load();
+//            if (isCheckstyleModule(loadedClass)) {
+//                checkstyleModules.add(loadedClass);
+//            }
+//        }
         return checkstyleModules;
     }
 
