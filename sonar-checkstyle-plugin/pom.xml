@@ -84,6 +84,13 @@
       <artifactId>checkstyle-all</artifactId>
       <version>${project.version}</version>
       <classifier>shaded</classifier>
+      <exclusions>
+        <exclusion>
+          <!-- we exclude checkstyle as we use shaded version of it -->
+          <groupId>com.puppycrawl.tools</groupId>
+          <artifactId>checkstyle</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
