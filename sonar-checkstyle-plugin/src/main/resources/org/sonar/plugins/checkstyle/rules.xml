@@ -1355,7 +1355,7 @@
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^equals$</defaultValue>
     </param>
-    <param key="tokens" type="s[LCTOR_DEF,METHOD_DEF,LAMBDA]">
+    <param key="tokens" type="s[CTOR_DEF,METHOD_DEF,LAMBDA]">
       <defaultValue>CTOR_DEF,METHOD_DEF,LAMBDA</defaultValue>
     </param>
     <status>DEPRECATED</status>
