@@ -32,7 +32,7 @@
     <param key="fileExtensions" type="s{}">
       <defaultValue></defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck">
@@ -54,7 +54,7 @@
     <configKey><![CDATA[Checker/TreeWalker/MissingDeprecated]]></configKey>
     <param key="skipNoJavadoc" type="BOOLEAN">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.MissingOverrideCheck">
@@ -91,7 +91,7 @@
     <param key="ignoreEqualsIgnoreCase" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.NoCloneCheck">
@@ -104,7 +104,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[No Finalizer]]></name>
     <configKey><![CDATA[Checker/TreeWalker/NoFinalizer]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStaticImportCheck">
@@ -125,7 +125,7 @@
     <param key="fileExtensions" type="s{}">
       <defaultValue></defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheck">
@@ -227,7 +227,7 @@
     <param key="fileExtensions" type="s{}">
       <defaultValue></defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.GenericWhitespaceCheck">
@@ -253,7 +253,7 @@
     <priority>MINOR</priority>
     <name><![CDATA[Redundant import]]></name>
     <configKey><![CDATA[Checker/TreeWalker/RedundantImport]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.AbstractClassNameCheck">
@@ -270,7 +270,7 @@
     <param key="ignoreName" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.AnonInnerLengthCheck">
@@ -280,7 +280,7 @@
     <configKey><![CDATA[Checker/TreeWalker/AnonInnerLength]]></configKey>
     <param key="max" type="INTEGER">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.ArrayTrailingCommaCheck">
@@ -295,14 +295,14 @@
     <configKey><![CDATA[Checker/TreeWalker/ArrayTypeStyle]]></configKey>
     <param key="javaStyle" type="BOOLEAN">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.AvoidInlineConditionalsCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Avoid Inline Conditionals]]></name>
     <configKey><![CDATA[Checker/TreeWalker/AvoidInlineConditionals]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.AvoidNestedBlocksCheck">
@@ -311,7 +311,7 @@
     <configKey><![CDATA[Checker/TreeWalker/AvoidNestedBlocks]]></configKey>
     <param key="allowInSwitchCase" type="BOOLEAN">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck">
@@ -326,7 +326,7 @@
     <param key="allowStaticMemberImports" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.BooleanExpressionComplexityCheck">
@@ -341,7 +341,7 @@
     <param key="tokens" type="s[LAND,BAND,LOR,BOR,BXOR]">
       <defaultValue>LAND,BAND,LOR,BOR,BXOR</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.CatchParameterNameCheck">
@@ -372,7 +372,7 @@
     </param>
     <param key="excludedClasses" type="s{}">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck">
@@ -396,14 +396,14 @@
     <param key="applyToPrivate" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.CovariantEqualsCheck">
     <priority>CRITICAL</priority>
     <name><![CDATA[Covariant Equals]]></name>
     <configKey><![CDATA[Checker/TreeWalker/CovariantEquals]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck">
@@ -420,7 +420,7 @@
     <param key="tokens" type="s[LITERAL_WHILE,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_SWITCH,LITERAL_CASE,LITERAL_CATCH,QUESTION,LAND,LOR]">
       <defaultValue>LITERAL_WHILE,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_SWITCH,LITERAL_CASE,LITERAL_CATCH,QUESTION,LAND,LOR</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.DeclarationOrderCheck">
@@ -433,14 +433,14 @@
     <param key="ignoreModifiers" type="BOOLEAN">
         <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.DefaultComesLastCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Default Comes Last]]></name>
     <configKey><![CDATA[Checker/TreeWalker/DefaultComesLast]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck">
@@ -460,7 +460,7 @@
            type="s[LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,INSTANCE_INIT,STATIC_INIT,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_CASE,LITERAL_DEFAULT,ARRAY_INIT]">
       <defaultValue>LITERAL_WHILE,LITERAL_TRY,LITERAL_FINALLY,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,INSTANCE_INIT,STATIC_INIT,LITERAL_SWITCH,LITERAL_SYNCHRONIZED</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyForInitializerPadCheck">
@@ -483,7 +483,7 @@
     <priority>MINOR</priority>
     <name><![CDATA[Empty Statement]]></name>
     <configKey><![CDATA[Checker/TreeWalker/EmptyStatement]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.EqualsHashCodeCheck">
@@ -491,7 +491,7 @@
     <name><![CDATA[Equals Hash Code]]></name>
     <tag>bug</tag>
     <configKey><![CDATA[Checker/TreeWalker/EqualsHashCode]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.ExecutableStatementCountCheck">
@@ -512,7 +512,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Explicit Initialization]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ExplicitInitialization]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.FallThroughCheck">
@@ -523,7 +523,7 @@
     </param>
     <param key="reliefPattern" type="REGULAR_EXPRESSION">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.FileLengthCheck">
@@ -536,14 +536,14 @@
     <param key="fileExtensions" type="s{}">
       <defaultValue></defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Final Class]]></name>
     <configKey><![CDATA[Checker/TreeWalker/FinalClass]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.FinalLocalVariableCheck">
@@ -570,7 +570,7 @@
     <param key="ignorePrimitiveTypes" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.HiddenFieldCheck">
@@ -595,14 +595,14 @@
     <param key="setterCanReturnItsClass" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Hide Utility Class Constructor]]></name>
     <configKey><![CDATA[Checker/TreeWalker/HideUtilityClassConstructor]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheck">
@@ -620,7 +620,7 @@
     <configKey><![CDATA[Checker/TreeWalker/IllegalImport]]></configKey>
     <param key="illegalPkgs" type="s{}">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.IllegalInstantiationCheck">
@@ -646,7 +646,7 @@
     <param key="ignoreOverriddenMethods" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheck">
@@ -758,7 +758,7 @@
     <param key="forceStrictCondition" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.InnerAssignmentCheck">
@@ -766,7 +766,7 @@
     <name><![CDATA[Inner Assignment]]></name>
     <configKey><![CDATA[Checker/TreeWalker/InnerAssignment]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck">
@@ -775,7 +775,7 @@
     <configKey><![CDATA[Checker/TreeWalker/InterfaceIsType]]></configKey>
     <param key="allowMarkerInterfaces" type="BOOLEAN">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck">
@@ -831,7 +831,7 @@
     </param>
     <param key="ignoreMethodNamesRegex" type="REGULAR_EXPRESSION">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">
@@ -883,7 +883,7 @@
     <param key="tokens" type="s[INTERFACE_DEF,CLASS_DEF,ENUM_DEF,ANNOTATION_DEF]">
       <defaultValue>INTERFACE_DEF,CLASS_DEF,ENUM_DEF,ANNOTATION_DEF</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck">
@@ -901,7 +901,7 @@
     <param key="tokens" type="s[VARIABLE_DEF,ENUM_CONSTANT_DEF]">
       <defaultValue>VARIABLE_DEF,ENUM_CONSTANT_DEF</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyCheck">
@@ -923,7 +923,7 @@
            type="s[INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK]">
       <defaultValue>INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck">
@@ -935,7 +935,7 @@
     </param>
     <param key="max" type="INTEGER">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.LocalFinalVariableNameCheck">
@@ -948,7 +948,7 @@
     <param key="tokens" type="STRING">
       <defaultValue>VARIABLE_DEF,PARAMETER_DEF</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.LocalVariableNameCheck">
@@ -963,7 +963,7 @@
     <param key="allowOneCharVarInForLoop" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck">
@@ -989,7 +989,7 @@
     <param key="ignoreFieldDeclaration" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck">
@@ -1013,7 +1013,7 @@
     <param key="applyToPrivate" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.MethodLengthCheck">
@@ -1031,7 +1031,7 @@
     <param key="tokens" type="s[METHOD_DEF,CTOR_DEF]">
       <defaultValue>METHOD_DEF,CTOR_DEF</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.MethodNameCheck">
@@ -1057,7 +1057,7 @@
     <param key="applyToPublic" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck">
@@ -1086,7 +1086,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Missing Switch Default]]></name>
     <configKey><![CDATA[Checker/TreeWalker/MissingSwitchDefault]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.ModifiedControlVariableCheck">
@@ -1096,14 +1096,14 @@
     <param key="skipEnhancedForLoopVariable" type="BOOLEAN">
         <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.modifier.ModifierOrderCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Modifier Order]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ModifierOrder]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.MultipleStringLiteralsCheck">
@@ -1117,14 +1117,14 @@
     </param>
     <param key="ignoreOccurrenceContext" type="STRING">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.MultipleVariableDeclarationsCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Multiple Variable Declarations]]></name>
     <configKey><![CDATA[Checker/TreeWalker/MultipleVariableDeclarations]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.MutableExceptionCheck">
@@ -1135,7 +1135,7 @@
     </param>
     <param key="extendedClassNameFormat" type="REGULAR_EXPRESSION">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.NPathComplexityCheck">
@@ -1165,7 +1165,7 @@
     <param key="allowEmptyLoopBody" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.NestedIfDepthCheck">
@@ -1174,7 +1174,7 @@
     <configKey><![CDATA[Checker/TreeWalker/NestedIfDepth]]></configKey>
     <param key="max" type="INTEGER">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.NestedTryDepthCheck">
@@ -1183,7 +1183,7 @@
     <configKey><![CDATA[Checker/TreeWalker/NestedTryDepth]]></configKey>
     <param key="max" type="INTEGER">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck">
@@ -1195,7 +1195,7 @@
     </param>
     <param key="fileExtensions" type="s{}">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck">
@@ -1242,7 +1242,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Package Declaration]]></name>
     <configKey><![CDATA[Checker/TreeWalker/PackageDeclaration]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.PackageNameCheck">
@@ -1252,14 +1252,14 @@
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[a-z]+(\.[a-zA-Z_][a-zA-Z0-9_]*)*$</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.ParameterAssignmentCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Parameter Assignment]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ParameterAssignment]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheck">
@@ -1272,7 +1272,7 @@
     <param key="ignoreOverridden" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.ParameterNumberCheck">
@@ -1285,7 +1285,7 @@
     <param key="ignoreOverriddenMethods" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck">
@@ -1358,7 +1358,7 @@
     <param key="tokens" type="s[CTOR_DEF,METHOD_DEF,LAMBDA]">
       <defaultValue>CTOR_DEF,METHOD_DEF,LAMBDA</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.RightCurlyCheck">
@@ -1375,21 +1375,21 @@
     <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE,CLASS_DEF,METHOD_DEF,CTOR_DEF,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,STATIC_INIT,INSTANCE_INIT]">
       <defaultValue>LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Simplify Boolean Expression]]></name>
     <configKey><![CDATA[Checker/TreeWalker/SimplifyBooleanExpression]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanReturnCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Simplify Boolean Return]]></name>
     <configKey><![CDATA[Checker/TreeWalker/SimplifyBooleanReturn]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.StaticVariableNameCheck">
@@ -1412,28 +1412,28 @@
     <param key="applyToPrivate" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.StringLiteralEqualityCheck">
     <priority>CRITICAL</priority>
     <name><![CDATA[String Literal Equality]]></name>
     <configKey><![CDATA[Checker/TreeWalker/StringLiteralEquality]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.SuperCloneCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Super Clone]]></name>
     <configKey><![CDATA[Checker/TreeWalker/SuperClone]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.SuperFinalizeCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Super Finalize]]></name>
     <configKey><![CDATA[Checker/TreeWalker/SuperFinalize]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.ThrowsCountCheck">
@@ -1446,7 +1446,7 @@
     <param key="ignorePrivateMethods" type="BOOLEAN">
         <defaultValue>true</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck">
@@ -1456,7 +1456,7 @@
     <cardinality>MULTIPLE</cardinality>
     <param key="format" type="REGULAR_EXPRESSION">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.TrailingCommentCheck">
@@ -1468,7 +1468,7 @@
     </param>
     <param key="legalComment" type="REGULAR_EXPRESSION">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
    <rule key="com.puppycrawl.tools.checkstyle.checks.TranslationCheck">
@@ -1507,7 +1507,7 @@
     <param key="applyToPrivate" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.SingleSpaceSeparatorCheck">
@@ -1544,7 +1544,7 @@
     <param key="tokens" type="STRING">
       <defaultValue>EXPR,IDENT,NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,STRING_LITERAL,LITERAL_NULL,LITERAL_FALSE,LITERAL_TRUE,ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck">
@@ -1554,14 +1554,14 @@
     <param key="processJavadoc" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.UpperEllCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Upper Ell]]></name>
     <configKey><![CDATA[Checker/TreeWalker/UpperEll]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck">
@@ -1589,7 +1589,7 @@
     <param key="ignoreAnnotationCanonicalNames" types="s{}">
         <defaultValue>org.junit.Rule,org.junit.ClassRule,com.google.common.annotations.VisibleForTesting</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck">
@@ -1664,7 +1664,7 @@
     <param key="max" type="INTEGER">
       <defaultValue>1</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.MethodCountCheck">
@@ -1696,7 +1696,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[One Statement Per Line]]></name>
     <configKey><![CDATA[Checker/TreeWalker/OneStatementPerLine]]></configKey>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.ClassTypeParameterNameCheck">
@@ -1707,7 +1707,7 @@
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[A-Z]$</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.naming.MethodTypeParameterNameCheck">
@@ -1718,7 +1718,7 @@
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[A-Z]$</defaultValue>
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.UniquePropertiesCheck">
@@ -1960,7 +1960,7 @@
     </param>
     <param key="url" type="STRING">
     </param>
-    <status>DEPRECATED</status>
+    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck">
