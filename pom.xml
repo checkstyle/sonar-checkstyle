@@ -2,38 +2,65 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.sonarsource.checkstyle</groupId>
-  <artifactId>checkstyle</artifactId>
+  <groupId>com.github.checkstyle</groupId>
+  <artifactId>checkstyle-sonar-plugin-parent</artifactId>
   <version>3.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>SonarQube Checkstyle</name>
+  <name>Checkstyle SonarQube plugin</name>
   <inceptionYear>2012</inceptionYear>
   <organization>
-    <name>SonarSource</name>
-    <url>http://www.sonarsource.com</url>
+    <name>Checkstyle</name>
+    <url>http://checkstyle.sourceforge.net</url>
   </organization>
   <licenses>
     <license>
-      <name>GNU LGPL 3</name>
-      <url>http://www.gnu.org/licenses/lgpl.txt</url>
+      <name>LGPL-3.0</name>
+      <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
 
   <developers>
     <developer>
+      <id>romani</id>
+      <name>Roman Ivanov</name>
+      <organization>Checkstyle</organization>
+      <roles>
+        <role>project admin, lead developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>rnveach</id>
+      <name>Richard Veach</name>
+      <organization>Checkstyle</organization>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
       <id>godin</id>
       <name>Evgeny Mandrikov</name>
       <organization>SonarSource</organization>
+      <roles>
+        <role>former developer</role>
+      </roles>
     </developer>
     <developer>
       <id>m-g-sonar</id>
       <name>Michael Gumowski</name>
+      <organization>SonarSource</organization>
+      <roles>
+        <role>former developer</role>
+      </roles>
     </developer>
     <developer>
       <id>benzonico</id>
       <name>Nicolas Peru</name>
+      <organization>SonarSource</organization>
+      <roles>
+        <role>former developer</role>
+      </roles>
     </developer>
   </developers>
 
@@ -43,16 +70,18 @@
   </modules>
 
   <scm>
-    <connection>scm:git:git@github.com:SonarQubeCommunity/sonar-checkstyle.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-checkstyle.git</developerConnection>
-    <url>https://github.com/SonarQubeCommunity/sonar-checkstyle</url>
-    <tag>HEAD</tag>
+    <connection>scm:git:git@github.com:checkstyle/sonar-checkstyle.git</connection>
+    <developerConnection>scm:git:git@github.com:checkstyle/sonar-checkstyle.git</developerConnection>
+    <url>https://github.com/checkstyle/sonar-checkstyle</url>
   </scm>
-  <url>https://github.com/SonarQubeCommunity/sonar-checkstyle</url>
   <issueManagement>
     <system>GitHub Issues</system>
-    <url>https://github.com/SonarQubeCommunity/sonar-checkstyle/issues</url>
+    <url>https://github.com/checkstyle/sonar-checkstyle/issues</url>
   </issueManagement>
+  <ciManagement>
+    <system>travis</system>
+    <url>https://travis-ci.org/checkstyle/sonar-checkstyle</url>
+  </ciManagement>
 
   <properties>
     <checkstyle.version>7.1</checkstyle.version>

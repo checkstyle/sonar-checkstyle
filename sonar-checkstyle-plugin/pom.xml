@@ -3,23 +3,17 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonarsource.checkstyle</groupId>
-    <artifactId>checkstyle</artifactId>
+    <groupId>com.github.checkstyle</groupId>
+    <artifactId>checkstyle-sonar-plugin-parent</artifactId>
     <version>3.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>sonar-checkstyle-plugin</artifactId>
+  <artifactId>checkstyle-sonar-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
 
-  <name>SonarQube Checkstyle Plugin</name>
+  <name>Checkstyle SonarQube Plugin</name>
   <description>Checkstyle is a code analyser to help programmers write Java code that adheres to a coding standard.</description>
-  <url>http://redirect.sonarsource.com/plugins/checkstyle.html</url>
-  <scm>
-    <connection>scm:git:git@github.com:SonarCommunity/sonar-checkstyle.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-checkstyle.git</developerConnection>
-    <url>https://github.com/SonarCommunity/sonar-checkstyle</url>
-    <tag>HEAD</tag>
-  </scm>
+
 
   <properties>
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
