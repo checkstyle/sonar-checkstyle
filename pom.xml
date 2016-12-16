@@ -65,7 +65,7 @@
   </developers>
 
   <modules>
-    <module>sonar-checkstyle-plugin</module>
+    <module>checkstyle-sonar-plugin</module>
     <module>checkstyle-all</module>
   </modules>
 
