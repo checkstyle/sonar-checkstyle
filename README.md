@@ -9,13 +9,16 @@ Official announcement of project transfer - https://groups.google.com/d/topic/so
 
 This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforge.net/).
 
-Checkstyle Plugin|2.0|2.1.1|2.2|2.3|2.4|....|3.1
------------------|---|---|---|---|---|---|---
-Checkstyle|5.6|5.6|6.1|6.4.1|6.12.1|...|7.1
+Checkstyle Plugin|2.0|2.1.1|2.2|2.3|2.4|3.1
+-----------------|---|---|---|---|---|---
+Checkstyle|5.6|5.6|6.1|6.4.1|6.12.1|7.1
 
-A majority of the Checkstyle rules have been introduced in the Sonar Java plugin. Copied rules are marked "Deprecated" in the Checkstyle plugin ONLY beacause Sonar plugin have similar rule but NOT a functionality, [some summary of map/replaced rules (beware of a lot of match mistakes)](http://dist.sonarsource.com/reports/coverage/checkstyle.html) is available.
 
 ## Usage
+Dowload latest or required version from https://github.com/checkstyle/sonar-checkstyle/releases
+
+Place it your sonar instance to "[YOUR_SONAR_PATH]/extensions/plugins", restart Sonar.
+
 In the quality profile, activate some rules from Checkstyle and run an analysis on your project.
 ![checkstlye rules in sonar](https://github.com/checkstyle/resources/raw/master/img/sonar-in-docker.PNG)
 
