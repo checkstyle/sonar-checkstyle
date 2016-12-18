@@ -14,11 +14,6 @@
   <name>Checkstyle SonarQube Plugin</name>
   <description>Checkstyle is a code analyser to help programmers write Java code that adheres to a coding standard.</description>
 
-
-  <properties>
-    <sonar.requiresPlugin>java:${sonar-java.version}</sonar.requiresPlugin>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.codehaus.sonar</groupId>
