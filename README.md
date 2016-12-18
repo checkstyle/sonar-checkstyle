@@ -15,6 +15,12 @@ Sonar|3.6|3.6|4.5.1|4.5.1|4.5.2|4.5.2
 Checkstyle|5.6|5.6|6.1|6.4.1|6.12.1|7.1
 Jdk|1.6|1.6|1.6|1.7|1.7|1.8
 
+Jdk version depends on checkstyle's and sonar's jdk version:
+
+checkstyle:6.0 use jdk6, checkstyle:6.2 use jdk7, checkstyle:7.0 use jdk8.
+
+sonar:3.6 used jdk6, sonar:4.5 use jdk7, sonar:5.6-latest use jdk8.
+
 ## Usage
 Dowload latest or required version from https://github.com/checkstyle/sonar-checkstyle/releases
 
