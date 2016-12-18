@@ -39,10 +39,11 @@
       <version>${sonar-java.version}</version>
       <scope>provided</scope>
     </dependency>
+    <!-- required to load external descriptiona, see CheckstyleRulesDefinition -->
     <dependency>
-      <groupId>org.codehaus.sonar.sslr-squid-bridge</groupId>
+      <groupId>org.sonarsource.sslr-squid-bridge</groupId>
       <artifactId>sslr-squid-bridge</artifactId>
-      <version>2.6</version>
+      <version>2.6.1</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
