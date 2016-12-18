@@ -13,7 +13,7 @@ Checkstyle Plugin|2.0|2.1.1|2.2|2.3|2.4|3.1
 -----------------|---|---|---|---|---|---
 Sonar|3.6|3.6|4.5.1|4.5.1|4.5.2|4.5.2
 Checkstyle|5.6|5.6|6.1|6.4.1|6.12.1|7.1
-Jdk|1.6|1.6|1.7|1.7|1.7|1.8
+Jdk|1.6|1.6|1.6|1.7|1.7|1.8
 
 ## Usage
 Dowload latest or required version from https://github.com/checkstyle/sonar-checkstyle/releases
