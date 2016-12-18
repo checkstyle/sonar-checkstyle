@@ -62,19 +62,6 @@
       <version>2.6</version>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.sonar</groupId>
-      <artifactId>sonar-plugin-api</artifactId>
-      <version>${sonar.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>xmlunit</groupId>
-      <artifactId>xmlunit</artifactId>
-      <scope>test</scope>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>checkstyle-all</artifactId>
       <version>${project.version}</version>
@@ -87,8 +74,20 @@
         </exclusion>
       </exclusions>
     </dependency>
-
-    <!-- TODO http://jira.codehaus.org/browse/SONAR-2011
+    <dependency>
+      <groupId>org.codehaus.sonar</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <version>${sonar.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+      <scope>test</scope>
+      <version>1.4</version>
+    </dependency>
+    <!--
     We need following dependency, otherwise we will receive
     java.lang.NoClassDefFoundError: org/apache/maven/project/MavenProject
     during call mock(org.sonar.api.resources.Project.class)
