@@ -16,7 +16,6 @@
 
 
   <properties>
-    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
     <!-- Configuration for sonar-packaging-maven-plugin -->
     <sonar.pluginKey>checkstyle</sonar.pluginKey>
     <sonar.pluginName>Checkstyle</sonar.pluginName>
