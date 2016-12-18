@@ -48,6 +48,7 @@
       <scope>provided</scope>
       <version>${sonar.version}</version>
     </dependency>
+    <!-- till https://github.com/checkstyle/sonar-checkstyle/issues/40 -->
     <dependency>
       <groupId>org.sonarsource.java</groupId>
       <artifactId>sonar-java-plugin</artifactId>
