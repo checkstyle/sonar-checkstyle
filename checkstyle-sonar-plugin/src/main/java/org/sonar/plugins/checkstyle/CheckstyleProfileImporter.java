@@ -126,7 +126,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     return new SMInputFactory(xmlFactory);
   }
 
-  private void processModule(RulesProfile profile, String path, String moduleName, Map<String, String> properties, ValidationMessages messages) throws XMLStreamException {
+  private void processModule(RulesProfile profile, String path, String moduleName, Map<String, String> properties, ValidationMessages messages) {
     if (isFilter(moduleName)) {
       messages.addWarningText("Checkstyle filters are not imported: " + moduleName);
 
@@ -148,7 +148,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     return false;
   }
 
-  private void processRule(RulesProfile profile, String path, String moduleName, Map<String, String> properties, ValidationMessages messages) throws XMLStreamException {
+  private void processRule(RulesProfile profile, String path, String moduleName, Map<String, String> properties, ValidationMessages messages) {
     Rule rule;
     String id = properties.get("id");
     String warning;
