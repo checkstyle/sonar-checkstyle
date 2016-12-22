@@ -48,7 +48,7 @@ public class CheckstyleSeverityUtilsTest {
 
   @Test
   public void private_constructor() throws Exception {
-    Constructor constructor = CheckstyleSeverityUtils.class.getDeclaredConstructor();
+    Constructor<CheckstyleSeverityUtils> constructor = CheckstyleSeverityUtils.class.getDeclaredConstructor();
     assertThat(constructor.isAccessible()).isFalse();
     constructor.setAccessible(true);
     constructor.newInstance();

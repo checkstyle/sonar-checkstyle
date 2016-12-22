@@ -150,7 +150,7 @@ public class CheckstyleProfileImporterTest {
     assertThat(messages.getWarnings().size()).isEqualTo(5); // no warning for FileContentsHolder
   }
 
-  private RuleFinder newRuleFinder() {
+  private static RuleFinder newRuleFinder() {
     RuleFinder ruleFinder = mock(RuleFinder.class);
     when(ruleFinder.find(any(RuleQuery.class))).thenAnswer(new Answer<Rule>() {
       @Override

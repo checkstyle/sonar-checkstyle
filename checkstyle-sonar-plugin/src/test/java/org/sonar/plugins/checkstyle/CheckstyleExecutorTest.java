@@ -21,6 +21,8 @@ package org.sonar.plugins.checkstyle;
 
 import com.google.common.collect.ImmutableList;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.Rule;
 import org.junit.Test;
@@ -126,11 +128,11 @@ public class CheckstyleExecutorTest {
     }
   }
 
-  private CheckstyleAuditListener mockListener() {
+  private static CheckstyleAuditListener mockListener() {
     return mock(CheckstyleAuditListener.class);
   }
 
-  private CheckstyleConfiguration mockConf() throws Exception {
+  private static CheckstyleConfiguration mockConf() throws CheckstyleException {
     CheckstyleConfiguration conf = mock(CheckstyleConfiguration.class);
     when(conf.getCharset()).thenReturn(Charset.defaultCharset());
     when(conf.getCheckstyleConfiguration()).thenReturn(CheckstyleConfiguration.toCheckstyleConfiguration(new File("test-resources/checkstyle-conf.xml")));

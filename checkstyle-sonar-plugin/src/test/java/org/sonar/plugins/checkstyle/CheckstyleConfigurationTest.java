@@ -59,7 +59,7 @@ public class CheckstyleConfigurationTest {
   }
 
   @Test
-  public void getSourceFiles() throws IOException {
+  public void getSourceFiles() {
     CheckstyleProfileExporter exporter = new FakeExporter();
     CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter, null, fileSystem);
     assertThat(configuration.getSourceFiles()).hasSize(1);
@@ -67,7 +67,7 @@ public class CheckstyleConfigurationTest {
   }
 
   @Test
-  public void getTargetXMLReport() throws IOException {
+  public void getTargetXMLReport() {
     Settings conf = new Settings();
     CheckstyleConfiguration configuration = new CheckstyleConfiguration(conf, null, null, fileSystem);
     assertThat(configuration.getTargetXMLReport()).isNull();
