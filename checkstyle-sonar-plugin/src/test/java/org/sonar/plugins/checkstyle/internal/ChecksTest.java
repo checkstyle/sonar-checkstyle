@@ -26,10 +26,8 @@ import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -68,7 +66,7 @@ public final class ChecksTest {
 
     @Ignore
     @Test
-    public void verifyTestConfigurationFiles() throws Exception {
+    public static void verifyTestConfigurationFiles() throws Exception {
         final Set<Class<?>> modules = CheckUtil.getCheckstyleModules();
 
         Assert.assertTrue("no modules", modules.size() > 0);

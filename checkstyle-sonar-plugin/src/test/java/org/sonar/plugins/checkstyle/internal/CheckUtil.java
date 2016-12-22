@@ -22,14 +22,10 @@ package org.sonar.plugins.checkstyle.internal;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-
-import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
-import com.puppycrawl.tools.checkstyle.api.Filter;
 
 public final class CheckUtil {
     private CheckUtil() {
@@ -88,54 +84,6 @@ public final class CheckUtil {
         }
 
         return checkstyleMessages;
-    }
-
-    /**
-     * Checks whether a class may be considered as the checkstyle module.
-     * Checkstyle's modules are nonabstract classes which names end with
-     * 'Check', do not contain the word 'Input' (are not input files for UTs),
-     * checkstyle's filters, checkstyle's file filters and
-     * SuppressWarningsHolder class.
-     *
-     * @param loadedClass class to check.
-     * @return true if the class may be considered as the checkstyle module.
-     */
-    private static boolean isCheckstyleModule(Class<?> loadedClass) {
-        final String className = loadedClass.getSimpleName();
-        return isCheckstyleNonAbstractCheck(loadedClass, className)
-                || isFilterModule(loadedClass, className)
-                || "SuppressWarningsHolder".equals(className)
-                || "FileContentsHolder".equals(className);
-    }
-
-    /**
-     * Checks whether a class may be considered as the checkstyle check.
-     * Checkstyle's checks are nonabstract classes which names end with 'Check',
-     * do not contain the word 'Input' (are not input files for UTs), and extend
-     * Check.
-     *
-     * @param loadedClass class to check.
-     * @param className class name to check.
-     * @return true if a class may be considered as the checkstyle check.
-     */
-    private static boolean isCheckstyleNonAbstractCheck(Class<?> loadedClass, String className) {
-        return !Modifier.isAbstract(loadedClass.getModifiers()) && className.endsWith("Check")
-                && !className.contains("Input");
-    }
-
-    /**
-     * Checks whether a class may be considered as the checkstyle filter.
-     * Checkstyle's filters are classes which are subclasses of AutomaticBean,
-     * implement 'Filter' interface, and which names end with 'Filter'.
-     *
-     * @param loadedClass class to check.
-     * @param className class name to check.
-     * @return true if a class may be considered as the checkstyle filter.
-     */
-    private static boolean isFilterModule(Class<?> loadedClass, String className) {
-        return Filter.class.isAssignableFrom(loadedClass)
-                && AutomaticBean.class.isAssignableFrom(loadedClass)
-                && className.endsWith("Filter");
     }
 
     /**
