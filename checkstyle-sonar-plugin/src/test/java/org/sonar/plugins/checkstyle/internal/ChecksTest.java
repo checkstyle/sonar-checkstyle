@@ -26,7 +26,7 @@ import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -70,7 +70,7 @@ public final class ChecksTest {
     public void verifyTestConfigurationFiles() throws Exception {
         final Set<Class<?>> modules = CheckUtil.getCheckstyleModules();
 
-        Assert.assertTrue("no modules", modules.size() > 0);
+        Assert.assertTrue("no modules", !modules.isEmpty());
 
         // sonar
 
@@ -184,13 +184,9 @@ public final class ChecksTest {
         }
 
         // remove undocumented properties
-        Iterator<String> iter = properties.iterator();
-        while (iter.hasNext()) {
-            String value = iter.next();
-            if(UNDOCUMENTED_PROPERTIES.contains(clss.getSimpleName() + "." + value)){
-                iter.remove();
-            }
-        }
+        new HashSet<>(properties).stream()
+            .filter(p -> UNDOCUMENTED_PROPERTIES.contains(clss.getSimpleName() + "." + p))
+            .forEach(properties::remove);
 
         if (AbstractCheck.class.isAssignableFrom(clss)) {
             final AbstractCheck check = (AbstractCheck) clss.newInstance();
