@@ -65,7 +65,7 @@ public final class ChecksTest {
     );
 
     @SuppressWarnings("static-method")
-	@Ignore
+    @Ignore
     @Test
     public void verifyTestConfigurationFiles() throws Exception {
         final Set<Class<?>> modules = CheckUtil.getCheckstyleModules();
