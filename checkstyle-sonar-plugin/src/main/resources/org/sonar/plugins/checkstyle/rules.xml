@@ -447,6 +447,9 @@
     <priority>MINOR</priority>
     <name><![CDATA[Design For Extension]]></name>
     <configKey><![CDATA[Checker/TreeWalker/DesignForExtension]]></configKey>
+    <param key="ignoredAnnotations" type="s{}">
+      <defaultValue>Test, Before, After, BeforeClass, AfterClass</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck">
