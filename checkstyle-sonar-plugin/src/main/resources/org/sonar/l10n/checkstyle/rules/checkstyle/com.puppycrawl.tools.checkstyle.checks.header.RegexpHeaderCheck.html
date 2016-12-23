@@ -20,7 +20,7 @@
 <p>Different programming languages have different comment syntax rules, but all of them start a comment with a non-word character. Hence you can often use the non-word character class to abstract away the concrete comment syntax and allow checking the header for different languages with a single header definition. For example, consider the following header specification (note that this is not the full Apache license header):</p>
 <pre>
 	line 1: ^#!
-	line 2: ^<\?xml.*>$
+	line 2: ^&lt;\?xml.*&gt;$
 	line 3: ^\W*$
 	line 4: ^\W*Copyright 2006 The Apache Software Foundation or its licensors, as applicable\.$
 	line 5: ^\W*Licensed under the Apache License, Version 2\.0 \(the "License"\);$
