@@ -64,9 +64,10 @@ public final class ChecksTest {
             "SuppressionCommentFilter.fileContents"
     );
 
-    @Ignore
+    @SuppressWarnings("static-method")
+	@Ignore
     @Test
-    public static void verifyTestConfigurationFiles() throws Exception {
+    public void verifyTestConfigurationFiles() throws Exception {
         final Set<Class<?>> modules = CheckUtil.getCheckstyleModules();
 
         Assert.assertTrue("no modules", modules.size() > 0);
