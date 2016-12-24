@@ -25,11 +25,9 @@ import org.sonar.squidbridge.rules.ExternalDescriptionLoader;
 import org.sonar.squidbridge.rules.PropertyFileLoader;
 import org.sonar.squidbridge.rules.SqaleXmlLoader;
 
-public final class CheckstyleRulesDefinition implements RulesDefinition {
+import com.google.common.annotations.VisibleForTesting;
 
-  public CheckstyleRulesDefinition() {
-    // do nothing
-  }
+public final class CheckstyleRulesDefinition implements RulesDefinition {
 
   @Override
   public void define(Context context) {
@@ -42,6 +40,7 @@ public final class CheckstyleRulesDefinition implements RulesDefinition {
     repository.done();
   }
 
+  @VisibleForTesting
   static void extractRulesData(NewRepository repository, String xmlRulesFilePath, String htmlDescriptionFolder) {
     RulesDefinitionXmlLoader ruleLoader = new RulesDefinitionXmlLoader();
     ruleLoader.load(repository, CheckstyleRulesDefinition.class.getResourceAsStream(xmlRulesFilePath), "UTF-8");

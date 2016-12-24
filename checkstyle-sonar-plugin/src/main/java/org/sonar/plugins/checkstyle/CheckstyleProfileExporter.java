@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -37,8 +38,8 @@ import java.util.List;
 
 public class CheckstyleProfileExporter extends ProfileExporter {
 
-  static final String DOCTYPE_DECLARATION = "<!DOCTYPE module PUBLIC \"-//Puppy Crawl//DTD Check Configuration 1.2//EN\" \"http://www.puppycrawl.com/dtds/configuration_1_2.dtd\">";
-  private Settings settings;
+  public static final String DOCTYPE_DECLARATION = "<!DOCTYPE module PUBLIC \"-//Puppy Crawl//DTD Check Configuration 1.2//EN\" \"http://www.puppycrawl.com/dtds/configuration_1_2.dtd\">";
+  private final Settings settings;
   private static final String CLOSE_MODULE = "</module>";
 
   public CheckstyleProfileExporter(Settings settings) {
@@ -121,6 +122,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     writer.append(CLOSE_MODULE);
   }
 
+  @VisibleForTesting
   static boolean isInTreeWalker(String configKey) {
     return StringUtils.startsWithIgnoreCase(configKey, "Checker/TreeWalker/");
   }

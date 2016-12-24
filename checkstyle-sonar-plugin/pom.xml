@@ -202,16 +202,15 @@
         <artifactId>maven-pmd-plugin</artifactId>
         <version>3.7</version>
         <configuration>
-          <skip>true</skip>
           <targetJdk>${java.version}</targetJdk>
           <minimumTokens>20</minimumTokens>
           <skipEmptyReport>false</skipEmptyReport>
           <failOnViolation>true</failOnViolation>
           <printFailingErrors>true</printFailingErrors>
           <!--<includeTests>true</includeTests>-->
-          <!--<rulesets>
+          <rulesets>
             <ruleset>config/pmd.xml</ruleset>
-          </rulesets>-->
+          </rulesets>
           <excludeRoots>
             <excludeRoot>target/generated-sources/antlr</excludeRoot>
             <excludeRoot>target/generated-sources/antlr/com/puppycrawl/tools/checkstyle/grammars/javadoc</excludeRoot>
@@ -300,16 +299,16 @@
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleConfiguration</pattern>
                 <branchRate>80</branchRate>
-                <lineRate>95</lineRate>
+                <lineRate>94</lineRate>
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleProfileExporter</pattern>
-                <branchRate>89</branchRate>
+                <branchRate>88</branchRate>
                 <lineRate>97</lineRate>
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleProfileImporter</pattern>
-                <branchRate>97</branchRate>
+                <branchRate>96</branchRate>
                 <lineRate>100</lineRate>
               </regex>
               <regex>

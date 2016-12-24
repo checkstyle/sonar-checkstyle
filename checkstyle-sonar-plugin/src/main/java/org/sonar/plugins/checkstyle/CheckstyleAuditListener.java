@@ -44,7 +44,7 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
   private final RuleFinder ruleFinder;
   private final FileSystem fs;
   private final ResourcePerspectives perspectives;
-  private InputFile currentResource = null;
+  private InputFile currentResource;
 
   public CheckstyleAuditListener(RuleFinder ruleFinder, FileSystem fs, ResourcePerspectives perspectives) {
     this.ruleFinder = ruleFinder;

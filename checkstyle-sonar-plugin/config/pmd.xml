@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<ruleset name="PMD ruleset for Checkstyle"
+        xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+         http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+  <description>
+    PMD ruleset for Checkstyle (copy from main repo)
+  </description>
+  <rule ref="rulesets/java/basic.xml"/>
+  <rule ref="rulesets/java/braces.xml"/>
+  <rule ref="rulesets/java/clone.xml"/>
+  <rule ref="rulesets/java/codesize.xml">
+    <!-- we are using CyclomaticComplexity -->
+    <exclude name="ModifiedCyclomaticComplexity"/>
+    <!-- we are using CyclomaticComplexity -->
+    <exclude name="StdCyclomaticComplexity"/>
+  </rule>
+
+  <rule ref="rulesets/java/codesize.xml/CyclomaticComplexity">
+    <properties>
+      <property name="showClassesComplexity" value="false"/>
+      <property name="reportLevel" value="11"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/codesize.xml/NPathComplexity">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/codesize.xml/TooManyFields">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/codesize.xml/TooManyMethods">
+    <properties>
+      <property name="maxmethods" value="20"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/codesize.xml/ExcessiveClassLength">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/codesize.xml/ExcessiveMethodLength">
+    <properties>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/comments.xml">
+    <!-- activate after chekcstyle is activated -->
+    <exclude name="CommentRequired"/>
+    <!-- we use class comments as source for xdoc files, so content is big and that is by design -->
+    <exclude name="CommentSize"/>
+  </rule>
+
+  <rule ref="rulesets/java/controversial.xml">
+    <!-- calling super() is completely pointless, no matter if class inherits anything or not; it is meaningful only if you do not call implicit constructor of base class -->
+    <exclude name="CallSuperInConstructor"/>
+    <!-- We reuse Check instances between java files, we need to clear state of class in beginTree() methods -->
+    <exclude name="NullAssignment"/>
+    <!-- it is possible only in functional languages and fanatically-pristine code, without additional option that are done at ReturnCountExtendedCheck it is not good rule -->
+    <exclude name="OnlyOneReturn"/>
+    <!-- opposite to UnnecessaryConstructor -->
+    <exclude name="AtLeastOneConstructor"/>
+    <!-- that rule is too buggy, too much false positives-->
+    <exclude name="DataflowAnomalyAnalysis"/>
+    <!-- turning local variables to fields create design problems and extend scope of variable -->
+    <exclude name="AvoidFinalLocalVariable"/>
+    <!-- conflicts with names that does not mean in/out -->
+    <exclude name="AvoidPrefixingMethodParameters"/>
+    <!-- that is not practical, no options to allow some magic numbers, we will use our implementation -->
+    <exclude name="AvoidLiteralsInIfCondition"/>
+    <!-- Checkstyle is not thread safe -->
+    <exclude name="UseConcurrentHashMap"/>
+  </rule>
+  <rule ref="rulesets/java/controversial.xml/AvoidUsingShortType">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/coupling.xml">
+    <!-- produce too much violations, suppressed till we figure out how useful that metrics-->
+    <exclude name="LawOfDemeter"/>
+    <!-- this rule is for managing import, we have special Check for that -->
+    <exclude name="LoosePackageCoupling"/>
+  </rule>
+  <rule ref="rulesets/java/coupling.xml/ExcessiveImports">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/coupling.xml/CouplingBetweenObjects">
+    <properties>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/design.xml">
+    <!-- extra final modifier does not make code more secure in that cases-->
+    <exclude name="ImmutableField"/>
+    <!-- this rule does not have any option, unreasonable to use -->
+    <exclude name="MissingBreakInSwitch"/>
+    <!-- we need compare by ref as Tree structure is immutable, we can easily rely on refs -->
+    <exclude name="CompareObjectsWithEquals"/>
+    <!-- we will use our own declaration order logic -->
+    <exclude name="FieldDeclarationsShouldBeAtStartOfClass"/>
+    <!-- too much alarms of Checks, we will never move logic out of Check, each Check is independent logic container -->
+    <exclude name="GodClass"/>
+    <!-- need to be be investigated -->
+    <exclude name="SingularField"/>
+  </rule>
+<!--
+  <rule ref="rulesets/java/design.xml/SingularField">
+    <properties>
+      <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration[@Image='CheckstyleVersion']"/>
+    </properties>
+  </rule>
+-->
+  <rule ref="rulesets/java/design.xml/AccessorClassGeneration">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/design.xml/PreserveStackTrace">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/design.xml/EmptyMethodInAbstractClassShouldBeAbstract">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/design.xml/AbstractClassWithoutAnyMethod">
+    <properties>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/design.xml/AvoidDeeplyNestedIfStmts">
+    <properties>
+      <!-- default is 3 but we try to use single point of exit from method and that require extra IFs -->
+      <property name="problemDepth" value="4"/>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/empty.xml"/>
+  <rule ref="rulesets/java/empty.xml/EmptyCatchBlock">
+    <properties>
+      <property name="allowCommentedBlocks" value="true"/>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/finalizers.xml"/>
+  <rule ref="rulesets/java/imports.xml"/>
+  <rule ref="rulesets/java/javabeans.xml">
+    <!-- too many false-positives -->
+    <exclude name="BeanMembersShouldSerialize"/>
+  </rule>
+  <rule ref="rulesets/java/junit.xml"/>
+  <rule ref="rulesets/java/logging-jakarta-commons.xml">
+    <!-- slf4j does not need guards -->
+    <exclude name="GuardLogStatement"/>
+  </rule>
+  <rule ref="rulesets/java/logging-java.xml">
+    <!-- NPE -->
+    <exclude name="InvalidSlf4jMessageFormat"/>
+  </rule>
+  <rule ref="rulesets/java/logging-java.xml/SystemPrintln">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/logging-java.xml/AvoidPrintStackTrace">
+    <properties>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/migrating.xml"/>
+
+  <rule ref="rulesets/java/naming.xml">
+    <!-- we use CheckstyleCustomShortVariable, to control lenght (will be fixed in PMD 5.4) and skip Override methods -->
+    <exclude name="ShortVariable"/>
+  </rule>
+  <rule ref="rulesets/java/naming.xml/AbstractNaming">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/naming.xml/LongVariable">
+    <properties>
+      <!-- nothing bad in long and descriptive variable names if only they fit line, but still keep it reasonable -->
+      <property name="minimum" value="45"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/naming.xml/ShortClassName">
+    <properties>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/optimizations.xml">
+    <!--produces more false-positives than real problems-->
+    <exclude name="AvoidInstantiatingObjectsInLoops"/>
+    <!--pollutes code with modifiers-->
+    <exclude name="LocalVariableCouldBeFinal"/>
+    <!--pollutes code with modifiers-->
+    <exclude name="MethodArgumentCouldBeFinal"/>
+    <!--not configurable, decreases readability-->
+    <exclude name="UseStringBufferForStringAppends"/>
+  </rule>
+  <rule ref="rulesets/java/strictexception.xml/AvoidCatchingGenericException">
+    <properties>
+      <!-- need to be be investigated -->
+      <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration[@Image='CheckstyleAuditListener' or @Image='CheckstyleExecutor']"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/strictexception.xml/AvoidThrowingRawExceptionTypes">
+    <properties>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/strings.xml"/>
+  <rule ref="rulesets/java/strings.xml/AvoidDuplicateLiterals">
+    <properties>
+      <!-- Annotations like '@SuppressWarnings' don't need to be checked, it is better to keep their strings
+           connected to the annotation instead of separating. -->
+      <property name="skipAnnotations" value="true"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/sunsecure.xml/MethodReturnsInternalArray">
+    <properties>
+    </properties>
+  </rule>
+  <rule ref="rulesets/java/typeresolution.xml"/>
+  <rule ref="rulesets/java/unnecessary.xml"/>
+  <rule ref="rulesets/java/unusedcode.xml"/>
+
+</ruleset>

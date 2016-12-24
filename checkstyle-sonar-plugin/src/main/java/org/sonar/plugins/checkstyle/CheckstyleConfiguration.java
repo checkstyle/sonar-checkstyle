@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
@@ -94,22 +95,23 @@ public class CheckstyleConfiguration implements BatchExtension {
     return null;
   }
 
-  public com.puppycrawl.tools.checkstyle.api.Configuration getCheckstyleConfiguration() throws CheckstyleException {
+  public Configuration getCheckstyleConfiguration() throws CheckstyleException {
     File xmlConfig = getXMLDefinitionFile();
 
     LOG.info("Checkstyle configuration: " + xmlConfig.getAbsolutePath());
-    com.puppycrawl.tools.checkstyle.api.Configuration configuration = toCheckstyleConfiguration(xmlConfig);
+    Configuration configuration = toCheckstyleConfiguration(xmlConfig);
     defineCharset(configuration);
     return configuration;
   }
 
-  static com.puppycrawl.tools.checkstyle.api.Configuration toCheckstyleConfiguration(File xmlConfig) throws CheckstyleException {
+  @VisibleForTesting
+  static Configuration toCheckstyleConfiguration(File xmlConfig) throws CheckstyleException {
     return ConfigurationLoader.loadConfiguration(xmlConfig.getAbsolutePath(), new PropertiesExpander(new Properties()));
   }
 
-  private void defineCharset(com.puppycrawl.tools.checkstyle.api.Configuration configuration) {
+  private void defineCharset(Configuration configuration) {
     defineModuleCharset(configuration);
-    for (com.puppycrawl.tools.checkstyle.api.Configuration module : configuration.getChildren()) {
+    for (Configuration module : configuration.getChildren()) {
       defineModuleCharset(module);
     }
   }

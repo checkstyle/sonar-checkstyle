@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
@@ -58,9 +59,9 @@ public class CheckstyleProfileImporter extends ProfileImporter {
   private final RuleFinder ruleFinder;
 
   private static class Module {
-    String name;
-    Map<String, String> properties = Maps.newHashMap();
-    List<Module> modules = Lists.newArrayList();
+    private String name;
+    private Map<String, String> properties = Maps.newHashMap();
+    private List<Module> modules = Lists.newArrayList();
   }
 
   public CheckstyleProfileImporter(RuleFinder ruleFinder) {
@@ -135,10 +136,12 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     }
   }
 
+  @VisibleForTesting
   static boolean isIgnored(String configKey) {
     return StringUtils.equals(configKey, "FileContentsHolder") || StringUtils.equals(configKey, "SuppressWarningsHolder");
   }
 
+  @VisibleForTesting
   static boolean isFilter(String configKey) {
     for (String filter : FILTERS) {
       if (StringUtils.equals(configKey, filter)) {
