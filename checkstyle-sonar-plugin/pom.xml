@@ -276,6 +276,18 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>edu.illinois</groupId>
+        <artifactId>nondex-maven-plugin</artifactId>
+        <version>1.1.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>nondex</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
         <version>1.17</version>
