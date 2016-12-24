@@ -14,6 +14,11 @@
   <name>Checkstyle SonarQube Plugin</name>
   <description>Checkstyle is a code analyser to help programmers write Java code that adheres to a coding standard.</description>
 
+  <properties>
+    <checkstyle.version>7.3</checkstyle.version>
+    <checkstyle.plugin.version>2.17</checkstyle.plugin.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.codehaus.sonar</groupId>
@@ -122,6 +127,36 @@
     </resources>
 
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${checkstyle.plugin.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <!-- https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
+                 to run checkstyle validation in terminal please use command "mvn process-classes"
+            -->
+            <phase>process-classes</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_checks.xml</configLocation>
+              <failOnViolation>true</failOnViolation>
+              <linkXRef>false</linkXRef>
+              <propertiesLocation>checkstyle.properties</propertiesLocation>
+              <sourceDirectory>${project.basedir}/src</sourceDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
