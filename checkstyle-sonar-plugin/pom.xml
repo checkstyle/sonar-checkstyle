@@ -229,10 +229,9 @@
         <artifactId>findbugs-maven-plugin</artifactId>
         <version>3.0.4</version>
         <configuration>
-          <skip>true</skip>
           <effort>Max</effort>
           <threshold>Low</threshold>
-          <!--<excludeFilterFile>config/findbugs-exclude.xml</excludeFilterFile>-->
+          <excludeFilterFile>config/findbugs-exclude.xml</excludeFilterFile>
         </configuration>
         <executions>
           <execution>
