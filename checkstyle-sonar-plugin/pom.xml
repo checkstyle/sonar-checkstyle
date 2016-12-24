@@ -276,6 +276,74 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <!--<quiet>true</quiet>-->
+          <formats>
+            <format>xml</format>
+            <format>html</format>
+          </formats>
+          <check>
+            <haltOnFailure>true</haltOnFailure>
+            <branchRate>100</branchRate>
+            <lineRate>100</lineRate>
+            <totalBranchRate>86</totalBranchRate>
+            <totalLineRate>91</totalLineRate>
+            <regexes>
+              <regex>
+                <pattern>org.sonar.plugins.checkstyle.CheckstyleAuditListener</pattern>
+                <branchRate>71</branchRate>
+                <lineRate>85</lineRate>
+              </regex>
+              <regex>
+                <pattern>org.sonar.plugins.checkstyle.CheckstyleConfiguration</pattern>
+                <branchRate>80</branchRate>
+                <lineRate>95</lineRate>
+              </regex>
+              <regex>
+                <pattern>org.sonar.plugins.checkstyle.CheckstyleProfileExporter</pattern>
+                <branchRate>89</branchRate>
+                <lineRate>97</lineRate>
+              </regex>
+              <regex>
+                <pattern>org.sonar.plugins.checkstyle.CheckstyleProfileImporter</pattern>
+                <branchRate>97</branchRate>
+                <lineRate>100</lineRate>
+              </regex>
+              <regex>
+                <pattern>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</pattern>
+                <branchRate>0</branchRate>
+                <lineRate>0</lineRate>
+              </regex>
+              <regex>
+                <pattern>org.sonar.plugins.checkstyle.CheckstyleSensor</pattern>
+                <branchRate>100</branchRate>
+                <lineRate>85</lineRate>
+              </regex>
+              <regex>
+                <pattern>org.sonar.plugins.checkstyle.CheckstyleSeverityUtils</pattern>
+                <branchRate>76</branchRate>
+                <lineRate>91</lineRate>
+              </regex>
+              <regex>
+                <pattern>org.sonar.plugins.checkstyle.CheckstyleVersion</pattern>
+                <branchRate>100</branchRate>
+                <lineRate>78</lineRate>
+              </regex>
+            </regexes>
+          </check>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>edu.illinois</groupId>
         <artifactId>nondex-maven-plugin</artifactId>
         <version>1.1.1</version>
