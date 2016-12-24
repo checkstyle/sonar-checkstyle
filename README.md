@@ -9,11 +9,11 @@ Official announcement of project transfer - https://groups.google.com/d/topic/so
 
 This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforge.net/).
 
-Checkstyle Plugin|2.0|2.1.1|2.2|2.3|2.4|3.1|3.1.1|3.1.2|3.2|3.3
------------------|---|---|---|---|---|---|---|---|---|---
-Sonar|3.6|3.6|4.5.1|4.5.1|4.5.2|4.5.2|4.5.2|4.5.2|4.5.2|4.5.2
-Checkstyle|5.6|5.6|6.1|6.4.1|6.12.1|7.1|7.1.1|7.1.2|7.2|7.3
-Jdk|1.6|1.6|1.6|1.7|1.7|1.8|1.8|1.8|1.8|1.8
+Checkstyle Plugin|2.0|2.1.1|2.2|2.3|2.4|3.1|3.1.1|3.1.2|3.2|3.3|3.4-SNAPSHOT
+-----------------|---|---|---|---|---|---|---|---|---|---|---
+Sonar|3.6|3.6|4.5.1|4.5.1|4.5.2|4.5.2|4.5.2|4.5.2|4.5.2|4.5.2|4.5.4
+Checkstyle|5.6|5.6|6.1|6.4.1|6.12.1|7.1|7.1.1|7.1.2|7.2|7.3|7.4
+Jdk|1.6|1.6|1.6|1.7|1.7|1.8|1.8|1.8|1.8|1.8|1.8
 
 Jdk version depends on checkstyle's and sonar's jdk version:
 
