@@ -19,6 +19,9 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
 import org.sonar.squidbridge.rules.ExternalDescriptionLoader;
@@ -35,17 +38,25 @@ public final class CheckstyleRulesDefinition implements RulesDefinition {
       .createRepository(CheckstyleConstants.REPOSITORY_KEY, "java")
       .setName(CheckstyleConstants.REPOSITORY_NAME);
 
-    extractRulesData(repository, "/org/sonar/plugins/checkstyle/rules.xml", "/org/sonar/l10n/checkstyle/rules/checkstyle");
+      try {
+          extractRulesData(repository, "/org/sonar/plugins/checkstyle/rules.xml", "/org/sonar/l10n/checkstyle/rules/checkstyle");
+      } catch (IOException e) {
+          throw new IllegalStateException("Exception during extractRulesData", e);
+      }
 
-    repository.done();
+      repository.done();
   }
 
   @VisibleForTesting
-  static void extractRulesData(NewRepository repository, String xmlRulesFilePath, String htmlDescriptionFolder) {
+  static void extractRulesData(NewRepository repository, String xmlRulesFilePath, String htmlDescriptionFolder) throws IOException {
     RulesDefinitionXmlLoader ruleLoader = new RulesDefinitionXmlLoader();
-    ruleLoader.load(repository, CheckstyleRulesDefinition.class.getResourceAsStream(xmlRulesFilePath), "UTF-8");
+    try (InputStream resource = CheckstyleRulesDefinition.class.getResourceAsStream(xmlRulesFilePath)) {
+       ruleLoader.load(repository, resource, "UTF-8");
+    }
     ExternalDescriptionLoader.loadHtmlDescriptions(repository, htmlDescriptionFolder);
-    PropertyFileLoader.loadNames(repository, CheckstyleRulesDefinition.class.getResourceAsStream("/org/sonar/l10n/checkstyle.properties"));
+    try (InputStream resource = CheckstyleRulesDefinition.class.getResourceAsStream("/org/sonar/l10n/checkstyle.properties")) {
+       PropertyFileLoader.loadNames(repository, resource);
+    }
     SqaleXmlLoader.load(repository, "/com/sonar/sqale/checkstyle-model.xml");
   }
 }

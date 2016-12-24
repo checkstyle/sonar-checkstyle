@@ -6,14 +6,8 @@
       <Bug pattern="DE_MIGHT_IGNORE" />
     </Match>
     <Match>
-      <!-- to investigate -->
+      <!-- to investigate: but most likely we prevent whole sonar crash there -->
       <Class name="org.sonar.plugins.checkstyle.CheckstyleExecutor" />
       <Bug pattern="REC_CATCH_EXCEPTION" />
     </Match>
-    <Match>
-      <!-- to investigate -->
-      <Class name="org.sonar.plugins.checkstyle.CheckstyleRulesDefinition" />
-      <Bug pattern="OBL_UNSATISFIED_OBLIGATION" />
-    </Match>
-    
 </FindBugsFilter>
