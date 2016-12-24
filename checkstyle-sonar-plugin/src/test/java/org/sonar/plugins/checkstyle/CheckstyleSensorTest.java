@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 public class CheckstyleSensorTest {
 
   private RulesProfile profile = mock(RulesProfile.class);
-  private DefaultFileSystem fileSystem = new DefaultFileSystem();
+  private DefaultFileSystem fileSystem = new DefaultFileSystem(new File(""));
   private CheckstyleSensor sensor = new CheckstyleSensor(profile, null, fileSystem);
 
   private Project project = new Project("projectKey");

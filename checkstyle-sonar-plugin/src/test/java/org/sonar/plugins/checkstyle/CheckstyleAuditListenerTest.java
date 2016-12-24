@@ -46,7 +46,7 @@ public class CheckstyleAuditListenerTest {
   private File file = new File("file1");
   private AuditEvent event =
     new AuditEvent(this, file.getAbsolutePath(), new LocalizedMessage(42, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
-  private DefaultFileSystem fs = new DefaultFileSystem();
+  private DefaultFileSystem fs = new DefaultFileSystem(new File(""));
   private RuleFinder ruleFinder = mock(RuleFinder.class);
   private DefaultInputFile inputFile = new DefaultInputFile(file.getPath());
   private ResourcePerspectives perspectives = mock(ResourcePerspectives.class);

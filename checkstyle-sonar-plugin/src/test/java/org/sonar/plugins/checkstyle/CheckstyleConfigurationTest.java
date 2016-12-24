@@ -45,7 +45,7 @@ public class CheckstyleConfigurationTest {
 
   @Before
   public void beforeClass() {
-    fileSystem = new DefaultFileSystem();
+    fileSystem = new DefaultFileSystem(new File(""));
     DefaultInputFile inputFile = new DefaultInputFile("mainFile");
     inputFile.setAbsolutePath("mainFile");
     inputFile.setLanguage("java");
