@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.text.MessageFormat;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 
@@ -167,7 +168,7 @@ public final class CheckUtil {
         catch (IOException ex) {
             return null;
         }
-        final MessageFormat formatter = new MessageFormat(pr.getProperty(messageKey));
+        final MessageFormat formatter = new MessageFormat(pr.getProperty(messageKey), Locale.ENGLISH);
         return formatter.format(arguments);
     }
 }
