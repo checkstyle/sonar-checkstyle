@@ -198,6 +198,34 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.7</version>
+        <configuration>
+          <skip>true</skip>
+          <targetJdk>${java.version}</targetJdk>
+          <minimumTokens>20</minimumTokens>
+          <skipEmptyReport>false</skipEmptyReport>
+          <failOnViolation>true</failOnViolation>
+          <printFailingErrors>true</printFailingErrors>
+          <!--<includeTests>true</includeTests>-->
+          <!--<rulesets>
+            <ruleset>config/pmd.xml</ruleset>
+          </rulesets>-->
+          <excludeRoots>
+            <excludeRoot>target/generated-sources/antlr</excludeRoot>
+            <excludeRoot>target/generated-sources/antlr/com/puppycrawl/tools/checkstyle/grammars/javadoc</excludeRoot>
+          </excludeRoots>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
         <version>1.17</version>
