@@ -287,7 +287,7 @@
             <haltOnFailure>true</haltOnFailure>
             <branchRate>100</branchRate>
             <lineRate>100</lineRate>
-            <totalBranchRate>82</totalBranchRate>
+            <totalBranchRate>81</totalBranchRate>
             <totalLineRate>87</totalLineRate>
             <regexes>
               <regex>
