@@ -33,13 +33,13 @@ import java.util.TreeSet;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.puppycrawl.tools.checkstyle.TreeWalker;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck;
 import com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheck;
@@ -65,7 +65,6 @@ public final class ChecksTest {
     );
 
     @SuppressWarnings("static-method")
-    @Ignore
     @Test
     public void verifyTestConfigurationFiles() throws Exception {
         final Set<Class<?>> modules = CheckUtil.getCheckstyleModules();
@@ -95,6 +94,10 @@ public final class ChecksTest {
             final String key = rule.getAttributes().getNamedItem("key").getTextContent();
 
             final Class<?> module = findModule(modules, key);
+
+            if (CheckUtil.isFilterModule(module))
+                Assert.fail("Module should not be in sonar rules: " + module.getCanonicalName());
+
             modules.remove(module);
 
             Assert.assertNotNull("Unknown class found in sonar: " + key, module);
@@ -114,7 +117,7 @@ public final class ChecksTest {
                 expectedConfigKey = "Checker/TreeWalker/" + moduleSimpleName.replaceAll("Check$", "");
             }
             else {
-                expectedConfigKey = "Checker/" + moduleSimpleName.replaceAll("Check$", "");;
+                expectedConfigKey = "Checker/" + moduleSimpleName.replaceAll("Check$", "");
             }
 
             Assert.assertNotNull(moduleName + " requires a configKey in sonar", configKey);
@@ -125,7 +128,8 @@ public final class ChecksTest {
         }
 
         for (Class<?> module : modules) {
-            Assert.fail("Module not found in sonar: " + module.getCanonicalName());
+            if (!CheckUtil.isFilterModule(module) && module != TreeWalker.class)
+                Assert.fail("Module not found in sonar: " + module.getCanonicalName());
         }
     }
 
