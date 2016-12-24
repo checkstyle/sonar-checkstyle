@@ -1275,6 +1275,11 @@
     <param key="ignoreOverridden" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
+    <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
+      <defaultValue>anoninner</defaultValue>
+    </param>
+    <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
+    </param>
     <status>READY</status>
   </rule>
 
