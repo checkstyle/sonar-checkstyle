@@ -24,4 +24,4 @@ matrix:
 
     # package
     - jdk: oraclejdk8
-      env: TEST=package
+      env: TEST=nondex
