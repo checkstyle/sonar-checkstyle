@@ -121,7 +121,7 @@ public class CheckstyleConfigurationTest {
       try {
         writer.write("<conf/>");
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new IllegalStateException(e);
       }
     }
   }

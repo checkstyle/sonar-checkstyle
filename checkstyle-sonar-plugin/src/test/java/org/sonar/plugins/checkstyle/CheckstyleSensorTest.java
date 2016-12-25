@@ -43,19 +43,19 @@ public class CheckstyleSensorTest {
   private Project project = new Project("projectKey");
 
   @Test
-  public void shouldExecuteOnProject_without_java_file_and_with_rule() throws Exception {
+  public void shouldExecuteOnProjectWithoutJavaFileAndWithRule() {
     addOneActiveRule();
     assertThat(sensor.shouldExecuteOnProject(project)).isFalse();
   }
 
   @Test
-  public void shouldExecuteOnProject_with_java_file_and_without_rule() throws Exception {
+  public void shouldExecuteOnProjectWithJavaFileAndWithoutRule() {
     addOneJavaFile();
     assertThat(sensor.shouldExecuteOnProject(project)).isFalse();
   }
 
   @Test
-  public void shouldExecuteOnProject_with_java_files_and_rules() throws Exception {
+  public void shouldExecuteOnProjectWithJavaFilesAndRules() {
     addOneJavaFile();
     addOneActiveRule();
     assertThat(sensor.shouldExecuteOnProject(project)).isTrue();

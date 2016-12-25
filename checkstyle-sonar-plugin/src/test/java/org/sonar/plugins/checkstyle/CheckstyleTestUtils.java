@@ -30,7 +30,11 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
 
-public class CheckstyleTestUtils {
+public final class CheckstyleTestUtils {
+
+  private CheckstyleTestUtils() {
+    // no code
+  }
 
   public static String getResourceContent(String path) {
     try {

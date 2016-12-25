@@ -31,7 +31,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class CheckstyleRulesDefinitionTest {
 
-  List<String> NO_SQALE = ImmutableList.of(
+  private final List<String> NO_SQALE = ImmutableList.of(
     "com.puppycrawl.tools.checkstyle.checks.TranslationCheck",
     "com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck",
     "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck",
@@ -72,20 +72,20 @@ public class CheckstyleRulesDefinitionTest {
           .isNotNull();
       }
 
-      if (!NO_SQALE.contains(rule.key())) {
+      if (NO_SQALE.contains(rule.key())) {
         assertThat(rule.debtRemediationFunction())
-          .overridingErrorMessage("Sqale remediation function is not set for rule '" + rule.key())
-          .isNotNull();
+                .overridingErrorMessage("Sqale remediation function is set for rule '" + rule.key())
+                .isNull();
         assertThat(rule.debtSubCharacteristic())
-          .overridingErrorMessage("Sqale characteristic is not set for rule '" + rule.key())
-          .isNotNull();
+                .overridingErrorMessage("Sqale characteristic is set for rule '" + rule.key())
+                .isNull();
       } else {
         assertThat(rule.debtRemediationFunction())
-          .overridingErrorMessage("Sqale remediation function is set for rule '" + rule.key())
-          .isNull();
+                .overridingErrorMessage("Sqale remediation function is not set for rule '" + rule.key())
+                .isNotNull();
         assertThat(rule.debtSubCharacteristic())
-          .overridingErrorMessage("Sqale characteristic is set for rule '" + rule.key())
-          .isNull();
+                .overridingErrorMessage("Sqale characteristic is not set for rule '" + rule.key())
+                .isNotNull();
       }
     }
   }

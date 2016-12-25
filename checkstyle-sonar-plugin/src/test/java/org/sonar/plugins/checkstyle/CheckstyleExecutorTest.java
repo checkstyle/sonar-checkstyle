@@ -35,7 +35,9 @@ import org.sonar.java.JavaClasspath;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Locale;
@@ -56,7 +58,7 @@ public class CheckstyleExecutorTest {
   public ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void execute() throws Exception {
+  public void execute() throws CheckstyleException {
     CheckstyleConfiguration conf = mockConf();
     CheckstyleAuditListener listener = mockListener();
     CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
@@ -82,7 +84,7 @@ public class CheckstyleExecutorTest {
   }
 
   @Test
-  public void execute_exception() throws Exception {
+  public void executeException() throws CheckstyleException {
     thrown.expect(IllegalStateException.class);
     thrown.expectMessage("Can not execute Checkstyle");
     CheckstyleConfiguration conf = mockConf();
@@ -91,7 +93,7 @@ public class CheckstyleExecutorTest {
   }
 
   @Test
-  public void getURL_exception() throws Exception {
+  public void getURLException() throws URISyntaxException {
     thrown.expect(IllegalStateException.class);
     thrown.expectMessage("Fail to create the project classloader. Classpath element is invalid: htp://aa");
     CheckstyleExecutor executor = new CheckstyleExecutor(null, null, createJavaResourceLocator());
@@ -105,7 +107,7 @@ public class CheckstyleExecutorTest {
   }
 
   @Test
-  public void canGenerateXMLReport_in_english() throws Exception {
+  public void canGenerateXMLReportInEnglish() throws CheckstyleException, IOException {
     Locale initialLocale = Locale.getDefault();
     Locale.setDefault(Locale.FRENCH);
 

@@ -85,7 +85,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void properties_should_be_inherited() {
+  public void propertiesShouldBeInherited() {
     Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/inheritance_of_properties.xml"));
     RulesProfile profile = importer.importProfile(reader, messages);
 

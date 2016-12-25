@@ -79,7 +79,7 @@ public class CheckstyleAuditListenerTest {
 
 
   @Test
-  public void add_error_test() throws Exception {
+  public void addErrorTest() {
     Rule rule = setupRule("repo", "key");
 
     Issuable issuable = setupIssuable();
@@ -101,14 +101,14 @@ public class CheckstyleAuditListenerTest {
   }
 
   @Test
-  public void add_error_on_unknown_rule() throws Exception {
+  public void addErrorOnUnknownRule() {
     Issuable issuable = setupIssuable();
     addErrorToListener();
     verifyZeroInteractions(issuable);
   }
 
   @Test
-  public void add_error_on_unknown_file() throws Exception {
+  public void addErrorOnUnknownFile() {
     Rule rule = setupRule("repo", "key");
     addErrorToListener();
     verifyZeroInteractions(rule);

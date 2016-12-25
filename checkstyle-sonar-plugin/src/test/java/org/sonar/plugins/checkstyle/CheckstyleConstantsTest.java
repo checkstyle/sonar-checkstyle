@@ -28,7 +28,7 @@ import static org.fest.assertions.Assertions.assertThat;
 public class CheckstyleConstantsTest {
 
   @Test
-  public void private_constructor() throws Exception {
+  public void privateConstructor() throws ReflectiveOperationException {
     Constructor<CheckstyleConstants> constructor = CheckstyleConstants.class.getDeclaredConstructor();
     assertThat(constructor.isAccessible()).isFalse();
     constructor.setAccessible(true);

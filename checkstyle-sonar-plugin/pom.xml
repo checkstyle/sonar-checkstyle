@@ -207,7 +207,7 @@
           <skipEmptyReport>false</skipEmptyReport>
           <failOnViolation>true</failOnViolation>
           <printFailingErrors>true</printFailingErrors>
-          <!--<includeTests>true</includeTests>-->
+          <includeTests>true</includeTests>
           <rulesets>
             <ruleset>config/pmd.xml</ruleset>
           </rulesets>

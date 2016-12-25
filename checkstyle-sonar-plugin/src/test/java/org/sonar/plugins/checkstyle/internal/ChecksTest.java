@@ -25,6 +25,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -32,6 +33,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.Assert;
@@ -78,7 +81,7 @@ public final class ChecksTest {
         validateSonarProperties(new HashSet<>(modules));
     }
 
-    private static void validateSonarRules(Set<Class<?>> modules) throws Exception {
+    private static void validateSonarRules(Set<Class<?>> modules) throws ParserConfigurationException, IOException {
         final File rulesFile = new File(RULES_PATH);
 
         Assert.assertTrue("'rules.xml' must exist", rulesFile.exists());
@@ -91,7 +94,7 @@ public final class ChecksTest {
     }
 
     private static void validateSonarRules(Document document, Set<Class<?>> modules)
-            throws Exception {
+            {
         final NodeList rules = document.getElementsByTagName("rule");
 
         for (int position = 0; position < rules.getLength(); position++) {
@@ -104,8 +107,9 @@ public final class ChecksTest {
 
             Assert.assertNotNull("Unknown class found in sonar rules: " + key, module);
 
-            if (CheckUtil.isFilterModule(module))
+            if (CheckUtil.isFilterModule(module)) {
                 Assert.fail("Module should not be in sonar rules: " + module.getCanonicalName());
+            }
 
             modules.remove(module);
 
@@ -136,13 +140,14 @@ public final class ChecksTest {
         }
 
         for (Class<?> module : modules) {
-            if (!CheckUtil.isFilterModule(module) && module != TreeWalker.class)
+            if (!CheckUtil.isFilterModule(module) && module != TreeWalker.class) {
                 Assert.fail("Module not found in sonar rules: " + module.getCanonicalName());
+            }
         }
     }
 
     private static void validateSonarRuleProperties(Class<?> module, Set<Node> parameters)
-            throws Exception {
+            {
         final String moduleName = module.getName();
         final Set<String> properties = getFinalProperties(module);
 
@@ -168,7 +173,7 @@ public final class ChecksTest {
         }
     }
 
-    private static void validateSonarProperties(Set<Class<?>> modules) throws Exception {
+    private static void validateSonarProperties(Set<Class<?>> modules) throws IOException {
         final File propertiesFile = new File(MODULE_PROPERTIES_PATH);
 
         Assert.assertTrue("'checkstyle.properties' must exist", propertiesFile.exists());
@@ -180,7 +185,7 @@ public final class ChecksTest {
     }
 
     private static void validateSonarProperties(Properties properties, Set<Class<?>> modules)
-            throws Exception {
+            {
         Class<?> lastModule = null;
         Set<String> moduleProperties = null;
 
@@ -212,13 +217,15 @@ public final class ChecksTest {
 
             Assert.assertNotNull("Unknown class found in sonar properties: " + moduleName, module);
 
-            if (CheckUtil.isFilterModule(module))
+            if (CheckUtil.isFilterModule(module)) {
                 Assert.fail("Module should not be in sonar properties: "
                         + module.getCanonicalName());
+            }
 
             if (lastModule != module) {
-                if (lastModule != null)
+                if (lastModule != null) {
                     modules.remove(lastModule);
+                }
                 if (moduleProperties != null) {
                     for (String property : moduleProperties) {
                         Assert.fail(lastModule.getCanonicalName()
@@ -230,8 +237,9 @@ public final class ChecksTest {
             }
             lastModule = module;
 
-            if (!keyName.endsWith(".name"))
+            if (!keyName.endsWith(".name")) {
                 validateSonarPropertyProperties(module, moduleProperties, keyName);
+            }
         }
 
         if (lastModule != null) {
@@ -239,8 +247,9 @@ public final class ChecksTest {
         }
 
         for (Class<?> module : modules) {
-            if (!CheckUtil.isFilterModule(module) && module != TreeWalker.class)
+            if (!CheckUtil.isFilterModule(module) && module != TreeWalker.class) {
                 Assert.fail("Module not found in sonar properties: " + module.getCanonicalName());
+            }
         }
     }
 
@@ -266,7 +275,7 @@ public final class ChecksTest {
         return result;
     }
 
-    private static Set<String> getFinalProperties(Class<?> clss) throws Exception {
+    private static Set<String> getFinalProperties(Class<?> clss) {
         final Set<String> properties = getProperties(clss);
 
         if (AbstractJavadocCheck.class.isAssignableFrom(clss)) {
@@ -288,7 +297,12 @@ public final class ChecksTest {
             .forEach(properties::remove);
 
         if (AbstractCheck.class.isAssignableFrom(clss)) {
-            final AbstractCheck check = (AbstractCheck) clss.newInstance();
+            final AbstractCheck check;
+            try {
+                check = (AbstractCheck) clss.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new IllegalStateException(e);
+            }
 
             final int[] acceptableTokens = check.getAcceptableTokens();
             Arrays.sort(acceptableTokens);

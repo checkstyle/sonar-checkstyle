@@ -21,10 +21,14 @@
     <properties>
       <property name="showClassesComplexity" value="false"/>
       <property name="reportLevel" value="11"/>
-    </properties>
+      <!-- very big logic in test -->
+      <property name="violationSuppressXPath" value="//MethodDeclaration[@Name='validateSonarProperties' and ../../..[@Image='ChecksTest']]"/>
+    </properties>gnature
   </rule>
   <rule ref="rulesets/java/codesize.xml/NPathComplexity">
     <properties>
+      <!-- very big logic in test -->
+      <property name="violationSuppressXPath" value="//MethodDeclaration[@Name='validateSonarProperties' and ../../..[@Image='ChecksTest']]"/>
     </properties>
   </rule>
   <rule ref="rulesets/java/codesize.xml/TooManyFields">
@@ -145,11 +149,28 @@
 
   <rule ref="rulesets/java/finalizers.xml"/>
   <rule ref="rulesets/java/imports.xml"/>
+  <rule ref="rulesets/java/imports.xml/TooManyStaticImports">
+    <properties>
+      <property name="maximumStaticImports" value="10" />
+    </properties>
+  </rule>
   <rule ref="rulesets/java/javabeans.xml">
     <!-- too many false-positives -->
     <exclude name="BeanMembersShouldSerialize"/>
   </rule>
-  <rule ref="rulesets/java/junit.xml"/>
+
+  <rule ref="rulesets/java/junit.xml">
+    <!-- verify from another library is used -->
+    <exclude name="JUnitTestsShouldIncludeAssert" />
+    <!-- too much false positives -->
+    <exclude name="JUnitAssertionsShouldIncludeMessage"/>
+  </rule>
+  <rule ref="rulesets/java/junit.xml/JUnitTestContainsTooManyAsserts">
+    <properties>
+      <property name="maximumAsserts" value="15" />
+    </properties>
+  </rule>
+
   <rule ref="rulesets/java/logging-jakarta-commons.xml">
     <!-- slf4j does not need guards -->
     <exclude name="GuardLogStatement"/>
@@ -204,18 +225,16 @@
       <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration[@Image='CheckstyleAuditListener' or @Image='CheckstyleExecutor']"/>
     </properties>
   </rule>
-  <rule ref="rulesets/java/strictexception.xml/AvoidThrowingRawExceptionTypes">
+  <rule ref="rulesets/java/strictexception.xml/SignatureDeclareThrowsException">
     <properties>
+      <!-- not sure if this is good or bad -->
+      <property name="violationSuppressXPath" value="//MethodDeclaration[@Name='verifyTestConfigurationFiles' and ../../..[@Image='ChecksTest']]"/>
     </properties>
   </rule>
 
-  <rule ref="rulesets/java/strings.xml"/>
-  <rule ref="rulesets/java/strings.xml/AvoidDuplicateLiterals">
-    <properties>
-      <!-- Annotations like '@SuppressWarnings' don't need to be checked, it is better to keep their strings
-           connected to the annotation instead of separating. -->
-      <property name="skipAnnotations" value="true"/>
-    </properties>
+  <rule ref="rulesets/java/strings.xml">
+    <!-- too much false positived in tests -->
+    <exclude name="AvoidDuplicateLiterals" />
   </rule>
   <rule ref="rulesets/java/sunsecure.xml/MethodReturnsInternalArray">
     <properties>
