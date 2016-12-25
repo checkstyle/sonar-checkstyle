@@ -133,15 +133,17 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
 
   @VisibleForTesting
   static Integer getLineId(AuditEvent event) {
+    Integer result = null;
     try {
       int line = event.getLine();
       // checkstyle returns 0 if there is no relation to a file content, but we use null
-      return line == 0 ? null : line;
-
+      if (line != 0) {
+        result = line;
+      }
     } catch (Exception e) {
       // checkstyle can throw a NullPointerException if the message is not set
-      return null;
     }
+    return result;
   }
 
   /**

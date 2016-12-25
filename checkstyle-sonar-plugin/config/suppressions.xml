@@ -26,7 +26,7 @@
     <suppress checks="InnerTypeLast" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="ArrayTrailingComma" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="ReturnCount" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="AvoidInlineConditionals" files=".*[\\/]src[\\/]main[\\/]"/>
+    <!--<suppress checks="AvoidInlineConditionals" files=".*[\\/]src[\\/]main[\\/]"/>-->
     <suppress checks="ParameterName" files=".*[\\/]src[\\/]main[\\/]"/>
 
     <suppress checks="LeftCurly" files=".*[\/]src[\/]test[\/]"/>

@@ -293,7 +293,7 @@
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleAuditListener</pattern>
                 <branchRate>71</branchRate>
-                <lineRate>85</lineRate>
+                <lineRate>84</lineRate>
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleConfiguration</pattern>
