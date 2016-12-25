@@ -319,7 +319,7 @@
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleSeverityUtils</pattern>
                 <branchRate>75</branchRate>
-                <lineRate>91</lineRate>
+                <lineRate>87</lineRate>
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleVersion</pattern>
