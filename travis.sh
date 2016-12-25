@@ -5,11 +5,17 @@ set -euo pipefail
 case "$TEST" in
 
 ci)
-  mvn verify -B -e -V
+  mvn clean verify -B -e -V
   ;;
 
-package)
-  mvn clean package
+nondex)
+  cd checkstyle-sonar-plugin
+  mvn --fail-never clean nondex:nondex -Dcheckstyle.skip=true
+  cat `grep -RlE 'td class=.x' .nondex/ | cat` < /dev/null > output.txt
+  RESULT=$(cat output.txt | wc -c)
+  cat output.txt
+  echo 'Size of output:'$RESULT
+  if [[ $RESULT != 0 ]]; then false; fi
   ;;
 
 *)
