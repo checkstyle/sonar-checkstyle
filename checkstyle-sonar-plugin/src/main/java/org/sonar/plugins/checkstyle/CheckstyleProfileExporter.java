@@ -54,7 +54,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
   public void exportProfile(RulesProfile profile, Writer writer) {
     try {
       ListMultimap<String, ActiveRule> activeRulesByConfigKey = arrangeByConfigKey(profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY));
-      generateXML(writer, activeRulesByConfigKey);
+      generateXml(writer, activeRulesByConfigKey);
 
     } catch (IOException e) {
       throw new IllegalStateException("Fail to export the profile " + profile, e);
@@ -62,7 +62,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
 
   }
 
-  private void generateXML(Writer writer, ListMultimap<String, ActiveRule> activeRulesByConfigKey) throws IOException {
+  private void generateXml(Writer writer, ListMultimap<String, ActiveRule> activeRulesByConfigKey) throws IOException {
     appendXmlHeader(writer);
     appendCustomFilters(writer);
     appendCheckerModules(writer, activeRulesByConfigKey);
@@ -78,9 +78,9 @@ public class CheckstyleProfileExporter extends ProfileExporter {
   }
 
   private void appendCustomFilters(Writer writer) throws IOException {
-    String filtersXML = settings.getString(CheckstyleConstants.FILTERS_KEY);
-    if (StringUtils.isNotBlank(filtersXML)) {
-      writer.append(filtersXML);
+    String filtersXml = settings.getString(CheckstyleConstants.FILTERS_KEY);
+    if (StringUtils.isNotBlank(filtersXml)) {
+      writer.append(filtersXml);
     }
   }
 
@@ -115,8 +115,8 @@ public class CheckstyleProfileExporter extends ProfileExporter {
   }
 
   private boolean isSuppressWarningsEnabled() {
-    String filtersXML = settings.getString(CheckstyleConstants.FILTERS_KEY);
-    return filtersXML.contains("<module name=\"SuppressWarningsFilter\" />");
+    String filtersXml = settings.getString(CheckstyleConstants.FILTERS_KEY);
+    return filtersXml.contains("<module name=\"SuppressWarningsFilter\" />");
   }
 
   private static void appendXmlFooter(Writer writer) throws IOException {

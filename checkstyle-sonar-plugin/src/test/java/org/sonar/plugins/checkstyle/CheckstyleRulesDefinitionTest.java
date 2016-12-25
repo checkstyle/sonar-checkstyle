@@ -31,7 +31,7 @@ import com.google.common.collect.ImmutableList;
 
 public class CheckstyleRulesDefinitionTest {
 
-  private final List<String> NO_SQALE = ImmutableList.of(
+  private static final List<String> NO_SQALE = ImmutableList.of(
     "com.puppycrawl.tools.checkstyle.checks.TranslationCheck",
     "com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck",
     "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck",

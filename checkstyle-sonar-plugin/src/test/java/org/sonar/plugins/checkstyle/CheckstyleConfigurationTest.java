@@ -68,21 +68,21 @@ public class CheckstyleConfigurationTest {
   }
 
   @Test
-  public void getTargetXMLReport() {
+  public void getTargetXmlReport() {
     Settings conf = new Settings();
     CheckstyleConfiguration configuration = new CheckstyleConfiguration(conf, null, null, fileSystem);
-    assertThat(configuration.getTargetXMLReport()).isNull();
+    assertThat(configuration.getTargetXmlReport()).isNull();
 
     conf.setProperty(CheckstyleConfiguration.PROPERTY_GENERATE_XML, "true");
     configuration = new CheckstyleConfiguration(conf, null, null, fileSystem);
-    assertThat(configuration.getTargetXMLReport()).isEqualTo(new File(fileSystem.workDir(), "checkstyle-result.xml"));
+    assertThat(configuration.getTargetXmlReport()).isEqualTo(new File(fileSystem.workDir(), "checkstyle-result.xml"));
   }
 
   @Test
   public void writeConfigurationToWorkingDir() throws IOException {
     CheckstyleProfileExporter exporter = new FakeExporter();
     CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter, null, fileSystem);
-    File xmlFile = configuration.getXMLDefinitionFile();
+    File xmlFile = configuration.getXmlDefinitionFile();
 
     assertThat(xmlFile.exists()).isTrue();
     assertThat(FileUtils.readFileToString(xmlFile)).isEqualTo("<conf/>");

@@ -74,7 +74,7 @@ public class CheckstyleExecutor implements BatchExtension {
       checker.setModuleClassLoader(Thread.currentThread().getContextClassLoader());
       checker.addListener(listener);
 
-      File xmlReport = configuration.getTargetXMLReport();
+      File xmlReport = configuration.getTargetXmlReport();
       if (xmlReport != null) {
         LOG.info("Checkstyle output report: " + xmlReport.getAbsolutePath());
         xmlOutput = FileUtils.openOutputStream(xmlReport);
@@ -99,7 +99,7 @@ public class CheckstyleExecutor implements BatchExtension {
   }
 
   @VisibleForTesting
-  URL getURL(URI uri) {
+  URL getUrl(URI uri) {
     try {
       return uri.toURL();
     } catch (MalformedURLException e) {
@@ -111,7 +111,7 @@ public class CheckstyleExecutor implements BatchExtension {
     Collection<File> classpathElements = javaResourceLocator.classpath();
     List<URL> urls = Lists.newArrayList();
     for (File file : classpathElements) {
-      urls.add(getURL(file.toURI()));
+      urls.add(getUrl(file.toURI()));
     }
     return new URLClassLoader(urls.toArray(new URL[urls.size()]), null);
   }

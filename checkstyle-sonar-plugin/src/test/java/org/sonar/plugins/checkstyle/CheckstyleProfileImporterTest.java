@@ -133,7 +133,7 @@ public class CheckstyleProfileImporterTest {
   }
 
   @Test
-  public void testUnvalidXML() {
+  public void testUnvalidXml() {
     Reader reader = new StringReader("not xml");
     importer.importProfile(reader, messages);
     assertThat(messages.getErrors().size()).isEqualTo(1);

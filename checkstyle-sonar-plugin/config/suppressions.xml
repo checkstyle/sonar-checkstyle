@@ -18,7 +18,6 @@
     <suppress checks="RightCurly" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="IllegalCatch" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="CatchParameterName" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="AbbreviationAsWordInName" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="EmptyLineSeparator" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="OperatorWrap" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="MemberName" files=".*[\\/]src[\\/]main[\\/]"/>
@@ -47,7 +46,6 @@
     <suppress checks="ClassDataAbstractionCoupling" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="CyclomaticComplexity" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="NPathComplexity" files=".*[\/]src[\/]test[\/]"/>
-    <suppress checks="AbbreviationAsWordInName" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="CatchParameterName" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="MemberName" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="RegexpMultiline" files=".*[\/]src[\/]test[\/]"/>

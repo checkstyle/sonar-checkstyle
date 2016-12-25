@@ -64,7 +64,7 @@ public class CheckstyleConfiguration implements BatchExtension {
     this.fileSystem = fileSystem;
   }
 
-  public File getXMLDefinitionFile() {
+  public File getXmlDefinitionFile() {
     Writer writer = null;
     File xmlFile = new File(fileSystem.workDir(), "checkstyle.xml");
     try {
@@ -89,7 +89,7 @@ public class CheckstyleConfiguration implements BatchExtension {
     return ImmutableList.<File>builder().addAll(files).build();
   }
 
-  public File getTargetXMLReport() {
+  public File getTargetXmlReport() {
     if (conf.getBoolean(PROPERTY_GENERATE_XML)) {
       return new File(fileSystem.workDir(), "checkstyle-result.xml");
     }
@@ -97,7 +97,7 @@ public class CheckstyleConfiguration implements BatchExtension {
   }
 
   public Configuration getCheckstyleConfiguration() throws CheckstyleException {
-    File xmlConfig = getXMLDefinitionFile();
+    File xmlConfig = getXmlDefinitionFile();
 
     LOG.info("Checkstyle configuration: " + xmlConfig.getAbsolutePath());
     Configuration configuration = toCheckstyleConfiguration(xmlConfig);

@@ -93,11 +93,11 @@ public class CheckstyleExecutorTest {
   }
 
   @Test
-  public void getURLException() throws URISyntaxException {
+  public void getUrlException() throws URISyntaxException {
     thrown.expect(IllegalStateException.class);
     thrown.expectMessage("Fail to create the project classloader. Classpath element is invalid: htp://aa");
     CheckstyleExecutor executor = new CheckstyleExecutor(null, null, createJavaResourceLocator());
-    executor.getURL(new URI("htp://aa"));
+    executor.getUrl(new URI("htp://aa"));
   }
 
   private static JavaResourceLocator createJavaResourceLocator() {
@@ -107,14 +107,14 @@ public class CheckstyleExecutorTest {
   }
 
   @Test
-  public void canGenerateXMLReportInEnglish() throws CheckstyleException, IOException {
+  public void canGenerateXmlReportInEnglish() throws CheckstyleException, IOException {
     Locale initialLocale = Locale.getDefault();
     Locale.setDefault(Locale.FRENCH);
 
     try {
       CheckstyleConfiguration conf = mockConf();
       File report = new File("target/test-tmp/checkstyle-report.xml");
-      when(conf.getTargetXMLReport()).thenReturn(report);
+      when(conf.getTargetXmlReport()).thenReturn(report);
       CheckstyleAuditListener listener = mockListener();
       CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
       executor.execute();
