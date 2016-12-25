@@ -19,14 +19,15 @@
  */
 package org.sonar.plugins.checkstyle;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+
 import org.sonar.api.CoreProperties;
 import org.sonar.api.PropertyType;
 import org.sonar.api.SonarPlugin;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.resources.Qualifiers;
 
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 public final class CheckstylePlugin extends SonarPlugin {
 

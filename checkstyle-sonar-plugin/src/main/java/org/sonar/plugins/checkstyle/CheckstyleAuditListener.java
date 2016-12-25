@@ -19,9 +19,6 @@
  */
 package org.sonar.plugins.checkstyle;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.puppycrawl.tools.checkstyle.api.AuditEvent;
-import com.puppycrawl.tools.checkstyle.api.AuditListener;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +30,10 @@ import org.sonar.api.issue.Issuable;
 import org.sonar.api.issue.Issuable.IssueBuilder;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RuleFinder;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.puppycrawl.tools.checkstyle.api.AuditEvent;
+import com.puppycrawl.tools.checkstyle.api.AuditListener;
 
 /**
  * @since 2.3

@@ -19,7 +19,8 @@
  */
 package org.sonar.plugins.checkstyle;
 
-import com.google.common.collect.Iterables;
+import java.io.File;
+
 import org.sonar.api.batch.Sensor;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.batch.fs.FilePredicates;
@@ -28,7 +29,7 @@ import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
 
-import java.io.File;
+import com.google.common.collect.Iterables;
 
 public class CheckstyleSensor implements Sensor {
 

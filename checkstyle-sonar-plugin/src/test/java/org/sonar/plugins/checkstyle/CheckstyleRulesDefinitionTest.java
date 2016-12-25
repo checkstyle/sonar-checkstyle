@@ -19,15 +19,15 @@
  */
 package org.sonar.plugins.checkstyle;
 
-import com.google.common.collect.ImmutableList;
+import static org.fest.assertions.Assertions.assertThat;
+
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 
-import java.util.List;
-
-import static org.fest.assertions.Assertions.assertThat;
+import com.google.common.collect.ImmutableList;
 
 public class CheckstyleRulesDefinitionTest {
 

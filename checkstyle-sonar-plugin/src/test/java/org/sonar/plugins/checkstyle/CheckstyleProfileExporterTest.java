@@ -19,6 +19,8 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import java.io.StringWriter;
+
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,8 +29,6 @@ import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RulePriority;
-
-import java.io.StringWriter;
 
 public class CheckstyleProfileExporterTest {
 

@@ -19,19 +19,6 @@
  */
 package org.sonar.plugins.checkstyle;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Lists;
-import com.google.common.io.Closeables;
-import com.puppycrawl.tools.checkstyle.Checker;
-import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
-import com.puppycrawl.tools.checkstyle.XMLLogger;
-import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.sonar.api.BatchExtension;
-import org.sonar.api.utils.TimeProfiler;
-import org.sonar.plugins.java.api.JavaResourceLocator;
-
 import java.io.File;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
@@ -41,6 +28,20 @@ import java.net.URLClassLoader;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.sonar.api.BatchExtension;
+import org.sonar.api.utils.TimeProfiler;
+import org.sonar.plugins.java.api.JavaResourceLocator;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Lists;
+import com.google.common.io.Closeables;
+import com.puppycrawl.tools.checkstyle.Checker;
+import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
+import com.puppycrawl.tools.checkstyle.XMLLogger;
 
 public class CheckstyleExecutor implements BatchExtension {
   private static final Logger LOG = LoggerFactory.getLogger(CheckstyleExecutor.class);

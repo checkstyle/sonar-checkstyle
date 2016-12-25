@@ -10,8 +10,6 @@
     <suppress checks="Javadoc*" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="Header" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="FinalLocalVariable" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="CustomImportOrder" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="ImportOrder" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="ImportControl" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="DesignForExtension" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="WriteTag" files=".*[\\/]src[\\/]main[\\/]"/>
@@ -42,9 +40,7 @@
     <suppress checks="Header" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="RegexpHeader" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="AvoidStaticImport" files=".*[\/]src[\/]test[\/]"/>
-    <suppress checks="CustomImportOrder" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="ImportControl" files=".*[\/]src[\/]test[\/]"/>
-    <suppress checks="ImportOrder" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="Indentation" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="JavadocMethod" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="JavadocPackage" files=".*[\/]src[\/]test[\/]"/>

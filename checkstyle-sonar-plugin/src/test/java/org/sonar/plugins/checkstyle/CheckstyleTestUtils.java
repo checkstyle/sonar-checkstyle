@@ -19,16 +19,17 @@
  */
 package org.sonar.plugins.checkstyle;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+
 import org.apache.commons.lang.CharUtils;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.xml.sax.SAXException;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 
 public final class CheckstyleTestUtils {
 
