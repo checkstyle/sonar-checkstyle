@@ -207,14 +207,11 @@
           <skipEmptyReport>false</skipEmptyReport>
           <failOnViolation>true</failOnViolation>
           <printFailingErrors>true</printFailingErrors>
+          <linkXRef>false</linkXRef>
           <includeTests>true</includeTests>
           <rulesets>
             <ruleset>config/pmd.xml</ruleset>
           </rulesets>
-          <excludeRoots>
-            <excludeRoot>target/generated-sources/antlr</excludeRoot>
-            <excludeRoot>target/generated-sources/antlr/com/puppycrawl/tools/checkstyle/grammars/javadoc</excludeRoot>
-          </excludeRoots>
         </configuration>
         <executions>
           <execution>
