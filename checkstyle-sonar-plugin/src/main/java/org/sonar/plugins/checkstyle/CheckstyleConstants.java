@@ -23,7 +23,7 @@ public final class CheckstyleConstants {
 
   public static final String REPOSITORY_NAME = "Checkstyle";
   public static final String PLUGIN_KEY = "checkstyle";
-  public static final String PLUGIN_NAME = "Checkstyle";
+  public static final String PLUGIN_NAME = REPOSITORY_NAME;
   public static final String REPOSITORY_KEY = PLUGIN_KEY;
 
   public static final String FILTERS_KEY = "sonar.checkstyle.filters";

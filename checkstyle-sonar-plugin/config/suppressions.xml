@@ -15,7 +15,6 @@
     <suppress checks="WriteTag" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="LineLength" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="DeclarationOrder" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="MultipleStringLiterals" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="RightCurly" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="IllegalCatch" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="CatchParameterName" files=".*[\\/]src[\\/]main[\\/]"/>
@@ -26,7 +25,6 @@
     <suppress checks="InnerTypeLast" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="ArrayTrailingComma" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="ReturnCount" files=".*[\\/]src[\\/]main[\\/]"/>
-    <!--<suppress checks="AvoidInlineConditionals" files=".*[\\/]src[\\/]main[\\/]"/>-->
     <suppress checks="ParameterName" files=".*[\\/]src[\\/]main[\\/]"/>
 
     <suppress checks="LeftCurly" files=".*[\/]src[\/]test[\/]"/>
@@ -34,7 +32,6 @@
     <suppress checks="FinalLocalVariable" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="HiddenField" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="MagicNumber" files=".*[\/]src[\/]test[\/]"/>
-    <suppress checks="MultipleStringLiterals" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="VariableDeclarationUsageDistance" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="DesignForExtension" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="Header" files=".*[\/]src[\/]test[\/]"/>
@@ -61,4 +58,8 @@
     <!-- END of legacy code -->
 
 
+    <!-- parsing of xml imply reference attrubute names, does not make sense to move all to special variables -->
+    <suppress checks="MultipleStringLiterals" files="CheckstyleProfileImporter\.java"/>
+    <!-- messing test code with such optimization does not make sense , readability will decrease -->
+    <suppress checks="MultipleStringLiterals" files=".*[\/]src[\/]test[\/]"/>
 </suppressions>

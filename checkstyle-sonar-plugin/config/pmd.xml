@@ -222,7 +222,8 @@
   <rule ref="rulesets/java/strictexception.xml/AvoidCatchingGenericException">
     <properties>
       <!-- need to be be investigated -->
-      <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration[@Image='CheckstyleAuditListener' or @Image='CheckstyleExecutor']"/>
+      <!-- CheckstyleSeverityUtils is ok to catch all in util methods-->
+      <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration[@Image='CheckstyleAuditListener' or @Image='CheckstyleExecutor'] or //MethodDeclaration[@Name='fromSeverity' and ../../..[@Image='CheckstyleSeverityUtils']]"/>
     </properties>
   </rule>
   <rule ref="rulesets/java/strictexception.xml/SignatureDeclareThrowsException">

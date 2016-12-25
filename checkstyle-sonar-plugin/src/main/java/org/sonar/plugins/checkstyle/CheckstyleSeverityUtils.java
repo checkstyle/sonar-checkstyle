@@ -21,6 +21,8 @@ package org.sonar.plugins.checkstyle;
 
 import org.sonar.api.rules.RulePriority;
 
+import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
+
 public final class CheckstyleSeverityUtils {
 
   private CheckstyleSeverityUtils() {
@@ -31,25 +33,31 @@ public final class CheckstyleSeverityUtils {
     switch (priority) {
       case BLOCKER:
       case CRITICAL:
-        return "error";
+        return SeverityLevel.ERROR.getName();
       case MAJOR:
-        return "warning";
+        return SeverityLevel.WARNING.getName();
       case MINOR:
       case INFO:
-        return "info";
+        return SeverityLevel.INFO.getName();
       default:
         throw new IllegalArgumentException("Priority not supported: " + priority);
     }
   }
 
   public static RulePriority fromSeverity(String severity) {
-    switch (severity) {
-      case "error":
+    SeverityLevel severityLevel;
+    try {
+      severityLevel = SeverityLevel.getInstance(severity);
+    } catch (Exception exc) {
+      return null;
+    }
+    switch (severityLevel) {
+      case ERROR:
         return RulePriority.BLOCKER;
-      case "warning":
+      case WARNING:
         return RulePriority.MAJOR;
-      case "info":
-      case "ignore":
+      case INFO:
+      case IGNORE:
         return RulePriority.INFO;
       default:
         return null;

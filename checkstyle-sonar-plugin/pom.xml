@@ -283,7 +283,7 @@
             <haltOnFailure>true</haltOnFailure>
             <branchRate>100</branchRate>
             <lineRate>100</lineRate>
-            <totalBranchRate>81</totalBranchRate>
+            <totalBranchRate>80</totalBranchRate>
             <totalLineRate>87</totalLineRate>
             <regexes>
               <regex>
@@ -318,7 +318,7 @@
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleSeverityUtils</pattern>
-                <branchRate>76</branchRate>
+                <branchRate>75</branchRate>
                 <lineRate>91</lineRate>
               </regex>
               <regex>
