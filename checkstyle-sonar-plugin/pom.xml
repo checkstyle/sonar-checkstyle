@@ -152,7 +152,7 @@
               <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_checks.xml</configLocation>
               <failOnViolation>true</failOnViolation>
               <linkXRef>false</linkXRef>
-              <propertiesLocation>checkstyle.properties</propertiesLocation>
+              <propertiesLocation>config/checkstyle.properties</propertiesLocation>
               <sourceDirectory>${project.basedir}/src</sourceDirectory>
             </configuration>
           </execution>
