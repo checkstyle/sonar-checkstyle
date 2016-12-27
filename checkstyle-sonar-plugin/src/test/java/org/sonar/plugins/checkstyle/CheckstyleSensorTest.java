@@ -64,7 +64,8 @@ public class CheckstyleSensorTest {
 
   @Test
   public void testToString() {
-    assertThat(new CheckstyleSensor(null, null, null).toString()).isEqualTo("CheckstyleSensor");
+    assertThat(new CheckstyleSensor(null, null, null).toString())
+            .isEqualTo("CheckstyleSensor");
   }
 
   private void addOneJavaFile() {
@@ -74,7 +75,8 @@ public class CheckstyleSensorTest {
   }
 
   private void addOneActiveRule() {
-    when(profile.getActiveRulesByRepository("checkstyle")).thenReturn(ImmutableList.of(mock(ActiveRule.class)));
+    when(profile.getActiveRulesByRepository("checkstyle"))
+            .thenReturn(ImmutableList.of(mock(ActiveRule.class)));
   }
 
 }

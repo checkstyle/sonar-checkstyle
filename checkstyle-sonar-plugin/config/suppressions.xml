@@ -50,7 +50,6 @@
     <suppress checks="MemberName" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="RegexpMultiline" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="AnonInnerLength" files=".*[\/]src[\/]test[\/]"/>
-    <suppress checks="LineLength" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="TrailingComment" files=".*[\/]src[\/]test[\/]"/>
     <suppress checks="EmptyLineSeparator" files=".*[\/]src[\/]test[\/]"/>
     <!-- END of legacy code -->

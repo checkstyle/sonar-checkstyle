@@ -46,7 +46,9 @@ public class CheckstyleAuditListenerTest {
 
   private File file = new File("file1");
   private AuditEvent event =
-    new AuditEvent(this, file.getAbsolutePath(), new LocalizedMessage(42, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
+    new AuditEvent(this, file.getAbsolutePath(),
+            new LocalizedMessage(42, "", "", null, "",
+                    CheckstyleAuditListenerTest.class, "msg"));
   private DefaultFileSystem fs = new DefaultFileSystem(new File(""));
   private RuleFinder ruleFinder = mock(RuleFinder.class);
   private DefaultInputFile inputFile = new DefaultInputFile("", file.getPath());
@@ -62,15 +64,21 @@ public class CheckstyleAuditListenerTest {
   public void testUtilityMethods() {
     AuditEvent event;
 
-    event = new AuditEvent(this, "", new LocalizedMessage(0, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
+    event = new AuditEvent(this, "",
+            new LocalizedMessage(0, "", "", null, "",
+                    CheckstyleAuditListenerTest.class, "msg"));
     assertThat(CheckstyleAuditListener.getLineId(event)).isNull();
     assertThat(CheckstyleAuditListener.getMessage(event)).isEqualTo("msg");
-    assertThat(CheckstyleAuditListener.getRuleKey(event)).isEqualTo(CheckstyleAuditListenerTest.class.getName());
+    assertThat(CheckstyleAuditListener.getRuleKey(event))
+            .isEqualTo(CheckstyleAuditListenerTest.class.getName());
 
-    event = new AuditEvent(this, "", new LocalizedMessage(1, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
+    event = new AuditEvent(this, "",
+            new LocalizedMessage(1, "", "", null, "",
+                    CheckstyleAuditListenerTest.class, "msg"));
     assertThat(CheckstyleAuditListener.getLineId(event)).isEqualTo(1);
     assertThat(CheckstyleAuditListener.getMessage(event)).isEqualTo("msg");
-    assertThat(CheckstyleAuditListener.getRuleKey(event)).isEqualTo(CheckstyleAuditListenerTest.class.getName());
+    assertThat(CheckstyleAuditListener.getRuleKey(event))
+            .isEqualTo(CheckstyleAuditListenerTest.class.getName());
 
     event = new AuditEvent(this);
     assertThat(CheckstyleAuditListener.getLineId(event)).isNull();
@@ -124,7 +132,8 @@ public class CheckstyleAuditListenerTest {
   private Rule setupRule(String repo, String key) {
     Rule rule = mock(Rule.class);
     when(rule.ruleKey()).thenReturn(RuleKey.of(repo, key));
-    when(ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY, CheckstyleAuditListenerTest.class.getCanonicalName()))
+    when(ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY,
+            CheckstyleAuditListenerTest.class.getCanonicalName()))
       .thenReturn(rule);
     return rule;
   }

@@ -39,7 +39,8 @@ public final class CheckstyleTestUtils {
 
   public static String getResourceContent(String path) {
     try {
-      return Resources.toString(Resources.getResource(CheckstyleTestUtils.class, path), Charsets.UTF_8);
+      return Resources.toString(Resources.getResource(CheckstyleTestUtils.class, path),
+              Charsets.UTF_8);
     } catch (IOException e) {
       throw new IllegalArgumentException("Could not load resource " + path, e);
     }

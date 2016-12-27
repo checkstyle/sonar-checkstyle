@@ -47,7 +47,8 @@ public class CheckstyleProfileExporterTest {
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     CheckstyleTestUtils.assertSimilarXmlWithResource(
-      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/alwaysSetFileContentsHolderAndSuppressionCommentFilter.xml",
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+              + "alwaysSetFileContentsHolderAndSuppressionCommentFilter.xml",
       sanitizeForTests(writer.toString()));
   }
 
@@ -62,7 +63,8 @@ public class CheckstyleProfileExporterTest {
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     CheckstyleTestUtils.assertSimilarXmlWithResource(
-      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/noCheckstyleRulesToExport.xml",
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+              + "noCheckstyleRulesToExport.xml",
       sanitizeForTests(writer.toString()));
   }
 
@@ -71,29 +73,40 @@ public class CheckstyleProfileExporterTest {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
     profile.activateRule(Rule.create("pmd", "PmdRule1", "PMD rule one"), null);
     profile.activateRule(
-      Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc").setConfigKey("Checker/JavadocPackage"),
+      Rule.create("checkstyle",
+              "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
+              .setConfigKey("Checker/JavadocPackage"),
       RulePriority.MAJOR
       );
-    profile.activateRule(Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck", "Line Length").setConfigKey("Checker/TreeWalker/LineLength"),
+    profile.activateRule(Rule.create("checkstyle",
+            "com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck", "Line Length")
+                    .setConfigKey("Checker/TreeWalker/LineLength"),
       RulePriority.CRITICAL);
     profile.activateRule(
-      Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.naming.LocalFinalVariableNameCheck", "Local Variable").setConfigKey(
-        "Checker/TreeWalker/Checker/TreeWalker/LocalFinalVariableName"),
+      Rule.create("checkstyle",
+              "com.puppycrawl.tools.checkstyle.checks.naming.LocalFinalVariableNameCheck",
+              "Local Variable")
+              .setConfigKey("Checker/TreeWalker/Checker/TreeWalker/LocalFinalVariableName"),
       RulePriority.MINOR);
 
     StringWriter writer = new StringWriter();
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     CheckstyleTestUtils.assertSimilarXmlWithResource(
-      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/singleCheckstyleRulesToExport.xml",
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+              + "singleCheckstyleRulesToExport.xml",
       sanitizeForTests(writer.toString()));
   }
 
   @Test
   public void addTheIdPropertyWhenManyInstancesWithTheSameConfigKey() {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
-    Rule rule1 = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc").setConfigKey("Checker/JavadocPackage");
-    Rule rule2 = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck_12345", "Javadoc").setConfigKey("Checker/JavadocPackage")
+    Rule rule1 = Rule.create("checkstyle",
+            "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
+            .setConfigKey("Checker/JavadocPackage");
+    Rule rule2 = Rule.create("checkstyle",
+            "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck_12345", "Javadoc")
+            .setConfigKey("Checker/JavadocPackage")
       .setParent(rule1);
 
     profile.activateRule(rule1, RulePriority.MAJOR);
@@ -103,17 +116,20 @@ public class CheckstyleProfileExporterTest {
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     CheckstyleTestUtils.assertSimilarXmlWithResource(
-      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addTheIdPropertyWhenManyInstancesWithTheSameConfigKey.xml",
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+              + "addTheIdPropertyWhenManyInstancesWithTheSameConfigKey.xml",
       sanitizeForTests(writer.toString()));
   }
 
   @Test
   public void exportParameters() {
     RulesProfile profile = RulesProfile.create("sonar way", "java");
-    Rule rule = Rule.create("checkstyle", "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
+    Rule rule = Rule.create("checkstyle",
+            "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
       .setConfigKey("Checker/JavadocPackage");
     rule.createParameter("format");
-    rule.createParameter("message"); // not set in the profile and no default value => not exported in checkstyle
+    // not set in the profile and no default value => not exported in checkstyle
+    rule.createParameter("message");
     rule.createParameter("ignore");
 
     profile.activateRule(rule, RulePriority.MAJOR)
@@ -123,7 +139,8 @@ public class CheckstyleProfileExporterTest {
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     CheckstyleTestUtils.assertSimilarXmlWithResource(
-      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/exportParameters.xml",
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+              + "exportParameters.xml",
       sanitizeForTests(writer.toString()));
   }
 
@@ -134,7 +151,8 @@ public class CheckstyleProfileExporterTest {
         + "<property name=\"offCommentFormat\" value=\"BEGIN GENERATED CODE\"/>"
         + "<property name=\"onCommentFormat\" value=\"END GENERATED CODE\"/>" + "</module>"
         + "<module name=\"SuppressWithNearbyCommentFilter\">"
-        + "<property name=\"commentFormat\" value=\"CHECKSTYLE IGNORE (\\w+) FOR NEXT (\\d+) LINES\"/>"
+        + "<property name=\"commentFormat\""
+        + " value=\"CHECKSTYLE IGNORE (\\w+) FOR NEXT (\\d+) LINES\"/>"
         + "<property name=\"checkFormat\" value=\"$1\"/>"
         + "<property name=\"messageFormat\" value=\"$2\"/>"
         + "</module>");
@@ -144,7 +162,8 @@ public class CheckstyleProfileExporterTest {
     new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
     CheckstyleTestUtils.assertSimilarXmlWithResource(
-      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/addCustomFilters.xml",
+      "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+              + "addCustomFilters.xml",
       sanitizeForTests(writer.toString()));
   }
 

@@ -50,11 +50,14 @@ import com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck;
 import com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheck;
 
 public final class ChecksTest {
-    private static final String RULES_PATH = "src/main/resources/org/sonar/plugins/checkstyle/rules.xml";
-    private static final String MODULE_PROPERTIES_PATH = "src/main/resources/org/sonar/l10n/checkstyle.properties";
+    private static final String RULES_PATH =
+            "src/main/resources/org/sonar/plugins/checkstyle/rules.xml";
+    private static final String MODULE_PROPERTIES_PATH =
+            "src/main/resources/org/sonar/l10n/checkstyle.properties";
 
     private static final Set<String> CHECK_PROPERTIES = getProperties(AbstractCheck.class);
-    private static final Set<String> JAVADOC_CHECK_PROPERTIES = getProperties(AbstractJavadocCheck.class);
+    private static final Set<String> JAVADOC_CHECK_PROPERTIES =
+            getProperties(AbstractJavadocCheck.class);
     private static final Set<String> FILESET_PROPERTIES = getProperties(AbstractFileSetCheck.class);
 
     private static final List<String> UNDOCUMENTED_PROPERTIES = Arrays.asList(
@@ -81,7 +84,8 @@ public final class ChecksTest {
         validateSonarProperties(new HashSet<>(modules));
     }
 
-    private static void validateSonarRules(Set<Class<?>> modules) throws ParserConfigurationException, IOException {
+    private static void validateSonarRules(Set<Class<?>> modules)
+            throws ParserConfigurationException, IOException {
         final File rulesFile = new File(RULES_PATH);
 
         Assert.assertTrue("'rules.xml' must exist", rulesFile.exists());
@@ -132,7 +136,8 @@ public final class ChecksTest {
                 expectedConfigKey = "Checker/" + moduleSimpleName.replaceAll("Check$", "");
             }
 
-            Assert.assertNotNull(moduleName + " requires a configKey in sonar rules", configKey);
+            Assert.assertNotNull(moduleName
+                    + " requires a configKey in sonar rules", configKey);
             Assert.assertEquals(moduleName + " requires a valid configKey in sonar rules",
                     expectedConfigKey, configKey.getTextContent());
 
@@ -164,8 +169,8 @@ public final class ChecksTest {
                     + " requires a valid key for unknown parameter in sonar rules",
                     paramKey.isEmpty());
 
-            Assert.assertTrue(moduleName + " has an unknown parameter in sonar rules: " + paramKey,
-                    properties.remove(paramKey));
+            Assert.assertTrue(moduleName + " has an unknown parameter in sonar rules: "
+                            + paramKey, properties.remove(paramKey));
         }
 
         for (String property : properties) {
@@ -192,17 +197,17 @@ public final class ChecksTest {
         for (Object key : new TreeSet<>(properties.keySet())) {
             final String keyName = key.toString();
 
-            Assert.assertTrue("sonar properties must start with 'rule.checkstyle.': " + keyName,
-                    keyName.startsWith("rule.checkstyle."));
+            Assert.assertTrue("sonar properties must start with 'rule.checkstyle.': "
+                            + keyName, keyName.startsWith("rule.checkstyle."));
 
             final String keyValue = properties.get(keyName).toString();
 
             Assert.assertFalse("sonar properties value must not be empty: " + keyName,
                     keyValue.isEmpty());
-            Assert.assertFalse("sonar properties value must not have single quote: " + keyName,
-                    keyValue.matches(".*[^'{}]'[^'{}].*"));
-            Assert.assertFalse("sonar properties value must not have unescaped braces: " + keyName,
-                    keyValue.matches(".*[^'](\\{|\\})[^'].*"));
+            Assert.assertFalse("sonar properties value must not have single quote: "
+                            + keyName, keyValue.matches(".*[^'{}]'[^'{}].*"));
+            Assert.assertFalse("sonar properties value must not have unescaped braces: "
+                            + keyName, keyValue.matches(".*[^'](\\{|\\})[^'].*"));
 
             final String moduleName;
 
@@ -215,7 +220,8 @@ public final class ChecksTest {
 
             final Class<?> module = findModule(modules, moduleName);
 
-            Assert.assertNotNull("Unknown class found in sonar properties: " + moduleName, module);
+            Assert.assertNotNull("Unknown class found in sonar properties: " + moduleName,
+                    module);
 
             if (CheckUtil.isFilterModule(module)) {
                 Assert.fail("Module should not be in sonar properties: "

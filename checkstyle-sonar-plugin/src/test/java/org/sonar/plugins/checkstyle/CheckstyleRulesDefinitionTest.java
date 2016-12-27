@@ -68,7 +68,8 @@ public class CheckstyleRulesDefinitionTest {
       for (RulesDefinition.Param param : rule.params()) {
         assertThat(param.name()).isNotNull();
         assertThat(param.description())
-          .overridingErrorMessage("Description is not set for parameter '" + param.name() + "' of rule '" + rule.key())
+          .overridingErrorMessage("Description is not set for parameter '" + param.name()
+                  + "' of rule '" + rule.key())
           .isNotNull();
       }
 
@@ -81,7 +82,8 @@ public class CheckstyleRulesDefinitionTest {
                 .isNull();
       } else {
         assertThat(rule.debtRemediationFunction())
-                .overridingErrorMessage("Sqale remediation function is not set for rule '" + rule.key())
+                .overridingErrorMessage("Sqale remediation function is not set for rule '"
+                        + rule.key())
                 .isNotNull();
         assertThat(rule.debtSubCharacteristic())
                 .overridingErrorMessage("Sqale characteristic is not set for rule '" + rule.key())

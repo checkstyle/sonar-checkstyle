@@ -61,7 +61,8 @@ public class CheckstyleExecutorTest {
   public void execute() throws CheckstyleException {
     CheckstyleConfiguration conf = mockConf();
     CheckstyleAuditListener listener = mockListener();
-    CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
+    CheckstyleExecutor executor =
+            new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
     executor.execute();
 
     verify(listener, times(1)).auditStarted(any(AuditEvent.class));
@@ -80,7 +81,8 @@ public class CheckstyleExecutorTest {
     verify(listener, atLeast(1)).addError(captor.capture());
     AuditEvent event = captor.getValue();
     assertThat(event.getFileName()).matches(".*Hello.java");
-    assertThat(event.getSourceName()).matches("com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck");
+    assertThat(event.getSourceName())
+            .matches("com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck");
   }
 
   @Test
@@ -88,15 +90,18 @@ public class CheckstyleExecutorTest {
     thrown.expect(IllegalStateException.class);
     thrown.expectMessage("Can not execute Checkstyle");
     CheckstyleConfiguration conf = mockConf();
-    CheckstyleExecutor executor = new CheckstyleExecutor(conf, null, createJavaResourceLocator());
+    CheckstyleExecutor executor =
+            new CheckstyleExecutor(conf, null, createJavaResourceLocator());
     executor.execute();
   }
 
   @Test
   public void getUrlException() throws URISyntaxException {
     thrown.expect(IllegalStateException.class);
-    thrown.expectMessage("Fail to create the project classloader. Classpath element is invalid: htp://aa");
-    CheckstyleExecutor executor = new CheckstyleExecutor(null, null, createJavaResourceLocator());
+    thrown.expectMessage("Fail to create the project classloader. "
+            + "Classpath element is invalid: htp://aa");
+    CheckstyleExecutor executor =
+            new CheckstyleExecutor(null, null, createJavaResourceLocator());
     executor.getUrl(new URI("htp://aa"));
   }
 
@@ -116,7 +121,8 @@ public class CheckstyleExecutorTest {
       File report = new File("target/test-tmp/checkstyle-report.xml");
       when(conf.getTargetXmlReport()).thenReturn(report);
       CheckstyleAuditListener listener = mockListener();
-      CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
+      CheckstyleExecutor executor =
+              new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
       executor.execute();
 
       assertThat(report.exists(), is(true));
@@ -137,8 +143,14 @@ public class CheckstyleExecutorTest {
   private static CheckstyleConfiguration mockConf() throws CheckstyleException {
     CheckstyleConfiguration conf = mock(CheckstyleConfiguration.class);
     when(conf.getCharset()).thenReturn(Charset.defaultCharset());
-    when(conf.getCheckstyleConfiguration()).thenReturn(CheckstyleConfiguration.toCheckstyleConfiguration(new File("test-resources/checkstyle-conf.xml")));
-    when(conf.getSourceFiles()).thenReturn(Arrays.asList(new File("test-resources/Hello.java"), new File("test-resources/World.java")));
+    when(conf.getCheckstyleConfiguration()).thenReturn(
+            CheckstyleConfiguration.toCheckstyleConfiguration(
+                    new File("test-resources/checkstyle-conf.xml"))
+    );
+    when(conf.getSourceFiles()).thenReturn(
+            Arrays.asList(new File("test-resources/Hello.java"),
+                    new File("test-resources/World.java"))
+    );
     return conf;
   }
 
