@@ -49,12 +49,12 @@ public class CheckstyleAuditListenerTest {
     new AuditEvent(this, file.getAbsolutePath(), new LocalizedMessage(42, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
   private DefaultFileSystem fs = new DefaultFileSystem(new File(""));
   private RuleFinder ruleFinder = mock(RuleFinder.class);
-  private DefaultInputFile inputFile = new DefaultInputFile(file.getPath());
+  private DefaultInputFile inputFile = new DefaultInputFile("", file.getPath());
   private ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
 
   @Before
   public void before() {
-    inputFile.setAbsolutePath(file.getAbsolutePath());
+    //inputFile.setAbsolutePath(file.getAbsolutePath());
     fs.add(inputFile);
   }
 

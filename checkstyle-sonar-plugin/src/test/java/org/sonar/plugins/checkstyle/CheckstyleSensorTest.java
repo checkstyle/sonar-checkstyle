@@ -69,8 +69,8 @@ public class CheckstyleSensorTest {
 
   private void addOneJavaFile() {
     File file = new File("MyClass.java");
-    fileSystem.add(new DefaultInputFile(
-      file.getName()).setAbsolutePath(file.getAbsolutePath()).setLanguage("java").setType(Type.MAIN));
+    fileSystem.add(new DefaultInputFile("", file.getName())
+            .setLanguage("java").setType(Type.MAIN));
   }
 
   private void addOneActiveRule() {

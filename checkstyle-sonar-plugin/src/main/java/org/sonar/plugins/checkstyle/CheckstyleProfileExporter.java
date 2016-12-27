@@ -116,7 +116,11 @@ public class CheckstyleProfileExporter extends ProfileExporter {
 
   private boolean isSuppressWarningsEnabled() {
     String filtersXml = settings.getString(CheckstyleConstants.FILTERS_KEY);
-    return filtersXml.contains("<module name=\"SuppressWarningsFilter\" />");
+    boolean result = false;
+    if (filtersXml != null) {
+      result = filtersXml.contains("<module name=\"SuppressWarningsFilter\" />");
+    }
+    return result;
   }
 
   private static void appendXmlFooter(Writer writer) throws IOException {

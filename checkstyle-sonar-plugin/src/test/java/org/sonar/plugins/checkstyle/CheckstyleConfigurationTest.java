@@ -47,13 +47,12 @@ public class CheckstyleConfigurationTest {
   @Before
   public void beforeClass() {
     fileSystem = new DefaultFileSystem(new File(""));
-    DefaultInputFile inputFile = new DefaultInputFile("mainFile");
-    inputFile.setAbsolutePath("mainFile");
+    fileSystem.setWorkDir(new File(""));
+    DefaultInputFile inputFile = new DefaultInputFile("", "mainFile");
     inputFile.setLanguage("java");
     inputFile.setType(InputFile.Type.MAIN);
     fileSystem.add(inputFile);
-    DefaultInputFile testFile = new DefaultInputFile("testFile");
-    testFile.setAbsolutePath("testFile");
+    DefaultInputFile testFile = new DefaultInputFile("", "testFile");
     testFile.setLanguage("java");
     testFile.setType(InputFile.Type.TEST);
     fileSystem.add(testFile);
