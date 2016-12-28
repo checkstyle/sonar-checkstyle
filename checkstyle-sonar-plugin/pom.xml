@@ -169,6 +169,11 @@
             <artifactId>checkstyle</artifactId>
             <version>${checkstyle.version}</version>
           </dependency>
+          <dependency>
+            <groupId>com.github.sevntu.checkstyle</groupId>
+            <artifactId>sevntu-checkstyle-maven-plugin</artifactId>
+            <version>${maven.sevntu.checkstyle.plugin.version}</version>
+          </dependency>
         </dependencies>
         <executions>
           <execution>
@@ -184,44 +189,23 @@
               <sourceDirectory>${project.basedir}/src</sourceDirectory>
             </configuration>
           </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${checkstyle.plugin.version}</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.github.sevntu.checkstyle</groupId>
-            <artifactId>sevntu-checkstyle-maven-plugin</artifactId>
-            <version>${maven.sevntu.checkstyle.plugin.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>${checkstyle.version}</version>
-          </dependency>
-        </dependencies>
-        <!-- Specifying configuration here will take effect on the execution of "mvn checkstyle:checkstyle",
-             but will not take effect on the execution of "mvn site"  -->
-        <configuration>
-          <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_sevntu_checks.xml</configLocation>
-          <failOnViolation>true</failOnViolation>
-          <includeResources>false</includeResources>
-          <includeTestResources>false</includeTestResources>
-          <logViolationsToConsole>true</logViolationsToConsole>
-          <maxAllowedViolations>0</maxAllowedViolations>
-          <violationSeverity>error</violationSeverity>
-          <propertyExpansion>project.basedir=${project.basedir}</propertyExpansion>
-          <sourceDirectory>${project.basedir}/src</sourceDirectory>
-        </configuration>
-        <executions>
           <execution>
             <id>sevntu-checkstyle-check</id>
             <phase>verify</phase>
             <goals>
               <goal>check</goal>
             </goals>
+            <configuration>
+              <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_sevntu_checks.xml</configLocation>
+              <failOnViolation>true</failOnViolation>
+              <includeResources>false</includeResources>
+              <includeTestResources>false</includeTestResources>
+              <logViolationsToConsole>true</logViolationsToConsole>
+              <maxAllowedViolations>0</maxAllowedViolations>
+              <violationSeverity>error</violationSeverity>
+              <propertyExpansion>project.basedir=${project.basedir}</propertyExpansion>
+              <sourceDirectory>${project.basedir}/src</sourceDirectory>
+            </configuration>
           </execution>
         </executions>
       </plugin>
