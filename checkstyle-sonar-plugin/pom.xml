@@ -172,10 +172,8 @@
         </dependencies>
         <executions>
           <execution>
-            <!-- https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
-                 to run checkstyle validation in terminal please use command "mvn process-classes"
-            -->
-            <phase>process-classes</phase>
+            <id>checkstyle-check</id>
+            <phase>verify</phase>
             <goals>
               <goal>check</goal>
             </goals>
