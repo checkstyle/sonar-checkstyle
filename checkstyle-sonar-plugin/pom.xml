@@ -316,7 +316,7 @@
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleConfiguration</pattern>
                 <branchRate>80</branchRate>
-                <lineRate>94</lineRate>
+                <lineRate>92</lineRate>
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleProfileExporter</pattern>
