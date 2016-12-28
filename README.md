@@ -1,4 +1,5 @@
 [![][travis img]][travis]
+[![][teamcity img]][teamcity]
 
 Sonar Checkstyle
 ==========
@@ -41,3 +42,5 @@ In the quality profile, activate some rules from Checkstyle and run an analysis 
 [travis]:https://travis-ci.org/checkstyle/sonar-checkstyle/builds
 [travis img]:https://secure.travis-ci.org/checkstyle/sonar-checkstyle.png
 
+[teamcity]:https://teamcity.jetbrains.com/viewType.html?buildTypeId=Checkstyle_SonarCheckstyleIdeaInspectionsMaster
+[teamcity img]:https://img.shields.io/teamcity/http/teamcity.jetbrains.com/s/Checkstyle_SonarCheckstyleIdeaInspectionsMaster.svg?label=TeamCity%20inspections
