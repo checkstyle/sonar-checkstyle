@@ -13,7 +13,6 @@
     <suppress checks="ImportControl" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="DesignForExtension" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="WriteTag" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="LineLength" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="DeclarationOrder" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="RightCurly" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="IllegalCatch" files=".*[\\/]src[\\/]main[\\/]"/>

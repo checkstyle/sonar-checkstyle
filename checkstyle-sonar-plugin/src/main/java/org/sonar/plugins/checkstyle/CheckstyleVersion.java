@@ -29,7 +29,8 @@ import org.slf4j.LoggerFactory;
 public enum CheckstyleVersion {
   INSTANCE;
 
-  private static final String PROPERTIES_PATH = "/org/sonar/plugins/checkstyle/checkstyle-plugin.properties";
+  private static final String PROPERTIES_PATH =
+          "/org/sonar/plugins/checkstyle/checkstyle-plugin.properties";
   private String version;
 
   CheckstyleVersion() {
@@ -40,7 +41,8 @@ public enum CheckstyleVersion {
       this.version = properties.getProperty("checkstyle.version");
 
     } catch (IOException e) {
-      LoggerFactory.getLogger(getClass()).warn("Can not load the Checkstyle version from the file " + PROPERTIES_PATH, e);
+      LoggerFactory.getLogger(getClass()).warn("Can not load the Checkstyle version from the file "
+              + PROPERTIES_PATH, e);
       this.version = "";
     } finally {
       IOUtils.closeQuietly(input);

@@ -57,7 +57,8 @@ public class CheckstyleConfiguration implements BatchExtension {
   private final Settings conf;
   private final FileSystem fileSystem;
 
-  public CheckstyleConfiguration(Settings conf, CheckstyleProfileExporter confExporter, RulesProfile profile, FileSystem fileSystem) {
+  public CheckstyleConfiguration(Settings conf, CheckstyleProfileExporter confExporter,
+                                 RulesProfile profile, FileSystem fileSystem) {
     this.conf = conf;
     this.confExporter = confExporter;
     this.profile = profile;
@@ -68,13 +69,15 @@ public class CheckstyleConfiguration implements BatchExtension {
     Writer writer = null;
     File xmlFile = new File(fileSystem.workDir(), "checkstyle.xml");
     try {
-      writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false), StandardCharsets.UTF_8);
+      writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false),
+              StandardCharsets.UTF_8);
       confExporter.exportProfile(profile, writer);
       writer.flush();
       return xmlFile;
 
     } catch (IOException e) {
-      throw new IllegalStateException("Fail to save the Checkstyle configuration to " + xmlFile.getPath(), e);
+      throw new IllegalStateException("Fail to save the Checkstyle configuration to "
+              + xmlFile.getPath(), e);
 
     } finally {
       IOUtils.closeQuietly(writer);
@@ -107,7 +110,8 @@ public class CheckstyleConfiguration implements BatchExtension {
 
   @VisibleForTesting
   static Configuration toCheckstyleConfiguration(File xmlConfig) throws CheckstyleException {
-    return ConfigurationLoader.loadConfiguration(xmlConfig.getAbsolutePath(), new PropertiesExpander(new Properties()));
+    return ConfigurationLoader.loadConfiguration(xmlConfig.getAbsolutePath(),
+            new PropertiesExpander(new Properties()));
   }
 
   private void defineCharset(Configuration configuration) {
@@ -118,7 +122,9 @@ public class CheckstyleConfiguration implements BatchExtension {
   }
 
   private void defineModuleCharset(Configuration module) {
-    if (("Checker".equals(module.getName()) || "com.puppycrawl.tools.checkstyle.Checker".equals(module.getName())) && module instanceof DefaultConfiguration) {
+    if (("Checker".equals(module.getName())
+            || "com.puppycrawl.tools.checkstyle.Checker".equals(module.getName()))
+            && module instanceof DefaultConfiguration) {
       Charset charset = getCharset();
       LOG.info("Checkstyle charset: " + charset.name());
       ((DefaultConfiguration) module).addAttribute("charset", charset.name());

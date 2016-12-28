@@ -50,7 +50,8 @@ public class CheckstyleExecutor implements BatchExtension {
   private final CheckstyleAuditListener listener;
   private final JavaResourceLocator javaResourceLocator;
 
-  public CheckstyleExecutor(CheckstyleConfiguration configuration, CheckstyleAuditListener listener, JavaResourceLocator javaResourceLocator) {
+  public CheckstyleExecutor(CheckstyleConfiguration configuration, CheckstyleAuditListener listener,
+                            JavaResourceLocator javaResourceLocator) {
     this.configuration = configuration;
     this.listener = listener;
     this.javaResourceLocator = javaResourceLocator;
@@ -60,7 +61,8 @@ public class CheckstyleExecutor implements BatchExtension {
    * Execute Checkstyle and return the generated XML report.
    */
   public void execute() {
-    TimeProfiler profiler = new TimeProfiler().start("Execute Checkstyle " + CheckstyleVersion.getVersion());
+    TimeProfiler profiler =
+            new TimeProfiler().start("Execute Checkstyle " + CheckstyleVersion.getVersion());
     ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
     Thread.currentThread().setContextClassLoader(PackageNamesLoader.class.getClassLoader());
     URLClassLoader projectClassloader = createClassloader();
@@ -103,7 +105,8 @@ public class CheckstyleExecutor implements BatchExtension {
     try {
       return uri.toURL();
     } catch (MalformedURLException e) {
-      throw new IllegalStateException("Fail to create the project classloader. Classpath element is invalid: " + uri, e);
+      throw new IllegalStateException("Fail to create the project classloader. "
+              + "Classpath element is invalid: " + uri, e);
     }
   }
 

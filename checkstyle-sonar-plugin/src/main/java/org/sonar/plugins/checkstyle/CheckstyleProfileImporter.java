@@ -104,10 +104,12 @@ public class CheckstyleProfileImporter extends ProfileImporter {
             Map<String, String> treewalkerModuleProperties = Maps.newHashMap(rootModuleProperties);
             treewalkerModuleProperties.putAll(treewalkerModule.properties);
 
-            processModule(profile, CHECKER_MODULE + "/" + TREEWALKER_MODULE + "/", treewalkerModule.name, treewalkerModuleProperties, messages);
+            processModule(profile, CHECKER_MODULE + "/" + TREEWALKER_MODULE + "/",
+                    treewalkerModule.name, treewalkerModuleProperties, messages);
           }
         } else {
-          processModule(profile, CHECKER_MODULE + "/", rootModule.name, rootModuleProperties, messages);
+          processModule(profile, CHECKER_MODULE + "/", rootModule.name,
+                  rootModuleProperties, messages);
         }
       }
 
@@ -128,7 +130,8 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     return new SMInputFactory(xmlFactory);
   }
 
-  private void processModule(RulesProfile profile, String path, String moduleName, Map<String, String> properties, ValidationMessages messages) {
+  private void processModule(RulesProfile profile, String path, String moduleName,
+                             Map<String, String> properties, ValidationMessages messages) {
     if (isFilter(moduleName)) {
       messages.addWarningText("Checkstyle filters are not imported: " + moduleName);
 
@@ -139,7 +142,8 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
   @VisibleForTesting
   static boolean isIgnored(String configKey) {
-    return StringUtils.equals(configKey, "FileContentsHolder") || StringUtils.equals(configKey, "SuppressWarningsHolder");
+    return StringUtils.equals(configKey, "FileContentsHolder")
+            || StringUtils.equals(configKey, "SuppressWarningsHolder");
   }
 
   @VisibleForTesting
@@ -152,17 +156,20 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     return false;
   }
 
-  private void processRule(RulesProfile profile, String path, String moduleName, Map<String, String> properties, ValidationMessages messages) {
+  private void processRule(RulesProfile profile, String path, String moduleName,
+                           Map<String, String> properties, ValidationMessages messages) {
     Rule rule;
     String id = properties.get("id");
     String warning;
     if (StringUtils.isNotBlank(id)) {
-      rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(CheckstyleConstants.REPOSITORY_KEY).withKey(id));
+      rule = ruleFinder.find(RuleQuery.create()
+              .withRepositoryKey(CheckstyleConstants.REPOSITORY_KEY).withKey(id));
       warning = "Checkstyle rule with key '" + id + "' not found";
 
     } else {
       String configKey = path + moduleName;
-      rule = ruleFinder.find(RuleQuery.create().withRepositoryKey(CheckstyleConstants.REPOSITORY_KEY).withConfigKey(configKey));
+      rule = ruleFinder.find(RuleQuery.create()
+              .withRepositoryKey(CheckstyleConstants.REPOSITORY_KEY).withConfigKey(configKey));
       warning = "Checkstyle rule with config key '" + configKey + "' not found";
     }
 

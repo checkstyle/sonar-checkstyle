@@ -39,7 +39,9 @@ import com.google.common.collect.ListMultimap;
 
 public class CheckstyleProfileExporter extends ProfileExporter {
 
-  public static final String DOCTYPE_DECLARATION = "<!DOCTYPE module PUBLIC \"-//Puppy Crawl//DTD Check Configuration 1.2//EN\" \"http://www.puppycrawl.com/dtds/configuration_1_2.dtd\">";
+  public static final String DOCTYPE_DECLARATION =
+          "<!DOCTYPE module PUBLIC \"-//Puppy Crawl//DTD Check Configuration 1.2//EN\" "
+                  + "\"http://www.puppycrawl.com/dtds/configuration_1_2.dtd\">";
   private final Settings settings;
   private static final String CLOSE_MODULE = "</module>";
 
@@ -53,7 +55,9 @@ public class CheckstyleProfileExporter extends ProfileExporter {
   @Override
   public void exportProfile(RulesProfile profile, Writer writer) {
     try {
-      ListMultimap<String, ActiveRule> activeRulesByConfigKey = arrangeByConfigKey(profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY));
+      ListMultimap<String, ActiveRule> activeRulesByConfigKey =
+              arrangeByConfigKey(
+                      profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY));
       generateXml(writer, activeRulesByConfigKey);
 
     } catch (IOException e) {
@@ -62,7 +66,8 @@ public class CheckstyleProfileExporter extends ProfileExporter {
 
   }
 
-  private void generateXml(Writer writer, ListMultimap<String, ActiveRule> activeRulesByConfigKey) throws IOException {
+  private void generateXml(Writer writer, ListMultimap<String, ActiveRule> activeRulesByConfigKey)
+          throws IOException {
     appendXmlHeader(writer);
     appendCustomFilters(writer);
     appendCheckerModules(writer, activeRulesByConfigKey);
@@ -84,7 +89,8 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
   }
 
-  private static void appendCheckerModules(Writer writer, ListMultimap<String, ActiveRule> activeRulesByConfigKey) throws IOException {
+  private static void appendCheckerModules(Writer writer, ListMultimap<String,
+          ActiveRule> activeRulesByConfigKey) throws IOException {
     for (String configKey : activeRulesByConfigKey.keySet()) {
       if (!isInTreeWalker(configKey)) {
         List<ActiveRule> activeRules = activeRulesByConfigKey.get(configKey);
@@ -95,7 +101,8 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
   }
 
-  private void appendTreeWalker(Writer writer, ListMultimap<String, ActiveRule> activeRulesByConfigKey) throws IOException {
+  private void appendTreeWalker(Writer writer, ListMultimap<String,
+          ActiveRule> activeRulesByConfigKey) throws IOException {
     writer.append("<module name=\"TreeWalker\">");
     writer.append("<module name=\"FileContentsHolder\"/> ");
     if (isSuppressWarningsEnabled()) {
@@ -150,12 +157,14 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     if (activeRule.getRule().getTemplate() != null) {
       appendModuleProperty(writer, "id", activeRule.getRuleKey());
     }
-    appendModuleProperty(writer, "severity", CheckstyleSeverityUtils.toSeverity(activeRule.getSeverity()));
+    appendModuleProperty(writer, "severity",
+            CheckstyleSeverityUtils.toSeverity(activeRule.getSeverity()));
     appendRuleParameters(writer, activeRule);
     writer.append(CLOSE_MODULE);
   }
 
-  private static void appendRuleParameters(Writer writer, ActiveRule activeRule) throws IOException {
+  private static void appendRuleParameters(Writer writer, ActiveRule activeRule)
+          throws IOException {
     for (RuleParam ruleParam : activeRule.getRule().getParams()) {
       String value = activeRule.getParameter(ruleParam.getKey());
       if (StringUtils.isNotBlank(value)) {
@@ -164,7 +173,8 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
   }
 
-  private static void appendModuleProperty(Writer writer, String propertyKey, String propertyValue) throws IOException {
+  private static void appendModuleProperty(Writer writer, String propertyKey, String propertyValue)
+          throws IOException {
     if (StringUtils.isNotBlank(propertyValue)) {
       writer.append("<property name=\"");
       StringEscapeUtils.escapeXml(writer, propertyKey);
