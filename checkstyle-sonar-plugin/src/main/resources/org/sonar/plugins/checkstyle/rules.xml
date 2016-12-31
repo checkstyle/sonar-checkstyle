@@ -1209,7 +1209,7 @@
     <param key="allowLineBreaks" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <param key="tokens" type="s[ARRAY_INIT,INC,DEC,UNARY_MINUS,UNARY_PLUS,BNOT,LNOT,DOT,TYPECAST,ARRAY_DECLARATOR,INDEX_OP]">
+    <param key="tokens" type="s[ARRAY_INIT,INC,DEC,UNARY_MINUS,UNARY_PLUS,BNOT,LNOT,DOT,TYPECAST,ARRAY_DECLARATOR,INDEX_OP,LITERAL_SYNCHRONIZED]">
       <defaultValue>ARRAY_INIT,INC,DEC,UNARY_MINUS,UNARY_PLUS,BNOT,LNOT,DOT,ARRAY_DECLARATOR,INDEX_OP</defaultValue>
     </param>
   </rule>
@@ -1605,7 +1605,7 @@
     <name><![CDATA[Whitespace After]]></name>
     <configKey><![CDATA[Checker/TreeWalker/WhitespaceAfter]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="tokens" type="s[COMMA,SEMI,TYPECAST]">
+    <param key="tokens" type="s[COMMA,SEMI,TYPECAST,LITERAL_IF,LITERAL_ELSE,LITERAL_WHILE,LITERAL_DO,LITERAL_FOR,DO_WHILE]">
       <defaultValue>COMMA,SEMI,TYPECAST</defaultValue>
     </param>
   </rule>
