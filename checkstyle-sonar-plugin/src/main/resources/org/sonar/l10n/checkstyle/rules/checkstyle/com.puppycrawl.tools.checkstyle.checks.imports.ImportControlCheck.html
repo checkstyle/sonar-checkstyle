@@ -1,16 +1,220 @@
-<p>Controls what can be imported in each package.
-Useful for ensuring that application layering rules are not violated, especially on large projects.</p>
-
-<p>The DTD for a import control XML document is at <a href="http://www.puppycrawl.com/dtds/import_control_1_1.dtd"
-target="_blank">http://www.puppycrawl.com/dtds/import_control_1_1.dtd</a>. It contains documentation on each of the
-elements and attributes.</p>
-
-<p>The check validates a XML document when it loads the document. To validate against the above DTD, include the
-following document type declaration in your XML document:</p>
-
-<pre>&lt;!DOCTYPE import-control PUBLIC
-    "-//Puppy Crawl//DTD Import Control 1.1//EN"
-    "http://www.puppycrawl.com/dtds/import_control_1_1.dtd"&gt;</pre>
-
+<div >
+<h2><a name="ImportControl"></a>ImportControl</h2>
+      
+<div class="section">
+<h3><a name="Description"></a>Description</h3>
+        
 <p>
-</p>
+          Controls what can be imported in each package. Useful for
+          ensuring that application layering rules are not violated,
+          especially on large projects.
+        </p>
+
+        
+<p>
+          The DTD for a import control XML document is at <a class="externalLink" href="http://checkstyle.sourceforge.net/dtds/import_control_1_2.dtd">
+          http://checkstyle.sourceforge.net/dtds/import_control_1_2.dtd</a>. It
+          contains documentation on each of the elements and attributes.
+        </p>
+
+        
+<p>
+          The check validates a XML document when it loads the document.
+          To validate against the above DTD, include the following
+          document type declaration in your XML document:
+        </p>
+
+        
+<div>
+<pre>&lt;!DOCTYPE import-control PUBLIC
+    "-//Puppy Crawl//DTD Import Control 1.2//EN"
+    "http://checkstyle.sourceforge.net/dtds/import_control_1_2.dtd"&gt;
+        </pre></div>
+      </div>
+
+      
+<div class="section">
+<h3><a name="Properties"></a>Properties</h3>
+        
+<table class="bodyTable" border="0">
+          
+<tbody><tr class="a">
+            
+<th>name</th>
+            
+<th>description</th>
+            
+<th>type</th>
+            
+<th>default value</th>
+          </tr>
+          
+<tr class="b">
+            
+<td>file</td>
+            
+<td>
+              The location of the file containing the import control configuration.
+              It can be a regular file, URL or resource path. It will try loading
+              the path as a URL first, then as a file, and finally as a resource.
+            </td>
+            
+<td><a href="http://checkstyle.sourceforge.net/property_types.html#uri">URI</a></td>
+            
+<td><tt>null</tt></td>
+          </tr>
+          
+<tr class="a">
+            
+<td>url</td>
+            
+<td>
+              URL of the file containing the import control configuration.
+              This property is deprecated. Please use the file property to load configurations
+              from URLs.
+            </td>
+            
+<td><a href="http://checkstyle.sourceforge.net/property_types.html#uri">URI</a></td>
+            
+<td><tt>null</tt></td>
+          </tr>
+        </tbody></table>
+      </div>
+
+      
+<div class="section">
+<h3><a name="Examples"></a>Examples</h3>
+        
+<p>
+          To configure the check using a import control file called
+          "config/import-control.xml", then have the following:
+        </p>
+
+        
+<div class="source">
+<pre>&lt;module name="ImportControl"&gt;
+    &lt;property name="file" value="config/import-control.xml"/&gt;
+&lt;/module&gt;
+        </pre></div>
+
+        
+<p>
+            In the example below access to package
+            <tt>com.puppycrawl.tools.checkstyle.checks</tt> and its subpackages is
+            allowed from anywhere in <tt>com.puppycrawl.tools.checkstyle</tt> except
+            from the <tt>filters</tt> subpackage where access to all
+            <tt>check</tt>'s subpackages is disallowed. Two <tt>java.lang.ref</tt>
+            classes are allowed by virtue of one regular expression instead of listing
+            them in two separate allow rules (as it is done with the <tt>Files</tt>
+            and <tt>ClassPath</tt> classes).
+        </p>
+
+        
+<div class="source">
+<pre>&lt;import-control pkg="com.puppycrawl.tools.checkstyle"&gt;
+    &lt;allow pkg="com.puppycrawl.tools.checkstyle.api"/&gt;
+    &lt;allow pkg="com.puppycrawl.tools.checkstyle.checks"/&gt;
+    &lt;allow class="com.google.common.io.Files"/&gt;
+    &lt;allow class="com.google.common.reflect.ClassPath"/&gt;
+    &lt;subpackage name="filters"&gt;
+        &lt;allow class="java\.lang\.ref\.(Weak|Soft)Reference"
+            regex="true"/&gt;
+        &lt;disallow pkg="com\.puppycrawl\.tools\.checkstyle\.checks\.[^.]+"
+            regex="true"/&gt;
+        &lt;disallow pkg="com.puppycrawl.tools.checkstyle.ant"/&gt;
+        &lt;disallow pkg="com.puppycrawl.tools.checkstyle.doclets"/&gt;
+        &lt;disallow pkg="com.puppycrawl.tools.checkstyle.gui"/&gt;
+    &lt;/subpackage&gt;
+&lt;/import-control&gt;
+        </pre></div>
+
+        
+<p>
+          In the next example regular expressions are used to enforce a layering rule: In all
+          <tt>dao</tt> packages it is not allowed to access UI layer code (<tt>ui</tt>,
+          <tt>awt</tt>, and <tt>swing</tt>). On the other hand it is not allowed to directly
+          access <tt>dao</tt> and <tt>service</tt> layer from <tt>ui</tt> packages. The
+          root package is also a regular expression that is used to handle old and new domain name
+          with the same rules.
+        </p>
+
+        
+<div class="source">
+<pre>&lt;import-control pkg="(de.olddomain|de.newdomain)\..*" regex="true"&gt;
+    &lt;subpackage pkg="[^.]+\.dao" regex="true"&gt;
+        &lt;disallow pkg=".*\.ui" regex="true"/&gt;
+        &lt;disallow pkg=".*\.(awt|swing).\.*" regex="true"/&gt;
+    &lt;/subpackage&gt;
+    &lt;subpackage pkg="[^.]+\.ui" regex="true"&gt;
+        &lt;disallow pkg=".*\.(dao|service)" regex="true"/&gt;
+    &lt;/subpackage&gt;
+&lt;/import-control&gt;
+        </pre></div>
+
+        
+<p>
+          For a real-life import control file look at the file called <a class="externalLink" href="https://github.com/checkstyle/checkstyle/blob/master/config/import-control.xml">
+          import-control.xml</a>
+          which is part of the Checkstyle distribution.
+        </p>
+
+        
+<div class="section" id="regex-notes">
+<h4 id="regex-notes">Notes on regular expressions</h4>
+        
+<p>
+          Regular expressions in import rules have to match either Java packages or
+          classes. The language rules for packages and class names can be described by the
+          following complicated regular expression that takes into account that Java names may
+          contain any unicode letter, numbers, underscores, and dollar signs (see section 3.8
+          in the <a class="externalLink" href="http://docs.oracle.com/javase/specs/">Java specs</a>):
+        </p>
+        
+<ul>
+          
+<li>
+            <tt>[\p{Letter}_$][\p{Letter}\p{Number}_$]*</tt> or short
+            <tt>[\p{L}_$][\p{L}\p{N}_$]*</tt> for a class name or package component.
+          </li>
+          
+<li>
+            <tt>([\p{L}_$][\p{L}\p{N}_$]*\.)*[\p{L}_$][\p{L}\p{N}_$]*</tt>
+            for a fully qualified name.
+          </li>
+        </ul>
+        
+<p>
+          But it is not necessary to use these complicated expressions since no validation is
+          required. Differentiating between package separator '.' and others is
+          sufficient. Unfortunately '.' has a special meaning in regular expressions so one has
+          to write <tt>\.</tt> to match an actual dot.
+        </p>
+        
+<ul>
+          
+<li>
+            Use <tt>[^.]+</tt> (one or more "not a dot" characters) for a class name or
+            package component.
+          </li>
+          
+<li>
+            Use <tt>com\.google\.common\.[^.]+</tt> to match any subpackage of
+            <tt>com.google.common</tt>.
+          </li>
+          
+<li>
+            When matching concrete packages like <tt>com.google.common</tt> omitting the
+            backslash before the dots may improve readability and may be just exact enough:
+            <tt>com.google.common\.[^.]+</tt> matches not only subpackages of
+            <tt>com.google.common</tt> but e.g. also of <tt>com.googleecommon</tt> but
+            you may not care for that.
+          </li>
+          
+<li>
+            Do not use <tt>.*</tt> unless you really do not care for what is matched. Often
+            you want to match only a certain package level instead.
+          </li>
+        </ul>
+      </div></div>
+
+</div>
