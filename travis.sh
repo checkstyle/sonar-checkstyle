@@ -8,6 +8,11 @@ ci)
   mvn clean verify -B -e -V
   ;;
 
+sonar)
+  if [[ $TRAVIS_PULL_REQUEST =~ ^([0-9]*)$ ]]; then exit 0; fi
+  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+  ;;
+
 nondex)
   cd checkstyle-sonar-plugin
   mvn --fail-never clean nondex:nondex -Dcheckstyle.skip=true
