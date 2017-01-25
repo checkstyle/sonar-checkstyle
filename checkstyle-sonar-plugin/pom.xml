@@ -302,7 +302,7 @@
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleProfileExporter</pattern>
-                <branchRate>86</branchRate>
+                <branchRate>85</branchRate>
                 <lineRate>97</lineRate>
               </regex>
               <regex>

@@ -55,11 +55,13 @@ public class CheckstyleProfileExporter extends ProfileExporter {
   @Override
   public void exportProfile(RulesProfile profile, Writer writer) {
     try {
-      ListMultimap<String, ActiveRule> activeRulesByConfigKey =
-              arrangeByConfigKey(
-                      profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY));
-      generateXml(writer, activeRulesByConfigKey);
-
+      List<ActiveRule> activeRules =
+              profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY);
+      if (activeRules != null) {
+        ListMultimap<String, ActiveRule> activeRulesByConfigKey =
+                arrangeByConfigKey(activeRules);
+        generateXml(writer, activeRulesByConfigKey);
+      }
     } catch (IOException e) {
       throw new IllegalStateException("Fail to export the profile " + profile, e);
     }
@@ -141,10 +143,8 @@ public class CheckstyleProfileExporter extends ProfileExporter {
 
   private static ListMultimap<String, ActiveRule> arrangeByConfigKey(List<ActiveRule> activeRules) {
     ListMultimap<String, ActiveRule> result = ArrayListMultimap.create();
-    if (activeRules != null) {
-      for (ActiveRule activeRule : activeRules) {
-        result.put(activeRule.getConfigKey(), activeRule);
-      }
+    for (ActiveRule activeRule : activeRules) {
+      result.put(activeRule.getConfigKey(), activeRule);
     }
     return result;
   }
