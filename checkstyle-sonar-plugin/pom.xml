@@ -297,7 +297,7 @@
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleConfiguration</pattern>
-                <branchRate>75</branchRate>
+                <branchRate>55</branchRate>
                 <lineRate>92</lineRate>
               </regex>
               <regex>
