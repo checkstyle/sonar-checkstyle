@@ -123,8 +123,9 @@ public class CheckstyleConfiguration implements BatchExtension {
             || "com.puppycrawl.tools.checkstyle.Checker".equals(module.getName()))
             && module instanceof DefaultConfiguration) {
       Charset charset = getCharset();
-      LOG.info("Checkstyle charset: {}", charset.name());
-      ((DefaultConfiguration) module).addAttribute("charset", charset.name());
+      String charsetName = charset.name();
+      LOG.info("Checkstyle charset: {}", charsetName);
+      ((DefaultConfiguration) module).addAttribute("charset", charsetName);
     }
   }
 
