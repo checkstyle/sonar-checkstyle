@@ -19,11 +19,15 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.rules.RulePriority;
 
 import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
 
 public final class CheckstyleSeverityUtils {
+
+  private static final Logger LOG = LoggerFactory.getLogger(CheckstyleSeverityUtils.class);
 
   private CheckstyleSeverityUtils() {
     // only static methods
@@ -49,6 +53,7 @@ public final class CheckstyleSeverityUtils {
     try {
       severityLevel = SeverityLevel.getInstance(severity);
     } catch (Exception exc) {
+      LOG.warn("Smth wrong severity", exc);
       return null;
     }
     switch (severityLevel) {
