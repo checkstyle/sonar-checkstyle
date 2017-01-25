@@ -81,7 +81,7 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
       String message = getMessage(event);
       // In Checkstyle 5.5 exceptions are reported as an events from TreeWalker
       if ("com.puppycrawl.tools.checkstyle.TreeWalker".equals(ruleKey)) {
-        LOG.warn(event.getFileName() + ": " + message);
+        LOG.warn("%s : %s", event.getFileName(), message);
       }
       initResource(event);
       Issuable issuable = perspectives.as(Issuable.class, currentResource);
@@ -109,13 +109,13 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
     try {
       key = event.getModuleId();
     } catch (Exception e) {
-      // checkstyle throws a NullPointerException if the message is not set
+      LOG.warn("AuditEvent is created incorrectly. Exception happen during getModuleId()", e);
     }
     if (StringUtils.isBlank(key)) {
       try {
         key = event.getSourceName();
       } catch (Exception e) {
-        // checkstyle can throw a NullPointerException if the message is not set
+        LOG.warn("AuditEvent is created incorrectly. Exception happen during getSourceName()", e);
       }
     }
     return key;
@@ -127,7 +127,7 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
       return event.getMessage();
 
     } catch (Exception e) {
-      // checkstyle can throw a NullPointerException if the message is not set
+      LOG.warn("AuditEvent is created incorrectly. Exception happen during getMessage()", e);
       return null;
     }
   }
@@ -142,7 +142,7 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
         result = line;
       }
     } catch (Exception e) {
-      // checkstyle can throw a NullPointerException if the message is not set
+      LOG.warn("AuditEvent is created incorrectly. Exception happen during getLine()", e);
     }
     return result;
   }
