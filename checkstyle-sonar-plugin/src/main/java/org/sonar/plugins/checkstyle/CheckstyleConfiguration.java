@@ -102,7 +102,7 @@ public class CheckstyleConfiguration implements BatchExtension {
   public Configuration getCheckstyleConfiguration() throws CheckstyleException {
     File xmlConfig = getXmlDefinitionFile();
 
-    LOG.info("Checkstyle configuration: " + xmlConfig.getAbsolutePath());
+    LOG.info("Checkstyle configuration: {}", xmlConfig.getAbsolutePath());
     Configuration configuration = toCheckstyleConfiguration(xmlConfig);
     defineCharset(configuration);
     return configuration;
@@ -126,7 +126,7 @@ public class CheckstyleConfiguration implements BatchExtension {
             || "com.puppycrawl.tools.checkstyle.Checker".equals(module.getName()))
             && module instanceof DefaultConfiguration) {
       Charset charset = getCharset();
-      LOG.info("Checkstyle charset: " + charset.name());
+      LOG.info("Checkstyle charset: {}", charset.name());
       ((DefaultConfiguration) module).addAttribute("charset", charset.name());
     }
   }

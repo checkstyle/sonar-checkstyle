@@ -81,7 +81,7 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
       String message = getMessage(event);
       // In Checkstyle 5.5 exceptions are reported as an events from TreeWalker
       if ("com.puppycrawl.tools.checkstyle.TreeWalker".equals(ruleKey)) {
-        LOG.warn("%s : %s", event.getFileName(), message);
+        LOG.warn("{} : {}", event.getFileName(), message);
       }
       initResource(event);
       Issuable issuable = perspectives.as(Issuable.class, currentResource);
