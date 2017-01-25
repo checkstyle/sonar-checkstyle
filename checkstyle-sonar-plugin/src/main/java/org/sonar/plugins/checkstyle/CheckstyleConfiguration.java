@@ -29,7 +29,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.BatchExtension;
@@ -66,11 +65,11 @@ public class CheckstyleConfiguration implements BatchExtension {
   }
 
   public File getXmlDefinitionFile() {
-    Writer writer = null;
     File xmlFile = new File(fileSystem.workDir(), "checkstyle.xml");
-    try {
-      writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false),
-              StandardCharsets.UTF_8);
+    try (Writer writer =
+                 new OutputStreamWriter(new FileOutputStream(xmlFile, false),
+                                          StandardCharsets.UTF_8)) {
+
       confExporter.exportProfile(profile, writer);
       writer.flush();
       return xmlFile;
@@ -79,8 +78,6 @@ public class CheckstyleConfiguration implements BatchExtension {
       throw new IllegalStateException("Fail to save the Checkstyle configuration to "
               + xmlFile.getPath(), e);
 
-    } finally {
-      IOUtils.closeQuietly(writer);
     }
   }
 
