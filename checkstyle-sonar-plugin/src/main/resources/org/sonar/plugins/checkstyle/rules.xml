@@ -1275,10 +1275,8 @@
     <param key="ignoreOverridden" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
-      <defaultValue>anoninner</defaultValue>
-    </param>
-    <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
+    <param key="accessModifiers" type="s[public,protected,package,private]">
+      <defaultValue>public, protected, package, private</defaultValue>
     </param>
     <status>READY</status>
   </rule>
@@ -1967,6 +1965,9 @@
     <param key="file" type="STRING">
     </param>
     <param key="url" type="STRING">
+    </param>
+    <param key="path" type="REGULAR_EXPRESSION">
+      <defaultValue>.*</defaultValue>
     </param>
     <status>READY</status>
   </rule>

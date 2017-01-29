@@ -1,30 +1,31 @@
 <div >
-<h2><a name="ImportControl"></a>ImportControl</h2>
-      
+<div class="section">
+<h2><a name="ImportControl"></a>ImportControl<div class="anchor"><a href="http://checkstyle.sourceforge.net/config_imports.html#ImportControl"><img src="images/anchor.png"></a></div></h2>
+
 <div class="section">
 <h3><a name="Description"></a>Description</h3>
-        
+
 <p>
           Controls what can be imported in each package. Useful for
           ensuring that application layering rules are not violated,
           especially on large projects.
         </p>
 
-        
+
 <p>
           The DTD for a import control XML document is at <a class="externalLink" href="http://checkstyle.sourceforge.net/dtds/import_control_1_2.dtd">
           http://checkstyle.sourceforge.net/dtds/import_control_1_2.dtd</a>. It
           contains documentation on each of the elements and attributes.
         </p>
 
-        
+
 <p>
           The check validates a XML document when it loads the document.
           To validate against the above DTD, include the following
           document type declaration in your XML document:
         </p>
 
-        
+
 <div>
 <pre>&lt;!DOCTYPE import-control PUBLIC
     "-//Puppy Crawl//DTD Import Control 1.2//EN"
@@ -32,72 +33,102 @@
         </pre></div>
       </div>
 
-      
+
 <div class="section">
 <h3><a name="Properties"></a>Properties</h3>
-        
+
 <table class="bodyTable" border="0">
-          
+
 <tbody><tr class="a">
-            
+
 <th>name</th>
-            
+
 <th>description</th>
-            
+
 <th>type</th>
-            
+
 <th>default value</th>
           </tr>
-          
+
 <tr class="b">
-            
+
 <td>file</td>
-            
+
 <td>
               The location of the file containing the import control configuration.
               It can be a regular file, URL or resource path. It will try loading
               the path as a URL first, then as a file, and finally as a resource.
             </td>
-            
-<td><a href="http://checkstyle.sourceforge.net/property_types.html#uri">URI</a></td>
-            
+
+<td><a href="property_types.html#uri">URI</a></td>
+
 <td><tt>null</tt></td>
           </tr>
-          
+
 <tr class="a">
-            
+
 <td>url</td>
-            
+
 <td>
               URL of the file containing the import control configuration.
               This property is deprecated. Please use the file property to load configurations
               from URLs.
             </td>
-            
-<td><a href="http://checkstyle.sourceforge.net/property_types.html#uri">URI</a></td>
-            
+
+<td><a href="property_types.html#uri">URI</a></td>
+
 <td><tt>null</tt></td>
+          </tr>
+
+<tr class="b">
+
+<td>path</td>
+
+<td>
+              Regular expression of file paths to which this check should apply. Files that
+              don't match the pattern will not be checked. The pattern will be matched against
+              the full absolute file path.
+            </td>
+
+<td><a href="property_types.html#regexp">Regular Expression</a></td>
+
+<td><tt>".*"</tt></td>
           </tr>
         </tbody></table>
       </div>
 
-      
+
 <div class="section">
 <h3><a name="Examples"></a>Examples</h3>
-        
+
 <p>
-          To configure the check using a import control file called
+          To configure the check using an import control file called
           "config/import-control.xml", then have the following:
         </p>
 
-        
+
 <div class="source">
 <pre>&lt;module name="ImportControl"&gt;
     &lt;property name="file" value="config/import-control.xml"/&gt;
 &lt;/module&gt;
         </pre></div>
 
-        
+
+<p>
+          To configure the check to only check the "src/main" directory
+          using an import control file called "config/import-control.xml",
+          then have the following:
+        </p>
+
+
+<div class="source">
+<pre>&lt;module name="ImportControl"&gt;
+    &lt;property name="file" value="config/import-control.xml"/&gt;
+    &lt;property name="path" value="^.*[\\/]src[\\/]main[\\/].*$"/&gt;
+&lt;/module&gt;
+        </pre></div>
+
+
 <p>
             In the example below access to package
             <tt>com.puppycrawl.tools.checkstyle.checks</tt> and its subpackages is
@@ -109,7 +140,7 @@
             and <tt>ClassPath</tt> classes).
         </p>
 
-        
+
 <div class="source">
 <pre>&lt;import-control pkg="com.puppycrawl.tools.checkstyle"&gt;
     &lt;allow pkg="com.puppycrawl.tools.checkstyle.api"/&gt;
@@ -128,7 +159,7 @@
 &lt;/import-control&gt;
         </pre></div>
 
-        
+
 <p>
           In the next example regular expressions are used to enforce a layering rule: In all
           <tt>dao</tt> packages it is not allowed to access UI layer code (<tt>ui</tt>,
@@ -138,7 +169,7 @@
           with the same rules.
         </p>
 
-        
+
 <div class="source">
 <pre>&lt;import-control pkg="(de.olddomain|de.newdomain)\..*" regex="true"&gt;
     &lt;subpackage pkg="[^.]+\.dao" regex="true"&gt;
@@ -151,17 +182,17 @@
 &lt;/import-control&gt;
         </pre></div>
 
-        
+
 <p>
           For a real-life import control file look at the file called <a class="externalLink" href="https://github.com/checkstyle/checkstyle/blob/master/config/import-control.xml">
           import-control.xml</a>
           which is part of the Checkstyle distribution.
         </p>
 
-        
+
 <div class="section" id="regex-notes">
 <h4 id="regex-notes">Notes on regular expressions</h4>
-        
+
 <p>
           Regular expressions in import rules have to match either Java packages or
           classes. The language rules for packages and class names can be described by the
@@ -169,39 +200,39 @@
           contain any unicode letter, numbers, underscores, and dollar signs (see section 3.8
           in the <a class="externalLink" href="http://docs.oracle.com/javase/specs/">Java specs</a>):
         </p>
-        
+
 <ul>
-          
+
 <li>
             <tt>[\p{Letter}_$][\p{Letter}\p{Number}_$]*</tt> or short
             <tt>[\p{L}_$][\p{L}\p{N}_$]*</tt> for a class name or package component.
           </li>
-          
+
 <li>
             <tt>([\p{L}_$][\p{L}\p{N}_$]*\.)*[\p{L}_$][\p{L}\p{N}_$]*</tt>
             for a fully qualified name.
           </li>
         </ul>
-        
+
 <p>
           But it is not necessary to use these complicated expressions since no validation is
           required. Differentiating between package separator '.' and others is
           sufficient. Unfortunately '.' has a special meaning in regular expressions so one has
           to write <tt>\.</tt> to match an actual dot.
         </p>
-        
+
 <ul>
-          
+
 <li>
             Use <tt>[^.]+</tt> (one or more "not a dot" characters) for a class name or
             package component.
           </li>
-          
+
 <li>
             Use <tt>com\.google\.common\.[^.]+</tt> to match any subpackage of
             <tt>com.google.common</tt>.
           </li>
-          
+
 <li>
             When matching concrete packages like <tt>com.google.common</tt> omitting the
             backslash before the dots may improve readability and may be just exact enough:
@@ -209,7 +240,7 @@
             <tt>com.google.common</tt> but e.g. also of <tt>com.googleecommon</tt> but
             you may not care for that.
           </li>
-          
+
 <li>
             Do not use <tt>.*</tt> unless you really do not care for what is matched. Often
             you want to match only a certain package level instead.
@@ -217,4 +248,48 @@
         </ul>
       </div></div>
 
+
+<div class="section">
+<h3><a name="Example_of_Usage"></a>Example of Usage</h3>
+
+<ul>
+
+<li>
+            <a class="externalLink" href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+ImportControl">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </div>
+
+
+<div class="section">
+<h3><a name="Error_Messages"></a>Error Messages</h3>
+
+<ul>
+
+<li>
+            <a class="externalLink" href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fimports+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22import.control.disallowed%22">
+            import.control.disallowed</a>
+          </li>
+
+<li>
+            <a class="externalLink" href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fimports+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22import.control.missing.file%22">
+            import.control.missing.file</a>
+          </li>
+
+<li>
+            <a class="externalLink" href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fimports+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22import.control.unknown.pkg%22">
+            import.control.unknown.pkg</a>
+          </li>
+        </ul>
+
+<p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
+      </div>
+
+
+
+</div>
 </div>
