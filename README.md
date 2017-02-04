@@ -13,6 +13,7 @@ This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforg
 
 Checkstyle Plugin|Sonar|Checkstyle|Jdk
 -----------------|-----|----------|---
+3.5.1|5.6.4|7.5.1|1.8
 3.5|5.6.4|7.5|1.8
 3.4|5.6.4|7.4|1.8
 3.3|5.6.4|7.3|1.8
