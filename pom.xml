@@ -4,7 +4,7 @@
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin-parent</artifactId>
-  <version>3.5.1-SNAPSHOT</version>
+  <version>3.5.1</version>
   <packaging>pom</packaging>
 
   <name>Checkstyle SonarQube plugin</name>
@@ -73,7 +73,7 @@
     <connection>scm:git:git@github.com:checkstyle/sonar-checkstyle.git</connection>
     <developerConnection>scm:git:git@github.com:checkstyle/sonar-checkstyle.git</developerConnection>
     <url>https://github.com/checkstyle/sonar-checkstyle</url>
-    <tag>HEAD</tag>
+    <tag>3.5.1</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issues</system>
