@@ -100,13 +100,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
         rootModuleProperties.putAll(rootModule.properties);
 
         if (StringUtils.equals(TREEWALKER_MODULE, rootModule.name)) {
-          for (Module treewalkerModule : rootModule.modules) {
-            Map<String, String> treewalkerModuleProperties = Maps.newHashMap(rootModuleProperties);
-            treewalkerModuleProperties.putAll(treewalkerModule.properties);
-
-            processModule(profile, CHECKER_MODULE + "/" + TREEWALKER_MODULE + "/",
-                    treewalkerModule.name, treewalkerModuleProperties, messages);
-          }
+          processTreewalker(profile, rootModule, rootModuleProperties, messages);
         } else {
           processModule(profile, CHECKER_MODULE + "/", rootModule.name,
                   rootModuleProperties, messages);
@@ -119,6 +113,18 @@ public class CheckstyleProfileImporter extends ProfileImporter {
       messages.addErrorText(message);
     }
     return profile;
+  }
+
+  private void processTreewalker(RulesProfile profile, Module rootModule,
+                                 Map<String, String> rootModuleProperties,
+                                 ValidationMessages messages) {
+    for (Module treewalkerModule : rootModule.modules) {
+      Map<String, String> treewalkerModuleProperties = Maps.newHashMap(rootModuleProperties);
+      treewalkerModuleProperties.putAll(treewalkerModule.properties);
+
+      processModule(profile, CHECKER_MODULE + "/" + TREEWALKER_MODULE + "/",
+              treewalkerModule.name, treewalkerModuleProperties, messages);
+    }
   }
 
   private static SMInputFactory initStax() {
