@@ -26,10 +26,12 @@ import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -183,13 +185,15 @@ public final class ChecksTest {
         Assert.assertTrue("'checkstyle.properties' must exist", propertiesFile.exists());
 
         final Properties properties = new Properties();
-        properties.load(new FileInputStream(propertiesFile));
+        try (InputStream stream = new FileInputStream(propertiesFile)) {
+          properties.load(stream);
+        }
 
         validateSonarProperties(properties, modules);
     }
 
-    private static void validateSonarProperties(Properties properties, Set<Class<?>> modules)
-            {
+    private static void validateSonarProperties(Map<Object, Object> properties,
+            Set<Class<?>> modules) {
         Class<?> lastModule = null;
         Set<String> moduleProperties = null;
 

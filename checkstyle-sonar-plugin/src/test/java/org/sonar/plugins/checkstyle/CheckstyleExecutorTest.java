@@ -20,8 +20,6 @@
 package org.sonar.plugins.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
@@ -29,6 +27,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -38,6 +37,7 @@ import java.util.Arrays;
 import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -119,13 +119,14 @@ public class CheckstyleExecutorTest {
     try {
       CheckstyleConfiguration conf = mockConf();
       File report = new File("target/test-tmp/checkstyle-report.xml");
+      report.delete(); // delete if exists from a previous run
       when(conf.getTargetXmlReport()).thenReturn(report);
       CheckstyleAuditListener listener = mockListener();
       CheckstyleExecutor executor =
               new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
       executor.execute();
 
-      assertThat(report.exists(), is(true));
+      Assert.assertTrue(report.exists());
 
       String reportContents = FileUtils.readFileToString(report);
       assertThat(reportContents).contains("<error");
@@ -134,6 +135,44 @@ public class CheckstyleExecutorTest {
       assertThat(Locale.getDefault()).isEqualTo(Locale.FRENCH);
       Locale.setDefault(initialLocale);
     }
+  }
+
+  @Test
+  public void canGenerateXmlReportNull() throws CheckstyleException {
+    CheckstyleConfiguration conf = mockConf();
+    File report = new File("target/test-tmp/checkstyle-report.xml");
+    report.delete(); // delete if exists from a previous run
+    when(conf.getTargetXmlReport()).thenReturn(null);
+    CheckstyleAuditListener listener = mockListener();
+    CheckstyleExecutor executor =
+            new CheckstyleExecutor(conf, listener, createJavaResourceLocator());
+    executor.execute();
+
+    Assert.assertFalse(report.exists());
+  }
+
+  @Test
+  public void closeNull() {
+    CheckstyleExecutor.close(null);
+  }
+
+  @Test
+  public void closeNoException() throws IOException {
+    Closeable closeable = mock(Closeable.class);
+
+    CheckstyleExecutor.close(closeable);
+
+    verify(closeable, times(1)).close();
+  }
+
+  @Test
+  public void closeWithException() throws IOException {
+    Closeable closeable = mock(Closeable.class);
+    // using a static import pushes us above the PMD import limit
+    Mockito.doThrow(IOException.class).when(closeable).close();
+
+    thrown.expect(IllegalStateException.class);
+    CheckstyleExecutor.close(closeable);
   }
 
   private static CheckstyleAuditListener mockListener() {

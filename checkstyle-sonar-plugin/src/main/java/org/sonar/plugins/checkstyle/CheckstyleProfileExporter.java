@@ -23,7 +23,10 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -34,8 +37,6 @@ import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.rules.RuleParam;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ListMultimap;
 
 public class CheckstyleProfileExporter extends ProfileExporter {
 
@@ -58,7 +59,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
       List<ActiveRule> activeRules =
               profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY);
       if (activeRules != null) {
-        ListMultimap<String, ActiveRule> activeRulesByConfigKey =
+        Map<String, List<ActiveRule>> activeRulesByConfigKey =
                 arrangeByConfigKey(activeRules);
         generateXml(writer, activeRulesByConfigKey);
       }
@@ -68,7 +69,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
 
   }
 
-  private void generateXml(Writer writer, ListMultimap<String, ActiveRule> activeRulesByConfigKey)
+  private void generateXml(Writer writer, Map<String, List<ActiveRule>> activeRulesByConfigKey)
           throws IOException {
     appendXmlHeader(writer);
     appendCustomFilters(writer);
@@ -91,11 +92,12 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
   }
 
-  private static void appendCheckerModules(Writer writer, ListMultimap<String,
-          ActiveRule> activeRulesByConfigKey) throws IOException {
-    for (String configKey : activeRulesByConfigKey.keySet()) {
+  private static void appendCheckerModules(Writer writer,
+          Map<String, List<ActiveRule>> activeRulesByConfigKey) throws IOException {
+    for (Entry<String, List<ActiveRule>> entry : activeRulesByConfigKey.entrySet()) {
+      String configKey = entry.getKey();
       if (!isInTreeWalker(configKey)) {
-        List<ActiveRule> activeRules = activeRulesByConfigKey.get(configKey);
+        List<ActiveRule> activeRules = entry.getValue();
         for (ActiveRule activeRule : activeRules) {
           appendModule(writer, activeRule);
         }
@@ -103,8 +105,8 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
   }
 
-  private void appendTreeWalker(Writer writer, ListMultimap<String,
-          ActiveRule> activeRulesByConfigKey) throws IOException {
+  private void appendTreeWalker(Writer writer,
+          Map<String, List<ActiveRule>> activeRulesByConfigKey) throws IOException {
     writer.append("<module name=\"TreeWalker\">");
     writer.append("<module name=\"FileContentsHolder\"/> ");
     if (isSuppressWarningsEnabled()) {
@@ -141,10 +143,18 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     return StringUtils.startsWithIgnoreCase(configKey, "Checker/TreeWalker/");
   }
 
-  private static ListMultimap<String, ActiveRule> arrangeByConfigKey(List<ActiveRule> activeRules) {
-    ListMultimap<String, ActiveRule> result = ArrayListMultimap.create();
+  private static Map<String, List<ActiveRule>> arrangeByConfigKey(List<ActiveRule> activeRules) {
+    Map<String, List<ActiveRule>> result = new HashMap<>();
     for (ActiveRule activeRule : activeRules) {
-      result.put(activeRule.getConfigKey(), activeRule);
+      String key = activeRule.getConfigKey();
+      if (result.containsKey(key)) {
+        List<ActiveRule> rules = result.get(key);
+        rules.add(activeRule);
+      } else {
+        List<ActiveRule> rules = new ArrayList<>();
+        rules.add(activeRule);
+        result.put(key, rules);
+      }
     }
     return result;
   }

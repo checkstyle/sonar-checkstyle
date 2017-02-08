@@ -20,6 +20,8 @@
 package org.sonar.plugins.checkstyle;
 
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +42,6 @@ import org.sonar.api.rules.RuleQuery;
 import org.sonar.api.utils.ValidationMessages;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class CheckstyleProfileImporter extends ProfileImporter {
 
@@ -61,8 +61,8 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
   private static class Module {
     private String name;
-    private final Map<String, String> properties = Maps.newHashMap();
-    private final List<Module> modules = Lists.newArrayList();
+    private final Map<String, String> properties = new HashMap<>();
+    private final List<Module> modules = new ArrayList<>();
   }
 
   public CheckstyleProfileImporter(RuleFinder ruleFinder) {
@@ -96,7 +96,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
       Module checkerModule = loadModule(inputFactory.rootElementCursor(reader).advance());
 
       for (Module rootModule : checkerModule.modules) {
-        Map<String, String> rootModuleProperties = Maps.newHashMap(checkerModule.properties);
+        Map<String, String> rootModuleProperties = new HashMap<>(checkerModule.properties);
         rootModuleProperties.putAll(rootModule.properties);
 
         if (StringUtils.equals(TREEWALKER_MODULE, rootModule.name)) {
@@ -119,7 +119,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
                                  Map<String, String> rootModuleProperties,
                                  ValidationMessages messages) {
     for (Module treewalkerModule : rootModule.modules) {
-      Map<String, String> treewalkerModuleProperties = Maps.newHashMap(rootModuleProperties);
+      Map<String, String> treewalkerModuleProperties = new HashMap<>(rootModuleProperties);
       treewalkerModuleProperties.putAll(treewalkerModule.properties);
 
       processModule(profile, CHECKER_MODULE + "/" + TREEWALKER_MODULE + "/",
