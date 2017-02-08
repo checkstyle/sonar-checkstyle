@@ -26,6 +26,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -39,7 +40,6 @@ import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableList;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
@@ -86,7 +86,11 @@ public class CheckstyleConfiguration implements BatchExtension {
     Iterable<File> files = fileSystem.files(predicates.and(
       predicates.hasLanguage(CheckstyleConstants.JAVA_KEY),
       predicates.hasType(InputFile.Type.MAIN)));
-    return ImmutableList.<File>builder().addAll(files).build();
+    List<File> fileList = new ArrayList<>();
+    for (File file : files) {
+      fileList.add(file);
+    }
+    return fileList;
   }
 
   public File getTargetXmlReport() {

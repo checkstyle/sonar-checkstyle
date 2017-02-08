@@ -19,12 +19,15 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -37,8 +40,6 @@ import org.sonar.api.utils.TimeProfiler;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Lists;
-import com.google.common.io.Closeables;
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
 import com.puppycrawl.tools.checkstyle.XMLLogger;
@@ -61,14 +62,24 @@ public class CheckstyleExecutor implements BatchExtension {
    * Execute Checkstyle and return the generated XML report.
    */
   public void execute() {
-    TimeProfiler profiler =
-            new TimeProfiler().start("Execute Checkstyle " + CheckstyleVersion.getVersion());
-    ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
-    Thread.currentThread().setContextClassLoader(PackageNamesLoader.class.getClassLoader());
-    URLClassLoader projectClassloader = createClassloader();
 
     Locale initialLocale = Locale.getDefault();
     Locale.setDefault(Locale.ENGLISH);
+    ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
+    Thread.currentThread().setContextClassLoader(PackageNamesLoader.class.getClassLoader());
+    URLClassLoader projectClassloader = createClassloader();
+    try {
+      executeWithClassLoader(projectClassloader);
+    } finally {
+      Thread.currentThread().setContextClassLoader(initialClassLoader);
+      Locale.setDefault(initialLocale);
+      close(projectClassloader);
+    }
+  }
+
+  private void executeWithClassLoader(URLClassLoader projectClassloader) {
+    TimeProfiler profiler =
+            new TimeProfiler().start("Execute Checkstyle " + CheckstyleVersion.getVersion());
     Checker checker = new Checker();
     OutputStream xmlOutput = null;
     try {
@@ -78,7 +89,7 @@ public class CheckstyleExecutor implements BatchExtension {
 
       File xmlReport = configuration.getTargetXmlReport();
       if (xmlReport != null) {
-        LOG.info("Checkstyle output report: " + xmlReport.getAbsolutePath());
+        LOG.info("Checkstyle output report: {}", xmlReport.getAbsolutePath());
         xmlOutput = FileUtils.openOutputStream(xmlReport);
         checker.addListener(new XMLLogger(xmlOutput, true));
       }
@@ -93,10 +104,20 @@ public class CheckstyleExecutor implements BatchExtension {
       throw new IllegalStateException("Can not execute Checkstyle", e);
     } finally {
       checker.destroy();
-      Closeables.closeQuietly(xmlOutput);
-      Thread.currentThread().setContextClassLoader(initialClassLoader);
-      Locale.setDefault(initialLocale);
-      Closeables.closeQuietly(projectClassloader);
+      if (xmlOutput != null) {
+        close(xmlOutput);
+      }
+    }
+  }
+
+  @VisibleForTesting
+  static void close(Closeable closeable) {
+    if (closeable != null) {
+      try {
+        closeable.close();
+      } catch (IOException e) {
+        throw new IllegalStateException("failed to close object", e);
+      }
     }
   }
 
@@ -112,7 +133,7 @@ public class CheckstyleExecutor implements BatchExtension {
 
   private URLClassLoader createClassloader() {
     Collection<File> classpathElements = javaResourceLocator.classpath();
-    List<URL> urls = Lists.newArrayList();
+    List<URL> urls = new ArrayList<>(classpathElements.size());
     for (File file : classpathElements) {
       urls.add(getUrl(file.toURI()));
     }

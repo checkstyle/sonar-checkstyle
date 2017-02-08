@@ -29,8 +29,6 @@ import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.resources.Project;
 
-import com.google.common.collect.Iterables;
-
 public class CheckstyleSensor implements Sensor {
 
   private final RulesProfile profile;
@@ -49,7 +47,8 @@ public class CheckstyleSensor implements Sensor {
     Iterable<File> mainFiles = fs.files(predicates.and(
       predicates.hasLanguage(CheckstyleConstants.JAVA_KEY),
       predicates.hasType(Type.MAIN)));
-    return !Iterables.isEmpty(mainFiles) &&
+    boolean mainFilesIsEmpty = !mainFiles.iterator().hasNext();
+    return !mainFilesIsEmpty &&
         !profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY).isEmpty();
   }
 

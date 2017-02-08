@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.checkstyle;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.sonar.api.CoreProperties;
@@ -27,15 +28,13 @@ import org.sonar.api.SonarPlugin;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.resources.Qualifiers;
 
-import com.google.common.collect.ImmutableList;
-
 public final class CheckstylePlugin extends SonarPlugin {
 
   private static final String CHECKSTYLE_SUB_CATEGORY_NAME = "Checkstyle";
 
   @Override
   public List getExtensions() {
-    return ImmutableList.of(
+    return Arrays.asList(
       PropertyDefinition
         .builder(CheckstyleConstants.FILTERS_KEY)
         .defaultValue(CheckstyleConstants.FILTERS_DEFAULT_VALUE)
