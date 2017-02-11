@@ -55,7 +55,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 public class CheckstyleExecutorTest {
 
   @Rule
-  public ExpectedException thrown = ExpectedException.none();
+  public final ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void execute() throws CheckstyleException {

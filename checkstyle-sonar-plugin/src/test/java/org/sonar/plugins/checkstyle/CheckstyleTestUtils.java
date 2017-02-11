@@ -51,12 +51,10 @@ public final class CheckstyleTestUtils {
     Diff diff;
     try {
       diff = XMLUnit.compareXML(xml, expectedXml);
-    } catch (SAXException e) {
-      throw new IllegalArgumentException("Could not run XML comparison", e);
-    } catch (IOException e) {
+    } catch (SAXException | IOException e) {
       throw new IllegalArgumentException("Could not run XML comparison", e);
     }
-    String message = "Diff: " + diff.toString() + CharUtils.LF + "XML: " + xml;
+    String message = "Diff: " + diff + CharUtils.LF + "XML: " + xml;
     assertTrue(message, diff.similar());
   }
 

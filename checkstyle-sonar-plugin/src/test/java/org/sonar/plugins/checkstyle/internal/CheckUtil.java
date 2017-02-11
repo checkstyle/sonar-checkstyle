@@ -126,9 +126,8 @@ public final class CheckUtil {
      * Get's the check's messages.
      * @param module class to examine.
      * @return a set of checkstyle's module message fields.
-     * @throws ClassNotFoundException if the attempt to read a protected class fails.
      */
-    public static Set<Field> getCheckMessages(Class<?> module) throws ClassNotFoundException {
+    public static Set<Field> getCheckMessages(Class<?> module) {
         final Set<Field> checkstyleMessages = new HashSet<>();
 
         // get all fields from current class
@@ -154,7 +153,7 @@ public final class CheckUtil {
      * Gets the check message 'as is' from appropriate 'messages.properties'
      * file.
      *
-     * @param locale the locale to get the message for.
+     * @param module the module to get the message from.
      * @param messageKey the key of message in 'messages*.properties' file.
      * @param arguments the arguments of message in 'messages*.properties' file.
      * @return the check's formatted message.

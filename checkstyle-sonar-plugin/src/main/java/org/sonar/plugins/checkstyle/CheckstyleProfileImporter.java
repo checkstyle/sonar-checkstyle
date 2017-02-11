@@ -50,7 +50,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
   private static final String CHECKER_MODULE = "Checker";
   private static final String TREEWALKER_MODULE = "TreeWalker";
   private static final String MODULE_NODE = "module";
-  private static final String[] FILTERS = new String[] {
+  private static final String[] FILTERS = {
     "SeverityMatchFilter",
     "SuppressionFilter",
     "SuppressWarningsFilter",
@@ -61,8 +61,8 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
   private static class Module {
     private String name;
-    private Map<String, String> properties = Maps.newHashMap();
-    private List<Module> modules = Lists.newArrayList();
+    private final Map<String, String> properties = Maps.newHashMap();
+    private final List<Module> modules = Lists.newArrayList();
   }
 
   public CheckstyleProfileImporter(RuleFinder ruleFinder) {
