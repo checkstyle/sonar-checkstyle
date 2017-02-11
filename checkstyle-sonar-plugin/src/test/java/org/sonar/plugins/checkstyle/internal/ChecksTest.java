@@ -73,7 +73,6 @@ public final class ChecksTest {
             "SuppressionCommentFilter.fileContents"
     );
 
-    @SuppressWarnings("static-method")
     @Test
     public void verifyTestConfigurationFiles() throws Exception {
         final Set<Class<?>> modules = CheckUtil.getCheckstyleModules();
@@ -305,8 +304,8 @@ public final class ChecksTest {
         if (AbstractCheck.class.isAssignableFrom(clss)) {
             final AbstractCheck check;
             try {
-                check = (AbstractCheck) clss.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
+                check = (AbstractCheck) clss.getConstructor().newInstance();
+            } catch (ReflectiveOperationException e) {
                 throw new IllegalStateException(e);
             }
 

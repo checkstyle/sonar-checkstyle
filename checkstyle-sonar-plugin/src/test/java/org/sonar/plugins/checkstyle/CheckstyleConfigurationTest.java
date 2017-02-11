@@ -117,9 +117,9 @@ public class CheckstyleConfigurationTest {
     FileUtils.forceDelete(xmlFile);
   }
 
-  public class FakeExporter extends CheckstyleProfileExporter {
+  /* default */ static class FakeExporter extends CheckstyleProfileExporter {
 
-    public FakeExporter() {
+    FakeExporter() {
       super(new Settings());
     }
 

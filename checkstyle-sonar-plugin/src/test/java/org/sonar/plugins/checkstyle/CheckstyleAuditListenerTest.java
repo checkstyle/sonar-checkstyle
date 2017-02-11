@@ -44,15 +44,15 @@ import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
 public class CheckstyleAuditListenerTest {
 
-  private File file = new File("file1");
-  private AuditEvent event =
+  private final File file = new File("file1");
+  private final AuditEvent event =
     new AuditEvent(this, file.getAbsolutePath(),
             new LocalizedMessage(42, "", "", null, "",
                     CheckstyleAuditListenerTest.class, "msg"));
-  private DefaultFileSystem fs = new DefaultFileSystem(new File(""));
-  private RuleFinder ruleFinder = mock(RuleFinder.class);
-  private DefaultInputFile inputFile = new DefaultInputFile("", file.getPath());
-  private ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
+  private final DefaultFileSystem fs = new DefaultFileSystem(new File(""));
+  private final RuleFinder ruleFinder = mock(RuleFinder.class);
+  private final DefaultInputFile inputFile = new DefaultInputFile("", file.getPath());
+  private final ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
 
   @Before
   public void before() {
