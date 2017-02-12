@@ -112,12 +112,10 @@ public class CheckstyleExecutor implements BatchExtension {
 
   @VisibleForTesting
   static void close(Closeable closeable) {
-    if (closeable != null) {
-      try {
-        closeable.close();
-      } catch (IOException e) {
-        throw new IllegalStateException("failed to close object", e);
-      }
+    try {
+      closeable.close();
+    } catch (IOException e) {
+      throw new IllegalStateException("failed to close object", e);
     }
   }
 

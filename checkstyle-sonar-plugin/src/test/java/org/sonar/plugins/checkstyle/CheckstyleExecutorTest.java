@@ -152,11 +152,6 @@ public class CheckstyleExecutorTest {
   }
 
   @Test
-  public void closeNull() {
-    CheckstyleExecutor.close(null);
-  }
-
-  @Test
   public void closeNoException() throws IOException {
     Closeable closeable = mock(Closeable.class);
 
