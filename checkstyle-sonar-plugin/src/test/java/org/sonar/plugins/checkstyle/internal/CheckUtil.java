@@ -31,10 +31,14 @@ import java.util.Set;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck;
 import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
+import com.puppycrawl.tools.checkstyle.api.BeforeExecutionFileFilter;
 import com.puppycrawl.tools.checkstyle.api.Filter;
+import com.puppycrawl.tools.checkstyle.api.RootModule;
+import com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheck;
+import com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck;
+import com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck;
 import com.puppycrawl.tools.checkstyle.guava.collect.ImmutableSet;
 import com.puppycrawl.tools.checkstyle.guava.reflect.ClassPath;
-import com.puppycrawl.tools.checkstyle.guava.reflect.ClassPath.ClassInfo;
 
 public final class CheckUtil {
     private CheckUtil() {
@@ -53,7 +57,7 @@ public final class CheckUtil {
                 .getContextClassLoader();
         final ClassPath classpath = ClassPath.from(loader);
         final String packageName = "com.puppycrawl.tools.checkstyle";
-        final ImmutableSet<ClassInfo> checkstyleClasses = classpath
+        final ImmutableSet<ClassPath.ClassInfo> checkstyleClasses = classpath
                 .getTopLevelClassesRecursive(packageName);
 
         for (ClassPath.ClassInfo clazz : checkstyleClasses) {
@@ -77,7 +81,9 @@ public final class CheckUtil {
         return isValidCheckstyleClass(loadedClass, className)
             && (isCheckstyleCheck(loadedClass)
                     || isFileSetModule(loadedClass)
-                    || isFilterModule(loadedClass));
+                    || isFilterModule(loadedClass)
+                    || isFileFilterModule(loadedClass)
+                    || isRootModule(loadedClass));
     }
 
     /**
@@ -124,11 +130,32 @@ public final class CheckUtil {
     }
 
     /**
+     * Checks whether a class may be considered as the checkstyle file filter.
+     * Checkstyle's file filters are classes which implement 'BeforeExecutionFileFilter' interface.
+     * @param loadedClass class to check.
+     * @return true if a class may be considered as the checkstyle file filter.
+     */
+    public static boolean isFileFilterModule(Class<?> loadedClass) {
+        return BeforeExecutionFileFilter.class.isAssignableFrom(loadedClass);
+    }
+
+    /**
+     * Checks whether a class may be considered as the checkstyle root module.
+     * Checkstyle's root modules are classes which implement 'RootModule' interface.
+     * @param loadedClass class to check.
+     * @return true if a class may be considered as the checkstyle root module.
+     */
+    public static boolean isRootModule(Class<?> loadedClass) {
+        return RootModule.class.isAssignableFrom(loadedClass);
+    }
+
+    /**
      * Get's the check's messages.
      * @param module class to examine.
      * @return a set of checkstyle's module message fields.
+     * @throws ClassNotFoundException if the attempt to read a protected class fails.
      */
-    public static Set<Field> getCheckMessages(Class<?> module) {
+    public static Set<Field> getCheckMessages(Class<?> module) throws ClassNotFoundException {
         final Set<Field> checkstyleMessages = new HashSet<>();
 
         // get all fields from current class
@@ -145,6 +172,17 @@ public final class CheckUtil {
 
         if (superModule != null) {
             checkstyleMessages.addAll(getCheckMessages(superModule));
+        }
+
+        // special cases that require additional classes
+        if (module == RegexpMultilineCheck.class) {
+            checkstyleMessages.addAll(getCheckMessages(Class
+                    .forName("com.puppycrawl.tools.checkstyle.checks.regexp.MultilineDetector")));
+        }
+        else if (module == RegexpSinglelineCheck.class
+                || module == RegexpSinglelineJavaCheck.class) {
+            checkstyleMessages.addAll(getCheckMessages(Class
+                    .forName("com.puppycrawl.tools.checkstyle.checks.regexp.SinglelineDetector")));
         }
 
         return checkstyleMessages;
