@@ -6,51 +6,30 @@
 
 <suppressions>
     <!-- START of legacy code, all violations will be resolved during transition to main project -->
-    <suppress checks="Indentation" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="Javadoc*" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="Header" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="FinalLocalVariable" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="ImportControl" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="DesignForExtension" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="WriteTag" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="DeclarationOrder" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="RightCurly" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="IllegalCatch" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="CatchParameterName" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="EmptyLineSeparator" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="OperatorWrap" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="MemberName" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="InnerTypeLast" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="ArrayTrailingComma" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="ReturnCount" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="ParameterName" files=".*[\\/]src[\\/]main[\\/]"/>
 
-    <suppress checks="LeftCurly" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="RightCurly" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="FinalLocalVariable" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="HiddenField" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="MagicNumber" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="VariableDeclarationUsageDistance" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="DesignForExtension" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="Header" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="RegexpHeader" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="AvoidStaticImport" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="ImportControl" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="Indentation" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="JavadocMethod" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="JavadocPackage" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="JavadocType" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="JavadocVariable" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="WriteTag" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="ClassDataAbstractionCoupling" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="CyclomaticComplexity" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="NPathComplexity" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="CatchParameterName" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="MemberName" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="RegexpMultiline" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="AnonInnerLength" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="TrailingComment" files=".*[\\/]src[\\/]test[\\/]"/>
-    <suppress checks="EmptyLineSeparator" files=".*[\\/]src[\\/]test[\\/]"/>
     <!-- END of legacy code -->
 
 
@@ -58,4 +37,10 @@
     <suppress checks="MultipleStringLiterals" files="CheckstyleProfileImporter\.java"/>
     <!-- messing test code with such optimization does not make sense , readability will decrease -->
     <suppress checks="MultipleStringLiterals" files=".*[\\/]src[\\/]test[\\/]"/>
+
+    <!-- Tone down the checking for test code -->
+    <suppress checks="Javadoc" files=".*[\\/]src[\\/]test[\\/]"/>
+    <suppress checks="WriteTag" files=".*[\\/]src[\\/]test[\\/]"/>
+    <suppress checks="AvoidStaticImport" files=".*[\\/]src[\\/]test[\\/]"/>
+    <suppress checks="MagicNumber" files=".*[\\/]src[\\/]test[\\/]"/>
 </suppressions>
