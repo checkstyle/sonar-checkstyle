@@ -1,22 +1,21 @@
-/*
- * SonarQube Checkstyle Plugin
- * Copyright (C) 2012 SonarSource
- * sonarqube@googlegroups.com
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
- */
+////////////////////////////////////////////////////////////////////////////////
+// checkstyle: Checks Java source code for adherence to a set of rules.
+// Copyright (C) 2001-2017 the original author or authors.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 3 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+////////////////////////////////////////////////////////////////////////////////
 
 package org.sonar.plugins.checkstyle.internal;
 
@@ -51,7 +50,7 @@ import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck;
 import com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheck;
 
-public final class ChecksTest {
+public class ChecksTest {
     private static final String RULES_PATH =
             "src/main/resources/org/sonar/plugins/checkstyle/rules.xml";
     private static final String MODULE_PROPERTIES_PATH =
@@ -98,8 +97,7 @@ public final class ChecksTest {
         validateSonarRules(document, modules);
     }
 
-    private static void validateSonarRules(Document document, Set<Class<?>> modules)
-            {
+    private static void validateSonarRules(Document document, Set<Class<?>> modules) {
         final NodeList rules = document.getElementsByTagName("rule");
 
         for (int position = 0; position < rules.getLength(); position++) {
@@ -152,8 +150,7 @@ public final class ChecksTest {
         }
     }
 
-    private static void validateSonarRuleProperties(Class<?> module, Set<Node> parameters)
-            {
+    private static void validateSonarRuleProperties(Class<?> module, Set<Node> parameters) {
         final String moduleName = module.getName();
         final Set<String> properties = getFinalProperties(module);
 
@@ -186,7 +183,7 @@ public final class ChecksTest {
 
         final Properties properties = new Properties();
         try (InputStream stream = new FileInputStream(propertiesFile)) {
-          properties.load(stream);
+            properties.load(stream);
         }
 
         validateSonarProperties(properties, modules);
@@ -309,7 +306,8 @@ public final class ChecksTest {
             final AbstractCheck check;
             try {
                 check = (AbstractCheck) clss.getConstructor().newInstance();
-            } catch (ReflectiveOperationException e) {
+            }
+            catch (ReflectiveOperationException e) {
                 throw new IllegalStateException(e);
             }
 

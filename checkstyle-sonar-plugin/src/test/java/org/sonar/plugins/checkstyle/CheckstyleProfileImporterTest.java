@@ -1,22 +1,22 @@
-/*
- * SonarQube Checkstyle Plugin
- * Copyright (C) 2012 SonarSource
- * sonarqube@googlegroups.com
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
- */
+////////////////////////////////////////////////////////////////////////////////
+// checkstyle: Checks Java source code for adherence to a set of rules.
+// Copyright (C) 2001-2017 the original author or authors.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 3 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+////////////////////////////////////////////////////////////////////////////////
+
 package org.sonar.plugins.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -44,188 +44,196 @@ import org.sonar.api.utils.ValidationMessages;
 
 public class CheckstyleProfileImporterTest {
 
-  private ValidationMessages messages;
-  private CheckstyleProfileImporter importer;
+    private ValidationMessages messages;
+    private CheckstyleProfileImporter importer;
 
-  @Before
-  public void before() {
-    messages = ValidationMessages.create();
+    @Before
+    public void before() {
+        messages = ValidationMessages.create();
 
-    /*
-     * The mocked rule finder defines 3 rules :
-     *
-     * - JavadocCheck with 2 paramters format and ignore, default priority is MAJOR
-     * - EqualsHashCodeCheck without parameters, default priority is BLOCKER
-     * - MissingOverride with 1 parameter javaFiveCompatibility, default priority is MINOR
-     */
-    importer = new CheckstyleProfileImporter(newRuleFinder());
-  }
+        /*
+         * The mocked rule finder defines 3 rules :
+         *
+         * - JavadocCheck with 2 paramters format and ignore, default priority
+         * is MAJOR
+         * - EqualsHashCodeCheck without parameters, default priority
+         * is BLOCKER
+         * - MissingOverride with 1 parameter javaFiveCompatibility,
+         * default priority is MINOR
+         */
+        importer = new CheckstyleProfileImporter(newRuleFinder());
+    }
 
-  @Test
-  public void importSimpleProfile() {
-    Reader reader = new StringReader(
-            CheckstyleTestUtils.getResourceContent(
-                    "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
-    RulesProfile profile = importer.importProfile(reader, messages);
+    @Test
+    public void importSimpleProfile() {
+        Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
+        RulesProfile profile = importer.importProfile(reader, messages);
 
-    assertThat(profile.getActiveRules().size()).isEqualTo(2);
-    assertNotNull(profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/TreeWalker/EqualsHashCode"));
-    assertNotNull(profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/JavadocPackage"));
-    assertThat(messages.hasErrors()).isFalse();
-  }
+        assertThat(profile.getActiveRules().size()).isEqualTo(2);
+        assertNotNull(profile.getActiveRuleByConfigKey("checkstyle",
+                "Checker/TreeWalker/EqualsHashCode"));
+        assertNotNull(profile.getActiveRuleByConfigKey("checkstyle", "Checker/JavadocPackage"));
+        assertThat(messages.hasErrors()).isFalse();
+    }
 
-  @Test
-  public void importParameters() {
-    Reader reader = new StringReader(
-            CheckstyleTestUtils.getResourceContent(
-                    "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
-    RulesProfile profile = importer.importProfile(reader, messages);
+    @Test
+    public void importParameters() {
+        Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
+        RulesProfile profile = importer.importProfile(reader, messages);
 
-    ActiveRule javadocCheck = profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/JavadocPackage");
-    assertThat(javadocCheck.getActiveRuleParams()).hasSize(2);
-    assertThat(javadocCheck.getParameter("format")).isEqualTo("abcde");
-    assertThat(javadocCheck.getParameter("ignore")).isEqualTo("true");
-    assertThat(javadocCheck.getParameter("severity")).isNull(); // checkstyle internal parameter
-  }
+        ActiveRule javadocCheck = profile.getActiveRuleByConfigKey("checkstyle",
+                "Checker/JavadocPackage");
+        assertThat(javadocCheck.getActiveRuleParams()).hasSize(2);
+        assertThat(javadocCheck.getParameter("format")).isEqualTo("abcde");
+        assertThat(javadocCheck.getParameter("ignore")).isEqualTo("true");
+        // checkstyle internal parameter
+        assertThat(javadocCheck.getParameter("severity")).isNull();
+    }
 
-  @Test
-  public void propertiesShouldBeInherited() {
-    Reader reader = new StringReader(
-            CheckstyleTestUtils.getResourceContent(
-                    "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/"
-                            + "inheritance_of_properties.xml"));
-    RulesProfile profile = importer.importProfile(reader, messages);
+    @Test
+    public void propertiesShouldBeInherited() {
+        Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/"
+                + "inheritance_of_properties.xml"));
+        RulesProfile profile = importer.importProfile(reader, messages);
 
-    ActiveRule activeRule = profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/TreeWalker/MissingOverride");
-    assertThat(activeRule.getSeverity()).isEqualTo(RulePriority.BLOCKER);
-    assertThat(activeRule.getParameter("javaFiveCompatibility")).isEqualTo("true");
-  }
+        ActiveRule activeRule = profile.getActiveRuleByConfigKey("checkstyle",
+                "Checker/TreeWalker/MissingOverride");
+        assertThat(activeRule.getSeverity()).isEqualTo(RulePriority.BLOCKER);
+        assertThat(activeRule.getParameter("javaFiveCompatibility")).isEqualTo("true");
+    }
 
-  @Test
-  public void importPriorities() {
-    Reader reader = new StringReader(
-            CheckstyleTestUtils.getResourceContent(
-                    "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
-    RulesProfile profile = importer.importProfile(reader, messages);
+    @Test
+    public void importPriorities() {
+        Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/simple.xml"));
+        RulesProfile profile = importer.importProfile(reader, messages);
 
-    ActiveRule javadocCheck = profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/JavadocPackage");
-    assertThat(javadocCheck.getSeverity()).isEqualTo(RulePriority.BLOCKER);
-  }
+        ActiveRule javadocCheck = profile.getActiveRuleByConfigKey("checkstyle",
+                "Checker/JavadocPackage");
+        assertThat(javadocCheck.getSeverity()).isEqualTo(RulePriority.BLOCKER);
+    }
 
-  @Test
-  public void priorityIsOptional() {
-    Reader reader = new StringReader(
-            CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/"
-                    + "CheckstyleProfileImporterTest/simple.xml"));
-    RulesProfile profile = importer.importProfile(reader, messages);
+    @Test
+    public void priorityIsOptional() {
+        Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent(
+                "/org/sonar/plugins/checkstyle/"
+                        + "CheckstyleProfileImporterTest/simple.xml"));
+        RulesProfile profile = importer.importProfile(reader, messages);
 
-    ActiveRule activeRule = profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/TreeWalker/EqualsHashCode");
-    // reuse the rule default priority
-    assertThat(activeRule.getSeverity()).isEqualTo(RulePriority.BLOCKER);
-  }
+        ActiveRule activeRule = profile.getActiveRuleByConfigKey("checkstyle",
+                "Checker/TreeWalker/EqualsHashCode");
+        // reuse the rule default priority
+        assertThat(activeRule.getSeverity()).isEqualTo(RulePriority.BLOCKER);
+    }
 
-  @Test
-  public void idPropertyShouldBeTheRuleKey() {
-    Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent(
-            "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/"
-                    + "idPropertyShouldBeTheRuleKey.xml"));
-    RulesProfile profile = importer.importProfile(reader, messages);
+    @Test
+    public void idPropertyShouldBeTheRuleKey() {
+        Reader reader = new StringReader(CheckstyleTestUtils.getResourceContent(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileImporterTest/"
+                        + "idPropertyShouldBeTheRuleKey.xml"));
+        RulesProfile profile = importer.importProfile(reader, messages);
 
-    assertNull(profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/JavadocPackage"));
-    assertThat(messages.getWarnings().size()).isEqualTo(1);
-  }
+        assertNull(profile.getActiveRuleByConfigKey("checkstyle", "Checker/JavadocPackage"));
+        assertThat(messages.getWarnings().size()).isEqualTo(1);
+    }
 
-  @Test
-  public void shouldUseTheIdPropertyToFindRule() {
-    Reader reader = new StringReader(
-            CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/"
-                    + "CheckstyleProfileImporterTest/shouldUseTheIdPropertyToFindRule.xml"));
-    RulesProfile profile = importer.importProfile(reader, messages);
+    @Test
+    public void shouldUseTheIdPropertyToFindRule() {
+        Reader reader = new StringReader(
+                CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/"
+                        + "CheckstyleProfileImporterTest/shouldUseTheIdPropertyToFindRule.xml"));
+        RulesProfile profile = importer.importProfile(reader, messages);
 
-    assertNotNull(profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/JavadocPackage"));
-    assertThat(profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/JavadocPackage").getRule().getKey())
-        .isEqualTo("com.puppycrawl.tools.checkstyle.checks.javadoc."
-                + "JavadocPackageCheck_12345");
-    assertThat(messages.getWarnings().size()).isEqualTo(0);
-  }
+        assertNotNull(profile.getActiveRuleByConfigKey("checkstyle", "Checker/JavadocPackage"));
+        assertThat(
+                profile.getActiveRuleByConfigKey("checkstyle", "Checker/JavadocPackage").getRule()
+                        .getKey()).isEqualTo(
+                "com.puppycrawl.tools.checkstyle.checks.javadoc." + "JavadocPackageCheck_12345");
+        assertThat(messages.getWarnings().size()).isEqualTo(0);
+    }
 
-  @Test
-  public void testUnvalidXml() {
-    Reader reader = new StringReader("not xml");
-    importer.importProfile(reader, messages);
-    assertThat(messages.getErrors().size()).isEqualTo(1);
-  }
+    @Test
+    public void testUnvalidXml() {
+        Reader reader = new StringReader("not xml");
+        importer.importProfile(reader, messages);
+        assertThat(messages.getErrors().size()).isEqualTo(1);
+    }
 
-  @Test
-  public void importingFiltersIsNotSupported() {
-    Reader reader = new StringReader(
-            CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/"
-                    + "CheckstyleProfileImporterTest/importingFiltersIsNotSupported.xml"));
-    RulesProfile profile = importer.importProfile(reader, messages);
+    @Test
+    public void importingFiltersIsNotSupported() {
+        Reader reader = new StringReader(
+                CheckstyleTestUtils.getResourceContent("/org/sonar/plugins/checkstyle/"
+                        + "CheckstyleProfileImporterTest/importingFiltersIsNotSupported.xml"));
+        RulesProfile profile = importer.importProfile(reader, messages);
 
-    assertNull(profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/SuppressionCommentFilter"));
-    assertNull(profile.getActiveRuleByConfigKey("checkstyle",
-            "Checker/TreeWalker/FileContentsHolder"));
-    assertThat(profile.getActiveRules().size()).isEqualTo(2);
-    assertThat(messages.getWarnings().size()).isEqualTo(5); // no warning for FileContentsHolder
-  }
+        assertNull(profile.getActiveRuleByConfigKey("checkstyle",
+                "Checker/SuppressionCommentFilter"));
+        assertNull(profile.getActiveRuleByConfigKey("checkstyle",
+                "Checker/TreeWalker/FileContentsHolder"));
+        assertThat(profile.getActiveRules().size()).isEqualTo(2);
+        // no warning for FileContentsHolder
+        assertThat(messages.getWarnings().size()).isEqualTo(5);
+    }
 
-  private static RuleFinder newRuleFinder() {
-    RuleFinder ruleFinder = mock(RuleFinder.class);
-    when(ruleFinder.find(any(RuleQuery.class))).thenAnswer(new Answer<Rule>() {
-      @Override
-      public Rule answer(InvocationOnMock iom) throws Throwable {
-        RuleQuery query = (RuleQuery) iom.getArguments()[0];
-        Rule rule = null;
-        if (StringUtils.equals(query.getConfigKey(), "Checker/JavadocPackage")) {
-          rule = Rule.create(query.getRepositoryKey(),
-                  "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck",
-                  "Javadoc Package")
-              .setConfigKey("Checker/JavadocPackage")
-              .setSeverity(RulePriority.MAJOR);
-          rule.createParameter("format");
-          rule.createParameter("ignore");
+    private static RuleFinder newRuleFinder() {
+        RuleFinder ruleFinder = mock(RuleFinder.class);
+        when(ruleFinder.find(any(RuleQuery.class))).thenAnswer(new Answer<Rule>() {
+            @Override
+            public Rule answer(InvocationOnMock iom) throws Throwable {
+                RuleQuery query = (RuleQuery) iom.getArguments()[0];
+                Rule rule = null;
+                if (StringUtils.equals(query.getConfigKey(), "Checker/JavadocPackage")) {
+                    rule = Rule
+                            .create(query.getRepositoryKey(),
+                                    "com.puppycrawl.tools.checkstyle.checks.javadoc."
+                                            + "JavadocPackageCheck", "Javadoc Package")
+                            .setConfigKey("Checker/JavadocPackage")
+                            .setSeverity(RulePriority.MAJOR);
+                    rule.createParameter("format");
+                    rule.createParameter("ignore");
 
-        } else if (StringUtils.equals(query.getConfigKey(),
-                "Checker/TreeWalker/EqualsHashCode")) {
-          rule = Rule.create(query.getRepositoryKey(),
-                  "com.puppycrawl.tools.checkstyle.checks.coding.EqualsHashCodeCheck",
-                  "Equals HashCode")
-              .setConfigKey("Checker/TreeWalker/EqualsHashCode")
-              .setSeverity(RulePriority.BLOCKER);
+                }
+                else if (StringUtils.equals(query.getConfigKey(),
+                        "Checker/TreeWalker/EqualsHashCode")) {
+                    rule = Rule
+                            .create(query.getRepositoryKey(),
+                                    "com.puppycrawl.tools.checkstyle.checks.coding."
+                                            + "EqualsHashCodeCheck",
+                                    "Equals HashCode")
+                            .setConfigKey("Checker/TreeWalker/EqualsHashCode")
+                            .setSeverity(RulePriority.BLOCKER);
 
-        } else if (StringUtils.equals(query.getKey(),
-                "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck_12345")) {
-          rule = Rule.create(query.getRepositoryKey(),
-                  "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck_12345",
-                  "Javadoc Package")
-              .setConfigKey("Checker/JavadocPackage")
-              .setSeverity(RulePriority.MAJOR);
-          rule.createParameter("format");
-          rule.createParameter("ignore");
-        } else if (StringUtils.equals(query.getConfigKey(),
-                "Checker/TreeWalker/MissingOverride")) {
-          rule = Rule.create(query.getRepositoryKey(),
-                  "com.puppycrawl.tools.checkstyle.checks.annotation.MissingOverrideCheck",
-                  "Missing Override")
-              .setConfigKey("Checker/TreeWalker/MissingOverride")
-              .setSeverity(RulePriority.MINOR);
-          rule.createParameter("javaFiveCompatibility");
-        }
-        return rule;
-      }
-    });
-    return ruleFinder;
-  }
+                }
+                else if (StringUtils.equals(query.getKey(),
+                        "com.puppycrawl.tools.checkstyle.checks.javadoc."
+                                + "JavadocPackageCheck_12345")) {
+                    rule = Rule
+                            .create(query.getRepositoryKey(),
+                                    "com.puppycrawl.tools.checkstyle.checks.javadoc."
+                                            + "JavadocPackageCheck_12345",
+                                    "Javadoc Package").setConfigKey("Checker/JavadocPackage")
+                            .setSeverity(RulePriority.MAJOR);
+                    rule.createParameter("format");
+                    rule.createParameter("ignore");
+                }
+                else if (StringUtils.equals(query.getConfigKey(),
+                        "Checker/TreeWalker/MissingOverride")) {
+                    rule = Rule
+                            .create(query.getRepositoryKey(),
+                                    "com.puppycrawl.tools.checkstyle.checks.annotation."
+                                            + "MissingOverrideCheck",
+                                    "Missing Override")
+                            .setConfigKey("Checker/TreeWalker/MissingOverride")
+                            .setSeverity(RulePriority.MINOR);
+                    rule.createParameter("javaFiveCompatibility");
+                }
+                return rule;
+            }
+        });
+        return ruleFinder;
+    }
 
 }
