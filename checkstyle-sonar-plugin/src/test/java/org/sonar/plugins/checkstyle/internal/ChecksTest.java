@@ -38,6 +38,7 @@ import java.util.TreeSet;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.fest.util.Collections;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -45,6 +46,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.TreeWalker;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck;
@@ -60,6 +62,11 @@ public class ChecksTest {
     private static final Set<String> JAVADOC_CHECK_PROPERTIES =
             getProperties(AbstractJavadocCheck.class);
     private static final Set<String> FILESET_PROPERTIES = getProperties(AbstractFileSetCheck.class);
+
+    private static final Set<Class<?>> UNDOCUMENTED_MODULES = Collections.set(
+            TreeWalker.class,
+            Checker.class
+    );
 
     private static final List<String> UNDOCUMENTED_PROPERTIES = Arrays.asList(
             "Checker.classLoader",
@@ -144,7 +151,8 @@ public class ChecksTest {
         }
 
         for (Class<?> module : modules) {
-            if (module != TreeWalker.class && !CheckUtil.isFilterModule(module)) {
+            if (!UNDOCUMENTED_MODULES.contains(module) && !CheckUtil.isFilterModule(module)
+                    && !CheckUtil.isFileFilterModule(module)) {
                 Assert.fail("Module not found in sonar rules: " + module.getCanonicalName());
             }
         }
@@ -253,7 +261,8 @@ public class ChecksTest {
         }
 
         for (Class<?> module : modules) {
-            if (module != TreeWalker.class && !CheckUtil.isFilterModule(module)) {
+            if (!UNDOCUMENTED_MODULES.contains(module) && !CheckUtil.isFilterModule(module)
+                    && !CheckUtil.isFileFilterModule(module)) {
                 Assert.fail("Module not found in sonar properties: " + module.getCanonicalName());
             }
         }
