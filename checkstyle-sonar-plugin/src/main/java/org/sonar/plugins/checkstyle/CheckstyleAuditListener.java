@@ -43,14 +43,14 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleAuditListener.class);
 
     private final RuleFinder ruleFinder;
-    private final FileSystem fs;
+    private final FileSystem fileSystem;
     private final ResourcePerspectives perspectives;
     private InputFile currentResource;
 
-    public CheckstyleAuditListener(RuleFinder ruleFinder, FileSystem fs,
+    public CheckstyleAuditListener(RuleFinder ruleFinder, FileSystem fileSystem,
             ResourcePerspectives perspectives) {
         this.ruleFinder = ruleFinder;
-        this.fs = fs;
+        this.fileSystem = fileSystem;
         this.perspectives = perspectives;
     }
 
@@ -76,19 +76,19 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
 
     @Override
     public void addError(AuditEvent event) {
-        String ruleKey = getRuleKey(event);
+        final String ruleKey = getRuleKey(event);
         if (ruleKey != null) {
-            String message = getMessage(event);
+            final String message = getMessage(event);
             // In Checkstyle 5.5 exceptions are reported as an events from
             // TreeWalker
             if ("com.puppycrawl.tools.checkstyle.TreeWalker".equals(ruleKey)) {
                 LOG.warn("{} : {}", event.getFileName(), message);
             }
             initResource(event);
-            Issuable issuable = perspectives.as(Issuable.class, currentResource);
-            Rule rule = ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY, ruleKey);
+            final Issuable issuable = perspectives.as(Issuable.class, currentResource);
+            final Rule rule = ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY, ruleKey);
             if (rule != null && issuable != null) {
-                IssueBuilder issueBuilder = issuable.newIssueBuilder().ruleKey(rule.ruleKey())
+                final IssueBuilder issueBuilder = issuable.newIssueBuilder().ruleKey(rule.ruleKey())
                         .message(message).line(getLineId(event));
                 issuable.addIssue(issueBuilder.build());
             }
@@ -97,8 +97,9 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
 
     private void initResource(AuditEvent event) {
         if (currentResource == null) {
-            String absoluteFilename = event.getFileName();
-            currentResource = fs.inputFile(fs.predicates().hasAbsolutePath(absoluteFilename));
+            final String absoluteFilename = event.getFileName();
+            currentResource = fileSystem.inputFile(fileSystem.predicates().hasAbsolutePath(
+                    absoluteFilename));
         }
     }
 
@@ -108,16 +109,17 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
         try {
             key = event.getModuleId();
         }
-        catch (Exception e) {
-            LOG.warn("AuditEvent is created incorrectly. Exception happen during getModuleId()", e);
+        catch (Exception ex) {
+            LOG.warn("AuditEvent is created incorrectly. Exception happen during getModuleId()",
+                    ex);
         }
         if (StringUtils.isBlank(key)) {
             try {
                 key = event.getSourceName();
             }
-            catch (Exception e) {
+            catch (Exception ex) {
                 LOG.warn("AuditEvent is created incorrectly."
-                        + "Exception happen during getSourceName()", e);
+                        + "Exception happen during getSourceName()", ex);
             }
         }
         return key;
@@ -129,8 +131,8 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
             return event.getMessage();
 
         }
-        catch (Exception e) {
-            LOG.warn("AuditEvent is created incorrectly. Exception happen during getMessage()", e);
+        catch (Exception ex) {
+            LOG.warn("AuditEvent is created incorrectly. Exception happen during getMessage()", ex);
             return null;
         }
     }
@@ -139,15 +141,15 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
     static Integer getLineId(AuditEvent event) {
         Integer result = null;
         try {
-            int line = event.getLine();
+            final int line = event.getLine();
             // checkstyle returns 0 if there is no relation to a file content,
             // but we use null
             if (line != 0) {
                 result = line;
             }
         }
-        catch (Exception e) {
-            LOG.warn("AuditEvent is created incorrectly. Exception happen during getLine()", e);
+        catch (Exception ex) {
+            LOG.warn("AuditEvent is created incorrectly. Exception happen during getLine()", ex);
         }
         return result;
     }

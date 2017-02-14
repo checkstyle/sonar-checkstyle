@@ -29,7 +29,7 @@ public class CheckstyleConstantsTest {
 
     @Test
     public void privateConstructor() throws ReflectiveOperationException {
-        Constructor<CheckstyleConstants> constructor = CheckstyleConstants.class
+        final Constructor<CheckstyleConstants> constructor = CheckstyleConstants.class
                 .getDeclaredConstructor();
         assertThat(constructor.isAccessible()).isFalse();
         constructor.setAccessible(true);

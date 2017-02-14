@@ -6,9 +6,17 @@
 
 <suppressions>
     <!-- START of legacy code, all violations will be resolved during transition to main project -->
-    <suppress checks=".*" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks=".*" files=".*[\\/]src[\\/]test[\\/]"/>
+    <suppress checks="IllegalCatchExtended" files=".*[\\/]src[\\/]main[\\/]"/>
+    <suppress checks="ForbidAnnotation" files=".*[\\/]src[\\/]main[\\/]"/>
+
+    <suppress checks="ForbidAnnotation" files=".*[\\/]src[\\/]test[\\/]"/>
     <!-- END of legacy code -->
 
 
+    <!-- parsing of xml imply reference attribute names, does not make sense to move all to special variables -->
+    <suppress checks="MultipleStringLiteralsExtended" files="CheckstyleProfileImporter\.java"/>
+    
+    <!-- Tone down the checking for test code -->
+    <suppress checks="MultipleStringLiteralsExtended" files=".*[\\/]src[\\/]test[\\/]"/>
+    <suppress checks="ForbidCCommentsInMethods" files=".*[\\/]src[\\/]test[\\/]"/>
 </suppressions>

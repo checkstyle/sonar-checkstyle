@@ -59,12 +59,6 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     };
     private final RuleFinder ruleFinder;
 
-    private static class Module {
-        private String name;
-        private final Map<String, String> properties = new HashMap<>();
-        private final List<Module> modules = new ArrayList<>();
-    }
-
     public CheckstyleProfileImporter(RuleFinder ruleFinder) {
         super(CheckstyleConstants.REPOSITORY_KEY, CheckstyleConstants.PLUGIN_NAME);
         setSupportedLanguages(CheckstyleConstants.JAVA_KEY);
@@ -72,17 +66,17 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     }
 
     private Module loadModule(SMInputCursor parentCursor) throws XMLStreamException {
-        Module result = new Module();
+        final Module result = new Module();
         result.name = parentCursor.getAttrValue("name");
-        SMInputCursor cursor = parentCursor.childElementCursor();
+        final SMInputCursor cursor = parentCursor.childElementCursor();
         while (cursor.getNext() != null) {
-            String nodeName = cursor.getLocalName();
+            final String nodeName = cursor.getLocalName();
             if (MODULE_NODE.equals(nodeName)) {
                 result.modules.add(loadModule(cursor));
             }
             else if ("property".equals(nodeName)) {
-                String key = cursor.getAttrValue("name");
-                String value = cursor.getAttrValue("value");
+                final String key = cursor.getAttrValue("name");
+                final String value = cursor.getAttrValue("value");
                 result.properties.put(key, value);
             }
         }
@@ -91,13 +85,15 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
     @Override
     public RulesProfile importProfile(Reader reader, ValidationMessages messages) {
-        SMInputFactory inputFactory = initStax();
-        RulesProfile profile = RulesProfile.create();
+        final SMInputFactory inputFactory = initStax();
+        final RulesProfile profile = RulesProfile.create();
         try {
-            Module checkerModule = loadModule(inputFactory.rootElementCursor(reader).advance());
+            final Module checkerModule = loadModule(inputFactory.rootElementCursor(reader)
+                    .advance());
 
             for (Module rootModule : checkerModule.modules) {
-                Map<String, String> rootModuleProperties = new HashMap<>(checkerModule.properties);
+                final Map<String, String> rootModuleProperties = new HashMap<>(
+                        checkerModule.properties);
                 rootModuleProperties.putAll(rootModule.properties);
 
                 if (StringUtils.equals(TREEWALKER_MODULE, rootModule.name)) {
@@ -110,9 +106,9 @@ public class CheckstyleProfileImporter extends ProfileImporter {
             }
 
         }
-        catch (XMLStreamException e) {
-            String message = "XML is not valid: " + e.getMessage();
-            LOG.error(message, e);
+        catch (XMLStreamException ex) {
+            final String message = "XML is not valid: " + ex.getMessage();
+            LOG.error(message, ex);
             messages.addErrorText(message);
         }
         return profile;
@@ -121,7 +117,8 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     private void processTreewalker(RulesProfile profile, Module rootModule,
             Map<String, String> rootModuleProperties, ValidationMessages messages) {
         for (Module treewalkerModule : rootModule.modules) {
-            Map<String, String> treewalkerModuleProperties = new HashMap<>(rootModuleProperties);
+            final Map<String, String> treewalkerModuleProperties = new HashMap<>(
+                    rootModuleProperties);
             treewalkerModuleProperties.putAll(treewalkerModule.properties);
 
             processModule(profile, CHECKER_MODULE + "/" + TREEWALKER_MODULE + "/",
@@ -130,7 +127,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
     }
 
     private static SMInputFactory initStax() {
-        XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
+        final XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
         xmlFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.TRUE);
         xmlFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, Boolean.FALSE);
         xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE);
@@ -167,9 +164,9 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
     private void processRule(RulesProfile profile, String path, String moduleName,
             Map<String, String> properties, ValidationMessages messages) {
-        Rule rule;
-        String id = properties.get("id");
-        String warning;
+        final Rule rule;
+        final String id = properties.get("id");
+        final String warning;
         if (StringUtils.isNotBlank(id)) {
             rule = ruleFinder.find(RuleQuery.create()
                     .withRepositoryKey(CheckstyleConstants.REPOSITORY_KEY).withKey(id));
@@ -177,7 +174,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
         }
         else {
-            String configKey = path + moduleName;
+            final String configKey = path + moduleName;
             rule = ruleFinder
                     .find(RuleQuery.create().withRepositoryKey(CheckstyleConstants.REPOSITORY_KEY)
                             .withConfigKey(configKey));
@@ -189,7 +186,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
         }
         else {
-            ActiveRule activeRule = profile.activateRule(rule, null);
+            final ActiveRule activeRule = profile.activateRule(rule, null);
             activateProperties(activeRule, properties);
         }
     }
@@ -206,4 +203,9 @@ public class CheckstyleProfileImporter extends ProfileImporter {
         }
     }
 
+    private static class Module {
+        private final Map<String, String> properties = new HashMap<>();
+        private final List<Module> modules = new ArrayList<>();
+        private String name;
+    }
 }

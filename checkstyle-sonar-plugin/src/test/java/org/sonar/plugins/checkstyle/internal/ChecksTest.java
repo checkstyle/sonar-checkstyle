@@ -144,7 +144,7 @@ public class ChecksTest {
         }
 
         for (Class<?> module : modules) {
-            if (!CheckUtil.isFilterModule(module) && module != TreeWalker.class) {
+            if (module != TreeWalker.class && !CheckUtil.isFilterModule(module)) {
                 Assert.fail("Module not found in sonar rules: " + module.getCanonicalName());
             }
         }
@@ -253,7 +253,7 @@ public class ChecksTest {
         }
 
         for (Class<?> module : modules) {
-            if (!CheckUtil.isFilterModule(module) && module != TreeWalker.class) {
+            if (module != TreeWalker.class && !CheckUtil.isFilterModule(module)) {
                 Assert.fail("Module not found in sonar properties: " + module.getCanonicalName());
             }
         }
@@ -307,8 +307,8 @@ public class ChecksTest {
             try {
                 check = (AbstractCheck) clss.getConstructor().newInstance();
             }
-            catch (ReflectiveOperationException e) {
-                throw new IllegalStateException(e);
+            catch (ReflectiveOperationException ex) {
+                throw new IllegalStateException(ex);
             }
 
             final int[] acceptableTokens = check.getAcceptableTokens();

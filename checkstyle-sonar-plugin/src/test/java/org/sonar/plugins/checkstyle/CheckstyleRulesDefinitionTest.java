@@ -44,19 +44,19 @@ public class CheckstyleRulesDefinitionTest {
             "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck"
     );
 
-    @Ignore
     @Test
+    @Ignore
     public void test() {
-        CheckstyleRulesDefinition definition = new CheckstyleRulesDefinition();
-        RulesDefinition.Context context = new RulesDefinition.Context();
+        final CheckstyleRulesDefinition definition = new CheckstyleRulesDefinition();
+        final RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        RulesDefinition.Repository repository = context
+        final RulesDefinition.Repository repository = context
                 .repository(CheckstyleConstants.REPOSITORY_KEY);
 
         assertThat(repository.name()).isEqualTo(CheckstyleConstants.REPOSITORY_NAME);
         assertThat(repository.language()).isEqualTo("java");
 
-        List<RulesDefinition.Rule> rules = repository.rules();
+        final List<RulesDefinition.Rule> rules = repository.rules();
         assertThat(rules).hasSize(150);
 
         for (RulesDefinition.Rule rule : rules) {

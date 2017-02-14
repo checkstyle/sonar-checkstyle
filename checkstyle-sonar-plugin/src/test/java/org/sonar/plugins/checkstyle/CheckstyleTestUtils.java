@@ -42,21 +42,21 @@ public final class CheckstyleTestUtils {
             return Resources.toString(Resources.getResource(CheckstyleTestUtils.class, path),
                     Charsets.UTF_8);
         }
-        catch (IOException e) {
-            throw new IllegalArgumentException("Could not load resource " + path, e);
+        catch (IOException ex) {
+            throw new IllegalArgumentException("Could not load resource " + path, ex);
         }
     }
 
     public static void assertSimilarXml(String expectedXml, String xml) {
         XMLUnit.setIgnoreWhitespace(true);
-        Diff diff;
+        final Diff diff;
         try {
             diff = XMLUnit.compareXML(xml, expectedXml);
         }
-        catch (SAXException | IOException e) {
-            throw new IllegalArgumentException("Could not run XML comparison", e);
+        catch (SAXException | IOException ex) {
+            throw new IllegalArgumentException("Could not run XML comparison", ex);
         }
-        String message = "Diff: " + diff + CharUtils.LF + "XML: " + xml;
+        final String message = "Diff: " + diff + CharUtils.LF + "XML: " + xml;
         assertTrue(message, diff.similar());
     }
 

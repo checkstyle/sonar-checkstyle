@@ -34,15 +34,16 @@ public final class CheckstyleRulesDefinition implements RulesDefinition {
 
     @Override
     public void define(Context context) {
-        NewRepository repository = context.createRepository(CheckstyleConstants.REPOSITORY_KEY,
-                "java").setName(CheckstyleConstants.REPOSITORY_NAME);
+        final NewRepository repository = context.createRepository(
+                CheckstyleConstants.REPOSITORY_KEY, "java").setName(
+                CheckstyleConstants.REPOSITORY_NAME);
 
         try {
             extractRulesData(repository, "/org/sonar/plugins/checkstyle/rules.xml",
                     "/org/sonar/l10n/checkstyle/rules/checkstyle");
         }
-        catch (IOException e) {
-            throw new IllegalStateException("Exception during extractRulesData", e);
+        catch (IOException ex) {
+            throw new IllegalStateException("Exception during extractRulesData", ex);
         }
 
         repository.done();
@@ -51,7 +52,7 @@ public final class CheckstyleRulesDefinition implements RulesDefinition {
     @VisibleForTesting
     static void extractRulesData(NewRepository repository, String xmlRulesFilePath,
             String htmlDescriptionFolder) throws IOException {
-        RulesDefinitionXmlLoader ruleLoader = new RulesDefinitionXmlLoader();
+        final RulesDefinitionXmlLoader ruleLoader = new RulesDefinitionXmlLoader();
         try (InputStream resource = CheckstyleRulesDefinition.class
                 .getResourceAsStream(xmlRulesFilePath)) {
             ruleLoader.load(repository, resource, "UTF-8");

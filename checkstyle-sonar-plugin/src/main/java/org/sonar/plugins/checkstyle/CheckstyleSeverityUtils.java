@@ -34,39 +34,51 @@ public final class CheckstyleSeverityUtils {
     }
 
     public static String toSeverity(RulePriority priority) {
+        final String result;
+
         switch (priority) {
             case BLOCKER:
             case CRITICAL:
-                return SeverityLevel.ERROR.getName();
+                result = SeverityLevel.ERROR.getName();
+                break;
             case MAJOR:
-                return SeverityLevel.WARNING.getName();
+                result = SeverityLevel.WARNING.getName();
+                break;
             case MINOR:
             case INFO:
-                return SeverityLevel.INFO.getName();
+                result = SeverityLevel.INFO.getName();
+                break;
             default:
                 throw new IllegalArgumentException("Priority not supported: " + priority);
         }
+
+        return result;
     }
 
     public static RulePriority fromSeverity(String severity) {
-        SeverityLevel severityLevel;
+        RulePriority result = null;
+
         try {
-            severityLevel = SeverityLevel.getInstance(severity);
+            final SeverityLevel severityLevel = SeverityLevel.getInstance(severity);
+
+            switch (severityLevel) {
+                case ERROR:
+                    result = RulePriority.BLOCKER;
+                    break;
+                case WARNING:
+                    result = RulePriority.MAJOR;
+                    break;
+                case INFO:
+                case IGNORE:
+                    result = RulePriority.INFO;
+                    break;
+                default:
+            }
         }
         catch (Exception exc) {
             LOG.warn("Smth wrong severity", exc);
-            return null;
         }
-        switch (severityLevel) {
-            case ERROR:
-                return RulePriority.BLOCKER;
-            case WARNING:
-                return RulePriority.MAJOR;
-            case INFO:
-            case IGNORE:
-                return RulePriority.INFO;
-            default:
-                return null;
-        }
+
+        return result;
     }
 }

@@ -47,7 +47,7 @@ public class CheckstyleAuditListenerTest {
     private final File file = new File("file1");
     private final AuditEvent event = new AuditEvent(this, file.getAbsolutePath(),
             new LocalizedMessage(42, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
-    private final DefaultFileSystem fs = new DefaultFileSystem(new File(""));
+    private final DefaultFileSystem fileSystem = new DefaultFileSystem(new File(""));
     private final RuleFinder ruleFinder = mock(RuleFinder.class);
     private final DefaultInputFile inputFile = new DefaultInputFile("", file.getPath());
     private final ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
@@ -55,40 +55,40 @@ public class CheckstyleAuditListenerTest {
     @Before
     public void before() {
         // inputFile.setAbsolutePath(file.getAbsolutePath());
-        fs.add(inputFile);
+        fileSystem.add(inputFile);
     }
 
     @Test
     public void testUtilityMethods() {
-        AuditEvent event;
+        AuditEvent eventTest;
 
-        event = new AuditEvent(this, "", new LocalizedMessage(0, "", "", null, "",
+        eventTest = new AuditEvent(this, "", new LocalizedMessage(0, "", "", null, "",
                 CheckstyleAuditListenerTest.class, "msg"));
-        assertThat(CheckstyleAuditListener.getLineId(event)).isNull();
-        assertThat(CheckstyleAuditListener.getMessage(event)).isEqualTo("msg");
-        assertThat(CheckstyleAuditListener.getRuleKey(event)).isEqualTo(
+        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isNull();
+        assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
+        assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isEqualTo(
                 CheckstyleAuditListenerTest.class.getName());
 
-        event = new AuditEvent(this, "", new LocalizedMessage(1, "", "", null, "",
+        eventTest = new AuditEvent(this, "", new LocalizedMessage(1, "", "", null, "",
                 CheckstyleAuditListenerTest.class, "msg"));
-        assertThat(CheckstyleAuditListener.getLineId(event)).isEqualTo(1);
-        assertThat(CheckstyleAuditListener.getMessage(event)).isEqualTo("msg");
-        assertThat(CheckstyleAuditListener.getRuleKey(event)).isEqualTo(
+        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
+        assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
+        assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isEqualTo(
                 CheckstyleAuditListenerTest.class.getName());
 
-        event = new AuditEvent(this);
-        assertThat(CheckstyleAuditListener.getLineId(event)).isNull();
-        assertThat(CheckstyleAuditListener.getMessage(event)).isNull();
-        assertThat(CheckstyleAuditListener.getRuleKey(event)).isNull();
+        eventTest = new AuditEvent(this);
+        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isNull();
+        assertThat(CheckstyleAuditListener.getMessage(eventTest)).isNull();
+        assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isNull();
     }
 
     @Test
     public void addErrorTest() {
-        Rule rule = setupRule("repo", "key");
+        final Rule rule = setupRule("repo", "key");
 
-        Issuable issuable = setupIssuable();
-        IssueBuilder issueBuilder = mock(IssueBuilder.class);
-        Issue issue = mock(Issue.class);
+        final Issuable issuable = setupIssuable();
+        final IssueBuilder issueBuilder = mock(IssueBuilder.class);
+        final Issue issue = mock(Issue.class);
         when(issuable.newIssueBuilder()).thenReturn(issueBuilder);
         when(issueBuilder.ruleKey(RuleKey.of("repo", "key"))).thenReturn(issueBuilder);
         when(issueBuilder.message(event.getMessage())).thenReturn(issueBuilder);
@@ -106,27 +106,27 @@ public class CheckstyleAuditListenerTest {
 
     @Test
     public void addErrorOnUnknownRule() {
-        Issuable issuable = setupIssuable();
+        final Issuable issuable = setupIssuable();
         addErrorToListener();
         verifyZeroInteractions(issuable);
     }
 
     @Test
     public void addErrorOnUnknownFile() {
-        Rule rule = setupRule("repo", "key");
+        final Rule rule = setupRule("repo", "key");
         addErrorToListener();
         verifyZeroInteractions(rule);
     }
 
     private CheckstyleAuditListener addErrorToListener() {
-        CheckstyleAuditListener listener = new CheckstyleAuditListener(ruleFinder, fs,
+        final CheckstyleAuditListener listener = new CheckstyleAuditListener(ruleFinder, fileSystem,
                 perspectives);
         listener.addError(event);
         return listener;
     }
 
     private Rule setupRule(String repo, String key) {
-        Rule rule = mock(Rule.class);
+        final Rule rule = mock(Rule.class);
         when(rule.ruleKey()).thenReturn(RuleKey.of(repo, key));
         when(
                 ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY,
@@ -135,7 +135,7 @@ public class CheckstyleAuditListenerTest {
     }
 
     private Issuable setupIssuable() {
-        Issuable issuable = mock(Issuable.class);
+        final Issuable issuable = mock(Issuable.class);
         when(perspectives.as(Issuable.class, inputFile)).thenReturn(issuable);
         return issuable;
     }
