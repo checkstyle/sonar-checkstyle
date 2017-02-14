@@ -33,21 +33,22 @@ public class CheckstyleSensor implements Sensor {
 
     private final RulesProfile profile;
     private final CheckstyleExecutor executor;
-    private final FileSystem fs;
+    private final FileSystem fileSystem;
 
-    public CheckstyleSensor(RulesProfile profile, CheckstyleExecutor executor, FileSystem fs) {
+    public CheckstyleSensor(RulesProfile profile, CheckstyleExecutor executor,
+            FileSystem fileSystem) {
         this.profile = profile;
         this.executor = executor;
-        this.fs = fs;
+        this.fileSystem = fileSystem;
     }
 
     @Override
     public boolean shouldExecuteOnProject(Project project) {
-        FilePredicates predicates = fs.predicates();
-        Iterable<File> mainFiles = fs
+        final FilePredicates predicates = fileSystem.predicates();
+        final Iterable<File> mainFiles = fileSystem
                 .files(predicates.and(predicates.hasLanguage(CheckstyleConstants.JAVA_KEY),
                         predicates.hasType(Type.MAIN)));
-        boolean mainFilesIsEmpty = !mainFiles.iterator().hasNext();
+        final boolean mainFilesIsEmpty = !mainFiles.iterator().hasNext();
         return !mainFilesIsEmpty
                 && !profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY)
                         .isEmpty();

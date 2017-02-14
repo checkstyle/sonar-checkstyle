@@ -48,11 +48,11 @@ public class CheckstyleConfigurationTest {
     public void beforeClass() {
         fileSystem = new DefaultFileSystem(new File(""));
         fileSystem.setWorkDir(new File(""));
-        DefaultInputFile inputFile = new DefaultInputFile("", "mainFile");
+        final DefaultInputFile inputFile = new DefaultInputFile("", "mainFile");
         inputFile.setLanguage("java");
         inputFile.setType(InputFile.Type.MAIN);
         fileSystem.add(inputFile);
-        DefaultInputFile testFile = new DefaultInputFile("", "testFile");
+        final DefaultInputFile testFile = new DefaultInputFile("", "testFile");
         testFile.setLanguage("java");
         testFile.setType(InputFile.Type.TEST);
         fileSystem.add(testFile);
@@ -60,9 +60,9 @@ public class CheckstyleConfigurationTest {
 
     @Test
     public void getSourceFiles() {
-        CheckstyleProfileExporter exporter = new FakeExporter();
-        CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter, null,
-                fileSystem);
+        final CheckstyleProfileExporter exporter = new FakeExporter();
+        final CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter,
+                null, fileSystem);
         assertThat(configuration.getSourceFiles()).hasSize(1);
         assertThat(configuration.getSourceFiles().iterator().next().toString())
                 .contains("mainFile");
@@ -70,7 +70,7 @@ public class CheckstyleConfigurationTest {
 
     @Test
     public void getTargetXmlReport() {
-        Settings conf = new Settings();
+        final Settings conf = new Settings();
         CheckstyleConfiguration configuration = new CheckstyleConfiguration(conf, null, null,
                 fileSystem);
         assertThat(configuration.getTargetXmlReport()).isNull();
@@ -83,10 +83,10 @@ public class CheckstyleConfigurationTest {
 
     @Test
     public void writeConfigurationToWorkingDir() throws IOException {
-        CheckstyleProfileExporter exporter = new FakeExporter();
-        CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter, null,
-                fileSystem);
-        File xmlFile = configuration.getXmlDefinitionFile();
+        final CheckstyleProfileExporter exporter = new FakeExporter();
+        final CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter,
+                null, fileSystem);
+        final File xmlFile = configuration.getXmlDefinitionFile();
 
         assertThat(xmlFile.exists()).isTrue();
         assertThat(FileUtils.readFileToString(xmlFile)).isEqualTo("<conf/>");
@@ -96,23 +96,23 @@ public class CheckstyleConfigurationTest {
     @Test
     public void getCheckstyleConfiguration() throws IOException, CheckstyleException {
         fileSystem.setEncoding(StandardCharsets.UTF_8);
-        Settings settings = new Settings(new PropertyDefinitions(
+        final Settings settings = new Settings(new PropertyDefinitions(
                 new CheckstylePlugin().getExtensions()));
         settings.setProperty(CheckstyleConstants.FILTERS_KEY,
                 CheckstyleConstants.FILTERS_DEFAULT_VALUE);
 
-        RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final RulesProfile profile = RulesProfile.create("sonar way", "java");
 
-        Rule rule = Rule.create("checkstyle", "CheckStyleRule1", "checkstyle rule one");
+        final Rule rule = Rule.create("checkstyle", "CheckStyleRule1", "checkstyle rule one");
         rule.setConfigKey("checkstyle/rule1");
         profile.activateRule(rule, null);
 
-        CheckstyleConfiguration configuration = new CheckstyleConfiguration(settings,
+        final CheckstyleConfiguration configuration = new CheckstyleConfiguration(settings,
                 new CheckstyleProfileExporter(settings), profile, fileSystem);
-        Configuration checkstyleConfiguration = configuration.getCheckstyleConfiguration();
+        final Configuration checkstyleConfiguration = configuration.getCheckstyleConfiguration();
         assertThat(checkstyleConfiguration).isNotNull();
         assertThat(checkstyleConfiguration.getAttribute("charset")).isEqualTo("UTF-8");
-        File xmlFile = new File("checkstyle.xml");
+        final File xmlFile = new File("checkstyle.xml");
         assertThat(xmlFile.exists()).isTrue();
 
         FileUtils.forceDelete(xmlFile);
@@ -129,8 +129,8 @@ public class CheckstyleConfigurationTest {
             try {
                 writer.write("<conf/>");
             }
-            catch (IOException e) {
-                throw new IllegalStateException(e);
+            catch (IOException ex) {
+                throw new IllegalStateException(ex);
             }
         }
     }

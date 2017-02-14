@@ -47,9 +47,9 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 public class CheckstyleConfiguration implements BatchExtension {
+    public static final String PROPERTY_GENERATE_XML = "sonar.checkstyle.generateXml";
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleConfiguration.class);
-    public static final String PROPERTY_GENERATE_XML = "sonar.checkstyle.generateXml";
 
     private final CheckstyleProfileExporter confExporter;
     private final RulesProfile profile;
@@ -65,7 +65,7 @@ public class CheckstyleConfiguration implements BatchExtension {
     }
 
     public File getXmlDefinitionFile() {
-        File xmlFile = new File(fileSystem.workDir(), "checkstyle.xml");
+        final File xmlFile = new File(fileSystem.workDir(), "checkstyle.xml");
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false),
                 StandardCharsets.UTF_8)) {
 
@@ -74,19 +74,19 @@ public class CheckstyleConfiguration implements BatchExtension {
             return xmlFile;
 
         }
-        catch (IOException e) {
+        catch (IOException ex) {
             throw new IllegalStateException("Fail to save the Checkstyle configuration to "
-                    + xmlFile.getPath(), e);
+                    + xmlFile.getPath(), ex);
 
         }
     }
 
     public List<File> getSourceFiles() {
-        FilePredicates predicates = fileSystem.predicates();
-        Iterable<File> files = fileSystem.files(predicates.and(
+        final FilePredicates predicates = fileSystem.predicates();
+        final Iterable<File> files = fileSystem.files(predicates.and(
                 predicates.hasLanguage(CheckstyleConstants.JAVA_KEY),
                 predicates.hasType(InputFile.Type.MAIN)));
-        List<File> fileList = new ArrayList<>();
+        final List<File> fileList = new ArrayList<>();
         for (File file : files) {
             fileList.add(file);
         }
@@ -101,10 +101,10 @@ public class CheckstyleConfiguration implements BatchExtension {
     }
 
     public Configuration getCheckstyleConfiguration() throws CheckstyleException {
-        File xmlConfig = getXmlDefinitionFile();
+        final File xmlConfig = getXmlDefinitionFile();
 
         LOG.info("Checkstyle configuration: {}", xmlConfig.getAbsolutePath());
-        Configuration configuration = toCheckstyleConfiguration(xmlConfig);
+        final Configuration configuration = toCheckstyleConfiguration(xmlConfig);
         defineCharset(configuration);
         return configuration;
     }
@@ -123,10 +123,11 @@ public class CheckstyleConfiguration implements BatchExtension {
     }
 
     private void defineModuleCharset(Configuration module) {
-        if (("Checker".equals(module.getName()) || "com.puppycrawl.tools.checkstyle.Checker"
-                .equals(module.getName())) && module instanceof DefaultConfiguration) {
-            Charset charset = getCharset();
-            String charsetName = charset.name();
+        if (module instanceof DefaultConfiguration
+                && ("Checker".equals(module.getName())
+                    || "com.puppycrawl.tools.checkstyle.Checker".equals(module.getName()))) {
+            final Charset charset = getCharset();
+            final String charsetName = charset.name();
             LOG.info("Checkstyle charset: {}", charsetName);
             ((DefaultConfiguration) module).addAttribute("charset", charsetName);
         }

@@ -63,11 +63,11 @@ public class CheckstyleExecutor implements BatchExtension {
      */
     public void execute() {
 
-        Locale initialLocale = Locale.getDefault();
+        final Locale initialLocale = Locale.getDefault();
         Locale.setDefault(Locale.ENGLISH);
-        ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
+        final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(PackageNamesLoader.class.getClassLoader());
-        URLClassLoader projectClassloader = createClassloader();
+        final URLClassLoader projectClassloader = createClassloader();
         try {
             executeWithClassLoader(projectClassloader);
         }
@@ -79,16 +79,16 @@ public class CheckstyleExecutor implements BatchExtension {
     }
 
     private void executeWithClassLoader(URLClassLoader projectClassloader) {
-        TimeProfiler profiler = new TimeProfiler().start("Execute Checkstyle "
+        final TimeProfiler profiler = new TimeProfiler().start("Execute Checkstyle "
                 + CheckstyleVersion.getVersion());
-        Checker checker = new Checker();
+        final Checker checker = new Checker();
         OutputStream xmlOutput = null;
         try {
             checker.setClassLoader(projectClassloader);
             checker.setModuleClassLoader(Thread.currentThread().getContextClassLoader());
             checker.addListener(listener);
 
-            File xmlReport = configuration.getTargetXmlReport();
+            final File xmlReport = configuration.getTargetXmlReport();
             if (xmlReport != null) {
                 LOG.info("Checkstyle output report: {}", xmlReport.getAbsolutePath());
                 xmlOutput = FileUtils.openOutputStream(xmlReport);
@@ -102,8 +102,8 @@ public class CheckstyleExecutor implements BatchExtension {
             profiler.stop();
 
         }
-        catch (Exception e) {
-            throw new IllegalStateException("Can not execute Checkstyle", e);
+        catch (Exception ex) {
+            throw new IllegalStateException("Can not execute Checkstyle", ex);
         }
         finally {
             checker.destroy();
@@ -118,8 +118,8 @@ public class CheckstyleExecutor implements BatchExtension {
         try {
             closeable.close();
         }
-        catch (IOException e) {
-            throw new IllegalStateException("failed to close object", e);
+        catch (IOException ex) {
+            throw new IllegalStateException("failed to close object", ex);
         }
     }
 
@@ -128,15 +128,15 @@ public class CheckstyleExecutor implements BatchExtension {
         try {
             return uri.toURL();
         }
-        catch (MalformedURLException e) {
+        catch (MalformedURLException ex) {
             throw new IllegalStateException("Fail to create the project classloader. "
-                    + "Classpath element is invalid: " + uri, e);
+                    + "Classpath element is invalid: " + uri, ex);
         }
     }
 
     private URLClassLoader createClassloader() {
-        Collection<File> classpathElements = javaResourceLocator.classpath();
-        List<URL> urls = new ArrayList<>(classpathElements.size());
+        final Collection<File> classpathElements = javaResourceLocator.classpath();
+        final List<URL> urls = new ArrayList<>(classpathElements.size());
         for (File file : classpathElements) {
             urls.add(getUrl(file.toURI()));
         }

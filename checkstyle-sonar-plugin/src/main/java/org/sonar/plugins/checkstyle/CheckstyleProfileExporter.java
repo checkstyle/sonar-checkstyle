@@ -43,8 +43,10 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     public static final String DOCTYPE_DECLARATION =
         "<!DOCTYPE module PUBLIC \"-//Puppy Crawl//DTD Check Configuration 1.2//EN\" "
         + "\"http://www.puppycrawl.com/dtds/configuration_1_2.dtd\">";
-    private final Settings settings;
+
     private static final String CLOSE_MODULE = "</module>";
+
+    private final Settings settings;
 
     public CheckstyleProfileExporter(Settings settings) {
         super(CheckstyleConstants.REPOSITORY_KEY, CheckstyleConstants.PLUGIN_NAME);
@@ -56,16 +58,16 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     @Override
     public void exportProfile(RulesProfile profile, Writer writer) {
         try {
-            List<ActiveRule> activeRules = profile
+            final List<ActiveRule> activeRules = profile
                     .getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY);
             if (activeRules != null) {
-                Map<String, List<ActiveRule>> activeRulesByConfigKey =
+                final Map<String, List<ActiveRule>> activeRulesByConfigKey =
                         arrangeByConfigKey(activeRules);
                 generateXml(writer, activeRulesByConfigKey);
             }
         }
-        catch (IOException e) {
-            throw new IllegalStateException("Fail to export the profile " + profile, e);
+        catch (IOException ex) {
+            throw new IllegalStateException("Fail to export the profile " + profile, ex);
         }
 
     }
@@ -85,7 +87,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
 
     private void appendCustomFilters(Writer writer) throws IOException {
-        String filtersXml = settings.getString(CheckstyleConstants.FILTERS_KEY);
+        final String filtersXml = settings.getString(CheckstyleConstants.FILTERS_KEY);
         if (StringUtils.isNotBlank(filtersXml)) {
             writer.append(filtersXml);
         }
@@ -94,9 +96,9 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     private static void appendCheckerModules(Writer writer,
             Map<String, List<ActiveRule>> activeRulesByConfigKey) throws IOException {
         for (Entry<String, List<ActiveRule>> entry : activeRulesByConfigKey.entrySet()) {
-            String configKey = entry.getKey();
+            final String configKey = entry.getKey();
             if (!isInTreeWalker(configKey)) {
-                List<ActiveRule> activeRules = entry.getValue();
+                final List<ActiveRule> activeRules = entry.getValue();
                 for (ActiveRule activeRule : activeRules) {
                     appendModule(writer, activeRule);
                 }
@@ -111,11 +113,11 @@ public class CheckstyleProfileExporter extends ProfileExporter {
         if (isSuppressWarningsEnabled()) {
             writer.append("<module name=\"SuppressWarningsHolder\"/> ");
         }
-        List<String> ruleSet = new ArrayList<>(activeRulesByConfigKey.keySet());
+        final List<String> ruleSet = new ArrayList<>(activeRulesByConfigKey.keySet());
         Collections.sort(ruleSet);
         for (String configKey : ruleSet) {
             if (isInTreeWalker(configKey)) {
-                List<ActiveRule> activeRules = activeRulesByConfigKey.get(configKey);
+                final List<ActiveRule> activeRules = activeRulesByConfigKey.get(configKey);
                 for (ActiveRule activeRule : activeRules) {
                     appendModule(writer, activeRule);
                 }
@@ -125,7 +127,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
 
     private boolean isSuppressWarningsEnabled() {
-        String filtersXml = settings.getString(CheckstyleConstants.FILTERS_KEY);
+        final String filtersXml = settings.getString(CheckstyleConstants.FILTERS_KEY);
         boolean result = false;
         if (filtersXml != null) {
             result = filtersXml.contains("<module name=\"SuppressWarningsFilter\" />");
@@ -143,15 +145,15 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
 
     private static Map<String, List<ActiveRule>> arrangeByConfigKey(List<ActiveRule> activeRules) {
-        Map<String, List<ActiveRule>> result = new HashMap<>();
+        final Map<String, List<ActiveRule>> result = new HashMap<>();
         for (ActiveRule activeRule : activeRules) {
-            String key = activeRule.getConfigKey();
+            final String key = activeRule.getConfigKey();
             if (result.containsKey(key)) {
-                List<ActiveRule> rules = result.get(key);
+                final List<ActiveRule> rules = result.get(key);
                 rules.add(activeRule);
             }
             else {
-                List<ActiveRule> rules = new ArrayList<>();
+                final List<ActiveRule> rules = new ArrayList<>();
                 rules.add(activeRule);
                 result.put(key, rules);
             }
@@ -160,7 +162,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
 
     private static void appendModule(Writer writer, ActiveRule activeRule) throws IOException {
-        String moduleName = StringUtils.substringAfterLast(activeRule.getConfigKey(), "/");
+        final String moduleName = StringUtils.substringAfterLast(activeRule.getConfigKey(), "/");
         writer.append("<module name=\"");
         StringEscapeUtils.escapeXml(writer, moduleName);
         writer.append("\">");
@@ -176,7 +178,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     private static void appendRuleParameters(Writer writer, ActiveRule activeRule)
             throws IOException {
         for (RuleParam ruleParam : activeRule.getRule().getParams()) {
-            String value = activeRule.getParameter(ruleParam.getKey());
+            final String value = activeRule.getParameter(ruleParam.getKey());
             if (StringUtils.isNotBlank(value)) {
                 appendModuleProperty(writer, ruleParam.getKey(), value);
             }

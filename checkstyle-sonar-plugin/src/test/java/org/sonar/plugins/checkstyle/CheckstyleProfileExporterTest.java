@@ -41,9 +41,9 @@ public class CheckstyleProfileExporterTest {
 
     @Test
     public void alwaysSetFileContentsHolderAndSuppressionCommentFilter() {
-        RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final RulesProfile profile = RulesProfile.create("sonar way", "java");
 
-        StringWriter writer = new StringWriter();
+        final StringWriter writer = new StringWriter();
         new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
@@ -54,12 +54,12 @@ public class CheckstyleProfileExporterTest {
 
     @Test
     public void noCheckstyleRulesToExport() {
-        RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final RulesProfile profile = RulesProfile.create("sonar way", "java");
 
         // this is a PMD rule
         profile.activateRule(Rule.create("pmd", "PmdRule1", "PMD rule one"), null);
 
-        StringWriter writer = new StringWriter();
+        final StringWriter writer = new StringWriter();
         new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
@@ -69,7 +69,7 @@ public class CheckstyleProfileExporterTest {
 
     @Test
     public void singleCheckstyleRulesToExport() {
-        RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final RulesProfile profile = RulesProfile.create("sonar way", "java");
         profile.activateRule(Rule.create("pmd", "PmdRule1", "PMD rule one"), null);
         profile.activateRule(
                 Rule.create("checkstyle",
@@ -88,7 +88,7 @@ public class CheckstyleProfileExporterTest {
                         "Checker/TreeWalker/Checker/TreeWalker/LocalFinalVariableName"),
                 RulePriority.MINOR);
 
-        StringWriter writer = new StringWriter();
+        final StringWriter writer = new StringWriter();
         new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
@@ -98,11 +98,11 @@ public class CheckstyleProfileExporterTest {
 
     @Test
     public void addTheIdPropertyWhenManyInstancesWithTheSameConfigKey() {
-        RulesProfile profile = RulesProfile.create("sonar way", "java");
-        Rule rule1 = Rule.create("checkstyle",
+        final RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final Rule rule1 = Rule.create("checkstyle",
                 "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
                 .setConfigKey("Checker/JavadocPackage");
-        Rule rule2 = Rule
+        final Rule rule2 = Rule
                 .create("checkstyle",
                         "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck_12345",
                         "Javadoc").setConfigKey("Checker/JavadocPackage").setParent(rule1);
@@ -110,7 +110,7 @@ public class CheckstyleProfileExporterTest {
         profile.activateRule(rule1, RulePriority.MAJOR);
         profile.activateRule(rule2, RulePriority.CRITICAL);
 
-        StringWriter writer = new StringWriter();
+        final StringWriter writer = new StringWriter();
         new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
@@ -121,8 +121,8 @@ public class CheckstyleProfileExporterTest {
 
     @Test
     public void exportParameters() {
-        RulesProfile profile = RulesProfile.create("sonar way", "java");
-        Rule rule = Rule.create("checkstyle",
+        final RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final Rule rule = Rule.create("checkstyle",
                 "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
                 .setConfigKey("Checker/JavadocPackage");
         rule.createParameter("format");
@@ -133,7 +133,7 @@ public class CheckstyleProfileExporterTest {
 
         profile.activateRule(rule, RulePriority.MAJOR).setParameter("format", "abcde");
 
-        StringWriter writer = new StringWriter();
+        final StringWriter writer = new StringWriter();
         new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
@@ -153,8 +153,8 @@ public class CheckstyleProfileExporterTest {
                         + "<property name=\"checkFormat\" value=\"$1\"/>"
                         + "<property name=\"messageFormat\" value=\"$2\"/>" + "</module>");
 
-        RulesProfile profile = RulesProfile.create("sonar way", "java");
-        StringWriter writer = new StringWriter();
+        final RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final StringWriter writer = new StringWriter();
         new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(

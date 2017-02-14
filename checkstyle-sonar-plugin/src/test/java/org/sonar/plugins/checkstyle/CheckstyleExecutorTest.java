@@ -59,17 +59,17 @@ public class CheckstyleExecutorTest {
 
     @Test
     public void execute() throws CheckstyleException {
-        CheckstyleConfiguration conf = mockConf();
-        CheckstyleAuditListener listener = mockListener();
-        CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
+        final CheckstyleConfiguration conf = mockConf();
+        final CheckstyleAuditListener listener = mockListener();
+        final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
                 createJavaResourceLocator());
         executor.execute();
 
         verify(listener, times(1)).auditStarted(any(AuditEvent.class));
         verify(listener, times(1)).auditFinished(any(AuditEvent.class));
 
-        InOrder inOrder = Mockito.inOrder(listener);
-        ArgumentCaptor<AuditEvent> captor = ArgumentCaptor.forClass(AuditEvent.class);
+        final InOrder inOrder = Mockito.inOrder(listener);
+        final ArgumentCaptor<AuditEvent> captor = ArgumentCaptor.forClass(AuditEvent.class);
         inOrder.verify(listener).fileStarted(captor.capture());
         assertThat(captor.getValue().getFileName()).matches(".*Hello.java");
         inOrder.verify(listener).fileFinished(captor.capture());
@@ -79,7 +79,7 @@ public class CheckstyleExecutorTest {
         inOrder.verify(listener).fileFinished(captor.capture());
         assertThat(captor.getValue().getFileName()).matches(".*World.java");
         verify(listener, atLeast(1)).addError(captor.capture());
-        AuditEvent event = captor.getValue();
+        final AuditEvent event = captor.getValue();
         assertThat(event.getFileName()).matches(".*Hello.java");
         assertThat(event.getSourceName()).matches(
                 "com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck");
@@ -89,8 +89,8 @@ public class CheckstyleExecutorTest {
     public void executeException() throws CheckstyleException {
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Can not execute Checkstyle");
-        CheckstyleConfiguration conf = mockConf();
-        CheckstyleExecutor executor = new CheckstyleExecutor(conf, null,
+        final CheckstyleConfiguration conf = mockConf();
+        final CheckstyleExecutor executor = new CheckstyleExecutor(conf, null,
                 createJavaResourceLocator());
         executor.execute();
     }
@@ -100,36 +100,36 @@ public class CheckstyleExecutorTest {
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Fail to create the project classloader. "
                 + "Classpath element is invalid: htp://aa");
-        CheckstyleExecutor executor = new CheckstyleExecutor(null, null,
+        final CheckstyleExecutor executor = new CheckstyleExecutor(null, null,
                 createJavaResourceLocator());
         executor.getUrl(new URI("htp://aa"));
     }
 
     private static JavaResourceLocator createJavaResourceLocator() {
-        JavaClasspath javaClasspath = mock(JavaClasspath.class);
+        final JavaClasspath javaClasspath = mock(JavaClasspath.class);
         when(javaClasspath.getElements()).thenReturn(ImmutableList.of(new File(".")));
         return new DefaultJavaResourceLocator(null, javaClasspath, null);
     }
 
     @Test
     public void canGenerateXmlReportInEnglish() throws CheckstyleException, IOException {
-        Locale initialLocale = Locale.getDefault();
+        final Locale initialLocale = Locale.getDefault();
         Locale.setDefault(Locale.FRENCH);
 
         try {
-            CheckstyleConfiguration conf = mockConf();
-            File report = new File("target/test-tmp/checkstyle-report.xml");
+            final CheckstyleConfiguration conf = mockConf();
+            final File report = new File("target/test-tmp/checkstyle-report.xml");
             // delete if exists from a previous run
             report.delete();
             when(conf.getTargetXmlReport()).thenReturn(report);
-            CheckstyleAuditListener listener = mockListener();
-            CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
+            final CheckstyleAuditListener listener = mockListener();
+            final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
                     createJavaResourceLocator());
             executor.execute();
 
             Assert.assertTrue(report.exists());
 
-            String reportContents = FileUtils.readFileToString(report);
+            final String reportContents = FileUtils.readFileToString(report);
             assertThat(reportContents).contains("<error");
             assertThat(reportContents).contains("Empty statement.");
         }
@@ -141,13 +141,13 @@ public class CheckstyleExecutorTest {
 
     @Test
     public void canGenerateXmlReportNull() throws CheckstyleException {
-        CheckstyleConfiguration conf = mockConf();
-        File report = new File("target/test-tmp/checkstyle-report.xml");
+        final CheckstyleConfiguration conf = mockConf();
+        final File report = new File("target/test-tmp/checkstyle-report.xml");
         // delete if exists from a previous run
         report.delete();
         when(conf.getTargetXmlReport()).thenReturn(null);
-        CheckstyleAuditListener listener = mockListener();
-        CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
+        final CheckstyleAuditListener listener = mockListener();
+        final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
                 createJavaResourceLocator());
         executor.execute();
 
@@ -156,7 +156,7 @@ public class CheckstyleExecutorTest {
 
     @Test
     public void closeNoException() throws IOException {
-        Closeable closeable = mock(Closeable.class);
+        final Closeable closeable = mock(Closeable.class);
 
         CheckstyleExecutor.close(closeable);
 
@@ -165,7 +165,7 @@ public class CheckstyleExecutorTest {
 
     @Test
     public void closeWithException() throws IOException {
-        Closeable closeable = mock(Closeable.class);
+        final Closeable closeable = mock(Closeable.class);
         // using a static import pushes us above the PMD import limit
         Mockito.doThrow(IOException.class).when(closeable).close();
 
@@ -178,7 +178,7 @@ public class CheckstyleExecutorTest {
     }
 
     private static CheckstyleConfiguration mockConf() throws CheckstyleException {
-        CheckstyleConfiguration conf = mock(CheckstyleConfiguration.class);
+        final CheckstyleConfiguration conf = mock(CheckstyleConfiguration.class);
         when(conf.getCharset()).thenReturn(Charset.defaultCharset());
         when(conf.getCheckstyleConfiguration()).thenReturn(
                 CheckstyleConfiguration.toCheckstyleConfiguration(new File(
