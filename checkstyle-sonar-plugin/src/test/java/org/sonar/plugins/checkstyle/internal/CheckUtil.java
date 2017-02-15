@@ -39,6 +39,8 @@ import com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck;
 import com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck;
 import com.puppycrawl.tools.checkstyle.guava.collect.ImmutableSet;
 import com.puppycrawl.tools.checkstyle.guava.reflect.ClassPath;
+import com.puppycrawl.tools.checkstyle.utils.JavadocUtils;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtils;
 
 public final class CheckUtil {
     private CheckUtil() {
@@ -209,5 +211,67 @@ public final class CheckUtil {
         final MessageFormat formatter =
                 new MessageFormat(pr.getProperty(messageKey), Locale.ENGLISH);
         return formatter.format(arguments);
+    }
+
+    public static String getTokenText(int[] tokens, int... subtractions) {
+        final StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (int token : tokens) {
+            boolean found = false;
+
+            for (int subtraction : subtractions) {
+                if (subtraction == token) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                continue;
+            }
+
+            if (first) {
+                first = false;
+            }
+            else {
+                result.append(',');
+            }
+
+            result.append(TokenUtils.getTokenName(token));
+        }
+
+        return result.toString();
+    }
+
+    public static String getJavadocTokenText(int[] tokens, int... subtractions) {
+        final StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (int token : tokens) {
+            boolean found = false;
+
+            for (int subtraction : subtractions) {
+                if (subtraction == token) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                continue;
+            }
+
+            if (first) {
+                first = false;
+            }
+            else {
+                result.append(',');
+            }
+
+            result.append(JavadocUtils.getTokenName(token));
+        }
+
+        return result.toString();
     }
 }
