@@ -22,7 +22,7 @@
     <suppress checks="MultipleStringLiterals" files=".*[\\/]src[\\/]test[\\/]"/>
 
     <!-- Tone down the checking for test code -->
-    <suppress checks="NPathComplexity|CyclomaticComplexity" files=".*[\\/]ChecksTest\.java"/>
+    <suppress checks="ExecutableStatementCount|NPathComplexity|CyclomaticComplexity" files=".*[\\/]ChecksTest\.java"/>
     <suppress checks="Javadoc" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="WriteTag" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="AvoidStaticImport" files=".*[\\/]src[\\/]test[\\/]"/>

@@ -134,7 +134,7 @@ public class ChecksTest {
             final Node configKey = XmlUtil.findElementByTag(children, "configKey");
             final String expectedConfigKey;
 
-            if (AbstractCheck.class.isAssignableFrom(module)) {
+            if (CheckUtil.isCheckstyleCheck(module)) {
                 expectedConfigKey = "Checker/TreeWalker/"
                         + moduleSimpleName.replaceAll("Check$", "");
             }
@@ -159,6 +159,15 @@ public class ChecksTest {
     }
 
     private static void validateSonarRuleProperties(Class<?> module, Set<Node> parameters) {
+        final Object instance;
+
+        try {
+            instance = module.getConstructor().newInstance();
+        }
+        catch (ReflectiveOperationException ex) {
+            throw new IllegalStateException(ex);
+        }
+
         final String moduleName = module.getName();
         final Set<String> properties = getFinalProperties(module);
 
@@ -177,6 +186,61 @@ public class ChecksTest {
 
             Assert.assertTrue(moduleName + " has an unknown parameter in sonar rules: "
                             + paramKey, properties.remove(paramKey));
+
+            final Node typeNode = parameter.getAttributes().getNamedItem("type");
+
+            Assert.assertNotNull(moduleName + " has no parameter type in sonar rules: " + paramKey,
+                    typeNode);
+
+            final String type = typeNode.getTextContent();
+
+            if ("tokens".equals(paramKey) || "javadocTokens".equals(paramKey)) {
+                String expectedTokenType;
+
+                if ("tokens".equals(paramKey)) {
+                    expectedTokenType = "s[" + CheckUtil.getTokenText(
+                            ((AbstractCheck) instance).getAcceptableTokens(),
+                            ((AbstractCheck) instance).getRequiredTokens()) + "]";
+                }
+                else {
+                    expectedTokenType = "s[" + CheckUtil.getTokenText(
+                            ((AbstractJavadocCheck) instance).getAcceptableJavadocTokens(),
+                            ((AbstractJavadocCheck) instance).getRequiredJavadocTokens()) + "]";
+                }
+
+                // Type can't be too long as it is stored in a database field with a max limit
+                // sonar adds its own text to the type affecting the limit of data we can store
+                // see https://github.com/checkstyle/sonar-checkstyle/issues/75 and
+                // https://github.com/checkstyle/sonar-checkstyle/pull/77#issuecomment-281247278
+                if (expectedTokenType.length() + 44 > 512) {
+                    expectedTokenType = "STRING";
+                }
+
+                Assert.assertEquals(moduleName + " has the parameter '" + paramKey
+                        + "' in sonar rules with the incorrect type", expectedTokenType, type);
+
+                final Set<Node> values = XmlUtil.getChildrenElements(parameter);
+
+                Assert.assertEquals(moduleName + " has the parameter '" + paramKey
+                        + "' in sonar rules with no defaultValue", 1, values.size());
+
+                final String expectedDefaultTokens;
+
+                if ("tokens".equals(paramKey)) {
+                    expectedDefaultTokens = CheckUtil.getTokenText(
+                            ((AbstractCheck) instance).getDefaultTokens(),
+                            ((AbstractCheck) instance).getRequiredTokens());
+                }
+                else {
+                    expectedDefaultTokens = CheckUtil.getJavadocTokenText(
+                            ((AbstractJavadocCheck) instance).getDefaultJavadocTokens(),
+                            ((AbstractJavadocCheck) instance).getRequiredJavadocTokens());
+                }
+
+                Assert.assertEquals(moduleName + " has the parameter '" + paramKey
+                        + "' in sonar rules with the incorrect defaultValue", expectedDefaultTokens,
+                        values.iterator().next().getTextContent());
+            }
         }
 
         for (String property : properties) {
@@ -330,6 +394,28 @@ public class ChecksTest {
             if (!Arrays.equals(acceptableTokens, defaultTokens)
                     || !Arrays.equals(acceptableTokens, requiredTokens)) {
                 properties.add("tokens");
+            }
+        }
+
+        if (AbstractJavadocCheck.class.isAssignableFrom(clss)) {
+            final AbstractJavadocCheck check;
+            try {
+                check = (AbstractJavadocCheck) clss.getConstructor().newInstance();
+            }
+            catch (ReflectiveOperationException ex) {
+                throw new IllegalStateException(ex);
+            }
+
+            final int[] acceptableJavadocTokens = check.getAcceptableJavadocTokens();
+            Arrays.sort(acceptableJavadocTokens);
+            final int[] defaultJavadocTokens = check.getDefaultJavadocTokens();
+            Arrays.sort(defaultJavadocTokens);
+            final int[] requiredJavadocTokens = check.getRequiredJavadocTokens();
+            Arrays.sort(requiredJavadocTokens);
+
+            if (!Arrays.equals(acceptableJavadocTokens, defaultJavadocTokens)
+                    || !Arrays.equals(acceptableJavadocTokens, requiredJavadocTokens)) {
+                properties.add("javadocTokens");
             }
         }
 

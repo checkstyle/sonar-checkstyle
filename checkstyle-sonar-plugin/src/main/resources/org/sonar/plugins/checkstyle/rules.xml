@@ -79,7 +79,7 @@
     <param key="format" type="STRING">
       <defaultValue>^$|^\s+$</defaultValue>
     </param>
-    <param key="tokens" type="STRING">
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,ENUM_CONSTANT_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF,CTOR_DEF]">
       <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,ENUM_CONSTANT_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF,CTOR_DEF</defaultValue>
     </param>
   </rule>
@@ -557,7 +557,7 @@
     <param key="validateEnhancedForLoopVariable" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[PARAMETER_DEF,VARIABLE_DEF]">
+    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF]">
       <defaultValue>VARIABLE_DEF</defaultValue>
     </param>
   </rule>
@@ -630,7 +630,7 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Illegal Instantiation]]></name>
     <configKey><![CDATA[Checker/TreeWalker/IllegalInstantiation]]></configKey>
-    <param key="tokens" type="STRING">
+    <param key="tokens" type="s[CLASS_DEF]">
       <defaultValue>CLASS_DEF</defaultValue>
     </param>
     <param key="classes" type="s{}">
@@ -657,7 +657,7 @@
     <name><![CDATA[Illegal Token]]></name>
     <configKey><![CDATA[Checker/TreeWalker/IllegalToken]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="tokens" type="s{}">
+    <param key="tokens" type="STRING">
       <defaultValue>LABELED_STAT</defaultValue>
     </param>
   </rule>
@@ -667,7 +667,8 @@
     <name><![CDATA[Illegal Token Text]]></name>
     <configKey><![CDATA[Checker/TreeWalker/IllegalTokenText]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="tokens" type="s{}">
+    <param key="tokens" type="s[NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,IDENT,COMMENT_CONTENT,STRING_LITERAL,CHAR_LITERAL]">
+      <defaultValue></defaultValue>
     </param>
     <param key="format" type="REGULAR_EXPRESSION">
     </param>
@@ -685,7 +686,7 @@
     <param key="validateAbstractClassNames" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF]">
+    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF,METHOD_DEF]">
       <defaultValue>VARIABLE_DEF,PARAMETER_DEF,METHOD_DEF</defaultValue>
     </param>
     <param key="illegalClassNames" type="s{}">
@@ -857,7 +858,8 @@
     <param key="checkHtml" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <param key="tokens" type="s[INTERFACE_DEF,CLASS_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF]">
+    <param key="tokens" type="s[ANNOTATION_DEF,ANNOTATION_FIELD_DEF,CLASS_DEF,CTOR_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF,METHOD_DEF,PACKAGE_DEF,VARIABLE_DEF]">
+      <defaultValue>ANNOTATION_DEF,ANNOTATION_FIELD_DEF,CLASS_DEF,CTOR_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF,METHOD_DEF,PACKAGE_DEF,VARIABLE_DEF</defaultValue>
     </param>
     <param key="endOfSentenceFormat" type="REGULAR_EXPRESSION"/>
   </rule>
@@ -901,8 +903,8 @@
     </param>
     <param key="ignoreNamePattern" type="STRING">
     </param>
-    <param key="tokens" type="s[VARIABLE_DEF,ENUM_CONSTANT_DEF]">
-      <defaultValue>VARIABLE_DEF,ENUM_CONSTANT_DEF</defaultValue>
+    <param key="tokens" type="s[ENUM_CONSTANT_DEF]">
+      <defaultValue>ENUM_CONSTANT_DEF</defaultValue>
     </param>
     <status>READY</status>
   </rule>
@@ -923,8 +925,8 @@
       <defaultValue>true</defaultValue>
     </param>
     <param key="tokens"
-           type="s[INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK]">
-      <defaultValue>INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK</defaultValue>
+           type="s[INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK,LAMBDA]">
+      <defaultValue>INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK,LAMBDA</defaultValue>
     </param>
     <status>READY</status>
   </rule>
@@ -948,7 +950,7 @@
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[a-z][a-zA-Z0-9]*$</defaultValue>
     </param>
-    <param key="tokens" type="STRING">
+    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF]">
       <defaultValue>VARIABLE_DEF,PARAMETER_DEF</defaultValue>
     </param>
     <status>READY</status>
@@ -1233,7 +1235,7 @@
       <defaultValue>nl</defaultValue>
     </param>
     <param key="tokens"
-           type="s[QUESTION,COLON,EQUAL,NOT_EQUAL,DIV,PLUS,MINUS,STAR,MOD,SR,BSR,GE,GT,SL,LE,LT,BXOR,BOR,LOR,BAND,LAND,LITERAL_INSTANCEOF,TYPE_EXTENSION_AND,ASSIGN,DIV_ASSIGN,PLUS_ASSIGN,MINUS_ASSIGN,STAR_ASSIGN,MOD_ASSIGN,SR_ASSIGN,BSR_ASSIGN,SL_ASSIGN,BXOR_ASSIGN,BOR_ASSIGN,BAND_ASSIGN]">
+           type="s[QUESTION,COLON,EQUAL,NOT_EQUAL,DIV,PLUS,MINUS,STAR,MOD,SR,BSR,GE,GT,SL,LE,LT,BXOR,BOR,LOR,BAND,LAND,LITERAL_INSTANCEOF,TYPE_EXTENSION_AND,ASSIGN,DIV_ASSIGN,PLUS_ASSIGN,MINUS_ASSIGN,STAR_ASSIGN,MOD_ASSIGN,SR_ASSIGN,BSR_ASSIGN,SL_ASSIGN,BXOR_ASSIGN,BOR_ASSIGN,BAND_ASSIGN,METHOD_REF]">
       <defaultValue>QUESTION,COLON,EQUAL,NOT_EQUAL,DIV,PLUS,MINUS,STAR,MOD,SR,BSR,GE,GT,SL,LE,LT,BXOR,BOR,LOR,BAND,LAND,TYPE_EXTENSION_AND,LITERAL_INSTANCEOF</defaultValue>
     </param>
   </rule>
@@ -1284,7 +1286,9 @@
     <configKey><![CDATA[Checker/TreeWalker/ParameterNumber]]></configKey>
     <cardinality>MULTIPLE</cardinality>
     <param key="max" type="INTEGER"/>
-    <param key="tokens" type="s[METHOD_DEF,CTOR_DEF]" />
+    <param key="tokens" type="s[METHOD_DEF,CTOR_DEF]">
+      <defaultValue>METHOD_DEF,CTOR_DEF</defaultValue>
+    </param>
     <param key="ignoreOverriddenMethods" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
@@ -1309,8 +1313,8 @@
     <name><![CDATA[Redundant Modifier]]></name>
     <configKey><![CDATA[Checker/TreeWalker/RedundantModifier]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="tokens" type="s[METHOD_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,INTERFACE_DEF,CTOR_DEF,CLASS_DEF,ENUM_DEF]">
-      <defaultValue>METHOD_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,INTERFACE_DEF,CTOR_DEF,CLASS_DEF,ENUM_DEF</defaultValue>
+    <param key="tokens" type="s[METHOD_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,INTERFACE_DEF,CTOR_DEF,CLASS_DEF,ENUM_DEF,RESOURCE]">
+      <defaultValue>METHOD_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,INTERFACE_DEF,CTOR_DEF,CLASS_DEF,ENUM_DEF,RESOURCE</defaultValue>
     </param>
   </rule>
 
@@ -1496,7 +1500,8 @@
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[A-Z][a-zA-Z0-9]*$</defaultValue>
     </param>
-    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF]">
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF]">
+      <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF</defaultValue>
     </param>
     <param key="applyToPublic" type="BOOLEAN">
       <defaultValue>true</defaultValue>
@@ -1544,7 +1549,7 @@
     <priority>MINOR</priority>
     <name><![CDATA[Unnecessary Parentheses]]></name>
     <configKey><![CDATA[Checker/TreeWalker/UnnecessaryParentheses]]></configKey>
-    <param key="tokens" type="STRING">
+    <param key="tokens" type="s[EXPR,IDENT,NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,STRING_LITERAL,LITERAL_NULL,LITERAL_FALSE,LITERAL_TRUE,ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN]">
       <defaultValue>EXPR,IDENT,NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,STRING_LITERAL,LITERAL_NULL,LITERAL_FALSE,LITERAL_TRUE,ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN</defaultValue>
     </param>
     <status>READY</status>
@@ -1586,10 +1591,10 @@
     <param key="allowPublicImmutableFields" type="BOOLEAN">
         <defaultValue>true</defaultValue>
     </param>
-    <param key="immutableClassCanonicalNames" types="s{}">
+    <param key="immutableClassCanonicalNames" type="s{}">
         <defaultValue>java.lang.String,java.lang.Integer,java.lang.Byte,java.lang.Character,java.lang.Short,java.lang.Boolean,java.lang.Long,java.lang.Double,java.lang.Float,java.lang.StackTraceElement,java.math.BigInteger,java.math.BigDecimal,java.io.File,java.util.Locale,java.util.UUID,java.net.URL,java.net.URI,java.net.Inet4Address,java.net.Inet6Address,java.net.InetSocketAddress</defaultValue>
     </param>
-    <param key="ignoreAnnotationCanonicalNames" types="s{}">
+    <param key="ignoreAnnotationCanonicalNames" type="s{}">
         <defaultValue>org.junit.Rule,org.junit.ClassRule,com.google.common.annotations.VisibleForTesting</defaultValue>
     </param>
     <status>READY</status>
@@ -1646,7 +1651,7 @@
     </param>
     <param key="tagSeverity" type="s[ignore,info,warning,error]">
     </param>
-    <param key="tokens" type="STRING">
+    <param key="tokens" type="s[INTERFACE_DEF,CLASS_DEF,ENUM_DEF,ANNOTATION_DEF,METHOD_DEF,CTOR_DEF,ENUM_CONSTANT_DEF,ANNOTATION_FIELD_DEF]">
       <defaultValue>INTERFACE_DEF,CLASS_DEF,ENUM_DEF,ANNOTATION_DEF</defaultValue>
     </param>
   </rule>
@@ -1693,7 +1698,7 @@
     <param key="maxPublic" type="INTEGER">
       <defaultValue>100</defaultValue>
     </param>
-    <param key="tokens" type="STRING">
+    <param key="tokens" type="s[CLASS_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF]">
       <defaultValue>CLASS_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF</defaultValue>
     </param>
   </rule>
@@ -1755,7 +1760,7 @@
     <param key="ignoreOverriddenMethods" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <param key="tokens" type="STRING">
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF,ENUM_CONSTANT_DEF]">
       <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF</defaultValue>
     </param>
   </rule>
@@ -1835,7 +1840,7 @@
     <configKey><![CDATA[Checker/TreeWalker/NoLineWrap]]></configKey>
     <cardinality>MULTIPLE</cardinality>
     <param key="tokens" type="s[IMPORT,PACKAGE_DEF,CLASS_DEF,METHOD_DEF,CTOR_DEF,ENUM_DEF,INTERFACE_DEF]">
-      <defaultValue>IMPORT,PACKAGE_DEF,CLASS_DEF,METHOD_DEF,CTOR_DEF,ENUM_DEF,INTERFACE_DEF</defaultValue>
+      <defaultValue>PACKAGE_DEF,IMPORT</defaultValue>
     </param>
   </rule>
 
@@ -1881,7 +1886,7 @@
     <param key="allowSamelineParameterizedAnnotation" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="STRING">
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF,PARAMETER_DEF,ANNOTATION_DEF,TYPECAST,LITERAL_THROWS,IMPLEMENTS_CLAUSE,TYPE_ARGUMENT,LITERAL_NEW,DOT,ANNOTATION_FIELD_DEF]">
       <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF</defaultValue>
     </param>
   </rule>
@@ -1905,6 +1910,9 @@
     <name><![CDATA[Non-Empty Atclause Description]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/NonEmptyAtclauseDescription]]></configKey>
+    <param key="javadocTokens" type="s[VARIABLE_DEF,INSTANCE_INIT,ARRAY_DECLARATOR,CTOR_DEF]">
+      <defaultValue>PARAM_LITERAL,RETURN_LITERAL,THROWS_LITERAL,DEPRECATED_LITERAL</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocParagraphCheck">
@@ -1994,7 +2002,7 @@
     <param key="option" type="s[eol,nl]">
       <defaultValue>eol</defaultValue>
     </param>
-    <param key="tokens" type="STRING">
+    <param key="tokens" type="s[DOT,COMMA,SEMI,ELLIPSIS,AT,LPAREN,RPAREN,ARRAY_DECLARATOR,RBRACK]">
       <defaultValue>DOT,COMMA</defaultValue>
     </param>
   </rule>
