@@ -35,9 +35,12 @@ checkstyle:6.0 use jdk6, checkstyle:6.2 use jdk7, checkstyle:7.0 use jdk8.
 sonar:3.6 used jdk6, sonar:4.5 use jdk6, sonar:5.6-latest use jdk8.
 
 ## Usage
-Dowload latest or required version from https://github.com/checkstyle/sonar-checkstyle/releases
+Install it from Sonar Update Center:
+![Sonar Update Center](https://cloud.githubusercontent.com/assets/812984/23023964/e850b208-f40c-11e6-9577-a8e449de7e1d.png)
 
-Place it your sonar instance to "[YOUR_SONAR_PATH]/extensions/plugins", restart Sonar.
+or do it manually:
+Dowload latest or required version from https://github.com/checkstyle/sonar-checkstyle/releases .
+Place jar file to your sonar instance to "[YOUR_SONAR_PATH]/extensions/plugins", restart Sonar.
 
 In the quality profile, activate some rules from Checkstyle and run an analysis on your project.
 ![checkstlye rules in sonar](https://github.com/checkstyle/resources/raw/master/img/sonar-wiki/sonar-in-docker.PNG)
