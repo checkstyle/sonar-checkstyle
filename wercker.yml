@@ -16,7 +16,7 @@ build:
   - script:
       name: Package plugin, install to sonar
       code: >
-        ls -la ../
+        ps -eaf
         && mvn package
         && cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-3.6-SNAPSHOT.jar /opt/sonarqube/extensions/plugins/
         && mvn sonar:sonar
