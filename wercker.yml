@@ -15,12 +15,12 @@ build:
   # Build Checkstyle
   - script:
       name: Package plugin, install to sonar
-      code: >
+      code: |-
         cd /opt/sonarqube/
-        && ./bin/run.sh &
-        && mvn package
-        && cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-3.6-SNAPSHOT.jar /opt/sonarqube/extensions/plugins/
-        && mvn sonar:sonar
+        ./bin/run.sh
+        mvn package
+        cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-3.6-SNAPSHOT.jar /opt/sonarqube/extensions/plugins/
+        mvn sonar:sonar
 #        && sleep 20
 #        && curl -X POST http://localhost:9000/api/system/restart -u admin:admin
 
