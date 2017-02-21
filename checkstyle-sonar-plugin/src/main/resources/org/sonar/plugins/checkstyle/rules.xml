@@ -13,7 +13,7 @@
     <param key="charset" type="STRING">
     </param>
     <param key="fileExtensions" type="s{}">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
   </rule>
 
@@ -30,7 +30,7 @@
     <param key="charset" type="STRING">
     </param>
     <param key="fileExtensions" type="s{}">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
     <status>READY</status>
   </rule>
@@ -123,7 +123,7 @@
     <param key="allowLegacy" type="BOOLEAN">
     </param>
     <param key="fileExtensions" type="s{}">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
     <status>READY</status>
   </rule>
@@ -144,7 +144,7 @@
     <param key="maximum" type="INTEGER">
     </param>
     <param key="fileExtensions" type="s{}">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
   </rule>
 
@@ -162,7 +162,7 @@
       <defaultValue>false</defaultValue>
     </param>
     <param key="fileExtensions" type="s{}">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
   </rule>
 
@@ -175,7 +175,7 @@
       <defaultValue>^$</defaultValue>
     </param>
     <param key="message" type="STRING">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
     <param key="ignoreCase" type="BOOLEAN">
       <defaultValue>false</defaultValue>
@@ -187,7 +187,7 @@
       <defaultValue>0</defaultValue>
     </param>
     <param key="fileExtensions" type="s{}">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
   </rule>
 
@@ -225,7 +225,7 @@
     <param key="eachLine" type="BOOLEAN">
     </param>
     <param key="fileExtensions" type="s{}">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
     <status>READY</status>
   </rule>
@@ -537,7 +537,7 @@
     <param key="max" type="INTEGER">
     </param>
     <param key="fileExtensions" type="s{}">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
     <status>READY</status>
   </rule>
@@ -668,7 +668,7 @@
     <configKey><![CDATA[Checker/TreeWalker/IllegalTokenText]]></configKey>
     <cardinality>MULTIPLE</cardinality>
     <param key="tokens" type="s[NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,IDENT,COMMENT_CONTENT,STRING_LITERAL,CHAR_LITERAL]">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
     <param key="format" type="REGULAR_EXPRESSION">
     </param>
@@ -1749,7 +1749,7 @@
       <defaultValue>3</defaultValue>
     </param>
     <param key="allowedAbbreviations" type="s{}">
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </param>
     <param key="ignoreFinal" type="BOOLEAN">
       <defaultValue>true</defaultValue>
