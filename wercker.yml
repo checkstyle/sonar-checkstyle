@@ -18,6 +18,7 @@ build:
       code: |-
         cd /opt/sonarqube/
         ./bin/run.sh &
+        cd -
         mvn package
         cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-3.6-SNAPSHOT.jar /opt/sonarqube/extensions/plugins/
         mvn sonar:sonar
