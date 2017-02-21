@@ -1,4 +1,5 @@
 [![][travis img]][travis]
+[![][wercker img]][wercker]
 [![][teamcity img]][teamcity]
 [![][sonar img]][sonar]
 
@@ -53,3 +54,6 @@ In the quality profile, activate some rules from Checkstyle and run an analysis 
 
 [sonar]:https://sonarqube.com/dashboard/index/com.github.checkstyle:checkstyle-sonar-plugin-parent
 [sonar img]:https://img.shields.io/sonar/http/sonarqube.com/com.github.checkstyle:checkstyle-sonar-plugin-parent/tech_debt.svg?label=Sonarqube%20tech%20debt
+
+[wercker]: https://app.wercker.com/project/bykey/ece513d8a6eb70207dd3b805b63e8d1c
+[wercker img]: https://app.wercker.com/status/ece513d8a6eb70207dd3b805b63e8d1c/s/master
