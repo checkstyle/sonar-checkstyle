@@ -1,4 +1,4 @@
-box: maven:3.3.9-jdk-8
+box: romani/sonarqube-maven-git
 
 build:
   steps:
@@ -14,9 +14,20 @@ build:
 
   # Build Checkstyle
   - script:
-      name: Build Checkstyle plugin
-      code: >
-        mvn clean package
+      name: Package plugin, install to sonar
+      code: |-
+        mvn package
+        cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-3.6-SNAPSHOT.jar /opt/sonarqube/extensions/plugins/
+        cd /opt/sonarqube/
+        rm logs/*.*
+        ./bin/run.sh &
+        echo "sleeping 30 to let sonar start up"
+        sleep 30
+        cd -
+        mvn sonar:sonar
+        grep "ERROR" /opt/sonarqube/logs/* | cat
+#        && sleep 20
+#        && curl -X POST http://localhost:9000/api/system/restart -u admin:admin
 
   # Cleanup
   - script:
@@ -29,3 +40,4 @@ build:
         du -hs ${WERCKER_CACHE_DIR}/* | sort -h
         echo "------"
         du -hs * | sort -h
+
