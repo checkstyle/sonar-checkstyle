@@ -19,9 +19,8 @@ build:
         ls -la ../
         && mvn package
         && cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-3.6-SNAPSHOT.jar /opt/sonarqube/extensions/plugins/
-        && sleep 20
         && mvn sonar:sonar
-
+#        && sleep 20
 #        && curl -X POST http://localhost:9000/api/system/restart -u admin:admin
 
   # Cleanup
