@@ -1,4 +1,4 @@
-box: maven:3.3.9-jdk-8
+box: romani/sonarqube-maven-git
 
 build:
   steps:
@@ -14,9 +14,14 @@ build:
 
   # Build Checkstyle
   - script:
-      name: Build Checkstyle plugin
+      name: Package plugin, install to sonar
       code: >
-        mvn clean package
+        cd sonar-checkstyle
+        && mvn package
+        && cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-3.6-SNAPSHOT.jar ../extensions/plugins/
+        && curl -X POST http://localhost:9000/api/system/restart -u admin:admin
+        && sleep 20
+        && mvn sonar:sonar
 
   # Cleanup
   - script:
@@ -29,3 +34,4 @@ build:
         du -hs ${WERCKER_CACHE_DIR}/* | sort -h
         echo "------"
         du -hs * | sort -h
+
