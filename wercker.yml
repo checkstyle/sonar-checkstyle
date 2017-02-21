@@ -16,7 +16,7 @@ build:
   - script:
       name: Package plugin, install to sonar
       code: >
-        cd sonar-checkstyle
+        ls -la
         && mvn package
         && cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-3.6-SNAPSHOT.jar ../extensions/plugins/
         && curl -X POST http://localhost:9000/api/system/restart -u admin:admin
