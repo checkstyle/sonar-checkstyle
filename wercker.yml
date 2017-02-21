@@ -19,11 +19,13 @@ build:
         mvn package
         cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-3.6-SNAPSHOT.jar /opt/sonarqube/extensions/plugins/
         cd /opt/sonarqube/
+        rm log/*.*
         ./bin/run.sh &
-        echo "sleeping 20 to let sonar start up"
-        sleep 20
+        echo "sleeping 30 to let sonar start up"
+        sleep 30
         cd -
         mvn sonar:sonar
+        grep "ERROR" /opt/sonarqube/log/* | cat
 #        && sleep 20
 #        && curl -X POST http://localhost:9000/api/system/restart -u admin:admin
 
