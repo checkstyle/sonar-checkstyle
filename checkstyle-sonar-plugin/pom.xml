@@ -185,6 +185,7 @@
             <configuration>
               <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_checks.xml</configLocation>
               <failOnViolation>true</failOnViolation>
+              <headerLocation>I just need to put here smth to let it not use default - LICENSE.txt</headerLocation>
               <propertiesLocation>config/checkstyle.properties</propertiesLocation>
               <sourceDirectory>${project.basedir}/src</sourceDirectory>
             </configuration>
