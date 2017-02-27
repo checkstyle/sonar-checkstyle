@@ -1148,9 +1148,6 @@
     <configKey><![CDATA[Checker/TreeWalker/NPathComplexity]]></configKey>
     <param key="max" type="INTEGER">
     </param>
-    <param key="tokens" type="STRING">
-      <defaultValue>LITERAL_WHILE,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_ELSE,LITERAL_SWITCH,LITERAL_CASE,LITERAL_TRY,LITERAL_CATCH,QUESTION</defaultValue>
-    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck">
@@ -1222,8 +1219,8 @@
     <param key="allowLineBreaks" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[COMMA,SEMI,POST_INC,POST_DEC,DOT,GENERIC_START,GENERIC_END]">
-      <defaultValue>COMMA,SEMI,POST_INC,POST_DEC</defaultValue>
+    <param key="tokens" type="s[COMMA,SEMI,POST_INC,POST_DEC,DOT,GENERIC_START,GENERIC_END,ELLIPSIS]">
+      <defaultValue>COMMA,SEMI,POST_INC,POST_DEC,ELLIPSIS</defaultValue>
     </param>
   </rule>
 
@@ -1629,6 +1626,9 @@
       <defaultValue>false</defaultValue>
     </param>
     <param key="allowEmptyLambdas" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowEmptyCatches" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
     <param key="ignoreEnhancedForColon" type="BOOLEAN">

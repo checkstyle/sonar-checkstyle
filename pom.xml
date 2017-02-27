@@ -85,7 +85,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>7.5.1</checkstyle.version>
+    <checkstyle.version>7.6</checkstyle.version>
     <sonar.version>5.6.4</sonar.version>
     <sonar-java.version>3.7</sonar-java.version>
     <java.version>1.8</java.version>
