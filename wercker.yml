@@ -1,4 +1,4 @@
-box: romani/sonarqube-maven-git
+box: checkstyle/sonarqube-maven-git
 
 build:
   steps:
