@@ -741,6 +741,9 @@
     <name><![CDATA[Indentation]]></name>
     <tag>formatting</tag>
     <configKey><![CDATA[Checker/TreeWalker/Indentation]]></configKey>
+    <param key="tabWidth" type="INTEGER">
+      <defaultValue>8</defaultValue>
+    </param>
     <param key="basicOffset" type="INTEGER">
       <defaultValue>4</defaultValue>
     </param>
@@ -936,6 +939,9 @@
     <name><![CDATA[Line Length]]></name>
     <tag>size</tag>
     <configKey><![CDATA[Checker/TreeWalker/LineLength]]></configKey>
+    <param key="tabWidth" type="INTEGER">
+      <defaultValue>8</defaultValue>
+    </param>
     <param key="ignorePattern" type="REGULAR_EXPRESSION">
     </param>
     <param key="max" type="INTEGER">

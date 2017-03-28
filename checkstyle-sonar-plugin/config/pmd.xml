@@ -88,6 +88,8 @@
   </rule>
   <rule ref="rulesets/java/coupling.xml/ExcessiveImports">
     <properties>
+      <!-- ChecksTest integrates alot of classes from Checkstyle to build complete documentation -->
+      <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration[@Image='ChecksTest']"/>
     </properties>
   </rule>
   <rule ref="rulesets/java/coupling.xml/CouplingBetweenObjects">
