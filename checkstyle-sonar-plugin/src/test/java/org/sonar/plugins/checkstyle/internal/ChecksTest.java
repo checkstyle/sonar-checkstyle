@@ -281,7 +281,7 @@ public class ChecksTest {
             Assert.assertFalse("sonar properties value must not have single quote: "
                             + keyName, keyValue.matches(".*[^'{}]'[^'{}].*"));
             Assert.assertFalse("sonar properties value must not have unescaped braces: "
-                            + keyName, keyValue.matches(".*[^'](\\{|\\})[^'].*"));
+                            + keyName, keyValue.matches(".*[^'](\\{|})[^'].*"));
 
             final String moduleName;
 

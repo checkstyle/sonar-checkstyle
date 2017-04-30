@@ -111,8 +111,13 @@ public class CheckstyleExecutorTest {
         return new DefaultJavaResourceLocator(null, javaClasspath, null);
     }
 
+    /**
+     * This is fake description just to keep noinspection.
+     * @noinspection TooBroadScope
+     * @throws Exception all could happen
+     */
     @Test
-    public void canGenerateXmlReportInEnglish() throws Exception {
+    public void generateXmlReportInEnglish() throws Exception {
         final Locale initialLocale = Locale.getDefault();
         Locale.setDefault(Locale.FRENCH);
 
@@ -140,7 +145,7 @@ public class CheckstyleExecutorTest {
     }
 
     @Test
-    public void canGenerateXmlReportNull() throws CheckstyleException {
+    public void generateXmlReportNull() throws CheckstyleException {
         final CheckstyleConfiguration conf = mockConf();
         final File report = new File("target/test-tmp/checkstyle-report.xml");
         // delete if exists from a previous run

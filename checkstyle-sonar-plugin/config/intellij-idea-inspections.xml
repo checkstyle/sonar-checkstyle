@@ -1977,6 +1977,8 @@
                 <option value="deprecation" />
                 <option value="unchecked" />
                 <option value="rawtypes" />
+                <!-- Locale changes and caching, requires storage of value in advance in final -->
+                <option value="TooBroadScope" />
             </list>
         </option>
     </inspection_tool>

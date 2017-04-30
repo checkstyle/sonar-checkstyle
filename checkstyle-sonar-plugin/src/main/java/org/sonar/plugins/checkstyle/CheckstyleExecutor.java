@@ -60,9 +60,9 @@ public class CheckstyleExecutor implements BatchExtension {
 
     /**
      * Execute Checkstyle and return the generated XML report.
+     * @noinspection TooBroadScope
      */
     public void execute() {
-
         final Locale initialLocale = Locale.getDefault();
         Locale.setDefault(Locale.ENGLISH);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
