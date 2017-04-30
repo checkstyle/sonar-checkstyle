@@ -34,6 +34,7 @@ public class CheckstyleProfileExporterTest {
 
     private Settings settings;
 
+    @SuppressWarnings("unchecked")
     @Before
     public void prepare() {
         settings = new Settings(new PropertyDefinitions(new CheckstylePlugin().getExtensions()));

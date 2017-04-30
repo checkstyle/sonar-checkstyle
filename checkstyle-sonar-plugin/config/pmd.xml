@@ -231,7 +231,7 @@
   <rule ref="rulesets/java/strictexception.xml/SignatureDeclareThrowsException">
     <properties>
       <!-- not sure if this is good or bad -->
-      <property name="violationSuppressXPath" value="//MethodDeclaration[@Name='verifyTestConfigurationFiles' and ../../..[@Image='ChecksTest']]"/>
+      <property name="violationSuppressXPath" value="//MethodDeclaration[@Name='verifyTestConfigurationFiles' and ../../..[@Image='ChecksTest']] or //MethodDeclaration[@Name='getCheckstyleConfiguration' and ../../..[@Image='CheckstyleConfigurationTest']] or //MethodDeclaration[@Name='canGenerateXmlReportInEnglish' and ../../..[@Image='CheckstyleExecutorTest']]"/>
     </properties>
   </rule>
 

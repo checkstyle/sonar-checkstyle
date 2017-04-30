@@ -112,7 +112,7 @@ public class CheckstyleExecutorTest {
     }
 
     @Test
-    public void canGenerateXmlReportInEnglish() throws CheckstyleException, IOException {
+    public void canGenerateXmlReportInEnglish() throws Exception {
         final Locale initialLocale = Locale.getDefault();
         Locale.setDefault(Locale.FRENCH);
 

@@ -37,7 +37,6 @@ import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 public class CheckstyleConfigurationTest {
@@ -93,8 +92,9 @@ public class CheckstyleConfigurationTest {
         FileUtils.forceDelete(xmlFile);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
-    public void getCheckstyleConfiguration() throws IOException, CheckstyleException {
+    public void getCheckstyleConfiguration() throws Exception {
         fileSystem.setEncoding(StandardCharsets.UTF_8);
         final Settings settings = new Settings(new PropertyDefinitions(
                 new CheckstylePlugin().getExtensions()));
