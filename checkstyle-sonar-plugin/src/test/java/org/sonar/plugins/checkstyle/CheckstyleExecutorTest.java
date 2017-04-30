@@ -111,11 +111,6 @@ public class CheckstyleExecutorTest {
         return new DefaultJavaResourceLocator(null, javaClasspath, null);
     }
 
-    /**
-     * This is fake description just to keep noinspection.
-     * @noinspection TooBroadScope
-     * @throws Exception all could happen
-     */
     @Test
     public void generateXmlReportInEnglish() throws Exception {
         final Locale initialLocale = Locale.getDefault();

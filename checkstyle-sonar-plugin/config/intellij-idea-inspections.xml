@@ -1977,8 +1977,6 @@
                 <option value="deprecation" />
                 <option value="unchecked" />
                 <option value="rawtypes" />
-                <!-- Locale changes and caching, requires storage of value in advance in final -->
-                <option value="TooBroadScope" />
             </list>
         </option>
     </inspection_tool>
@@ -2092,7 +2090,8 @@
     <inspection_tool class="ToArrayCallWithZeroLengthArrayArgument" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="TodoComment" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="TooBroadCatch" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="TooBroadScope" enabled="true" level="ERROR" enabled_by_default="true">
+    <!-- I failed to suppress by javadoc annotation certain violation, some bug ... -->
+    <inspection_tool class="TooBroadScope" enabled="false" level="ERROR" enabled_by_default="true">
         <option name="m_allowConstructorAsInitializer" value="false" />
         <option name="m_onlyLookAtBlocks" value="false" />
     </inspection_tool>
