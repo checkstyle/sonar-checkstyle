@@ -23,7 +23,6 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 
@@ -38,14 +37,15 @@ public class CheckstyleRulesDefinitionTest {
             "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck",
             "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheck",
             "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpOnFilenameCheck",
-            "com.puppycrawl.tools.checkstyle.checks.RegexpCheck",
+            "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpCheck",
             "com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck",
             "com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheck",
-            "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck"
+            "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck",
+            "com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder",
+            "com.puppycrawl.tools.checkstyle.checks.FileContentsHolder"
     );
 
     @Test
-    @Ignore
     public void test() {
         final CheckstyleRulesDefinition definition = new CheckstyleRulesDefinition();
         final RulesDefinition.Context context = new RulesDefinition.Context();
@@ -57,7 +57,7 @@ public class CheckstyleRulesDefinitionTest {
         assertThat(repository.language()).isEqualTo("java");
 
         final List<RulesDefinition.Rule> rules = repository.rules();
-        assertThat(rules).hasSize(150);
+        assertThat(rules).hasSize(154);
 
         for (RulesDefinition.Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
@@ -76,15 +76,11 @@ public class CheckstyleRulesDefinitionTest {
             if (NO_SQALE.contains(rule.key())) {
                 assertThat(rule.debtRemediationFunction()).overridingErrorMessage(
                         "Sqale remediation function is set for rule '" + rule.key()).isNull();
-                assertThat(rule.debtSubCharacteristic()).overridingErrorMessage(
-                        "Sqale characteristic is set for rule '" + rule.key()).isNull();
             }
             else {
                 assertThat(rule.debtRemediationFunction()).overridingErrorMessage(
                         "Sqale remediation function is not set for rule '" + rule.key())
                         .isNotNull();
-                assertThat(rule.debtSubCharacteristic()).overridingErrorMessage(
-                        "Sqale characteristic is not set for rule '" + rule.key()).isNotNull();
             }
         }
     }
