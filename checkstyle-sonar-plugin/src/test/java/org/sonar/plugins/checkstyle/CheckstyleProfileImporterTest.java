@@ -180,60 +180,61 @@ public class CheckstyleProfileImporterTest {
 
     private static RuleFinder newRuleFinder() {
         final RuleFinder ruleFinder = mock(RuleFinder.class);
-        when(ruleFinder.find(any(RuleQuery.class))).thenAnswer(new Answer<Rule>() {
-            @Override
-            public Rule answer(InvocationOnMock iom) throws Throwable {
-                final RuleQuery query = (RuleQuery) iom.getArguments()[0];
-                Rule rule = null;
-                if (StringUtils.equals(query.getConfigKey(), "Checker/JavadocPackage")) {
-                    rule = Rule
-                            .create(query.getRepositoryKey(),
-                                    "com.puppycrawl.tools.checkstyle.checks.javadoc."
-                                            + "JavadocPackageCheck", "Javadoc Package")
-                            .setConfigKey("Checker/JavadocPackage")
-                            .setSeverity(RulePriority.MAJOR);
-                    rule.createParameter("format");
-                    rule.createParameter("ignore");
-
-                }
-                else if (StringUtils.equals(query.getConfigKey(),
-                        "Checker/TreeWalker/EqualsHashCode")) {
-                    rule = Rule
-                            .create(query.getRepositoryKey(),
-                                    "com.puppycrawl.tools.checkstyle.checks.coding."
-                                            + "EqualsHashCodeCheck",
-                                    "Equals HashCode")
-                            .setConfigKey("Checker/TreeWalker/EqualsHashCode")
-                            .setSeverity(RulePriority.BLOCKER);
-
-                }
-                else if (StringUtils.equals(query.getKey(),
-                        "com.puppycrawl.tools.checkstyle.checks.javadoc."
-                                + "JavadocPackageCheck_12345")) {
-                    rule = Rule
-                            .create(query.getRepositoryKey(),
-                                    "com.puppycrawl.tools.checkstyle.checks.javadoc."
-                                            + "JavadocPackageCheck_12345",
-                                    "Javadoc Package").setConfigKey("Checker/JavadocPackage")
-                            .setSeverity(RulePriority.MAJOR);
-                    rule.createParameter("format");
-                    rule.createParameter("ignore");
-                }
-                else if (StringUtils.equals(query.getConfigKey(),
-                        "Checker/TreeWalker/MissingOverride")) {
-                    rule = Rule
-                            .create(query.getRepositoryKey(),
-                                    "com.puppycrawl.tools.checkstyle.checks.annotation."
-                                            + "MissingOverrideCheck",
-                                    "Missing Override")
-                            .setConfigKey("Checker/TreeWalker/MissingOverride")
-                            .setSeverity(RulePriority.MINOR);
-                    rule.createParameter("javaFiveCompatibility");
-                }
-                return rule;
-            }
-        });
+        when(ruleFinder.find(any(RuleQuery.class))).thenAnswer(new RuleAnswer());
         return ruleFinder;
     }
 
+    private static class RuleAnswer implements Answer<Rule> {
+        @Override
+        public Rule answer(InvocationOnMock iom) throws Throwable {
+            final RuleQuery query = (RuleQuery) iom.getArguments()[0];
+            Rule rule = null;
+            if (StringUtils.equals(query.getConfigKey(), "Checker/JavadocPackage")) {
+                rule = Rule
+                        .create(query.getRepositoryKey(),
+                                "com.puppycrawl.tools.checkstyle.checks.javadoc."
+                                        + "JavadocPackageCheck", "Javadoc Package")
+                        .setConfigKey("Checker/JavadocPackage")
+                        .setSeverity(RulePriority.MAJOR);
+                rule.createParameter("format");
+                rule.createParameter("ignore");
+
+            }
+            else if (StringUtils.equals(query.getConfigKey(),
+                    "Checker/TreeWalker/EqualsHashCode")) {
+                rule = Rule
+                        .create(query.getRepositoryKey(),
+                                "com.puppycrawl.tools.checkstyle.checks.coding."
+                                        + "EqualsHashCodeCheck",
+                                "Equals HashCode")
+                        .setConfigKey("Checker/TreeWalker/EqualsHashCode")
+                        .setSeverity(RulePriority.BLOCKER);
+
+            }
+            else if (StringUtils.equals(query.getKey(),
+                    "com.puppycrawl.tools.checkstyle.checks.javadoc."
+                            + "JavadocPackageCheck_12345")) {
+                rule = Rule
+                        .create(query.getRepositoryKey(),
+                                "com.puppycrawl.tools.checkstyle.checks.javadoc."
+                                        + "JavadocPackageCheck_12345",
+                                "Javadoc Package").setConfigKey("Checker/JavadocPackage")
+                        .setSeverity(RulePriority.MAJOR);
+                rule.createParameter("format");
+                rule.createParameter("ignore");
+            }
+            else if (StringUtils.equals(query.getConfigKey(),
+                    "Checker/TreeWalker/MissingOverride")) {
+                rule = Rule
+                        .create(query.getRepositoryKey(),
+                                "com.puppycrawl.tools.checkstyle.checks.annotation."
+                                        + "MissingOverrideCheck",
+                                "Missing Override")
+                        .setConfigKey("Checker/TreeWalker/MissingOverride")
+                        .setSeverity(RulePriority.MINOR);
+                rule.createParameter("javaFiveCompatibility");
+            }
+            return rule;
+        }
+    }
 }

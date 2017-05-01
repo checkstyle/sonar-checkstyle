@@ -38,13 +38,13 @@ public enum CheckstyleVersion {
         try {
             final Properties properties = new Properties();
             properties.load(input);
-            this.version = properties.getProperty("checkstyle.version");
+            version = properties.getProperty("checkstyle.version");
 
         }
         catch (IOException ex) {
             LoggerFactory.getLogger(getClass()).warn(
                     "Can not load the Checkstyle version from the file " + PROPERTIES_PATH, ex);
-            this.version = "";
+            version = "";
         }
         finally {
             IOUtils.closeQuietly(input);
