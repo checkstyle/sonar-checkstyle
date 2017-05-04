@@ -362,6 +362,10 @@
     </param>
     <param key="excludedClasses" type="STRING">
     </param>
+    <param key="excludeClassesRegexps" type="s{}">
+    </param>
+    <param key="excludedPackages" type="STRING">
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.metrics.ClassFanOutComplexityCheck">
@@ -371,6 +375,10 @@
     <param key="max" type="INTEGER">
     </param>
     <param key="excludedClasses" type="s{}">
+    </param>
+    <param key="excludeClassesRegexps" type="s{}">
+    </param>
+    <param key="excludedPackages" type="STRING">
     </param>
     <status>READY</status>
   </rule>
@@ -440,6 +448,9 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Default Comes Last]]></name>
     <configKey><![CDATA[Checker/TreeWalker/DefaultComesLast]]></configKey>
+    <param key="skipIfLastAndSharedWithCase" type="BOOLEAN">
+        <defaultValue>false</defaultValue>
+    </param>
     <status>READY</status>
   </rule>
 
@@ -1227,7 +1238,7 @@
     <param key="allowLineBreaks" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[COMMA,SEMI,POST_INC,POST_DEC,DOT,GENERIC_START,GENERIC_END,ELLIPSIS]">
+    <param key="tokens" type="s[COMMA,SEMI,POST_INC,POST_DEC,DOT,GENERIC_START,GENERIC_END,ELLIPSIS,METHOD_REF]">
       <defaultValue>COMMA,SEMI,POST_INC,POST_DEC,ELLIPSIS</defaultValue>
     </param>
   </rule>
@@ -1313,8 +1324,8 @@
     <param key="option" type="s[nospace,space]">
       <defaultValue>nospace</defaultValue>
     </param>
-    <param key="tokens" type="s[ANNOTATION,ANNOTATION_FIELD_DEF,CTOR_CALL,CTOR_DEF,ENUM_CONSTANT_DEF,EXPR,LITERAL_CATCH,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_NEW,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_WHILE,METHOD_CALL,METHOD_DEF,QUESTION,RESOURCE_SPECIFICATION,SUPER_CTOR_CALL,LAMBDA]">
-      <defaultValue>ANNOTATION,ANNOTATION_FIELD_DEF,CTOR_CALL,CTOR_DEF,ENUM_CONSTANT_DEF,EXPR,LITERAL_CATCH,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_NEW,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_WHILE,METHOD_CALL,METHOD_DEF,QUESTION,RESOURCE_SPECIFICATION,SUPER_CTOR_CALL,LAMBDA</defaultValue>
+    <param key="tokens" type="s[ANNOTATION,ANNOTATION_FIELD_DEF,CTOR_CALL,CTOR_DEF,DOT,ENUM_CONSTANT_DEF,EXPR,LITERAL_CATCH,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_NEW,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_WHILE,METHOD_CALL,METHOD_DEF,QUESTION,RESOURCE_SPECIFICATION,SUPER_CTOR_CALL,LAMBDA]">
+      <defaultValue>ANNOTATION,ANNOTATION_FIELD_DEF,CTOR_CALL,CTOR_DEF,DOT,ENUM_CONSTANT_DEF,EXPR,LITERAL_CATCH,LITERAL_DO,LITERAL_FOR,LITERAL_IF,LITERAL_NEW,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_WHILE,METHOD_CALL,METHOD_DEF,QUESTION,RESOURCE_SPECIFICATION,SUPER_CTOR_CALL,LAMBDA</defaultValue>
     </param>
   </rule>
 
@@ -1389,7 +1400,7 @@
     <param key="shouldStartLine" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE,CLASS_DEF,METHOD_DEF,CTOR_DEF,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,STATIC_INIT,INSTANCE_INIT]">
+    <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE,CLASS_DEF,METHOD_DEF,CTOR_DEF,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,STATIC_INIT,INSTANCE_INIT,LAMBDA]">
       <defaultValue>LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE</defaultValue>
     </param>
     <status>READY</status>
@@ -2012,7 +2023,7 @@
     <param key="option" type="s[eol,nl]">
       <defaultValue>eol</defaultValue>
     </param>
-    <param key="tokens" type="s[DOT,COMMA,SEMI,ELLIPSIS,AT,LPAREN,RPAREN,ARRAY_DECLARATOR,RBRACK]">
+    <param key="tokens" type="s[DOT,COMMA,SEMI,ELLIPSIS,AT,LPAREN,RPAREN,ARRAY_DECLARATOR,RBRACK,METHOD_REF]">
       <defaultValue>DOT,COMMA</defaultValue>
     </param>
   </rule>
