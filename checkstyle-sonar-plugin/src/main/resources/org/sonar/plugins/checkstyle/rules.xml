@@ -1295,7 +1295,9 @@
     <name><![CDATA[Parameter Number]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ParameterNumber]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="max" type="INTEGER"/>
+    <param key="max" type="INTEGER">
+      <defaultValue>7</defaultValue>
+    </param>
     <param key="tokens" type="s[METHOD_DEF,CTOR_DEF]">
       <defaultValue>METHOD_DEF,CTOR_DEF</defaultValue>
     </param>
