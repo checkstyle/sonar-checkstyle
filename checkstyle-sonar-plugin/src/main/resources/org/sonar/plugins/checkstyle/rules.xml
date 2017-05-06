@@ -1285,7 +1285,7 @@
       <defaultValue>false</defaultValue>
     </param>
     <param key="accessModifiers" type="s[public,protected,package,private]">
-      <defaultValue>public, protected, package, private</defaultValue>
+      <defaultValue>public,protected,package,private</defaultValue>
     </param>
     <status>READY</status>
   </rule>
