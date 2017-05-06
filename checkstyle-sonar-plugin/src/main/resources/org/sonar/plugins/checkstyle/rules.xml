@@ -448,7 +448,7 @@
     <name><![CDATA[Design For Extension]]></name>
     <configKey><![CDATA[Checker/TreeWalker/DesignForExtension]]></configKey>
     <param key="ignoredAnnotations" type="s{}">
-      <defaultValue>Test, Before, After, BeforeClass, AfterClass</defaultValue>
+      <defaultValue>Test,Before,After,BeforeClass,AfterClass</defaultValue>
     </param>
   </rule>
 
@@ -690,12 +690,12 @@
       <defaultValue>VARIABLE_DEF,PARAMETER_DEF,METHOD_DEF</defaultValue>
     </param>
     <param key="illegalClassNames" type="s{}">
-      <defaultValue>"java.util.HashSet, java.util.HashMap, java.util.LinkedHashMap, java.util.LinkedHashSet, java.util.TreeSet, java.util.TreeMap"</defaultValue>
+      <defaultValue>"java.util.HashSet,java.util.HashMap,java.util.LinkedHashMap,java.util.LinkedHashSet,java.util.TreeSet,java.util.TreeMap"</defaultValue>
     </param>
     <param key="legalAbstractClassNames" type="s{}">
     </param>
     <param key="ignoredMethodNames" type="s{}">
-      <defaultValue>"getInitialContext, getEnvironment"</defaultValue>
+      <defaultValue>"getInitialContext,getEnvironment"</defaultValue>
     </param>
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^(.*[\\.])?Abstract.*$</defaultValue>
