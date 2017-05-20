@@ -26,8 +26,7 @@ import java.util.Properties;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.LoggerFactory;
 
-public enum CheckstyleVersion {
-    INSTANCE;
+public final class CheckstyleVersion {
 
     private static final String PROPERTIES_PATH =
             "/org/sonar/plugins/checkstyle/checkstyle-plugin.properties";
@@ -51,7 +50,7 @@ public enum CheckstyleVersion {
         }
     }
 
-    public static String getVersion() {
-        return INSTANCE.version;
+    public String getVersion() {
+        return version;
     }
 }

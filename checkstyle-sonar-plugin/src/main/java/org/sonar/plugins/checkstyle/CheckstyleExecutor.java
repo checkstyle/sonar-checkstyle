@@ -80,7 +80,7 @@ public class CheckstyleExecutor implements BatchExtension {
 
     private void executeWithClassLoader(URLClassLoader projectClassloader) {
         final TimeProfiler profiler = new TimeProfiler().start("Execute Checkstyle "
-                + CheckstyleVersion.getVersion());
+                + new CheckstyleVersion().getVersion());
         final Checker checker = new Checker();
         OutputStream xmlOutput = null;
         try {

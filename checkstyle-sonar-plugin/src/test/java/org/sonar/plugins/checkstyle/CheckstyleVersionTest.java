@@ -20,14 +20,41 @@
 package org.sonar.plugins.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ Properties.class, CheckstyleVersion.class})
 public class CheckstyleVersionTest {
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void getCheckstyleVersion() {
-        assertThat(CheckstyleVersion.getVersion().length()).isGreaterThan(1);
+        assertThat(new CheckstyleVersion().getVersion().length()).isGreaterThan(1);
     }
 
+    @Test
+    public void getCheckstyleVersionException() throws Exception {
+        final Properties mock = PowerMockito.mock(Properties.class);
+        PowerMockito.whenNew(Properties.class).withNoArguments().thenReturn(mock);
+        PowerMockito.doThrow(new IOException("Unable to process DataSource")).when(mock)
+                .load(any(InputStream.class));
+
+        final CheckstyleVersion version = new CheckstyleVersion();
+        assertEquals("", version.getVersion());
+    }
 }
