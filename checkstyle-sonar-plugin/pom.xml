@@ -302,8 +302,8 @@
             <haltOnFailure>true</haltOnFailure>
             <branchRate>100</branchRate>
             <lineRate>100</lineRate>
-            <totalBranchRate>77</totalBranchRate>
-            <totalLineRate>87</totalLineRate>
+            <totalBranchRate>84</totalBranchRate>
+            <totalLineRate>96</totalLineRate>
             <regexes>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleAuditListener</pattern>
