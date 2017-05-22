@@ -312,7 +312,7 @@
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleConfiguration</pattern>
-                <branchRate>75</branchRate>
+                <branchRate>60</branchRate>
                 <lineRate>93</lineRate>
               </regex>
               <regex>
