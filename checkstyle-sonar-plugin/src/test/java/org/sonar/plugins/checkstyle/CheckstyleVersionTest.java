@@ -20,23 +20,11 @@
 package org.sonar.plugins.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({ Properties.class, CheckstyleVersion.class})
 public class CheckstyleVersionTest {
 
     @Rule
@@ -44,17 +32,13 @@ public class CheckstyleVersionTest {
 
     @Test
     public void getCheckstyleVersion() {
-        assertThat(new CheckstyleVersion().getVersion().length()).isGreaterThan(1);
+        final String version = CheckstyleExecutor.PROPERTIES_PATH;
+        assertThat(new CheckstyleVersion().getVersion(version).length()).isGreaterThan(1);
     }
 
     @Test
     public void getCheckstyleVersionException() throws Exception {
-        final Properties mock = PowerMockito.mock(Properties.class);
-        PowerMockito.whenNew(Properties.class).withNoArguments().thenReturn(mock);
-        PowerMockito.doThrow(new IOException("Unable to process DataSource")).when(mock)
-                .load(any(InputStream.class));
-
-        final CheckstyleVersion version = new CheckstyleVersion();
-        assertEquals("", version.getVersion());
+        final String version = "/org/sonar/plugins/checkstyle/bad-checkstyle-pugin.properties";
+        assertThat(new CheckstyleVersion().getVersion(version)).isEmpty();
     }
 }

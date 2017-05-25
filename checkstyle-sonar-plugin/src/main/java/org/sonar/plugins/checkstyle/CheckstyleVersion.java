@@ -19,7 +19,6 @@
 
 package org.sonar.plugins.checkstyle;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -28,29 +27,27 @@ import org.slf4j.LoggerFactory;
 
 public final class CheckstyleVersion {
 
-    private static final String PROPERTIES_PATH =
-            "/org/sonar/plugins/checkstyle/checkstyle-plugin.properties";
-    private String version;
+    public String getVersion(String path) {
+        return loadVersion(path);
+    }
 
-    CheckstyleVersion() {
-        final InputStream input = getClass().getResourceAsStream(PROPERTIES_PATH);
+    private String loadVersion(String path) {
+        String version;
+        final InputStream input = getClass().getResourceAsStream(path);
         try {
             final Properties properties = new Properties();
             properties.load(input);
             version = properties.getProperty("checkstyle.version");
 
         }
-        catch (IOException ex) {
+        catch (Exception ex) {
             LoggerFactory.getLogger(getClass()).warn(
-                    "Can not load the Checkstyle version from the file " + PROPERTIES_PATH, ex);
+                    "Can not load the Checkstyle version from the file " + path, ex);
             version = "";
         }
         finally {
             IOUtils.closeQuietly(input);
         }
-    }
-
-    public String getVersion() {
         return version;
     }
 }

@@ -45,6 +45,9 @@ import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
 import com.puppycrawl.tools.checkstyle.XMLLogger;
 
 public class CheckstyleExecutor implements BatchExtension {
+    public static final String PROPERTIES_PATH =
+            "/org/sonar/plugins/checkstyle/checkstyle-plugin.properties";
+
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleExecutor.class);
 
     private final CheckstyleConfiguration configuration;
@@ -80,7 +83,7 @@ public class CheckstyleExecutor implements BatchExtension {
 
     private void executeWithClassLoader(URLClassLoader projectClassloader) {
         final TimeProfiler profiler = new TimeProfiler().start("Execute Checkstyle "
-                + new CheckstyleVersion().getVersion());
+                + new CheckstyleVersion().getVersion(PROPERTIES_PATH));
         final Checker checker = new Checker();
         OutputStream xmlOutput = null;
         try {
