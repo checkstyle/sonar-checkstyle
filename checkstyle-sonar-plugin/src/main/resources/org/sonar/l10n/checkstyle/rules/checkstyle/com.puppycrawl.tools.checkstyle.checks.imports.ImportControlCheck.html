@@ -62,7 +62,7 @@
 
 <td><a href="property_types.html#uri">URI</a></td>
 
-<td><tt>null</tt></td>
+<td><code>null</code></td>
           </tr>
 
 <tr class="a">
@@ -77,7 +77,7 @@
 
 <td><a href="property_types.html#uri">URI</a></td>
 
-<td><tt>null</tt></td>
+<td><code>null</code></td>
           </tr>
 
 <tr class="b">
@@ -92,7 +92,7 @@
 
 <td><a href="property_types.html#regexp">Regular Expression</a></td>
 
-<td><tt>".*"</tt></td>
+<td><code>".*"</code></td>
           </tr>
         </tbody></table>
       </div>
@@ -131,13 +131,13 @@
 
 <p>
             In the example below access to package
-            <tt>com.puppycrawl.tools.checkstyle.checks</tt> and its subpackages is
-            allowed from anywhere in <tt>com.puppycrawl.tools.checkstyle</tt> except
-            from the <tt>filters</tt> subpackage where access to all
-            <tt>check</tt>'s subpackages is disallowed. Two <tt>java.lang.ref</tt>
+            <code>com.puppycrawl.tools.checkstyle.checks</code> and its subpackages is
+            allowed from anywhere in <code>com.puppycrawl.tools.checkstyle</code> except
+            from the <code>filters</code> subpackage where access to all
+            <code>check</code>'s subpackages is disallowed. Two <code>java.lang.ref</code>
             classes are allowed by virtue of one regular expression instead of listing
-            them in two separate allow rules (as it is done with the <tt>Files</tt>
-            and <tt>ClassPath</tt> classes).
+            them in two separate allow rules (as it is done with the <code>Files</code>
+            and <code>ClassPath</code> classes).
         </p>
 
 
@@ -162,9 +162,9 @@
 
 <p>
           In the next example regular expressions are used to enforce a layering rule: In all
-          <tt>dao</tt> packages it is not allowed to access UI layer code (<tt>ui</tt>,
-          <tt>awt</tt>, and <tt>swing</tt>). On the other hand it is not allowed to directly
-          access <tt>dao</tt> and <tt>service</tt> layer from <tt>ui</tt> packages. The
+          <code>dao</code> packages it is not allowed to access UI layer code (<code>ui</code>,
+          <code>awt</code>, and <code>swing</code>). On the other hand it is not allowed to directly
+          access <code>dao</code> and <code>service</code> layer from <code>ui</code> packages. The
           root package is also a regular expression that is used to handle old and new domain name
           with the same rules.
         </p>
@@ -204,12 +204,12 @@
 <ul>
 
 <li>
-            <tt>[\p{Letter}_$][\p{Letter}\p{Number}_$]*</tt> or short
-            <tt>[\p{L}_$][\p{L}\p{N}_$]*</tt> for a class name or package component.
+            <code>[\p{Letter}_$][\p{Letter}\p{Number}_$]*</code> or short
+            <code>[\p{L}_$][\p{L}\p{N}_$]*</code> for a class name or package component.
           </li>
 
 <li>
-            <tt>([\p{L}_$][\p{L}\p{N}_$]*\.)*[\p{L}_$][\p{L}\p{N}_$]*</tt>
+            <code>([\p{L}_$][\p{L}\p{N}_$]*\.)*[\p{L}_$][\p{L}\p{N}_$]*</code>
             for a fully qualified name.
           </li>
         </ul>
@@ -218,31 +218,31 @@
           But it is not necessary to use these complicated expressions since no validation is
           required. Differentiating between package separator '.' and others is
           sufficient. Unfortunately '.' has a special meaning in regular expressions so one has
-          to write <tt>\.</tt> to match an actual dot.
+          to write <code>\.</code> to match an actual dot.
         </p>
 
 <ul>
 
 <li>
-            Use <tt>[^.]+</tt> (one or more "not a dot" characters) for a class name or
+            Use <code>[^.]+</code> (one or more "not a dot" characters) for a class name or
             package component.
           </li>
 
 <li>
-            Use <tt>com\.google\.common\.[^.]+</tt> to match any subpackage of
-            <tt>com.google.common</tt>.
+            Use <code>com\.google\.common\.[^.]+</code> to match any subpackage of
+            <code>com.google.common</code>.
           </li>
 
 <li>
-            When matching concrete packages like <tt>com.google.common</tt> omitting the
+            When matching concrete packages like <code>com.google.common</code> omitting the
             backslash before the dots may improve readability and may be just exact enough:
-            <tt>com.google.common\.[^.]+</tt> matches not only subpackages of
-            <tt>com.google.common</tt> but e.g. also of <tt>com.googleecommon</tt> but
+            <code>com.google.common\.[^.]+</code> matches not only subpackages of
+            <code>com.google.common</code> but e.g. also of <code>com.googleecommon</code> but
             you may not care for that.
           </li>
 
 <li>
-            Do not use <tt>.*</tt> unless you really do not care for what is matched. Often
+            Do not use <code>.*</code> unless you really do not care for what is matched. Often
             you want to match only a certain package level instead.
           </li>
         </ul>
