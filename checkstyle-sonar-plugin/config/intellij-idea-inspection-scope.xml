@@ -1,5 +1,5 @@
 <!-- ATTENTION: this file is not used by TeamCity, all excludes should be specified in build configuration -->
 <component name="DependencyValidationManager">
     <scope name="Checkstyle Sonar plugin Inspection Scope"
-           pattern="!file:target//*"/>
+           pattern="!file:target//*&amp;&amp;!file:src/test/resources/org/sonar/plugins/checkstyle/bad-checkstyle-pugin.properties"/>
 </component>

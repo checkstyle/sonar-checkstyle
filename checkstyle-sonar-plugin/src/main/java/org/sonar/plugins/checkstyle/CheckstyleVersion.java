@@ -41,8 +41,8 @@ public final class CheckstyleVersion {
 
         }
         catch (Exception ex) {
-            LoggerFactory.getLogger(getClass()).warn(
-                    "Can not load the Checkstyle version from the file " + path, ex);
+            LoggerFactory.getLogger(getClass())
+                    .warn("Can not load the Checkstyle version from the file {}", path, ex);
             version = "";
         }
         finally {

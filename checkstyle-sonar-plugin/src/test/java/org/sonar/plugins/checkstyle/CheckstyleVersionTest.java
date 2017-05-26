@@ -37,7 +37,7 @@ public class CheckstyleVersionTest {
     }
 
     @Test
-    public void getCheckstyleVersionException() throws Exception {
+    public void getCheckstyleVersionException() {
         final String version = "/org/sonar/plugins/checkstyle/bad-checkstyle-pugin.properties";
         assertThat(new CheckstyleVersion().getVersion(version)).isEmpty();
     }
