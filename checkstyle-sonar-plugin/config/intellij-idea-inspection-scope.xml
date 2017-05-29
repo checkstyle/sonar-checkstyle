@@ -1,5 +1,8 @@
-<!-- ATTENTION: this file is not used by TeamCity, all excludes should be specified in build configuration -->
-<component name="DependencyValidationManager">
+<!-- ATTENTION: this file is NOT used by TeamCity,
+     all excludes should be specified in
+     "Build Steps" at "1. Inspections (IntelliJ IDEA)" at "Include / exclude patterns:"
+-->
+<component name="NamedScopeManager">
     <scope name="Checkstyle Sonar plugin Inspection Scope"
            pattern="!file:target//*&amp;&amp;!file:src/test/resources/org/sonar/plugins/checkstyle/bad-checkstyle-pugin.properties"/>
 </component>
