@@ -111,6 +111,10 @@ public class CheckstyleExecutorTest {
         return new DefaultJavaResourceLocator(null, javaClasspath, null);
     }
 
+    /**
+     * We do suppression as we need to cache value initialLocale
+     * @noinspection TooBroadScope
+     */
     @Test
     public void generateXmlReportInEnglish() throws Exception {
         final Locale initialLocale = Locale.getDefault();

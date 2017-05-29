@@ -58,6 +58,10 @@ public class CheckstyleAuditListenerTest {
         fileSystem.add(inputFile);
     }
 
+    /**
+     * We do suppression to keep code the same in view
+     * @noinspection TooBroadScope
+     */
     @Test
     public void testUtilityMethods() {
         AuditEvent eventTest;

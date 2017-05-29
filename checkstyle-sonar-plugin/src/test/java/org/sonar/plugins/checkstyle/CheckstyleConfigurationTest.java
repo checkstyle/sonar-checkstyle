@@ -69,14 +69,16 @@ public class CheckstyleConfigurationTest {
 
     @Test
     public void getTargetXmlReport() {
-        final Settings conf = new Settings();
-        CheckstyleConfiguration configuration = new CheckstyleConfiguration(conf, null, null,
-                fileSystem);
+        final Settings settings = new Settings();
+        final CheckstyleConfiguration configuration = new CheckstyleConfiguration(settings,
+                null, null, fileSystem);
         assertThat(configuration.getTargetXmlReport()).isNull();
 
-        conf.setProperty(CheckstyleConfiguration.PROPERTY_GENERATE_XML, "true");
-        configuration = new CheckstyleConfiguration(conf, null, null, fileSystem);
-        assertThat(configuration.getTargetXmlReport()).isEqualTo(
+        final Settings settings2 = new Settings();
+        settings2.setProperty(CheckstyleConfiguration.PROPERTY_GENERATE_XML, "true");
+        final CheckstyleConfiguration configuration2 = new CheckstyleConfiguration(settings2,
+                null, null, fileSystem);
+        assertThat(configuration2.getTargetXmlReport()).isEqualTo(
                 new File(fileSystem.workDir(), "checkstyle-result.xml"));
     }
 

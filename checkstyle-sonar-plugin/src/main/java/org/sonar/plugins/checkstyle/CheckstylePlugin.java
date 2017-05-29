@@ -32,6 +32,7 @@ public final class CheckstylePlugin extends SonarPlugin {
 
     private static final String CHECKSTYLE_SUB_CATEGORY_NAME = "Checkstyle";
 
+    @SuppressWarnings("rawtypes")
     @Override
     public List getExtensions() {
         return Arrays
