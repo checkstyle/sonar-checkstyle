@@ -205,7 +205,7 @@ public class ChecksTest {
                             ((AbstractCheck) instance).getRequiredTokens()) + "]";
                 }
                 else {
-                    expectedTokenType = "s[" + CheckUtil.getTokenText(
+                    expectedTokenType = "s[" + CheckUtil.getJavadocTokenText(
                             ((AbstractJavadocCheck) instance).getAcceptableJavadocTokens(),
                             ((AbstractJavadocCheck) instance).getRequiredJavadocTokens()) + "]";
                 }

@@ -1933,7 +1933,7 @@
     <name><![CDATA[Non-Empty Atclause Description]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/NonEmptyAtclauseDescription]]></configKey>
-    <param key="javadocTokens" type="s[VARIABLE_DEF,INSTANCE_INIT,ARRAY_DECLARATOR,CTOR_DEF]">
+    <param key="javadocTokens" type="s[PARAM_LITERAL,RETURN_LITERAL,THROWS_LITERAL,DEPRECATED_LITERAL]">
       <defaultValue>PARAM_LITERAL,RETURN_LITERAL,THROWS_LITERAL,DEPRECATED_LITERAL</defaultValue>
     </param>
   </rule>
