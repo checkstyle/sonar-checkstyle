@@ -114,4 +114,22 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <!-- To be used during development. Run the command-->
+      <!-- mvn -Pno-validations install -->
+      <id>no-validations</id>
+      <properties>
+        <skipTests>true</skipTests>
+        <checkstyle.skip>true</checkstyle.skip>
+        <pmd.skip>true</pmd.skip>
+        <findbugs.skip>true</findbugs.skip>
+        <xml.skip>true</xml.skip>
+        <forbiddenapis.skip>true</forbiddenapis.skip>
+        <cobertura.skip>true</cobertura.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+      </properties>
+    </profile>
+  </profiles>
+
 </project>
