@@ -1693,8 +1693,8 @@
     <inspection_tool class="RedundantScopeBinding" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="RedundantStringFormatCall" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="RedundantSuppression" enabled="true" level="ERROR" enabled_by_default="true" />
-    <inspection_tool class="RedundantThrows" enabled="false" level="ERROR" enabled_by_default="true" />
-    <inspection_tool class="RedundantThrowsDeclaration" enabled="false" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="RedundantThrows" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="RedundantThrowsDeclaration" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="RedundantToBinding" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="RedundantToProviderBinding" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="RedundantTypeArguments" enabled="true" level="ERROR" enabled_by_default="true" />
@@ -2246,7 +2246,7 @@
         <option name="m_ignoreCatchBlocksWithComments" value="false" />
     </inspection_tool>
     <inspection_tool class="UnusedDefine" enabled="true" level="ERROR" enabled_by_default="true" />
-    <inspection_tool class="UnusedImport" enabled="false" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="UnusedImport" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="UnusedLabel" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UnusedMessageFormatParameter" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UnusedParameters" enabled="true" level="WARNING" enabled_by_default="true">
