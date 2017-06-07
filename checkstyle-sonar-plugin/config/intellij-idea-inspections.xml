@@ -2128,7 +2128,7 @@
     <inspection_tool class="TypeScriptUnresolvedFunction" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="TypeScriptUnresolvedVariable" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UNCHECKED_WARNING" enabled="true" level="ERROR" enabled_by_default="true" />
-    <inspection_tool class="UNUSED_IMPORT" enabled="false" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="UNUSED_IMPORT" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UnaryPlus" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UncheckedExceptionClass" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="UnclearBinaryExpression" enabled="false" level="ERROR" enabled_by_default="false" />
