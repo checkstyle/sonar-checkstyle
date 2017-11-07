@@ -94,10 +94,11 @@ public class CheckstyleConfiguration implements BatchExtension {
     }
 
     public File getTargetXmlReport() {
+        File result = null;
         if (conf.getBoolean(PROPERTY_GENERATE_XML)) {
-            return new File(fileSystem.workDir(), "checkstyle-result.xml");
+            result = new File(fileSystem.workDir(), "checkstyle-result.xml");
         }
-        return null;
+        return result;
     }
 
     public Configuration getCheckstyleConfiguration() throws CheckstyleException {

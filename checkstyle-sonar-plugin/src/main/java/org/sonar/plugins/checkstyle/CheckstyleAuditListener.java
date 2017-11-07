@@ -127,14 +127,16 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
 
     @VisibleForTesting
     static String getMessage(AuditEvent event) {
+        String result;
         try {
-            return event.getMessage();
+            result = event.getMessage();
 
         }
         catch (Exception ex) {
             LOG.warn("AuditEvent is created incorrectly. Exception happen during getMessage()", ex);
-            return null;
+            result = null;
         }
+        return result;
     }
 
     @VisibleForTesting

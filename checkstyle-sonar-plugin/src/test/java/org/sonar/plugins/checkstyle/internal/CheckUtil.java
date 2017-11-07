@@ -201,16 +201,18 @@ public final class CheckUtil {
      */
     public static String getCheckMessage(Class<?> module, String messageKey,
             Object... arguments) {
+        String result;
         final Properties pr = new Properties();
         try {
             pr.load(module.getResourceAsStream("messages.properties"));
+            final MessageFormat formatter =
+                    new MessageFormat(pr.getProperty(messageKey), Locale.ENGLISH);
+            result = formatter.format(arguments);
         }
         catch (IOException ex) {
-            return null;
+            result = null;
         }
-        final MessageFormat formatter =
-                new MessageFormat(pr.getProperty(messageKey), Locale.ENGLISH);
-        return formatter.format(arguments);
+        return result;
     }
 
     public static String getTokenText(int[] tokens, int... subtractions) {
