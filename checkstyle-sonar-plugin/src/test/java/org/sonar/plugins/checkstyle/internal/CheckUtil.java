@@ -201,7 +201,7 @@ public final class CheckUtil {
      */
     public static String getCheckMessage(Class<?> module, String messageKey,
             Object... arguments) {
-        String result = null;
+        String result;
         final Properties pr = new Properties();
         try {
             pr.load(module.getResourceAsStream("messages.properties"));

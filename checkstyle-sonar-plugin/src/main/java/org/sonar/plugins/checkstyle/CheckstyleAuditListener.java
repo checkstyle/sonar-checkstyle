@@ -127,7 +127,7 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
 
     @VisibleForTesting
     static String getMessage(AuditEvent event) {
-        String result = null;
+        String result;
         try {
             result = event.getMessage();
 
