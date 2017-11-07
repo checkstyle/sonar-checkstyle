@@ -154,12 +154,14 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
     @VisibleForTesting
     static boolean isFilter(String configKey) {
+        boolean result = false;
         for (String filter : FILTERS) {
             if (StringUtils.equals(configKey, filter)) {
-                return true;
+                result = true;
+                break;
             }
         }
-        return false;
+        return result;
     }
 
     private void processRule(RulesProfile profile, String path, String moduleName,
