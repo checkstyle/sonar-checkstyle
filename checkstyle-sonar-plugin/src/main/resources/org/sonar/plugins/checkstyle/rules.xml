@@ -1728,8 +1728,8 @@
     <param key="maxPublic" type="INTEGER">
       <defaultValue>100</defaultValue>
     </param>
-    <param key="tokens" type="s[CLASS_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF]">
-      <defaultValue>CLASS_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF</defaultValue>
+    <param key="tokens" type="s[CLASS_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF,ANNOTATION_DEF]">
+      <defaultValue>CLASS_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF,ANNOTATION_DEF</defaultValue>
     </param>
   </rule>
 
