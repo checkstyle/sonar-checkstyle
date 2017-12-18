@@ -526,6 +526,8 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Explicit Initialization]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ExplicitInitialization]]></configKey>
+    <param key="onlyObjectReferences" type="BOOLEAN">
+    </param>
     <status>READY</status>
   </rule>
 
@@ -633,6 +635,11 @@
     <name><![CDATA[Illegal Import]]></name>
     <configKey><![CDATA[Checker/TreeWalker/IllegalImport]]></configKey>
     <param key="illegalPkgs" type="s{}">
+    </param>
+    <param key="illegalClasses" type="s{}">
+    </param>
+    <param key="regexp" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <status>READY</status>
   </rule>
@@ -967,8 +974,8 @@
     <param key="format" type="REGULAR_EXPRESSION">
       <defaultValue>^[a-z][a-zA-Z0-9]*$</defaultValue>
     </param>
-    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF]">
-      <defaultValue>VARIABLE_DEF,PARAMETER_DEF</defaultValue>
+    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF,RESOURCE]">
+      <defaultValue>VARIABLE_DEF,PARAMETER_DEF,RESOURCE</defaultValue>
     </param>
     <status>READY</status>
   </rule>
@@ -1225,7 +1232,7 @@
     <param key="allowLineBreaks" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <param key="tokens" type="s[ARRAY_INIT,INC,DEC,UNARY_MINUS,UNARY_PLUS,BNOT,LNOT,DOT,TYPECAST,ARRAY_DECLARATOR,INDEX_OP,LITERAL_SYNCHRONIZED]">
+    <param key="tokens" type="s[ARRAY_INIT,INC,DEC,UNARY_MINUS,UNARY_PLUS,BNOT,LNOT,DOT,TYPECAST,ARRAY_DECLARATOR,INDEX_OP,LITERAL_SYNCHRONIZED,METHOD_REF]">
       <defaultValue>ARRAY_INIT,INC,DEC,UNARY_MINUS,UNARY_PLUS,BNOT,LNOT,DOT,ARRAY_DECLARATOR,INDEX_OP</defaultValue>
     </param>
   </rule>
