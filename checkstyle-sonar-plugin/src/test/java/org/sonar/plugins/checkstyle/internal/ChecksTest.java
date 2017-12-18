@@ -97,7 +97,7 @@ public class ChecksTest {
             throws ParserConfigurationException, IOException {
         final File rulesFile = new File(RULES_PATH);
 
-        Assert.assertTrue("'rules.xml' must exist", rulesFile.exists());
+        Assert.assertTrue(RULES_PATH + " must exist", rulesFile.exists());
 
         final String input = new String(Files.readAllBytes(rulesFile.toPath()), UTF_8);
 
@@ -117,7 +117,8 @@ public class ChecksTest {
 
             final Class<?> module = findModule(modules, key);
 
-            Assert.assertNotNull("Unknown class found in sonar rules: " + key, module);
+            Assert.assertNotNull("Unknown class found in sonar rules"
+                    + " (" + RULES_PATH + ")" + " :" + key, module);
 
             if (CheckUtil.isFilterModule(module)) {
                 Assert.fail("Module should not be in sonar rules: " + module.getCanonicalName());
@@ -129,8 +130,10 @@ public class ChecksTest {
             final String moduleSimpleName = module.getSimpleName();
             final Node name = XmlUtil.findElementByTag(children, "name");
 
-            Assert.assertNotNull(moduleName + " requires a name in sonar rules", name);
-            Assert.assertFalse(moduleName + " requires a name in sonar rules", name
+            Assert.assertNotNull(moduleName + " requires a name in sonar rules"
+                    + " (" + RULES_PATH + ")", name);
+            Assert.assertFalse(moduleName + " requires a name in sonar rules"
+                    + " (" + RULES_PATH + ")", name
                     .getTextContent().isEmpty());
 
             final Node configKey = XmlUtil.findElementByTag(children, "configKey");
@@ -145,8 +148,10 @@ public class ChecksTest {
             }
 
             Assert.assertNotNull(moduleName
-                    + " requires a configKey in sonar rules", configKey);
-            Assert.assertEquals(moduleName + " requires a valid configKey in sonar rules",
+                    + " requires a configKey in sonar rules"
+                    + " (" + RULES_PATH + ")", configKey);
+            Assert.assertEquals(moduleName + " requires a valid configKey in sonar rules"
+                            + " (" + RULES_PATH + ")",
                     expectedConfigKey, configKey.getTextContent());
 
             validateSonarRuleProperties(module, XmlUtil.findElementsByTag(children, "param"));
@@ -178,23 +183,24 @@ public class ChecksTest {
             final Node paramKeyNode = attributes.getNamedItem("key");
 
             Assert.assertNotNull(moduleName
-                    + " requires a key for unknown parameter in sonar rules", paramKeyNode);
+                    + " requires a key for unknown parameter in sonar rules"
+                    + " (" + RULES_PATH + ")", paramKeyNode);
 
             final String paramKey = paramKeyNode.getTextContent();
 
             Assert.assertFalse(moduleName
-                    + " requires a valid key for unknown parameter in sonar rules",
+                    + " requires a valid key for unknown parameter in sonar rules"
+                            + " (" + RULES_PATH + ")",
                     paramKey.isEmpty());
 
-            Assert.assertTrue(moduleName + " has an unknown parameter in sonar rules: "
-                            + paramKey, properties.remove(paramKey));
+            Assert.assertTrue(moduleName + " has an unknown parameter in sonar rules"
+                    + " (" + RULES_PATH + ")" + ": " + paramKey, properties.remove(paramKey));
 
             final Node typeNode = parameter.getAttributes().getNamedItem("type");
 
-            Assert.assertNotNull(moduleName + " has no parameter type in sonar rules: " + paramKey,
+            Assert.assertNotNull(moduleName + " has no parameter type in sonar rules"
+                            + " (" + RULES_PATH + ")" + ": " + paramKey,
                     typeNode);
-
-            final String type = typeNode.getTextContent();
 
             if ("tokens".equals(paramKey) || "javadocTokens".equals(paramKey)) {
                 String expectedTokenType;
@@ -218,6 +224,7 @@ public class ChecksTest {
                     expectedTokenType = "STRING";
                 }
 
+                final String type = typeNode.getTextContent();
                 Assert.assertEquals(moduleName + " has the parameter '" + paramKey
                         + "' in sonar rules with the incorrect type", expectedTokenType, type);
 
@@ -246,7 +253,8 @@ public class ChecksTest {
         }
 
         for (String property : properties) {
-            Assert.fail(moduleName + " parameter not found in sonar rules: " + property);
+            Assert.fail(moduleName + " parameter not found in sonar rules"
+                    + " (" + RULES_PATH + ")" + ": " + property);
         }
     }
 
@@ -294,11 +302,13 @@ public class ChecksTest {
 
             final Class<?> module = findModule(modules, moduleName);
 
-            Assert.assertNotNull("Unknown class found in sonar properties: " + moduleName,
+            Assert.assertNotNull("Unknown class found in sonar properties"
+                    + " (" + MODULE_PROPERTIES_PATH + ")" + ": " + moduleName,
                     module);
 
             if (CheckUtil.isFilterModule(module)) {
-                Assert.fail("Module should not be in sonar properties: "
+                Assert.fail("Module should not be in sonar properties"
+                        + " (" + MODULE_PROPERTIES_PATH + ")" + ": "
                         + module.getCanonicalName());
             }
 
@@ -309,7 +319,8 @@ public class ChecksTest {
                 if (moduleProperties != null) {
                     for (String property : moduleProperties) {
                         Assert.fail(lastModule.getCanonicalName()
-                                + " property not found in sonar properties: " + property);
+                                + " property not found in sonar properties"
+                                + " (" + MODULE_PROPERTIES_PATH + ")" + ": " + property);
                     }
                 }
 
@@ -329,7 +340,8 @@ public class ChecksTest {
         for (Class<?> module : modules) {
             if (!UNDOCUMENTED_MODULES.contains(module) && !CheckUtil.isFilterModule(module)
                     && !CheckUtil.isFileFilterModule(module)) {
-                Assert.fail("Module not found in sonar properties: " + module.getCanonicalName());
+                Assert.fail("Module not found in sonar properties"
+                        + " (" + MODULE_PROPERTIES_PATH + ")" + ": " + module.getCanonicalName());
             }
         }
     }
@@ -339,7 +351,8 @@ public class ChecksTest {
         final String moduleName = module.getName();
         final String propertyName = keyName.substring(keyName.indexOf(".param.") + 7);
 
-        Assert.assertTrue(moduleName + " has an unknown property in sonar properties: "
+        Assert.assertTrue(moduleName + " has an unknown property in sonar properties"
+                + " (" + MODULE_PROPERTIES_PATH + ")" + ": "
                 + propertyName, moduleProperties.remove(propertyName));
     }
 
