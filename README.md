@@ -14,6 +14,7 @@ This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforg
 
 Checkstyle Plugin|Sonar|Checkstyle|Jdk
 -----------------|-----|----------|---
+3.8|5.6.6|7.8.2|1.8
 3.7|5.6.6|7.7|1.8
 3.6.1|5.6.6|7.6.1|1.8
 3.6|5.6.4|7.6|1.8
@@ -55,8 +56,8 @@ In the quality profile, activate some rules from Checkstyle and run an analysis 
 [teamcity]:https://teamcity.jetbrains.com/viewType.html?buildTypeId=Checkstyle_SonarCheckstyleIdeaInspectionsMaster
 [teamcity img]:https://img.shields.io/teamcity/http/teamcity.jetbrains.com/s/Checkstyle_SonarCheckstyleIdeaInspectionsMaster.svg?label=TeamCity%20inspections
 
-[sonar]:https://sonarqube.com/dashboard/index/com.github.checkstyle:checkstyle-sonar-plugin-parent
-[sonar img]:https://sonarqube.com/api/badges/measure?key=com.github.checkstyle:checkstyle-sonar-plugin-parent&metric=sqale_debt_ratio
+[sonar]:https://sonarcloud.io/dashboard?id=com.github.checkstyle%3Acheckstyle-sonar-plugin-parent
+[sonar img]:https://sonarcloud.io/api/badges/measure?key=com.github.checkstyle:checkstyle-sonar-plugin-parent&metric=sqale_debt_ratio
 
 [wercker]: https://app.wercker.com/project/bykey/ece513d8a6eb70207dd3b805b63e8d1c
 [wercker img]: https://app.wercker.com/status/ece513d8a6eb70207dd3b805b63e8d1c/s/master
