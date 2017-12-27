@@ -26,11 +26,14 @@ public final class CheckstyleConstants {
     public static final String PLUGIN_NAME = REPOSITORY_NAME;
     public static final String REPOSITORY_KEY = PLUGIN_KEY;
 
-    public static final String FILTERS_KEY = "sonar.checkstyle.filters";
+    public static final String CHECKER_FILTERS_KEY = "sonar.checkstyle.filters";
+    public static final String TREEWALKER_FILTERS_KEY = "sonar.checkstyle.treewalkerfilters";
 
-    public static final String FILTERS_DEFAULT_VALUE =
-            "<module name=\"SuppressionCommentFilter\" />"
-            + "<module name=\"SuppressWarningsFilter\" />";
+    public static final String CHECKER_FILTERS_DEFAULT_VALUE =
+            "<module name=\"SuppressWarningsFilter\" />";
+
+    public static final String TREEWALKER_FILTERS_DEFAULT_VALUE =
+            "<module name=\"SuppressionCommentFilter\" />";
 
     public static final String JAVA_KEY = "java";
 

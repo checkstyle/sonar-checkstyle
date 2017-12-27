@@ -143,8 +143,8 @@ public class CheckstyleProfileExporterTest {
     }
 
     @Test
-    public void addCustomFilters() {
-        settings.setProperty(CheckstyleConstants.FILTERS_KEY,
+    public void addCustomCheckerFilters() {
+        settings.setProperty(CheckstyleConstants.CHECKER_FILTERS_KEY,
                 "<module name=\"SuppressionCommentFilter\">"
                         + "<property name=\"offCommentFormat\" value=\"BEGIN GENERATED CODE\"/>"
                         + "<property name=\"onCommentFormat\" value=\"END GENERATED CODE\"/>"
@@ -161,6 +161,20 @@ public class CheckstyleProfileExporterTest {
         CheckstyleTestUtils.assertSimilarXmlWithResource(
                 "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
                         + "addCustomFilters.xml", sanitizeForTests(writer.toString()));
+    }
+
+    @Test
+    public void addCustomTreewalkerFilters() {
+        settings.setProperty(CheckstyleConstants.TREEWALKER_FILTERS_KEY,
+                "<module name=\"SuppressWithNearbyCommentFilter\"/>");
+
+        final RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final StringWriter writer = new StringWriter();
+        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
+
+        CheckstyleTestUtils.assertSimilarXmlWithResource(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+                        + "addCustomTreewalkerFilters.xml", sanitizeForTests(writer.toString()));
     }
 
     private static String sanitizeForTests(String xml) {

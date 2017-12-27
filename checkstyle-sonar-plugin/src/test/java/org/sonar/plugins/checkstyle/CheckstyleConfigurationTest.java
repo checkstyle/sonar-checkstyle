@@ -100,8 +100,8 @@ public class CheckstyleConfigurationTest {
         fileSystem.setEncoding(StandardCharsets.UTF_8);
         final Settings settings = new Settings(new PropertyDefinitions(
                 new CheckstylePlugin().getExtensions()));
-        settings.setProperty(CheckstyleConstants.FILTERS_KEY,
-                CheckstyleConstants.FILTERS_DEFAULT_VALUE);
+        settings.setProperty(CheckstyleConstants.CHECKER_FILTERS_KEY,
+                CheckstyleConstants.CHECKER_FILTERS_DEFAULT_VALUE);
 
         final RulesProfile profile = RulesProfile.create("sonar way", "java");
 

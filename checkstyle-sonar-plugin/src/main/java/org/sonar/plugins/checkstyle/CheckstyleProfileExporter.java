@@ -87,7 +87,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
 
     private void appendCustomFilters(Writer writer) throws IOException {
-        final String filtersXml = settings.getString(CheckstyleConstants.FILTERS_KEY);
+        final String filtersXml = settings.getString(CheckstyleConstants.CHECKER_FILTERS_KEY);
         if (StringUtils.isNotBlank(filtersXml)) {
             writer.append(filtersXml);
         }
@@ -123,11 +123,16 @@ public class CheckstyleProfileExporter extends ProfileExporter {
                 }
             }
         }
+        // append Treewalker filters
+        final String filtersXml = settings.getString(CheckstyleConstants.TREEWALKER_FILTERS_KEY);
+        if (StringUtils.isNotBlank(filtersXml)) {
+            writer.append(filtersXml);
+        }
         writer.append(CLOSE_MODULE);
     }
 
     private boolean isSuppressWarningsEnabled() {
-        final String filtersXml = settings.getString(CheckstyleConstants.FILTERS_KEY);
+        final String filtersXml = settings.getString(CheckstyleConstants.CHECKER_FILTERS_KEY);
         boolean result = false;
         if (filtersXml != null) {
             result = filtersXml.contains("<module name=\"SuppressWarningsFilter\" />");

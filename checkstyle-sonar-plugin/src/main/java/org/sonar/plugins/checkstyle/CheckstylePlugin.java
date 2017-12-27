@@ -32,30 +32,51 @@ public final class CheckstylePlugin extends SonarPlugin {
 
     private static final String CHECKSTYLE_SUB_CATEGORY_NAME = "Checkstyle";
 
-    private static final String CHECKER_FILTERS_DESCRIPTION = "Checkstyle supports"
-            + " <a href=\"http://checkstyle.sourceforge.net/config_filefilters.html\">file filter"
-            + "</a> and several "
-            + "<a href=\"http://checkstyle.sourceforge.net/config_filters.html\">"
-            + "violation filtering mechanisms</a>: "
-            + "This property allows the configuration of those filters with a "
+    private static final String FILTERS_DESCRIPTION_HEADER = "Checkstyle supports";
+    private static final String FILTERS_DESCRIPTION_FOOTER = "This property"
+            + " allows the configuration of those filters with a "
             + "native XML format. See the "
             + "<a href='http://checkstyle.sourceforge.net/config.html'>"
             + "Checkstyle</a> "
             + "configuration for more information.";
 
+    private static final String CHECKER_FILTERS_DESCRIPTION = FILTERS_DESCRIPTION_HEADER
+            + " <a href=\"http://checkstyle.sourceforge.net/config_filefilters.html\">file filter"
+            + "</a> and several "
+            + "<a href=\"http://checkstyle.sourceforge.net/config_filters.html\">"
+            + "violation filtering mechanisms</a>: "
+            + FILTERS_DESCRIPTION_FOOTER;
+
+    private static final String TREEWALKER_FILTERS_DESCRIPTION = FILTERS_DESCRIPTION_HEADER
+            + " <a href=\"http://checkstyle.sourceforge.net/config_filters.html"
+            + "#SuppressWithNearbyCommentFilter\">"
+            + "SuppressWithNearbyCommentFilter"
+            + "</a> and "
+            + " <a href=\"http://checkstyle.sourceforge.net/config_filters.html"
+            + "#SuppressionCommentFilter\">"
+            + "SuppressionCommentFilter</a>: "
+            + FILTERS_DESCRIPTION_FOOTER;
+
     @SuppressWarnings("rawtypes")
     @Override
     public List getExtensions() {
         return Arrays
-                .asList(PropertyDefinition
-                        .builder(CheckstyleConstants.FILTERS_KEY)
-                        .defaultValue(CheckstyleConstants.FILTERS_DEFAULT_VALUE)
-                        .category(CoreProperties.CATEGORY_JAVA)
-                        .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
-                        .name("Filters")
-                        .description(CHECKER_FILTERS_DESCRIPTION)
-                        .type(PropertyType.TEXT)
-                        .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE).build(),
+                .asList(PropertyDefinition.builder(CheckstyleConstants.CHECKER_FILTERS_KEY)
+                                .defaultValue(CheckstyleConstants.CHECKER_FILTERS_DEFAULT_VALUE)
+                                .category(CoreProperties.CATEGORY_JAVA)
+                                .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
+                                .name("Checker Filters")
+                                .description(CHECKER_FILTERS_DESCRIPTION)
+                                .type(PropertyType.TEXT)
+                                .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE).build(),
+                        PropertyDefinition.builder(CheckstyleConstants.TREEWALKER_FILTERS_KEY)
+                                .defaultValue(CheckstyleConstants.TREEWALKER_FILTERS_DEFAULT_VALUE)
+                                .category(CoreProperties.CATEGORY_JAVA)
+                                .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
+                                .name("Treewalker Filters")
+                                .description(TREEWALKER_FILTERS_DESCRIPTION)
+                                .type(PropertyType.TEXT)
+                                .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE).build(),
                         PropertyDefinition.builder(CheckstyleConfiguration.PROPERTY_GENERATE_XML)
                                 .defaultValue("false").category(CoreProperties.CATEGORY_JAVA)
                                 .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)

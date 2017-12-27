@@ -15,7 +15,9 @@
 
     <!-- parsing of xml imply reference attribute names, does not make sense to move all to special variables -->
     <suppress checks="MultipleStringLiteralsExtended" files="CheckstyleProfileImporter\.java"/>
-    
+    <!-- till https://github.com/checkstyle/sonar-checkstyle/issues/135 -->
+    <suppress checks="MultipleStringLiteralsExtended" files="CheckstylePlugin\.java"/>
+
     <!-- Tone down the checking for test code -->
     <suppress checks="MultipleStringLiteralsExtended" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="ForbidCCommentsInMethods" files=".*[\\/]src[\\/]test[\\/]"/>
