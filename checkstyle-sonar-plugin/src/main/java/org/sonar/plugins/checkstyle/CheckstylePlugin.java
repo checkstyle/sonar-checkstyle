@@ -32,6 +32,17 @@ public final class CheckstylePlugin extends SonarPlugin {
 
     private static final String CHECKSTYLE_SUB_CATEGORY_NAME = "Checkstyle";
 
+    private static final String CHECKER_FILTERS_DESCRIPTION = "Checkstyle supports"
+            + " <a href=\"http://checkstyle.sourceforge.net/config_filefilters.html\">file filter"
+            + "</a> and several "
+            + "<a href=\"http://checkstyle.sourceforge.net/config_filters.html\">"
+            + "violation filtering mechanisms</a>: "
+            + "This property allows the configuration of those filters with a "
+            + "native XML format. See the "
+            + "<a href='http://checkstyle.sourceforge.net/config.html'>"
+            + "Checkstyle</a> "
+            + "configuration for more information.";
+
     @SuppressWarnings("rawtypes")
     @Override
     public List getExtensions() {
@@ -42,17 +53,7 @@ public final class CheckstylePlugin extends SonarPlugin {
                         .category(CoreProperties.CATEGORY_JAVA)
                         .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
                         .name("Filters")
-                        .description(
-                            "Checkstyle supports four error filtering mechanisms: "
-                                + "<code>SuppressionCommentFilter</code>, "
-                                + "<code>SuppressWithNearbyCommentFilter</code>, "
-                                + "<code>SuppressionFilter</code>,"
-                                + " and <code>SuppressWarningsFilter</code>."
-                                + "This property allows the configuration of those filters with a "
-                                + "native XML format. See the "
-                                + "<a href='http://checkstyle.sourceforge.net/config.html'>"
-                                + "Checkstyle</a> "
-                                + "configuration for more information.")
+                        .description(CHECKER_FILTERS_DESCRIPTION)
                         .type(PropertyType.TEXT)
                         .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE).build(),
                         PropertyDefinition.builder(CheckstyleConfiguration.PROPERTY_GENERATE_XML)
