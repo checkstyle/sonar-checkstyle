@@ -88,9 +88,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
 
     private void appendCustomFilters(Writer writer) throws IOException {
         final String filtersXml = settings.getString(CheckstyleConstants.CHECKER_FILTERS_KEY);
-        if (StringUtils.isNotBlank(filtersXml)) {
-            writer.append(filtersXml);
-        }
+        writer.append(filtersXml);
     }
 
     private static void appendCheckerModules(Writer writer,
@@ -125,9 +123,8 @@ public class CheckstyleProfileExporter extends ProfileExporter {
         }
         // append Treewalker filters
         final String filtersXml = settings.getString(CheckstyleConstants.TREEWALKER_FILTERS_KEY);
-        if (StringUtils.isNotBlank(filtersXml)) {
-            writer.append(filtersXml);
-        }
+        writer.append(filtersXml);
+
         writer.append(CLOSE_MODULE);
     }
 
