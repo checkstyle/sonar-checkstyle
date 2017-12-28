@@ -12,7 +12,6 @@
     </module>
 
     <module name="TreeWalker">
-        <module name="FileContentsHolder"/>
         <module name="SuppressionCommentFilter"/>
     </module>
 </module>

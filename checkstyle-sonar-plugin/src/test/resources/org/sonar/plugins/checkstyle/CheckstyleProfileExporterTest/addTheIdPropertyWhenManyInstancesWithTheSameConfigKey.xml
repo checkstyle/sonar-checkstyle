@@ -10,7 +10,6 @@
         <property name="severity" value="error" />
     </module>
     <module name="TreeWalker">
-        <module name="FileContentsHolder"/>
         <module name="SuppressWarningsHolder"/>
         <module name="SuppressionCommentFilter"/>
     </module>

@@ -94,7 +94,7 @@
       <groupId>xmlunit</groupId>
       <artifactId>xmlunit</artifactId>
       <scope>test</scope>
-      <version>1.4</version>
+      <version>1.6</version>
     </dependency>
     <!--
     We need following dependency, otherwise we will receive
@@ -308,7 +308,7 @@
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleProfileImporter</pattern>
-                <branchRate>97</branchRate>
+                <branchRate>96</branchRate>
                 <lineRate>100</lineRate>
               </regex>
               <regex>
@@ -376,7 +376,7 @@
             <configuration>
               <rules>
                 <requireFilesSize>
-                  <maxsize>10000000</maxsize>
+                  <maxsize>20000000</maxsize>
                   <minsize>5000000</minsize>
                   <files>
                     <file>${project.build.directory}/${project.build.finalName}.jar</file>

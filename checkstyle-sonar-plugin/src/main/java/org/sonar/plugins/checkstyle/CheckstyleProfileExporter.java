@@ -107,7 +107,6 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     private void appendTreeWalker(Writer writer,
             Map<String, List<ActiveRule>> activeRulesByConfigKey) throws IOException {
         writer.append("<module name=\"TreeWalker\">");
-        writer.append("<module name=\"FileContentsHolder\"/> ");
         if (isSuppressWarningsEnabled()) {
             writer.append("<module name=\"SuppressWarningsHolder\"/> ");
         }

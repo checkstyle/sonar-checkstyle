@@ -7,7 +7,6 @@
     </module>
     <module name="TreeWalker">
         <module name="SuppressionCommentFilter"/>
-        <module name="FileContentsHolder"/>
         <module name="EmptyStatement">
             <property name="severity" value="info"/>
         </module>

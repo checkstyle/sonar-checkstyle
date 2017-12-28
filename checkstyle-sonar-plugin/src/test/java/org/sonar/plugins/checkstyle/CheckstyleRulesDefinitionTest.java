@@ -41,8 +41,7 @@ public class CheckstyleRulesDefinitionTest {
             "com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck",
             "com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheck",
             "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck",
-            "com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder",
-            "com.puppycrawl.tools.checkstyle.checks.FileContentsHolder"
+            "com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder"
     );
 
     @Test

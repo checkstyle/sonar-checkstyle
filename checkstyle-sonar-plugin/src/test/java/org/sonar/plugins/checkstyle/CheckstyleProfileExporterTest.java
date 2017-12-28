@@ -22,6 +22,7 @@ package org.sonar.plugins.checkstyle;
 import java.io.StringWriter;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.config.PropertyDefinitions;
@@ -38,10 +39,17 @@ public class CheckstyleProfileExporterTest {
     @Before
     public void prepare() {
         settings = new Settings(new PropertyDefinitions(new CheckstylePlugin().getExtensions()));
+        System.setProperty("javax.xml.transform.TransformerFactory",
+                "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
+    }
+
+    @After
+    public void tearDown() {
+        System.setProperty("javax.xml.transform.TransformerFactory", "");
     }
 
     @Test
-    public void alwaysSetFileContentsHolderAndSuppressionCommentFilter() {
+    public void alwaysSetSuppressionCommentFilter() {
         final RulesProfile profile = RulesProfile.create("sonar way", "java");
 
         final StringWriter writer = new StringWriter();
@@ -49,7 +57,7 @@ public class CheckstyleProfileExporterTest {
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
                 "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
-                        + "alwaysSetFileContentsHolderAndSuppressionCommentFilter.xml",
+                        + "alwaysSetSuppressionCommentFilter.xml",
                 sanitizeForTests(writer.toString()));
     }
 

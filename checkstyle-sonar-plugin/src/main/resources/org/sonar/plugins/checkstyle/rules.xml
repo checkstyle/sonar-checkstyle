@@ -939,9 +939,6 @@
     <param key="option" type="s[eol,nl,nlow]">
       <defaultValue>eol</defaultValue>
     </param>
-    <param key="maxLineLength" type="INTEGER">
-      <defaultValue>80</defaultValue>
-    </param>
     <param key="ignoreEnums" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
@@ -1579,8 +1576,8 @@
     <priority>MINOR</priority>
     <name><![CDATA[Unnecessary Parentheses]]></name>
     <configKey><![CDATA[Checker/TreeWalker/UnnecessaryParentheses]]></configKey>
-    <param key="tokens" type="s[EXPR,IDENT,NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,STRING_LITERAL,LITERAL_NULL,LITERAL_FALSE,LITERAL_TRUE,ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN]">
-      <defaultValue>EXPR,IDENT,NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,STRING_LITERAL,LITERAL_NULL,LITERAL_FALSE,LITERAL_TRUE,ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN</defaultValue>
+    <param key="tokens" type="s[EXPR,IDENT,NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,STRING_LITERAL,LITERAL_NULL,LITERAL_FALSE,LITERAL_TRUE,ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN,LAMBDA]">
+      <defaultValue>EXPR,IDENT,NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG,STRING_LITERAL,LITERAL_NULL,LITERAL_FALSE,LITERAL_TRUE,ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN,LAMBDA</defaultValue>
     </param>
     <status>READY</status>
   </rule>
@@ -1600,6 +1597,16 @@
     <name><![CDATA[Upper Ell]]></name>
     <configKey><![CDATA[Checker/TreeWalker/UpperEll]]></configKey>
     <status>READY</status>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationOnSameLineCheck">
+    <priority>MINOR</priority>
+    <name><![CDATA[Upper Ell]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/AnnotationOnSameLine]]></configKey>
+    <status>READY</status>
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF,PARAMETER_DEF,ANNOTATION_DEF,TYPECAST,LITERAL_THROWS,IMPLEMENTS_CLAUSE,TYPE_ARGUMENT,LITERAL_NEW,DOT,ANNOTATION_FIELD_DEF]">
+      <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck">
@@ -2015,12 +2022,6 @@
     <param key="tokens" type="s[SINGLE_LINE_COMMENT,BLOCK_COMMENT_BEGIN]">
       <defaultValue>SINGLE_LINE_COMMENT,BLOCK_COMMENT_BEGIN</defaultValue>
     </param>
-  </rule>
-
-  <rule key="com.puppycrawl.tools.checkstyle.checks.FileContentsHolder">
-    <priority>MINOR</priority>
-    <name><![CDATA[File Contents Holder]]></name>
-    <configKey><![CDATA[Checker/TreeWalker/FileContentsHolder]]></configKey>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.whitespace.SeparatorWrapCheck">

@@ -171,10 +171,7 @@ public class CheckstyleProfileImporterTest {
 
         assertNull(profile.getActiveRuleByConfigKey("checkstyle",
                 "Checker/SuppressionCommentFilter"));
-        assertNull(profile.getActiveRuleByConfigKey("checkstyle",
-                "Checker/TreeWalker/FileContentsHolder"));
         assertThat(profile.getActiveRules().size()).isEqualTo(2);
-        // no warning for FileContentsHolder
         assertThat(messages.getWarnings().size()).isEqualTo(5);
     }
 

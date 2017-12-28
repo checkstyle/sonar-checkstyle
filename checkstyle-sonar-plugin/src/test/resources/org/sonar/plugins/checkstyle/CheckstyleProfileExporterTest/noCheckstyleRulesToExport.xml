@@ -3,7 +3,6 @@
 <module name="Checker">
     <module name="SuppressWarningsFilter" />
     <module name="TreeWalker">
-        <module name="FileContentsHolder"/>
         <module name="SuppressWarningsHolder"/>
         <module name="SuppressionCommentFilter"/>
     </module>

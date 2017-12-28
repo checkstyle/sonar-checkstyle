@@ -148,8 +148,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
 
     @VisibleForTesting
     static boolean isIgnored(String configKey) {
-        return StringUtils.equals(configKey, "FileContentsHolder")
-                || StringUtils.equals(configKey, "SuppressWarningsHolder");
+        return StringUtils.equals(configKey, "SuppressWarningsHolder");
     }
 
     @VisibleForTesting
