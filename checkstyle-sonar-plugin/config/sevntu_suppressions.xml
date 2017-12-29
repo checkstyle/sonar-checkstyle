@@ -10,6 +10,7 @@
     <suppress checks="ForbidAnnotation" files=".*[\\/]src[\\/]main[\\/]"/>
 
     <suppress checks="ForbidAnnotation" files=".*[\\/]src[\\/]test[\\/]"/>
+    <suppress checks="AvoidModifiersForTypes" files=".*[\\/]src[\\/]main[\\/]"/>
     <!-- END of legacy code -->
 
 
@@ -17,6 +18,7 @@
     <suppress checks="MultipleStringLiteralsExtended" files="CheckstyleProfileImporter\.java"/>
     <!-- till https://github.com/checkstyle/sonar-checkstyle/issues/135 -->
     <suppress checks="MultipleStringLiteralsExtended" files="CheckstylePlugin\.java"/>
+
 
     <!-- Tone down the checking for test code -->
     <suppress checks="MultipleStringLiteralsExtended" files=".*[\\/]src[\\/]test[\\/]"/>
