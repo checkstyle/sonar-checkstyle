@@ -197,7 +197,6 @@
               <goal>check</goal>
             </goals>
             <configuration>
-              <skip>true</skip>
               <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_sevntu_checks.xml</configLocation>
               <failOnViolation>true</failOnViolation>
               <includeResources>false</includeResources>
