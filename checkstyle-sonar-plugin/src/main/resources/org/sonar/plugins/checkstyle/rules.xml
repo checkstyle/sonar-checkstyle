@@ -2028,6 +2028,7 @@
     <priority>MINOR</priority>
     <name><![CDATA[Separator Wrap]]></name>
     <configKey><![CDATA[Checker/TreeWalker/SeparatorWrap]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
     <param key="option" type="s[eol,nl]">
       <defaultValue>eol</defaultValue>
     </param>
