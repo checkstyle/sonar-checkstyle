@@ -66,7 +66,7 @@ In the quality profile, activate some rules from Checkstyle and run an analysis 
 [teamcity img]:https://img.shields.io/teamcity/http/teamcity.jetbrains.com/s/Checkstyle_SonarCheckstyleIdeaInspectionsMaster.svg?label=TeamCity%20inspections
 
 [sonar]:https://sonarcloud.io/dashboard?id=com.github.checkstyle%3Acheckstyle-sonar-plugin-parent
-[sonar img]:https://sonarcloud.io/api/badges/measure?key=com.github.checkstyle:checkstyle-sonar-plugin-parent&metric=sqale_debt_ratio
+[sonar img]:https://sonarcloud.io/images/project_badges/sonarcloud-white.svg
 
 [wercker]: https://app.wercker.com/project/bykey/ece513d8a6eb70207dd3b805b63e8d1c
 [wercker img]: https://app.wercker.com/status/ece513d8a6eb70207dd3b805b63e8d1c/s/master
