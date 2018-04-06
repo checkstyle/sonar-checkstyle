@@ -5,7 +5,7 @@ set -euo pipefail
 case "$TEST" in
 
 ci)
-  mvn clean verify -B -e -V
+  mvn -e clean install
   ;;
 
 sonar)
