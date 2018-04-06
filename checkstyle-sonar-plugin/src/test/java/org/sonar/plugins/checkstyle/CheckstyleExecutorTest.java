@@ -131,7 +131,7 @@ public class CheckstyleExecutorTest {
                     createJavaResourceLocator());
             executor.execute();
 
-            Assert.assertTrue(report.exists());
+            Assert.assertTrue("Report should exists", report.exists());
 
             final String reportContents = FileUtils.readFileToString(report);
             assertThat(reportContents).contains("<error");
@@ -155,7 +155,7 @@ public class CheckstyleExecutorTest {
                 createJavaResourceLocator());
         executor.execute();
 
-        Assert.assertFalse(report.exists());
+        Assert.assertFalse("Report should NOT exists", report.exists());
     }
 
     @Test
