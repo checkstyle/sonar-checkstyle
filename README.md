@@ -3,6 +3,9 @@
 [![][teamcity img]][teamcity]
 [![][sonar img]][sonar]
 
+[![checkstyle-all vulnerabilities][snyk-cs-all img]][snyk-cs-all]
+[![sonar-checkstyle vulnerabilities][snyk-sonar img]][snyk-sonar]
+
 Sonar Checkstyle
 ==========
 
@@ -72,3 +75,9 @@ In the quality profile, activate some rules from Checkstyle and run an analysis 
 
 [wercker]: https://app.wercker.com/project/bykey/ece513d8a6eb70207dd3b805b63e8d1c
 [wercker img]: https://app.wercker.com/status/ece513d8a6eb70207dd3b805b63e8d1c/s/master
+
+[snyk-cs-all]: https://snyk.io/test/github/checkstyle/sonar-checkstyle?targetFile=checkstyle-all/pom.xml
+[snyk-cs-all img]: https://snyk.io/test/github/checkstyle/sonar-checkstyle/badge.svg?targetFile=checkstyle-all/pom.xml
+
+[snyk-sonar]: https://snyk.io/test/github/checkstyle/sonar-checkstyle?targetFile=checkstyle-sonar-plugin/pom.xml
+[snyk-sonar img]: https://snyk.io/test/github/checkstyle/sonar-checkstyle/badge.svg?targetFile=checkstyle-sonar-plugin/pom.xml
