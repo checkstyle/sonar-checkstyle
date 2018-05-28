@@ -4,7 +4,7 @@
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin-parent</artifactId>
-  <version>4.10.2-SNAPSHOT</version>
+  <version>4.11-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Checkstyle SonarQube plugin</name>
