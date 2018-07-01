@@ -39,8 +39,8 @@ import com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck;
 import com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck;
 import com.puppycrawl.tools.checkstyle.guava.collect.ImmutableSet;
 import com.puppycrawl.tools.checkstyle.guava.reflect.ClassPath;
-import com.puppycrawl.tools.checkstyle.utils.JavadocUtils;
-import com.puppycrawl.tools.checkstyle.utils.TokenUtils;
+import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 public final class CheckUtil {
     private CheckUtil() {
@@ -240,7 +240,7 @@ public final class CheckUtil {
                 result.append(',');
             }
 
-            result.append(TokenUtils.getTokenName(token));
+            result.append(TokenUtil.getTokenName(token));
         }
 
         return result.toString();
@@ -271,7 +271,7 @@ public final class CheckUtil {
                 result.append(',');
             }
 
-            result.append(JavadocUtils.getTokenName(token));
+            result.append(JavadocUtil.getTokenName(token));
         }
 
         return result.toString();
