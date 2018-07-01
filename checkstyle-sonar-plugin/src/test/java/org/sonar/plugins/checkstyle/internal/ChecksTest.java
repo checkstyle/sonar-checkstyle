@@ -395,7 +395,9 @@ public class ChecksTest {
 
         // remove undocumented properties
         new HashSet<>(properties).stream()
-            .filter(p -> UNDOCUMENTED_PROPERTIES.contains(clss.getSimpleName() + "." + p))
+            .filter(property -> {
+                return UNDOCUMENTED_PROPERTIES.contains(clss.getSimpleName() + "." + property);
+            })
             .forEach(properties::remove);
 
         if (AbstractCheck.class.isAssignableFrom(clss)) {

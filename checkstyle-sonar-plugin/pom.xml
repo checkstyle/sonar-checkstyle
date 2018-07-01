@@ -17,6 +17,10 @@
   <properties>
     <maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
     <maven.sevntu.checkstyle.plugin.version>1.29.0</maven.sevntu.checkstyle.plugin.version>
+    <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
+    <maven.sevntu.checkstyle.plugin.checkstyle.version>
+      8.10
+    </maven.sevntu.checkstyle.plugin.checkstyle.version>
   </properties>
 
   <dependencies>
@@ -166,7 +170,7 @@
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>${checkstyle.version}</version>
+            <version>${maven.sevntu.checkstyle.plugin.checkstyle.version}</version>
           </dependency>
           <dependency>
             <groupId>com.github.sevntu-checkstyle</groupId>
@@ -182,7 +186,7 @@
               <goal>check</goal>
             </goals>
             <configuration>
-              <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_checks.xml</configLocation>
+              <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${maven.sevntu.checkstyle.plugin.checkstyle.version}/config/checkstyle_checks.xml</configLocation>
               <failOnViolation>true</failOnViolation>
               <headerLocation>I just need to put here smth to let it not use default - LICENSE.txt</headerLocation>
               <propertiesLocation>config/checkstyle.properties</propertiesLocation>
@@ -389,13 +393,5 @@
       </plugin>
     </plugins>
   </build>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>sevntu-maven</id>
-      <name>sevntu-maven</name>
-      <url>http://sevntu-checkstyle.github.io/sevntu.checkstyle/maven2</url>
-    </pluginRepository>
-  </pluginRepositories>
 
 </project>
