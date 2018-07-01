@@ -1305,6 +1305,16 @@
     <status>READY</status>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.naming.LambdaParameterNameCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Parameter Name]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/LambdaParameterName]]></configKey>
+    <param key="format" type="REGULAR_EXPRESSION">
+      <defaultValue>^[a-z][a-zA-Z0-9]*$</defaultValue>
+    </param>
+    <status>READY</status>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.sizes.ParameterNumberCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Parameter Number]]></name>
