@@ -2332,7 +2332,9 @@
     <inspection_tool class="XsltTemplateInvocation" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="XsltUnusedDeclaration" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="XsltVariableShadowing" enabled="true" level="ERROR" enabled_by_default="true" />
-    <inspection_tool class="ZeroLengthArrayInitialization" enabled="true" level="WARNING" enabled_by_default="true" />
+    <!-- conflicting with ToArrayCallWithZeroLengthArrayArgument -->
+    <inspection_tool class="ZeroLengthArrayInitialization" enabled="false" level="WARNING"
+                     enabled_by_default="true"/>
     <inspection_tool class="dependsOnMethodTestNG" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="groupsTestNG" enabled="true" level="ERROR" enabled_by_default="true">
         <option name="groups">

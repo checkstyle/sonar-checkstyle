@@ -143,7 +143,7 @@ public class CheckstyleExecutor implements BatchExtension {
         for (File file : classpathElements) {
             urls.add(getUrl(file.toURI()));
         }
-        return new URLClassLoader(urls.toArray(new URL[urls.size()]), null);
+        return new URLClassLoader(urls.toArray(new URL[0]), null);
     }
 
 }
