@@ -217,17 +217,18 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.7</version>
+        <version>3.10.0</version>
         <configuration>
+          <analysisCache>false</analysisCache>
           <targetJdk>${java.version}</targetJdk>
           <minimumTokens>20</minimumTokens>
           <skipEmptyReport>false</skipEmptyReport>
           <failOnViolation>true</failOnViolation>
           <printFailingErrors>true</printFailingErrors>
-          <linkXRef>false</linkXRef>
           <includeTests>true</includeTests>
           <rulesets>
-            <ruleset>config/pmd.xml</ruleset>
+            <ruleset>config/pmd-main.xml</ruleset>
+            <ruleset>config/pmd-test.xml</ruleset>
           </rulesets>
         </configuration>
         <executions>
@@ -237,6 +238,28 @@
             </goals>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-java</artifactId>
+            <version>6.6.0</version>
+          </dependency>
+          <dependency>
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-core</artifactId>
+            <version>6.6.0</version>
+          </dependency>
+          <dependency>
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-javascript</artifactId>
+            <version>6.6.0</version>
+          </dependency>
+          <dependency>
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-jsp</artifactId>
+            <version>6.6.0</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
