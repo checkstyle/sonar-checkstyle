@@ -3,8 +3,9 @@
 [![][teamcity img]][teamcity]
 [![][sonar img]][sonar]
 
-[![checkstyle-all vulnerabilities][snyk-cs-all img]][snyk-cs-all]
-[![sonar-checkstyle vulnerabilities][snyk-sonar img]][snyk-sonar]
+[![checkstyle-all vulnerabilities][snyk-cs-all img]][snyk-cs-all] at checkstyle-all
+
+[![sonar-checkstyle vulnerabilities][snyk-sonar img]][snyk-sonar] at sonar-checkstyle
 
 Sonar Checkstyle
 ==========
