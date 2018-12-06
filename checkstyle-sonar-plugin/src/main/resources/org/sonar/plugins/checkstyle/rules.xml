@@ -743,10 +743,15 @@
     <param key="caseSensitive" type="BOOLEAN">
         <defaultValue>true</defaultValue>
     </param>
+    <param key="staticGroups" type="s{}">
+    </param>
     <param key="sortStaticImportsAlphabetically" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
     <param key="useContainerOrderingForStatic" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="separatedStaticGroups" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
     <param key="tokens" type="s[STATIC_IMPORT]">
@@ -943,8 +948,8 @@
       <defaultValue>true</defaultValue>
     </param>
     <param key="tokens"
-           type="s[INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK,LAMBDA]">
-      <defaultValue>INTERFACE_DEF,CLASS_DEF,ANNOTATION_DEF,ENUM_DEF,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,LITERAL_WHILE,LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_SYNCHRONIZED,LITERAL_SWITCH,LITERAL_DO,LITERAL_IF,LITERAL_ELSE,LITERAL_FOR,STATIC_INIT,OBJBLOCK,LAMBDA</defaultValue>
+           type="s[ANNOTATION_DEF,CLASS_DEF,CTOR_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF,LAMBDA,LITERAL_CASE,LITERAL_CATCH,LITERAL_DEFAULT,LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_FOR,LITERAL_IF,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_TRY,LITERAL_WHILE,METHOD_DEF,OBJBLOCK,STATIC_INIT]">
+      <defaultValue>ANNOTATION_DEF,CLASS_DEF,CTOR_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,INTERFACE_DEF,LAMBDA,LITERAL_CASE,LITERAL_CATCH,LITERAL_DEFAULT,LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_FOR,LITERAL_IF,LITERAL_SWITCH,LITERAL_SYNCHRONIZED,LITERAL_TRY,LITERAL_WHILE,METHOD_DEF,OBJBLOCK,STATIC_INIT</defaultValue>
     </param>
     <status>READY</status>
   </rule>
@@ -1858,8 +1863,8 @@
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/EmptyLineSeparator]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="tokens" type="s[PACKAGE_DEF,IMPORT,CLASS_DEF,INTERFACE_DEF,ENUM_DEF,STATIC_INIT,INSTANCE_INIT,METHOD_DEF,CTOR_DEF,VARIABLE_DEF]">
-      <defaultValue>PACKAGE_DEF,IMPORT,CLASS_DEF,INTERFACE_DEF,ENUM_DEF,STATIC_INIT,INSTANCE_INIT,METHOD_DEF,CTOR_DEF,VARIABLE_DEF</defaultValue>
+    <param key="tokens" type="s[PACKAGE_DEF,IMPORT,STATIC_IMPORT,CLASS_DEF,INTERFACE_DEF,ENUM_DEF,STATIC_INIT,INSTANCE_INIT,METHOD_DEF,CTOR_DEF,VARIABLE_DEF]">
+      <defaultValue>PACKAGE_DEF,IMPORT,STATIC_IMPORT,CLASS_DEF,INTERFACE_DEF,ENUM_DEF,STATIC_INIT,INSTANCE_INIT,METHOD_DEF,CTOR_DEF,VARIABLE_DEF</defaultValue>
     </param>
     <param key="allowNoEmptyLineBetweenFields" type="BOOLEAN">
       <defaultValue>false</defaultValue>
@@ -2075,6 +2080,34 @@
     <name><![CDATA[Suppress Warnings Holder]]></name>
     <configKey><![CDATA[Checker/TreeWalker/SuppressWarningsHolder]]></configKey>
     <param key="aliasList" type="STRING">
+    </param>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.modifier.InterfaceMemberImpliedModifierCheck">
+    <priority>MINOR</priority>
+    <name><![CDATA[Interface Member Implied Modifier]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/InterfaceMemberImpliedModifier]]></configKey>
+
+    <param key="violateImpliedPublicField" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
+    </param>
+    <param key="violateImpliedStaticField" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
+    </param>
+    <param key="violateImpliedFinalField" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
+    </param>
+    <param key="violateImpliedPublicMethod" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
+    </param>
+    <param key="violateImpliedAbstractMethod" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
+    </param>
+    <param key="violateImpliedPublicNested" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
+    </param>
+    <param key="violateImpliedStaticNested" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
     </param>
   </rule>
 
