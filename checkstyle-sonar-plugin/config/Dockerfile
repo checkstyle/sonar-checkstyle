@@ -3,6 +3,8 @@ FROM sonarqube:7.4-community
 ARG MAVEN_VERSION=3.3.9
 ARG USER_HOME_DIR="/root"
 
+USER root
+
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
   && curl -fsSL http://apache.osuosl.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz \
     | tar -xzC /usr/share/maven --strip-components=1 \
@@ -21,6 +23,8 @@ RUN apt-get install -y git
 
 # install vim
 RUN apt-get install -y vim
+
+USER sonarqube
 
 # Build image by "docker build -t sonarqube-maven-git ."
 # run it as "docker run -d --name sonarqube-maven-git -p 9000:9000 -p 9092:9092 sonarqube-maven-git"
