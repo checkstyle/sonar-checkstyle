@@ -5,6 +5,7 @@ build:
   - script:
       name: setup mvn local repo
       code: |-
+        ls -la /pipeline
         export MAVEN_OPTS="-Dmaven.repo.local=${WERCKER_CACHE_DIR}"
         mvn -version
         echo "------"
