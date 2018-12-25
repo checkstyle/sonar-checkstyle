@@ -1,4 +1,4 @@
-box: checkstyle/sonarqube-maven-git
+box: checkstyle/sonarqube-maven-git:6.2
 
 build:
   steps:
