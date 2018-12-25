@@ -704,8 +704,8 @@
     <param key="validateAbstractClassNames" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF,METHOD_DEF]">
-      <defaultValue>VARIABLE_DEF,PARAMETER_DEF,METHOD_DEF</defaultValue>
+    <param key="tokens" type="s[ANNOTATION_FIELD_DEF,METHOD_CALL,METHOD_DEF,METHOD_REF,PARAMETER_DEF,VARIABLE_DEF]">
+      <defaultValue>ANNOTATION_FIELD_DEF,METHOD_CALL,METHOD_DEF,METHOD_REF,PARAMETER_DEF,VARIABLE_DEF</defaultValue>
     </param>
     <param key="illegalClassNames" type="s{}">
       <defaultValue>"java.util.HashSet,java.util.HashMap,java.util.LinkedHashMap,java.util.LinkedHashSet,java.util.TreeSet,java.util.TreeMap"</defaultValue>
