@@ -613,7 +613,8 @@
   <inspection_tool class="EnumerationCanBeIteration" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="EqualityComparisonWithCoercionJS" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="EqualsAndHashcode" enabled="true" level="WARNING" enabled_by_default="true" />
-  <inspection_tool class="EqualsBetweenInconvertibleTypes" enabled="true" level="ERROR" enabled_by_default="true" />
+  <!-- disabled till https://github.com/checkstyle/sonar-checkstyle/issues/176 -->
+  <inspection_tool class="EqualsBetweenInconvertibleTypes" enabled="false" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="EqualsCalledOnEnumConstant" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="EqualsHashCodeCalledOnUrl" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="EqualsReplaceableByObjectsCall" enabled="false" level="ERROR" enabled_by_default="false" />
@@ -1698,7 +1699,8 @@
   <inspection_tool class="RedundantScopeBinding" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="RedundantStringFormatCall" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="RedundantSuppression" enabled="true" level="ERROR" enabled_by_default="true" />
-  <inspection_tool class="RedundantThrows" enabled="true" level="ERROR" enabled_by_default="true" />
+  <!-- disabled till https://github.com/checkstyle/sonar-checkstyle/issues/176 -->
+  <inspection_tool class="RedundantThrows" enabled="false" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="RedundantThrowsDeclaration" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="RedundantToBinding" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="RedundantToProviderBinding" enabled="true" level="ERROR" enabled_by_default="true" />
@@ -2131,7 +2133,8 @@
   <inspection_tool class="TypeScriptUnresolvedFunction" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="TypeScriptUnresolvedVariable" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="UNCHECKED_WARNING" enabled="true" level="ERROR" enabled_by_default="true" />
-  <inspection_tool class="UNUSED_IMPORT" enabled="true" level="ERROR" enabled_by_default="true" />
+  <!-- disabled till https://github.com/checkstyle/sonar-checkstyle/issues/176 -->
+  <inspection_tool class="UNUSED_IMPORT" enabled="false" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="UnaryPlus" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="UncheckedExceptionClass" enabled="false" level="ERROR" enabled_by_default="false" />
   <inspection_tool class="UnclearBinaryExpression" enabled="false" level="ERROR" enabled_by_default="false" />
@@ -2263,7 +2266,8 @@
     <option name="m_ignoreCatchBlocksWithComments" value="false" />
   </inspection_tool>
   <inspection_tool class="UnusedDefine" enabled="true" level="ERROR" enabled_by_default="true" />
-  <inspection_tool class="UnusedImport" enabled="true" level="WARNING" enabled_by_default="true" />
+  <!-- disabled till https://github.com/checkstyle/sonar-checkstyle/issues/176 -->
+  <inspection_tool class="UnusedImport" enabled="false" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="UnusedLabel" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="UnusedMessageFormatParameter" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="UnusedParameters" enabled="true" level="WARNING" enabled_by_default="true">
