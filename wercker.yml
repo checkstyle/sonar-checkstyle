@@ -18,9 +18,13 @@ build:
       code: |-
         POM_VERSION=$(grep "<version>" pom.xml | head -n 1 | sed -E "s/.*<version>//" | sed "s/<.*//")
         echo "POM_VERSION="$POM_VERSION
-        mvn package
+        mvn package -Pno-validations
         cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-$POM_VERSION.jar /opt/sonarqube/extensions/plugins/
+        pwd
         cd /opt/sonarqube/
+        pwd
+        ls -la
+        ls -la logs/
         rm logs/*.*
         ./bin/run.sh &
         echo "sleeping 30 to let sonar start up"
