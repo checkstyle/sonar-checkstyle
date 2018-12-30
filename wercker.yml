@@ -20,12 +20,8 @@ build:
         echo "POM_VERSION="$POM_VERSION
         mvn package -Pno-validations
         cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-$POM_VERSION.jar /opt/sonarqube/extensions/plugins/
-        pwd
         cd /opt/sonarqube/
-        pwd
-        ls -la
-        ls -la logs/
-        rm logs/*.*
+        rm -f logs/*.*
         ./bin/run.sh &
         echo "sleeping 30 to let sonar start up"
         sleep 30
