@@ -2114,4 +2114,17 @@
     </param>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.modifier.ClassMemberImpliedModifierCheck">
+    <priority>MINOR</priority>
+    <name><![CDATA[Class Member Implied Modifier]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/ClassMemberImpliedModifier]]></configKey>
+
+    <param key="violateImpliedStaticOnNestedEnum" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
+    </param>
+    <param key="violateImpliedStaticOnNestedInterface" type="BOOLEAN">
+        <defaultValue>true</defaultValue>
+    </param>
+  </rule>
+
 </rules>
