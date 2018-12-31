@@ -1,5 +1,6 @@
 [![][travis img]][travis]
 [![][wercker img]][wercker]
+[![][circleci img]][circleci]
 [![][teamcity img]][teamcity]
 [![][sonar img]][sonar]
 
@@ -83,6 +84,9 @@ In the quality profile, activate some rules from Checkstyle and run an analysis 
 
 [wercker]: https://app.wercker.com/project/bykey/ece513d8a6eb70207dd3b805b63e8d1c
 [wercker img]: https://app.wercker.com/status/ece513d8a6eb70207dd3b805b63e8d1c/s/master
+
+[circleci]: https://circleci.com/gh/checkstyle/sonar-checkstyle/tree/master
+[circleci img]: https://circleci.com/gh/checkstyle/sonar-checkstyle/tree/master.svg?style=svg
 
 [snyk-cs-all]: https://snyk.io/test/github/checkstyle/sonar-checkstyle?targetFile=checkstyle-all/pom.xml
 [snyk-cs-all img]: https://snyk.io/test/github/checkstyle/sonar-checkstyle/badge.svg?targetFile=checkstyle-all/pom.xml
