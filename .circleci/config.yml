@@ -40,4 +40,4 @@ jobs:
           sleep 40
           cd -
           mvn sonar:sonar
-          grep "ERROR" /opt/sonarqube/logs/* | cat
+          grep "ERROR" /opt/sonarqube/logs/* || test $? = 1
