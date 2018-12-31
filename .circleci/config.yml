@@ -20,7 +20,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: mvn dependency:go-offline
+      - run: mvn package -Pno-validations
 
       - save_cache:
           paths:
@@ -31,7 +31,7 @@ jobs:
       - run: |-
           POM_VERSION=$(grep "<version>" pom.xml | head -n 1 | sed -E "s/.*<version>//" | sed "s/<.*//")
           echo "POM_VERSION="$POM_VERSION
-          mvn package -Pno-validations
+          #mvn package -Pno-validations
           cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-$POM_VERSION.jar /opt/sonarqube/extensions/plugins/
           cd /opt/sonarqube/
           rm -f logs/*.*
