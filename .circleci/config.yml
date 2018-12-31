@@ -1,0 +1,43 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: checkstyle/sonarqube-maven-git:6.7.5
+
+    working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "pom.xml" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: mvn dependency:go-offline
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+      # run tests
+      - run: |-
+          POM_VERSION=$(grep "<version>" pom.xml | head -n 1 | sed -E "s/.*<version>//" | sed "s/<.*//")
+          echo "POM_VERSION="$POM_VERSION
+          mvn package -Pno-validations
+          cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-$POM_VERSION.jar /opt/sonarqube/extensions/plugins/
+          cd /opt/sonarqube/
+          rm -f logs/*.*
+          ./bin/run.sh &
+          echo "sleeping 40 to let sonar start up"
+          sleep 40
+          cd -
+          mvn sonar:sonar
+          grep "ERROR" /opt/sonarqube/logs/* | cat
