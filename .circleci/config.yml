@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: checkstyle/sonarqube-maven-git:7.4-community-wercker-pipeline
 
-    working_directory: /opt/sonarqube/
+    working_directory: /opt/sonarqube/repo
 
     environment:
       # Customize the JVM maximum heap limit
