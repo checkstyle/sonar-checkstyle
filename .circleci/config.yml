@@ -41,12 +41,14 @@ jobs:
           rm -f logs/*.*
           echo "run sonarqube web service"
           ./bin/run.sh &
-          echo "sleeping 40 to let sonar start up"
+          echo "sleeping 40 to let sonar start up ..."
           sleep 40
+          echo "check that sonar service is up ..."
+          grep "SonarQube is up" logs/sonar.log
           echo "switching back to repository code"
           cd -
           pwd
-          echo "execution of mvn sonar:sonar"
+          echo "execution of mvn sonar:sonar ..."
           mvn sonar:sonar
           echo "grep for ERROR in logs ..."
           grep "ERROR" /opt/sonarqube/logs/* || test $? = 1
