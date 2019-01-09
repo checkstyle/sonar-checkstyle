@@ -20,7 +20,11 @@
 package org.sonar.plugins.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -29,16 +33,22 @@ import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.sonar.api.batch.fs.internal.DefaultFileSystem;
-import org.sonar.api.batch.fs.internal.DefaultInputFile;
-import org.sonar.api.component.ResourcePerspectives;
-import org.sonar.api.issue.Issuable;
-import org.sonar.api.issue.Issuable.IssueBuilder;
-import org.sonar.api.issue.Issue;
+import org.sonar.api.batch.fs.FilePredicate;
+import org.sonar.api.batch.fs.FilePredicates;
+import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.fs.InputComponent;
+import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.batch.fs.TextRange;
+import org.sonar.api.batch.fs.internal.DefaultTextPointer;
+import org.sonar.api.batch.fs.internal.DefaultTextRange;
+import org.sonar.api.batch.rule.ActiveRule;
+import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.issue.NewIssue;
+import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
-import org.sonar.api.rules.Rule;
-import org.sonar.api.rules.RuleFinder;
 
+import com.puppycrawl.tools.checkstyle.TreeWalker;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
@@ -47,15 +57,23 @@ public class CheckstyleAuditListenerTest {
     private final File file = new File("file1");
     private final AuditEvent event = new AuditEvent(this, file.getAbsolutePath(),
             new LocalizedMessage(42, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
-    private final DefaultFileSystem fileSystem = new DefaultFileSystem(new File(""));
-    private final RuleFinder ruleFinder = mock(RuleFinder.class);
-    private final DefaultInputFile inputFile = new DefaultInputFile("", file.getPath());
-    private final ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
+    private ActiveRules ruleFinder;
+    private InputFile inputFile;
+    private SensorContext context;
+    private FileSystem fileSystem;
 
     @Before
     public void before() {
-        // inputFile.setAbsolutePath(file.getAbsolutePath());
-        fileSystem.add(inputFile);
+        fileSystem = mock(FileSystem.class);
+        context = mock(SensorContext.class);
+        inputFile = mock(InputFile.class);
+        ruleFinder = mock(ActiveRules.class);
+
+        final FilePredicates predicates = mock(FilePredicates.class);
+        final FilePredicate filePredicate = mock(FilePredicate.class);
+        when(fileSystem.inputFile(any(FilePredicate.class))).thenReturn(inputFile);
+        when(fileSystem.predicates()).thenReturn(predicates);
+        when(predicates.hasAbsolutePath(anyString())).thenReturn(filePredicate);
     }
 
     /**
@@ -88,59 +106,74 @@ public class CheckstyleAuditListenerTest {
 
     @Test
     public void addErrorTest() {
-        final Rule rule = setupRule("repo", "key");
+        final ActiveRule rule = setupRule("repo", "key");
 
-        final Issuable issuable = setupIssuable();
-        final IssueBuilder issueBuilder = mock(IssueBuilder.class);
-        final Issue issue = mock(Issue.class);
-        when(issuable.newIssueBuilder()).thenReturn(issueBuilder);
-        when(issueBuilder.ruleKey(RuleKey.of("repo", "key"))).thenReturn(issueBuilder);
-        when(issueBuilder.message(event.getMessage())).thenReturn(issueBuilder);
-        when(issueBuilder.line(event.getLine())).thenReturn(issueBuilder);
-        when(issueBuilder.build()).thenReturn(issue);
+        final NewIssue newIssue = mock(NewIssue.class);
+        final NewIssueLocation newLocation = mock(NewIssueLocation.class);
+        when(context.newIssue()).thenReturn(newIssue);
+        when(newIssue.newLocation()).thenReturn(newLocation);
+        when(newIssue.forRule(rule.ruleKey())).thenReturn(newIssue);
+        when(newIssue.at(newLocation)).thenReturn(newIssue);
+        when(newLocation.on(any(InputComponent.class))).thenReturn(newLocation);
+        when(newLocation.at(any(TextRange.class))).thenReturn(newLocation);
+        when(newLocation.message(anyString())).thenReturn(newLocation);
 
-        addErrorToListener();
+        when(inputFile.selectLine(anyInt())).thenReturn(new DefaultTextRange(
+                new DefaultTextPointer(1, 1), new DefaultTextPointer(1, 2)));
 
-        verify(issuable).addIssue(issue);
-        verify(issueBuilder).ruleKey(RuleKey.of("repo", "key"));
-        verify(issueBuilder).message(event.getMessage());
-        verify(issueBuilder).line(event.getLine());
-        verify(rule).ruleKey();
+        addErrorToListener(event);
+
+        verify(newIssue, times(1)).save();
+        verify(newIssue, times(1)).forRule(rule.ruleKey());
+        verify(newIssue, times(1)).at(newLocation);
+        verify(newIssue, times(1)).newLocation();
+        verify(newLocation, times(1)).on(any());
+        verify(newLocation, times(1)).at(any());
+        verify(newLocation, times(1)).message(any());
     }
 
     @Test
     public void addErrorOnUnknownRule() {
-        final Issuable issuable = setupIssuable();
-        addErrorToListener();
-        verifyZeroInteractions(issuable);
+        when(context.newIssue()).thenReturn(null);
+        addErrorToListener(event);
+        verify(context, times(1)).newIssue();
+    }
+
+    @Test
+    public void addErrorOnTreeWalkerRule() {
+        final AuditEvent treeWalkerEvent = new AuditEvent(
+                this,
+                file.getAbsolutePath(),
+                new LocalizedMessage(42, "", "", null, "",
+                        TreeWalker.class, "msg"));
+
+        when(context.newIssue()).thenReturn(null);
+        addErrorToListener(treeWalkerEvent);
+        verify(context, times(1)).newIssue();
     }
 
     @Test
     public void addErrorOnUnknownFile() {
-        final Rule rule = setupRule("repo", "key");
-        addErrorToListener();
+        final ActiveRule rule = setupRule("repo", "key");
+        addErrorToListener(event);
         verifyZeroInteractions(rule);
     }
 
-    private CheckstyleAuditListener addErrorToListener() {
-        final CheckstyleAuditListener listener = new CheckstyleAuditListener(ruleFinder, fileSystem,
-                perspectives);
-        listener.addError(event);
+    private CheckstyleAuditListener addErrorToListener(AuditEvent auditEvent) {
+        final CheckstyleAuditListener listener = new CheckstyleAuditListener(
+                ruleFinder,
+                fileSystem);
+        listener.setContext(context);
+        listener.addError(auditEvent);
         return listener;
     }
 
-    private Rule setupRule(String repo, String key) {
-        final Rule rule = mock(Rule.class);
+    private ActiveRule setupRule(String repo, String key) {
+        final ActiveRule rule = mock(ActiveRule.class);
         when(rule.ruleKey()).thenReturn(RuleKey.of(repo, key));
         when(
-                ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY,
-                        CheckstyleAuditListenerTest.class.getCanonicalName())).thenReturn(rule);
+                ruleFinder.find(RuleKey.of(CheckstyleConstants.REPOSITORY_KEY,
+                        CheckstyleAuditListenerTest.class.getCanonicalName()))).thenReturn(rule);
         return rule;
-    }
-
-    private Issuable setupIssuable() {
-        final Issuable issuable = mock(Issuable.class);
-        when(perspectives.as(Issuable.class, inputFile)).thenReturn(issuable);
-        return issuable;
     }
 }

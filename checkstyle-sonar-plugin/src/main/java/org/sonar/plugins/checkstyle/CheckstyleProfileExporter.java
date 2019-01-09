@@ -26,11 +26,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.sonar.api.config.Settings;
+import org.sonar.api.ExtensionPoint;
+import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -38,19 +39,20 @@ import org.sonar.api.rules.RuleParam;
 
 import com.google.common.annotations.VisibleForTesting;
 
+@ExtensionPoint
+@ScannerSide
 public class CheckstyleProfileExporter extends ProfileExporter {
 
     public static final String DOCTYPE_DECLARATION =
         "<!DOCTYPE module PUBLIC \"-//Puppy Crawl//DTD Check Configuration 1.2//EN\" "
         + "\"http://www.puppycrawl.com/dtds/configuration_1_2.dtd\">";
-
     private static final String CLOSE_MODULE = "</module>";
 
-    private final Settings settings;
+    private final Configuration configuration;
 
-    public CheckstyleProfileExporter(Settings settings) {
+    public CheckstyleProfileExporter(Configuration configuration) {
         super(CheckstyleConstants.REPOSITORY_KEY, CheckstyleConstants.PLUGIN_NAME);
-        this.settings = settings;
+        this.configuration = configuration;
         setSupportedLanguages(CheckstyleConstants.JAVA_KEY);
         setMimeType("application/xml");
     }
@@ -87,13 +89,14 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
 
     private void appendCustomFilters(Writer writer) throws IOException {
-        final String filtersXml = settings.getString(CheckstyleConstants.CHECKER_FILTERS_KEY);
+        final String filtersXml = configuration.get(CheckstyleConstants.CHECKER_FILTERS_KEY)
+                .orElse(null);
         writer.append(filtersXml);
     }
 
     private static void appendCheckerModules(Writer writer,
             Map<String, List<ActiveRule>> activeRulesByConfigKey) throws IOException {
-        for (Entry<String, List<ActiveRule>> entry : activeRulesByConfigKey.entrySet()) {
+        for (Map.Entry<String, List<ActiveRule>> entry : activeRulesByConfigKey.entrySet()) {
             final String configKey = entry.getKey();
             if (!isInTreeWalker(configKey)) {
                 final List<ActiveRule> activeRules = entry.getValue();
@@ -121,14 +124,17 @@ public class CheckstyleProfileExporter extends ProfileExporter {
             }
         }
         // append Treewalker filters
-        final String filtersXml = settings.getString(CheckstyleConstants.TREEWALKER_FILTERS_KEY);
+        final String filtersXml = configuration
+                .get(CheckstyleConstants.TREEWALKER_FILTERS_KEY)
+                .orElse(null);
         writer.append(filtersXml);
 
         writer.append(CLOSE_MODULE);
     }
 
     private boolean isSuppressWarningsEnabled() {
-        final String filtersXml = settings.getString(CheckstyleConstants.CHECKER_FILTERS_KEY);
+        final String filtersXml = configuration.get(CheckstyleConstants.CHECKER_FILTERS_KEY)
+                .orElse(null);
         boolean result = false;
         if (filtersXml != null) {
             result = filtersXml.contains("<module name=\"SuppressWarningsFilter\" />");

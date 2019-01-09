@@ -31,9 +31,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
+import org.sonar.api.batch.fs.internal.DefaultIndexedFile;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
+import org.sonar.api.batch.fs.internal.SensorStrategy;
+import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 import org.sonar.api.config.PropertyDefinitions;
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.ConfigurationBridge;
+import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
 
@@ -46,15 +50,29 @@ public class CheckstyleConfigurationTest {
     @Before
     public void beforeClass() {
         fileSystem = new DefaultFileSystem(new File(""));
-        fileSystem.setWorkDir(new File(""));
-        final DefaultInputFile inputFile = new DefaultInputFile("", "mainFile");
-        inputFile.setLanguage("java");
-        inputFile.setType(InputFile.Type.MAIN);
+        fileSystem.setWorkDir(new File(".").toPath());
+
+        final File file = new File("mainFile");
+        final DefaultInputFile inputFile = new DefaultInputFile(
+                new DefaultIndexedFile("",
+                        new File("").toPath(),
+                        file.getName(),
+                        "java"),
+                DefaultInputFile::checkMetadata);
         fileSystem.add(inputFile);
-        final DefaultInputFile testFile = new DefaultInputFile("", "testFile");
-        testFile.setLanguage("java");
-        testFile.setType(InputFile.Type.TEST);
-        fileSystem.add(testFile);
+
+        final File testFile = new File("testFile");
+        final DefaultInputFile testInputFile = new DefaultInputFile(
+                new DefaultIndexedFile(testFile.toPath(),
+                        "",
+                        "testFile",
+                        "testFile",
+                        InputFile.Type.TEST,
+                        "java",
+                        TestInputFileBuilder.nextBatchId(),
+                        new SensorStrategy()),
+                DefaultInputFile::checkMetadata);
+        fileSystem.add(testInputFile);
     }
 
     @Test
@@ -69,13 +87,15 @@ public class CheckstyleConfigurationTest {
 
     @Test
     public void getTargetXmlReport() {
-        final Settings settings = new Settings();
+        final org.sonar.api.config.Configuration settings =
+                new ConfigurationBridge(new MapSettings());
         final CheckstyleConfiguration configuration = new CheckstyleConfiguration(settings,
                 null, null, fileSystem);
         assertThat(configuration.getTargetXmlReport()).isNull();
 
-        final Settings settings2 = new Settings();
-        settings2.setProperty(CheckstyleConfiguration.PROPERTY_GENERATE_XML, "true");
+        final MapSettings mapSettings = new MapSettings();
+        mapSettings.setProperty(CheckstyleConfiguration.PROPERTY_GENERATE_XML, "true");
+        final org.sonar.api.config.Configuration settings2 = new ConfigurationBridge(mapSettings);
         final CheckstyleConfiguration configuration2 = new CheckstyleConfiguration(settings2,
                 null, null, fileSystem);
         assertThat(configuration2.getTargetXmlReport()).isEqualTo(
@@ -90,7 +110,8 @@ public class CheckstyleConfigurationTest {
         final File xmlFile = configuration.getXmlDefinitionFile();
 
         assertThat(xmlFile.exists()).isTrue();
-        assertThat(FileUtils.readFileToString(xmlFile)).isEqualTo("<conf/>");
+        assertThat(FileUtils.readFileToString(xmlFile, StandardCharsets.UTF_8))
+                .isEqualTo("<conf/>");
         FileUtils.forceDelete(xmlFile);
     }
 
@@ -98,10 +119,11 @@ public class CheckstyleConfigurationTest {
     @Test
     public void getCheckstyleConfiguration() throws Exception {
         fileSystem.setEncoding(StandardCharsets.UTF_8);
-        final Settings settings = new Settings(new PropertyDefinitions(
+        final MapSettings mapSettings = new MapSettings(new PropertyDefinitions(
                 new CheckstylePlugin().getExtensions()));
-        settings.setProperty(CheckstyleConstants.CHECKER_FILTERS_KEY,
+        mapSettings.setProperty(CheckstyleConstants.CHECKER_FILTERS_KEY,
                 CheckstyleConstants.CHECKER_FILTERS_DEFAULT_VALUE);
+        final org.sonar.api.config.Configuration settings = new ConfigurationBridge(mapSettings);
 
         final RulesProfile profile = RulesProfile.create("sonar way", "java");
 
@@ -123,7 +145,7 @@ public class CheckstyleConfigurationTest {
     private static class FakeExporter extends CheckstyleProfileExporter {
 
         FakeExporter() {
-            super(new Settings());
+            super(new ConfigurationBridge(new MapSettings()));
         }
 
         @Override

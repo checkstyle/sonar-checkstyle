@@ -21,61 +21,39 @@ package org.sonar.plugins.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.io.File;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
-import org.sonar.api.batch.fs.InputFile.Type;
-import org.sonar.api.batch.fs.internal.DefaultFileSystem;
-import org.sonar.api.batch.fs.internal.DefaultInputFile;
-import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Project;
-import org.sonar.api.rules.ActiveRule;
-
-import com.google.common.collect.ImmutableList;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
+import org.sonar.plugins.java.Java;
 
 public class CheckstyleSensorTest {
 
-    private final RulesProfile profile = mock(RulesProfile.class);
-    private final DefaultFileSystem fileSystem = new DefaultFileSystem(new File(""));
-    private final CheckstyleSensor sensor = new CheckstyleSensor(profile, null, fileSystem);
-
-    private final Project project = new Project("projectKey");
-
     @Test
-    public void shouldExecuteOnProjectWithoutJavaFileAndWithRule() {
-        addOneActiveRule();
-        assertThat(sensor.shouldExecuteOnProject(project)).isFalse();
+    public void shouldDescribePluginCorrectly() {
+        final DefaultSensorDescriptor descriptor = new DefaultSensorDescriptor();
+        final CheckstyleSensor sensor = new CheckstyleSensor(null);
+
+        sensor.describe(descriptor);
+        assertThat(descriptor.languages()).containsOnly(Java.KEY);
+        assertThat(descriptor.name()).isNotEmpty();
     }
 
     @Test
-    public void shouldExecuteOnProjectWithJavaFileAndWithoutRule() {
-        addOneJavaFile();
-        assertThat(sensor.shouldExecuteOnProject(project)).isFalse();
-    }
+    public void shouldExecuteExecutorWithContext() {
+        final SensorContext context = mock(SensorContext.class);
+        final CheckstyleExecutor executor = mock(CheckstyleExecutor.class);
 
-    @Test
-    public void shouldExecuteOnProjectWithJavaFilesAndRules() {
-        addOneJavaFile();
-        addOneActiveRule();
-        assertThat(sensor.shouldExecuteOnProject(project)).isTrue();
+        final CheckstyleSensor sensor = new CheckstyleSensor(executor);
+        sensor.execute(context);
+
+        verify(executor, times(1)).execute(context);
     }
 
     @Test
     public void testToString() {
-        assertThat(new CheckstyleSensor(null, null, null).toString()).isEqualTo("CheckstyleSensor");
+        assertThat(new CheckstyleSensor(null).toString()).isEqualTo("CheckstyleSensor");
     }
-
-    private void addOneJavaFile() {
-        final File file = new File("MyClass.java");
-        fileSystem.add(new DefaultInputFile("", file.getName()).setLanguage("java").setType(
-                Type.MAIN));
-    }
-
-    private void addOneActiveRule() {
-        when(profile.getActiveRulesByRepository("checkstyle")).thenReturn(
-                ImmutableList.of(mock(ActiveRule.class)));
-    }
-
 }
