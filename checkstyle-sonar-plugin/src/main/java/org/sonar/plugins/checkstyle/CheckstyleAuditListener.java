@@ -19,17 +19,21 @@
 
 package org.sonar.plugins.checkstyle;
 
+import java.util.Objects;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.BatchExtension;
+import org.sonar.api.ExtensionPoint;
+import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.component.ResourcePerspectives;
-import org.sonar.api.issue.Issuable;
-import org.sonar.api.issue.Issuable.IssueBuilder;
-import org.sonar.api.rules.Rule;
-import org.sonar.api.rules.RuleFinder;
+import org.sonar.api.batch.rule.ActiveRule;
+import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.issue.NewIssue;
+import org.sonar.api.batch.sensor.issue.NewIssueLocation;
+import org.sonar.api.rule.RuleKey;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
@@ -38,20 +42,25 @@ import com.puppycrawl.tools.checkstyle.api.AuditListener;
 /**
  * @since 2.3
  */
-public class CheckstyleAuditListener implements AuditListener, BatchExtension {
+@ExtensionPoint
+@ScannerSide
+public class CheckstyleAuditListener implements AuditListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleAuditListener.class);
 
-    private final RuleFinder ruleFinder;
+    private final ActiveRules ruleFinder;
     private final FileSystem fileSystem;
-    private final ResourcePerspectives perspectives;
-    private InputFile currentResource;
 
-    public CheckstyleAuditListener(RuleFinder ruleFinder, FileSystem fileSystem,
-            ResourcePerspectives perspectives) {
+    private InputFile currentResource;
+    private SensorContext context;
+
+    public CheckstyleAuditListener(ActiveRules ruleFinder, FileSystem fileSystem) {
         this.ruleFinder = ruleFinder;
         this.fileSystem = fileSystem;
-        this.perspectives = perspectives;
+    }
+
+    public void setContext(SensorContext context) {
+        this.context = context;
     }
 
     @Override
@@ -77,20 +86,28 @@ public class CheckstyleAuditListener implements AuditListener, BatchExtension {
     @Override
     public void addError(AuditEvent event) {
         final String ruleKey = getRuleKey(event);
-        if (ruleKey != null) {
+
+        if (Objects.nonNull(ruleKey)) {
             final String message = getMessage(event);
             // In Checkstyle 5.5 exceptions are reported as an events from
             // TreeWalker
             if ("com.puppycrawl.tools.checkstyle.TreeWalker".equals(ruleKey)) {
                 LOG.warn("{} : {}", event.getFileName(), message);
             }
+
             initResource(event);
-            final Issuable issuable = perspectives.as(Issuable.class, currentResource);
-            final Rule rule = ruleFinder.findByKey(CheckstyleConstants.REPOSITORY_KEY, ruleKey);
-            if (rule != null && issuable != null) {
-                final IssueBuilder issueBuilder = issuable.newIssueBuilder().ruleKey(rule.ruleKey())
-                        .message(message).line(getLineId(event));
-                issuable.addIssue(issueBuilder.build());
+
+            final NewIssue issue = context.newIssue();
+            final ActiveRule rule = ruleFinder.find(
+                    RuleKey.of(CheckstyleConstants.REPOSITORY_KEY, ruleKey));
+            if (Objects.nonNull(issue) && Objects.nonNull(rule)) {
+                final NewIssueLocation location = issue.newLocation()
+                        .on(currentResource)
+                        .at(currentResource.selectLine(getLineId(event)))
+                        .message(message);
+                issue.forRule(rule.ruleKey())
+                        .at(location)
+                        .save();
             }
         }
     }

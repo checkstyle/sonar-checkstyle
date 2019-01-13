@@ -20,25 +20,29 @@
 package org.sonar.plugins.checkstyle;
 
 import java.io.StringWriter;
+import java.util.Objects;
+
+import javax.annotation.Nullable;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.config.PropertyDefinitions;
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.ConfigurationBridge;
+import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RulePriority;
 
 public class CheckstyleProfileExporterTest {
 
-    private Settings settings;
+    private Configuration settings;
 
-    @SuppressWarnings("unchecked")
     @Before
     public void prepare() {
-        settings = new Settings(new PropertyDefinitions(new CheckstylePlugin().getExtensions()));
+        initSettings(null, null);
         System.setProperty("javax.xml.transform.TransformerFactory",
                 "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
     }
@@ -152,7 +156,7 @@ public class CheckstyleProfileExporterTest {
 
     @Test
     public void addCustomCheckerFilters() {
-        settings.setProperty(CheckstyleConstants.CHECKER_FILTERS_KEY,
+        initSettings(CheckstyleConstants.CHECKER_FILTERS_KEY,
                 "<module name=\"SuppressionCommentFilter\">"
                         + "<property name=\"offCommentFormat\" value=\"BEGIN GENERATED CODE\"/>"
                         + "<property name=\"onCommentFormat\" value=\"END GENERATED CODE\"/>"
@@ -173,7 +177,7 @@ public class CheckstyleProfileExporterTest {
 
     @Test
     public void addCustomTreewalkerFilters() {
-        settings.setProperty(CheckstyleConstants.TREEWALKER_FILTERS_KEY,
+        initSettings(CheckstyleConstants.TREEWALKER_FILTERS_KEY,
                 "<module name=\"SuppressWithNearbyCommentFilter\"/>");
 
         final RulesProfile profile = RulesProfile.create("sonar way", "java");
@@ -183,6 +187,16 @@ public class CheckstyleProfileExporterTest {
         CheckstyleTestUtils.assertSimilarXmlWithResource(
                 "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
                         + "addCustomTreewalkerFilters.xml", sanitizeForTests(writer.toString()));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initSettings(@Nullable String key, @Nullable String property) {
+        final MapSettings mapSettings = new MapSettings(
+                new PropertyDefinitions(new CheckstylePlugin().getExtensions()));
+        if (Objects.nonNull(key)) {
+            mapSettings.setProperty(key, property);
+        }
+        settings = new ConfigurationBridge(mapSettings);
     }
 
     private static String sanitizeForTests(String xml) {

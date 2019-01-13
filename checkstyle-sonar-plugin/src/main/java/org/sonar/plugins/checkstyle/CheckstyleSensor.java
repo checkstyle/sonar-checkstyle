@@ -19,44 +19,27 @@
 
 package org.sonar.plugins.checkstyle;
 
-import java.io.File;
-
-import org.sonar.api.batch.Sensor;
-import org.sonar.api.batch.SensorContext;
-import org.sonar.api.batch.fs.FilePredicates;
-import org.sonar.api.batch.fs.FileSystem;
-import org.sonar.api.batch.fs.InputFile.Type;
-import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Project;
+import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.SensorDescriptor;
+import org.sonar.plugins.java.Java;
 
 public class CheckstyleSensor implements Sensor {
 
-    private final RulesProfile profile;
     private final CheckstyleExecutor executor;
-    private final FileSystem fileSystem;
 
-    public CheckstyleSensor(RulesProfile profile, CheckstyleExecutor executor,
-            FileSystem fileSystem) {
-        this.profile = profile;
+    public CheckstyleSensor(CheckstyleExecutor executor) {
         this.executor = executor;
-        this.fileSystem = fileSystem;
     }
 
     @Override
-    public boolean shouldExecuteOnProject(Project project) {
-        final FilePredicates predicates = fileSystem.predicates();
-        final Iterable<File> mainFiles = fileSystem
-                .files(predicates.and(predicates.hasLanguage(CheckstyleConstants.JAVA_KEY),
-                        predicates.hasType(Type.MAIN)));
-        final boolean mainFilesIsEmpty = !mainFiles.iterator().hasNext();
-        return !mainFilesIsEmpty
-                && !profile.getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY)
-                        .isEmpty();
+    public void describe(SensorDescriptor descriptor) {
+        descriptor.onlyOnLanguage(Java.KEY).name("CheckstyleSensor");
     }
 
     @Override
-    public void analyse(Project project, SensorContext context) {
-        executor.execute();
+    public void execute(SensorContext context) {
+        executor.execute(context);
     }
 
     @Override

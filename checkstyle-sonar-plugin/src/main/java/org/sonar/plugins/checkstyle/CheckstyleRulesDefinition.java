@@ -21,15 +21,20 @@ package org.sonar.plugins.checkstyle;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
+import java.util.Properties;
 
+import org.sonar.api.ExtensionPoint;
+import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
 import org.sonar.squidbridge.rules.ExternalDescriptionLoader;
-import org.sonar.squidbridge.rules.PropertyFileLoader;
 import org.sonar.squidbridge.rules.SqaleXmlLoader;
 
 import com.google.common.annotations.VisibleForTesting;
 
+@ExtensionPoint
+@ScannerSide
 public final class CheckstyleRulesDefinition implements RulesDefinition {
 
     @Override
@@ -37,7 +42,6 @@ public final class CheckstyleRulesDefinition implements RulesDefinition {
         final NewRepository repository = context.createRepository(
                 CheckstyleConstants.REPOSITORY_KEY, "java").setName(
                 CheckstyleConstants.REPOSITORY_NAME);
-
         try {
             extractRulesData(repository, "/org/sonar/plugins/checkstyle/rules.xml",
                     "/org/sonar/l10n/checkstyle/rules/checkstyle");
@@ -60,8 +64,39 @@ public final class CheckstyleRulesDefinition implements RulesDefinition {
         ExternalDescriptionLoader.loadHtmlDescriptions(repository, htmlDescriptionFolder);
         try (InputStream resource = CheckstyleRulesDefinition.class
                 .getResourceAsStream("/org/sonar/l10n/checkstyle.properties")) {
-            PropertyFileLoader.loadNames(repository, resource);
+            loadNames(repository, resource);
         }
         SqaleXmlLoader.load(repository, "/com/sonar/sqale/checkstyle-model.xml");
+    }
+
+    private static void loadNames(NewRepository repository, InputStream stream) {
+        // code taken from:
+        // https://github.com/SonarSource/sslr-squid-bridge/blob/2.5.2/
+        // src/main/java/org/sonar/squidbridge/rules/PropertyFileLoader.java#L46
+        final Properties properties = new Properties();
+        try {
+            properties.load(stream);
+        }
+        catch (IOException ex) {
+            throw new IllegalArgumentException("Could not read names from properties", ex);
+        }
+
+        if (Objects.nonNull(repository.rules())) {
+            repository.rules().forEach(rule -> {
+                final String baseKey = "rule." + repository.key() + "." + rule.key();
+                final String nameKey = baseKey + ".name";
+                final String ruleName = properties.getProperty(nameKey);
+                if (Objects.nonNull(ruleName)) {
+                    rule.setName(ruleName);
+                }
+                rule.params().forEach(param -> {
+                    final String paramDescriptionKey = baseKey + ".param." + param.key();
+                    final String paramDescription = properties.getProperty(paramDescriptionKey);
+                    if (Objects.nonNull(paramDescription)) {
+                        param.setDescription(paramDescription);
+                    }
+                });
+            });
+        }
     }
 }

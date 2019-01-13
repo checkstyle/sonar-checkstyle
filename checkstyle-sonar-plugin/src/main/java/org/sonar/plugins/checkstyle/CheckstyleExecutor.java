@@ -31,12 +31,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.BatchExtension;
-import org.sonar.api.utils.TimeProfiler;
+import org.sonar.api.ExtensionPoint;
+import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -44,7 +48,9 @@ import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
 import com.puppycrawl.tools.checkstyle.XMLLogger;
 
-public class CheckstyleExecutor implements BatchExtension {
+@ExtensionPoint
+@ScannerSide
+public class CheckstyleExecutor {
     public static final String PROPERTIES_PATH =
             "/org/sonar/plugins/checkstyle/checkstyle-plugin.properties";
 
@@ -65,7 +71,11 @@ public class CheckstyleExecutor implements BatchExtension {
      * Execute Checkstyle and return the generated XML report.
      * @noinspection TooBroadScope
      */
-    public void execute() {
+    public void execute(SensorContext context) {
+        if (Objects.nonNull(listener)) {
+            listener.setContext(context);
+        }
+
         final Locale initialLocale = Locale.getDefault();
         Locale.setDefault(Locale.ENGLISH);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
@@ -82,8 +92,6 @@ public class CheckstyleExecutor implements BatchExtension {
     }
 
     private void executeWithClassLoader(URLClassLoader projectClassloader) {
-        final TimeProfiler profiler = new TimeProfiler().start("Execute Checkstyle "
-                + new CheckstyleVersion().getVersion(PROPERTIES_PATH));
         final Checker checker = new Checker();
         OutputStream xmlOutput = null;
         try {
@@ -100,17 +108,18 @@ public class CheckstyleExecutor implements BatchExtension {
 
             checker.setCharset(configuration.getCharset().name());
             checker.configure(configuration.getCheckstyleConfiguration());
-            checker.process(configuration.getSourceFiles());
-
-            profiler.stop();
-
+            checker.process(configuration
+                    .getSourceFiles()
+                    .stream()
+                    .map(InputFile::file)
+                    .collect(Collectors.toList()));
         }
         catch (Exception ex) {
             throw new IllegalStateException("Can not execute Checkstyle", ex);
         }
         finally {
             checker.destroy();
-            if (xmlOutput != null) {
+            if (Objects.nonNull(xmlOutput)) {
                 close(xmlOutput);
             }
         }
