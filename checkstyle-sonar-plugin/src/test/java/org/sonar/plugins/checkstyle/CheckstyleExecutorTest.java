@@ -44,8 +44,9 @@ import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
-import org.sonar.java.DefaultJavaResourceLocator;
-import org.sonar.java.JavaClasspath;
+import org.sonar.api.batch.fs.internal.DefaultIndexedFile;
+import org.sonar.api.batch.fs.internal.DefaultInputFile;
+import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import com.google.common.collect.ImmutableList;
@@ -57,13 +58,15 @@ public class CheckstyleExecutorTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
+    private final SensorContext context = mock(SensorContext.class);
+
     @Test
     public void execute() throws CheckstyleException {
         final CheckstyleConfiguration conf = mockConf();
         final CheckstyleAuditListener listener = mockListener();
         final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
                 createJavaResourceLocator());
-        executor.execute();
+        executor.execute(context);
 
         verify(listener, times(1)).auditStarted(any(AuditEvent.class));
         verify(listener, times(1)).auditFinished(any(AuditEvent.class));
@@ -92,7 +95,7 @@ public class CheckstyleExecutorTest {
         final CheckstyleConfiguration conf = mockConf();
         final CheckstyleExecutor executor = new CheckstyleExecutor(conf, null,
                 createJavaResourceLocator());
-        executor.execute();
+        executor.execute(context);
     }
 
     @Test
@@ -100,15 +103,15 @@ public class CheckstyleExecutorTest {
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Fail to create the project classloader. "
                 + "Classpath element is invalid: htp://aa");
-        final CheckstyleExecutor executor = new CheckstyleExecutor(null, null,
+        final CheckstyleExecutor executor = new CheckstyleExecutor(null, mockListener(),
                 createJavaResourceLocator());
         executor.getUrl(new URI("htp://aa"));
     }
 
     private static JavaResourceLocator createJavaResourceLocator() {
-        final JavaClasspath javaClasspath = mock(JavaClasspath.class);
-        when(javaClasspath.getElements()).thenReturn(ImmutableList.of(new File(".")));
-        return new DefaultJavaResourceLocator(null, javaClasspath, null);
+        final JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
+        when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(new File(".")));
+        return javaResourceLocator;
     }
 
     /**
@@ -129,7 +132,7 @@ public class CheckstyleExecutorTest {
             final CheckstyleAuditListener listener = mockListener();
             final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
                     createJavaResourceLocator());
-            executor.execute();
+            executor.execute(context);
 
             Assert.assertTrue("Report should exists", report.exists());
 
@@ -153,7 +156,7 @@ public class CheckstyleExecutorTest {
         final CheckstyleAuditListener listener = mockListener();
         final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
                 createJavaResourceLocator());
-        executor.execute();
+        executor.execute(context);
 
         Assert.assertFalse("Report should NOT exists", report.exists());
     }
@@ -185,11 +188,26 @@ public class CheckstyleExecutorTest {
         final CheckstyleConfiguration conf = mock(CheckstyleConfiguration.class);
         when(conf.getCharset()).thenReturn(Charset.defaultCharset());
         when(conf.getCheckstyleConfiguration()).thenReturn(
-                CheckstyleConfiguration.toCheckstyleConfiguration(new File(
-                        "test-resources/checkstyle-conf.xml")));
-        when(conf.getSourceFiles()).thenReturn(
-                Arrays.asList(new File("test-resources/Hello.java"), new File(
-                        "test-resources/World.java")));
+                CheckstyleConfiguration.toCheckstyleConfiguration(
+                        new File("test-resources/checkstyle-conf.xml")));
+
+        final File file = new File("test-resources/Hello.java");
+        final File file2 = new File("test-resources/World.java");
+        when(conf.getSourceFiles()).thenReturn(Arrays.asList(
+                new DefaultInputFile(
+                        new DefaultIndexedFile("",
+                                file.getParentFile().toPath(),
+                                file.getName(),
+                                "java"),
+                        DefaultInputFile::checkMetadata),
+                new DefaultInputFile(
+                        new DefaultIndexedFile("",
+                                file2.getParentFile().toPath(),
+                                file2.getName(),
+                                "java"),
+                        DefaultInputFile::checkMetadata)
+        ));
+
         return conf;
     }
 

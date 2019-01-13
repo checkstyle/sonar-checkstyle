@@ -33,6 +33,8 @@ import org.codehaus.staxmate.SMInputFactory;
 import org.codehaus.staxmate.in.SMInputCursor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonar.api.ExtensionPoint;
+import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.profiles.ProfileImporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
@@ -43,6 +45,8 @@ import org.sonar.api.utils.ValidationMessages;
 
 import com.google.common.annotations.VisibleForTesting;
 
+@ExtensionPoint
+@ScannerSide
 public class CheckstyleProfileImporter extends ProfileImporter {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleProfileImporter.class);

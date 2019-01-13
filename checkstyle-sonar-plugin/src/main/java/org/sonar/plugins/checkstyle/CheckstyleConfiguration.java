@@ -32,11 +32,11 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.BatchExtension;
+import org.sonar.api.ExtensionPoint;
+import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.config.Settings;
 import org.sonar.api.profiles.RulesProfile;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -46,18 +46,23 @@ import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
-public class CheckstyleConfiguration implements BatchExtension {
+@ExtensionPoint
+@ScannerSide
+public class CheckstyleConfiguration {
     public static final String PROPERTY_GENERATE_XML = "sonar.checkstyle.generateXml";
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleConfiguration.class);
 
     private final CheckstyleProfileExporter confExporter;
     private final RulesProfile profile;
-    private final Settings conf;
+    private final org.sonar.api.config.Configuration conf;
     private final FileSystem fileSystem;
 
-    public CheckstyleConfiguration(Settings conf, CheckstyleProfileExporter confExporter,
-            RulesProfile profile, FileSystem fileSystem) {
+    public CheckstyleConfiguration(
+            org.sonar.api.config.Configuration conf,
+            CheckstyleProfileExporter confExporter,
+            RulesProfile profile,
+            FileSystem fileSystem) {
         this.conf = conf;
         this.confExporter = confExporter;
         this.profile = profile;
@@ -81,24 +86,23 @@ public class CheckstyleConfiguration implements BatchExtension {
         }
     }
 
-    public List<File> getSourceFiles() {
+    public List<InputFile> getSourceFiles() {
         final FilePredicates predicates = fileSystem.predicates();
-        final Iterable<File> files = fileSystem.files(predicates.and(
+        final Iterable<InputFile> files = fileSystem.inputFiles(predicates.and(
                 predicates.hasLanguage(CheckstyleConstants.JAVA_KEY),
                 predicates.hasType(InputFile.Type.MAIN)));
-        final List<File> fileList = new ArrayList<>();
-        for (File file : files) {
+        final List<InputFile> fileList = new ArrayList<>();
+        for (InputFile file : files) {
             fileList.add(file);
         }
         return fileList;
     }
 
     public File getTargetXmlReport() {
-        File result = null;
-        if (conf.getBoolean(PROPERTY_GENERATE_XML)) {
-            result = new File(fileSystem.workDir(), "checkstyle-result.xml");
-        }
-        return result;
+        return conf.getBoolean(PROPERTY_GENERATE_XML)
+                .map(aBoolean -> new File(fileSystem.workDir(),
+                        "checkstyle-result.xml"))
+                .orElse(null);
     }
 
     public Configuration getCheckstyleConfiguration() throws CheckstyleException {
