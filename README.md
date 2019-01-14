@@ -77,7 +77,7 @@ In the quality profile, activate some rules from Checkstyle and run an analysis 
 [travis img]:https://secure.travis-ci.org/checkstyle/sonar-checkstyle.png
 
 [teamcity]:https://teamcity.jetbrains.com/viewType.html?buildTypeId=Checkstyle_SonarCheckstyleIdeaInspectionsMaster
-[teamcity img]:https://img.shields.io/teamcity/http/teamcity.jetbrains.com/s/Checkstyle_SonarCheckstyleIdeaInspectionsMaster.svg?label=TeamCity%20inspections
+[teamcity img]:https://teamcity.jetbrains.com/app/rest/builds/buildType:(id:Checkstyle_SonarCheckstyleIdeaInspectionsMaster)/statusIcon
 
 [sonar]:https://sonarcloud.io/dashboard?id=com.github.checkstyle%3Acheckstyle-sonar-plugin-parent
 [sonar img]:https://sonarcloud.io/api/project_badges/measure?project=com.github.checkstyle%3Acheckstyle-sonar-plugin-parent&metric=alert_status
