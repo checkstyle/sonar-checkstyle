@@ -1421,9 +1421,6 @@
     <param key="option" type="s[same,alone,alone_or_singleline]">
       <defaultValue>same</defaultValue>
     </param>
-    <param key="shouldStartLine" type="BOOLEAN">
-      <defaultValue>true</defaultValue>
-    </param>
     <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE,CLASS_DEF,METHOD_DEF,CTOR_DEF,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,STATIC_INIT,INSTANCE_INIT]">
       <defaultValue>LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE</defaultValue>
     </param>
