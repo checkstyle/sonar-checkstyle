@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.github.checkstyle</groupId>
     <artifactId>checkstyle-sonar-plugin-parent</artifactId>
-    <version>4.17</version>
+    <version>4.18-SNAPSHOT</version>
   </parent>
 
   <artifactId>checkstyle-sonar-plugin</artifactId>
