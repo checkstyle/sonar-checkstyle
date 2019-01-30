@@ -17,6 +17,10 @@ Official announcement of project transfer - https://groups.google.com/d/topic/so
 
 This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforge.net/).
 
+Compatibility matrix from Sonar team: https://docs.sonarqube.org/display/PLUG/Plugin+Version+Matrix
+
+Compatibility matrix from checkstyle team:
+
 Checkstyle Plugin|Sonar|Checkstyle|Jdk
 -----------------|-----|----------|---
 4.17|6.7  |8.17|1.8
