@@ -1,4 +1,4 @@
-FROM sonarqube:7.4-community
+FROM sonarqube:7.6-community
 
 ARG MAVEN_VERSION=3.3.9
 ARG USER_HOME_DIR="/root"
