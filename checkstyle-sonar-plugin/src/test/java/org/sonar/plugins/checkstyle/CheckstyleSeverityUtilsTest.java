@@ -23,6 +23,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.lang.reflect.Constructor;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.sonar.api.rules.RulePriority;
 
@@ -35,6 +36,26 @@ public class CheckstyleSeverityUtilsTest {
         assertThat(CheckstyleSeverityUtils.toSeverity(RulePriority.MAJOR)).isEqualTo("warning");
         assertThat(CheckstyleSeverityUtils.toSeverity(RulePriority.MINOR)).isEqualTo("info");
         assertThat(CheckstyleSeverityUtils.toSeverity(RulePriority.INFO)).isEqualTo("info");
+    }
+
+    @Test
+    public void testToSeverityString() {
+        assertThat(CheckstyleSeverityUtils.toSeverity("BLOCKER")).isEqualTo("error");
+        assertThat(CheckstyleSeverityUtils.toSeverity("CRITICAL")).isEqualTo("error");
+        assertThat(CheckstyleSeverityUtils.toSeverity("MAJOR")).isEqualTo("warning");
+        assertThat(CheckstyleSeverityUtils.toSeverity("MINOR")).isEqualTo("info");
+        assertThat(CheckstyleSeverityUtils.toSeverity("INFO")).isEqualTo("info");
+    }
+
+    @Test
+    public void testToSeverityWrongString() {
+        try {
+            CheckstyleSeverityUtils.toSeverity("nothing");
+            Assert.fail("IOException while writing should not be ignored");
+        }
+        catch (IllegalArgumentException ex) {
+            assertThat(ex.getMessage()).isEqualTo("Priority not supported: nothing");
+        }
     }
 
     @Test

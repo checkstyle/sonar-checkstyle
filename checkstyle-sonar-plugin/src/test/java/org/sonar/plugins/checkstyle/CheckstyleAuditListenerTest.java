@@ -102,6 +102,12 @@ public class CheckstyleAuditListenerTest {
         assertThat(CheckstyleAuditListener.getLineId(eventTest)).isNull();
         assertThat(CheckstyleAuditListener.getMessage(eventTest)).isNull();
         assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isNull();
+
+        eventTest = new AuditEvent(this, "", new LocalizedMessage(0, "", "", null, "module",
+                CheckstyleAuditListenerTest.class, "msg"));
+        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isNull();
+        assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
+        assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isEqualTo("module");
     }
 
     @Test

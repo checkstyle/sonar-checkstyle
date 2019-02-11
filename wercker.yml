@@ -23,8 +23,8 @@ build:
         cd /opt/sonarqube/
         rm -f logs/*.*
         ./bin/run.sh &
-        echo "sleeping 40 to let sonar start up"
-        sleep 40
+        echo "sleeping 60 to let sonar start up"
+        sleep 60
         cd -
         mvn sonar:sonar
         grep "ERROR" /opt/sonarqube/logs/* | cat
