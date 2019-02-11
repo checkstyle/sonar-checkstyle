@@ -22,6 +22,7 @@ package org.sonar.plugins.checkstyle;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -31,11 +32,14 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
-import org.sonar.api.rules.RuleParam;
+import org.sonar.plugins.checkstyle.rule.ActiveRuleWrapper;
+import org.sonar.plugins.checkstyle.rule.ActiveRuleWrapperScannerImpl;
+import org.sonar.plugins.checkstyle.rule.ActiveRuleWrapperServerImpl;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -63,19 +67,39 @@ public class CheckstyleProfileExporter extends ProfileExporter {
             final List<ActiveRule> activeRules = profile
                     .getActiveRulesByRepository(CheckstyleConstants.REPOSITORY_KEY);
             if (activeRules != null) {
-                final Map<String, List<ActiveRule>> activeRulesByConfigKey =
-                        arrangeByConfigKey(activeRules);
+                final List<ActiveRuleWrapper> activeRuleWrappers = new ArrayList<>();
+                for (ActiveRule activeRule : activeRules) {
+                    activeRuleWrappers.add(new ActiveRuleWrapperServerImpl(activeRule));
+                }
+                final Map<String, List<ActiveRuleWrapper>> activeRulesByConfigKey =
+                        arrangeByConfigKey(activeRuleWrappers);
                 generateXml(writer, activeRulesByConfigKey);
             }
         }
         catch (IOException ex) {
             throw new IllegalStateException("Fail to export the profile " + profile, ex);
         }
+    }
+
+    public void exportProfile(ActiveRules activeRules, Writer writer) {
+        try {
+            final List<ActiveRuleWrapper> activeRuleWrappers = new ArrayList<>();
+            for (org.sonar.api.batch.rule.ActiveRule activeRule : activeRules
+                    .findByRepository(CheckstyleConstants.REPOSITORY_KEY)) {
+                activeRuleWrappers.add(new ActiveRuleWrapperScannerImpl(activeRule));
+            }
+            final Map<String, List<ActiveRuleWrapper>> activeRulesByConfigKey =
+                    arrangeByConfigKey(activeRuleWrappers);
+            generateXml(writer, activeRulesByConfigKey);
+        }
+        catch (IOException ex) {
+            throw new IllegalStateException("Fail to export active rules.", ex);
+        }
 
     }
 
-    private void generateXml(Writer writer, Map<String, List<ActiveRule>> activeRulesByConfigKey)
-            throws IOException {
+    private void generateXml(Writer writer, Map<String,
+            List<ActiveRuleWrapper>> activeRulesByConfigKey) throws IOException {
         appendXmlHeader(writer);
         appendCustomFilters(writer);
         appendCheckerModules(writer, activeRulesByConfigKey);
@@ -95,12 +119,12 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
 
     private static void appendCheckerModules(Writer writer,
-            Map<String, List<ActiveRule>> activeRulesByConfigKey) throws IOException {
-        for (Map.Entry<String, List<ActiveRule>> entry : activeRulesByConfigKey.entrySet()) {
+            Map<String, List<ActiveRuleWrapper>> activeRulesByConfigKey) throws IOException {
+        for (Map.Entry<String, List<ActiveRuleWrapper>> entry : activeRulesByConfigKey.entrySet()) {
             final String configKey = entry.getKey();
             if (!isInTreeWalker(configKey)) {
-                final List<ActiveRule> activeRules = entry.getValue();
-                for (ActiveRule activeRule : activeRules) {
+                final List<ActiveRuleWrapper> activeRules = entry.getValue();
+                for (ActiveRuleWrapper activeRule : activeRules) {
                     appendModule(writer, activeRule);
                 }
             }
@@ -108,7 +132,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
 
     private void appendTreeWalker(Writer writer,
-            Map<String, List<ActiveRule>> activeRulesByConfigKey) throws IOException {
+            Map<String, List<ActiveRuleWrapper>> activeRulesByConfigKey) throws IOException {
         writer.append("<module name=\"TreeWalker\">");
         if (isSuppressWarningsEnabled()) {
             writer.append("<module name=\"SuppressWarningsHolder\"/> ");
@@ -117,8 +141,8 @@ public class CheckstyleProfileExporter extends ProfileExporter {
         Collections.sort(ruleSet);
         for (String configKey : ruleSet) {
             if (isInTreeWalker(configKey)) {
-                final List<ActiveRule> activeRules = activeRulesByConfigKey.get(configKey);
-                for (ActiveRule activeRule : activeRules) {
+                final List<ActiveRuleWrapper> activeRules = activeRulesByConfigKey.get(configKey);
+                for (ActiveRuleWrapper activeRule : activeRules) {
                     appendModule(writer, activeRule);
                 }
             }
@@ -151,16 +175,17 @@ public class CheckstyleProfileExporter extends ProfileExporter {
         return StringUtils.startsWithIgnoreCase(configKey, "Checker/TreeWalker/");
     }
 
-    private static Map<String, List<ActiveRule>> arrangeByConfigKey(List<ActiveRule> activeRules) {
-        final Map<String, List<ActiveRule>> result = new HashMap<>();
-        for (ActiveRule activeRule : activeRules) {
-            final String key = activeRule.getConfigKey();
+    private static Map<String, List<ActiveRuleWrapper>> arrangeByConfigKey(
+            Collection<ActiveRuleWrapper> activeRules) {
+        final Map<String, List<ActiveRuleWrapper>> result = new HashMap<>();
+        for (ActiveRuleWrapper activeRule : activeRules) {
+            final String key = activeRule.getInternalKey();
             if (result.containsKey(key)) {
-                final List<ActiveRule> rules = result.get(key);
+                final List<ActiveRuleWrapper> rules = result.get(key);
                 rules.add(activeRule);
             }
             else {
-                final List<ActiveRule> rules = new ArrayList<>();
+                final List<ActiveRuleWrapper> rules = new ArrayList<>();
                 rules.add(activeRule);
                 result.put(key, rules);
             }
@@ -168,26 +193,25 @@ public class CheckstyleProfileExporter extends ProfileExporter {
         return result;
     }
 
-    private static void appendModule(Writer writer, ActiveRule activeRule) throws IOException {
-        final String moduleName = StringUtils.substringAfterLast(activeRule.getConfigKey(), "/");
+    private static void appendModule(Writer writer, ActiveRuleWrapper activeRule)
+            throws IOException {
+        final String moduleName = StringUtils.substringAfterLast(activeRule.getInternalKey(), "/");
         writer.append("<module name=\"");
         StringEscapeUtils.escapeXml(writer, moduleName);
         writer.append("\">");
-        if (activeRule.getRule().getTemplate() != null) {
+        if (activeRule.getTemplateRuleKey() != null) {
             appendModuleProperty(writer, "id", activeRule.getRuleKey());
         }
-        appendModuleProperty(writer, "severity",
-                CheckstyleSeverityUtils.toSeverity(activeRule.getSeverity()));
+        appendModuleProperty(writer, "severity", activeRule.getSeverity());
         appendRuleParameters(writer, activeRule);
         writer.append(CLOSE_MODULE);
     }
 
-    private static void appendRuleParameters(Writer writer, ActiveRule activeRule)
+    private static void appendRuleParameters(Writer writer, ActiveRuleWrapper activeRule)
             throws IOException {
-        for (RuleParam ruleParam : activeRule.getRule().getParams()) {
-            final String value = activeRule.getParameter(ruleParam.getKey());
-            if (StringUtils.isNotBlank(value)) {
-                appendModuleProperty(writer, ruleParam.getKey(), value);
+        for (Map.Entry<String, String> param : activeRule.getParams().entrySet()) {
+            if (StringUtils.isNotBlank(param.getValue())) {
+                appendModuleProperty(writer, param.getKey(), param.getValue());
             }
         }
     }

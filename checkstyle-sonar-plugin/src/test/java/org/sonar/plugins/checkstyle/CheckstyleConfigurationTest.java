@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
@@ -35,6 +36,8 @@ import org.sonar.api.batch.fs.internal.DefaultIndexedFile;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.fs.internal.SensorStrategy;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
+import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.batch.rule.internal.DefaultActiveRules;
 import org.sonar.api.config.PropertyDefinitions;
 import org.sonar.api.config.internal.ConfigurationBridge;
 import org.sonar.api.config.internal.MapSettings;
@@ -106,7 +109,7 @@ public class CheckstyleConfigurationTest {
     public void writeConfigurationToWorkingDir() throws IOException {
         final CheckstyleProfileExporter exporter = new FakeExporter();
         final CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter,
-                null, fileSystem);
+                new DefaultActiveRules(Collections.emptyList()), fileSystem);
         final File xmlFile = configuration.getXmlDefinitionFile();
 
         assertThat(xmlFile.exists()).isTrue();
@@ -132,7 +135,8 @@ public class CheckstyleConfigurationTest {
         profile.activateRule(rule, null);
 
         final CheckstyleConfiguration configuration = new CheckstyleConfiguration(settings,
-                new CheckstyleProfileExporter(settings), profile, fileSystem);
+                new CheckstyleProfileExporter(settings),
+                new DefaultActiveRules(Collections.emptyList()), fileSystem);
         final Configuration checkstyleConfiguration = configuration.getCheckstyleConfiguration();
         assertThat(checkstyleConfiguration).isNotNull();
         assertThat(checkstyleConfiguration.getAttribute("charset")).isEqualTo("UTF-8");
@@ -149,7 +153,7 @@ public class CheckstyleConfigurationTest {
         }
 
         @Override
-        public void exportProfile(RulesProfile profile, Writer writer) {
+        public void exportProfile(ActiveRules activeRules, Writer writer) {
             try {
                 writer.write("<conf/>");
             }

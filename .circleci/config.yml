@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: checkstyle/sonarqube-maven-git:7.4-community
+      - image: checkstyle/sonarqube-maven-git:7.6-community-3612321
 
     working_directory: ~/repo
 
@@ -41,8 +41,8 @@ jobs:
           rm -f logs/*.*
           echo "run sonarqube web service"
           ./bin/run.sh &
-          echo "sleeping 40 to let sonar start up ..."
-          sleep 40
+          echo "sleeping 60 to let sonar start up ..."
+          sleep 60
           echo "check that sonar service is up ..."
           grep "SonarQube is up" logs/sonar.log
           echo "switching back to repository code"

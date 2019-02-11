@@ -34,18 +34,22 @@ public final class CheckstyleSeverityUtils {
     }
 
     public static String toSeverity(RulePriority priority) {
+        return toSeverity(priority.name());
+    }
+
+    public static String toSeverity(String priority) {
         final String result;
 
         switch (priority) {
-            case BLOCKER:
-            case CRITICAL:
+            case "BLOCKER":
+            case "CRITICAL":
                 result = SeverityLevel.ERROR.getName();
                 break;
-            case MAJOR:
+            case "MAJOR":
                 result = SeverityLevel.WARNING.getName();
                 break;
-            case MINOR:
-            case INFO:
+            case "MINOR":
+            case "INFO":
                 result = SeverityLevel.INFO.getName();
                 break;
             default:

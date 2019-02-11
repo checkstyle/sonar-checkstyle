@@ -37,7 +37,7 @@ import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.profiles.RulesProfile;
+import org.sonar.api.batch.rule.ActiveRules;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
@@ -54,18 +54,18 @@ public class CheckstyleConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleConfiguration.class);
 
     private final CheckstyleProfileExporter confExporter;
-    private final RulesProfile profile;
+    private final ActiveRules activeRules;
     private final org.sonar.api.config.Configuration conf;
     private final FileSystem fileSystem;
 
     public CheckstyleConfiguration(
             org.sonar.api.config.Configuration conf,
             CheckstyleProfileExporter confExporter,
-            RulesProfile profile,
+            ActiveRules activeRules,
             FileSystem fileSystem) {
         this.conf = conf;
         this.confExporter = confExporter;
-        this.profile = profile;
+        this.activeRules = activeRules;
         this.fileSystem = fileSystem;
     }
 
@@ -74,7 +74,7 @@ public class CheckstyleConfiguration {
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false),
                 StandardCharsets.UTF_8)) {
 
-            confExporter.exportProfile(profile, writer);
+            confExporter.exportProfile(activeRules, writer);
             writer.flush();
             return xmlFile;
 
