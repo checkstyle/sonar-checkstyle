@@ -49,7 +49,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
 
     public static final String DOCTYPE_DECLARATION =
         "<!DOCTYPE module PUBLIC \"-//Puppy Crawl//DTD Check Configuration 1.2//EN\" "
-        + "\"http://www.puppycrawl.com/dtds/configuration_1_2.dtd\">";
+        + "\"https://checkstyle.org/dtds/configuration_1_2.dtd\">";
     private static final String CLOSE_MODULE = "</module>";
 
     private final Configuration configuration;
