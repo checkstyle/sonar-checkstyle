@@ -715,7 +715,7 @@
     <param key="ignoredMethodNames" type="s{}">
       <defaultValue>"getInitialContext,getEnvironment"</defaultValue>
     </param>
-    <param key="format" type="REGULAR_EXPRESSION">
+    <param key="illegalAbstractClassNameFormat" type="REGULAR_EXPRESSION">
       <defaultValue>^(.*[\\.])?Abstract.*$</defaultValue>
     </param>
     <!--
@@ -1938,7 +1938,7 @@
     <param key="allowSamelineParameterizedAnnotation" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF,PARAMETER_DEF,ANNOTATION_DEF,TYPECAST,LITERAL_THROWS,IMPLEMENTS_CLAUSE,TYPE_ARGUMENT,LITERAL_NEW,DOT,ANNOTATION_FIELD_DEF]">
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF,PARAMETER_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF]">
       <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF</defaultValue>
     </param>
   </rule>
