@@ -23,6 +23,7 @@ Compatibility matrix from checkstyle team:
 
 Checkstyle Plugin|Sonar|Checkstyle|Jdk
 -----------------|-----|----------|---
+4.18|6.7  |8.18|1.8
 4.17|6.7  |8.17|1.8
 4.16|5.6.6|8.16|1.8
 4.15|5.6.6|8.15|1.8
