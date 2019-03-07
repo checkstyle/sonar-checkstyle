@@ -48,8 +48,8 @@ import com.google.common.annotations.VisibleForTesting;
 public class CheckstyleProfileExporter extends ProfileExporter {
 
     public static final String DOCTYPE_DECLARATION =
-        "<!DOCTYPE module PUBLIC \"-//Puppy Crawl//DTD Check Configuration 1.2//EN\" "
-        + "\"https://checkstyle.org/dtds/configuration_1_2.dtd\">";
+        "<!DOCTYPE module PUBLIC \"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN\" "
+        + "\"https://checkstyle.org/dtds/configuration_1_3.dtd\">";
     private static final String CLOSE_MODULE = "</module>";
 
     private final Configuration configuration;
