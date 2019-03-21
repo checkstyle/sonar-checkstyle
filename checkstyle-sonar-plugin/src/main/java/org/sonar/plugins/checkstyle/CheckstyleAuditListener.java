@@ -100,15 +100,10 @@ public class CheckstyleAuditListener implements AuditListener {
             final NewIssue issue = context.newIssue();
             final ActiveRule rule = ruleFinder.find(
                     RuleKey.of(CheckstyleConstants.REPOSITORY_KEY, ruleKey));
-            final Integer lineId = getLineId(event);
-            int lineNo = 1;
-            if (lineId != null) {
-                lineNo = lineId;
-            }
             if (Objects.nonNull(issue) && Objects.nonNull(rule)) {
                 final NewIssueLocation location = issue.newLocation()
                         .on(currentResource)
-                        .at(currentResource.selectLine(lineNo))
+                        .at(currentResource.selectLine(getLineId(event)))
                         .message(message);
                 issue.forRule(rule.ruleKey())
                         .at(location)
@@ -162,14 +157,12 @@ public class CheckstyleAuditListener implements AuditListener {
     }
 
     @VisibleForTesting
-    static Integer getLineId(AuditEvent event) {
-        Integer result = null;
+    static int getLineId(AuditEvent event) {
+        int result = 1;
         try {
-            final int line = event.getLine();
-            // checkstyle returns 0 if there is no relation to a file content,
-            // but we use null
-            if (line != 0) {
-                result = line;
+            final int eventLine = event.getLine();
+            if (eventLine > 0) {
+                result = eventLine;
             }
         }
         catch (Exception ex) {
