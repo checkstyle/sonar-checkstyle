@@ -100,10 +100,15 @@ public class CheckstyleAuditListener implements AuditListener {
             final NewIssue issue = context.newIssue();
             final ActiveRule rule = ruleFinder.find(
                     RuleKey.of(CheckstyleConstants.REPOSITORY_KEY, ruleKey));
+            final Integer lineId = getLineId(event);
+            int lineNo = 1;
+            if (lineId != null) {
+                lineNo = lineId;
+            }
             if (Objects.nonNull(issue) && Objects.nonNull(rule)) {
                 final NewIssueLocation location = issue.newLocation()
                         .on(currentResource)
-                        .at(currentResource.selectLine(getLineId(event)))
+                        .at(currentResource.selectLine(lineNo))
                         .message(message);
                 issue.forRule(rule.ruleKey())
                         .at(location)
