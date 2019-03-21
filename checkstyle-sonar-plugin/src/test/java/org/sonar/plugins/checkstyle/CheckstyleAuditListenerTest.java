@@ -86,7 +86,7 @@ public class CheckstyleAuditListenerTest {
 
         eventTest = new AuditEvent(this, "", new LocalizedMessage(0, "", "", null, "",
                 CheckstyleAuditListenerTest.class, "msg"));
-        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isNull();
+        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
         assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
         assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isEqualTo(
                 CheckstyleAuditListenerTest.class.getName());
@@ -99,19 +99,33 @@ public class CheckstyleAuditListenerTest {
                 CheckstyleAuditListenerTest.class.getName());
 
         eventTest = new AuditEvent(this);
-        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isNull();
+        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
         assertThat(CheckstyleAuditListener.getMessage(eventTest)).isNull();
         assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isNull();
 
         eventTest = new AuditEvent(this, "", new LocalizedMessage(0, "", "", null, "module",
                 CheckstyleAuditListenerTest.class, "msg"));
-        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isNull();
+        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
         assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
         assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isEqualTo("module");
     }
 
     @Test
     public void addErrorTest() {
+        addErrorTestForLine(42);
+    }
+
+    @Test
+    public void addErrorLine0Test() {
+        addErrorTestForLine(0);
+    }
+
+    @Test
+    public void addErrorLine1Test() {
+        addErrorTestForLine(1);
+    }
+
+    private void addErrorTestForLine(final int pLineNo) {
         final ActiveRule rule = setupRule("repo", "key");
 
         final NewIssue newIssue = mock(NewIssue.class);
@@ -125,9 +139,12 @@ public class CheckstyleAuditListenerTest {
         when(newLocation.message(anyString())).thenReturn(newLocation);
 
         when(inputFile.selectLine(anyInt())).thenReturn(new DefaultTextRange(
-                new DefaultTextPointer(1, 1), new DefaultTextPointer(1, 2)));
+            new DefaultTextPointer(1, 1), new DefaultTextPointer(1, 2)));
 
-        addErrorToListener(event);
+        final AuditEvent eventAdded = new AuditEvent(this, file.getAbsolutePath(),
+            new LocalizedMessage(pLineNo, "", "", null, "", CheckstyleAuditListenerTest.class,
+                "msg"));
+        addErrorToListener(eventAdded);
 
         verify(newIssue, times(1)).save();
         verify(newIssue, times(1)).forRule(rule.ruleKey());
