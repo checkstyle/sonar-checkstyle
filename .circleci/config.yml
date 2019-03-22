@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: checkstyle/sonarqube-maven-git:7.6-community-3612321
+      - image: checkstyle/sonarqube-maven-git:7.7-community-8c1737e
 
     working_directory: ~/repo
 
