@@ -16,10 +16,10 @@
 
   <properties>
     <maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
-    <maven.sevntu.checkstyle.plugin.version>1.29.0</maven.sevntu.checkstyle.plugin.version>
+    <maven.sevntu.checkstyle.plugin.version>1.33.0</maven.sevntu.checkstyle.plugin.version>
     <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
     <maven.sevntu.checkstyle.plugin.checkstyle.version>
-      8.10
+      8.18
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
   </properties>
 
