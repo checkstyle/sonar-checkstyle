@@ -28,6 +28,7 @@ public final class CheckstyleConstants {
 
     public static final String CHECKER_FILTERS_KEY = "sonar.checkstyle.filters";
     public static final String TREEWALKER_FILTERS_KEY = "sonar.checkstyle.treewalkerfilters";
+    public static final String CHECKER_TAB_WIDTH = "sonar.checkstyle.checker.tabWidth";
 
     public static final String CHECKER_FILTERS_DEFAULT_VALUE =
             "<module name=\"SuppressWarningsFilter\" />";
