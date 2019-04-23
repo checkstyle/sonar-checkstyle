@@ -101,6 +101,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     private void generateXml(Writer writer, Map<String,
             List<ActiveRuleWrapper>> activeRulesByConfigKey) throws IOException {
         appendXmlHeader(writer);
+        appendTabWidth(writer);
         appendCustomFilters(writer);
         appendCheckerModules(writer, activeRulesByConfigKey);
         appendTreeWalker(writer, activeRulesByConfigKey);
@@ -116,6 +117,12 @@ public class CheckstyleProfileExporter extends ProfileExporter {
         final String filtersXml = configuration.get(CheckstyleConstants.CHECKER_FILTERS_KEY)
                 .orElse(null);
         writer.append(filtersXml);
+    }
+
+    private void appendTabWidth(Writer writer) throws IOException {
+        final String tabWidth = configuration.get(CheckstyleConstants.CHECKER_TAB_WIDTH)
+                .orElse(null);
+        appendModuleProperty(writer, "tabWidth", tabWidth);
     }
 
     private static void appendCheckerModules(Writer writer,

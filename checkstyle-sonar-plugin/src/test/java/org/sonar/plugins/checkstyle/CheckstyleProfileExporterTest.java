@@ -242,6 +242,19 @@ public class CheckstyleProfileExporterTest {
                         + "addCustomTreewalkerFilters.xml", sanitizeForTests(writer.toString()));
     }
 
+    @Test
+    public void addTabWidthProperty() {
+        initSettings(CheckstyleConstants.CHECKER_TAB_WIDTH, "8");
+
+        final RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final StringWriter writer = new StringWriter();
+        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
+
+        CheckstyleTestUtils.assertSimilarXmlWithResource(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+                        + "addTabWidthProperty.xml", sanitizeForTests(writer.toString()));
+    }
+
     @SuppressWarnings("unchecked")
     private void initSettings(@Nullable String key, @Nullable String property) {
         final MapSettings mapSettings = new MapSettings(

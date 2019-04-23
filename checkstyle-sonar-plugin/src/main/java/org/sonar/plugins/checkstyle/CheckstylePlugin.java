@@ -32,7 +32,7 @@ public final class CheckstylePlugin extends SonarPlugin {
 
     private static final String CHECKSTYLE_SUB_CATEGORY_NAME = "Checkstyle";
 
-    private static final String FILTERS_DESCRIPTION_HEADER = "Checkstyle supports";
+    private static final String DESCRIPTION_HEADER = "Checkstyle supports";
     private static final String FILTERS_DESCRIPTION_FOOTER = "This property"
             + " allows the configuration of those filters with a "
             + "native XML format. See the "
@@ -40,14 +40,14 @@ public final class CheckstylePlugin extends SonarPlugin {
             + "Checkstyle</a> "
             + "configuration for more information.";
 
-    private static final String CHECKER_FILTERS_DESCRIPTION = FILTERS_DESCRIPTION_HEADER
+    private static final String CHECKER_FILTERS_DESCRIPTION = DESCRIPTION_HEADER
             + " <a href=\"http://checkstyle.sourceforge.net/config_filefilters.html\">file filter"
             + "</a> and several "
             + "<a href=\"http://checkstyle.sourceforge.net/config_filters.html\">"
             + "violation filtering mechanisms</a>: "
             + FILTERS_DESCRIPTION_FOOTER;
 
-    private static final String TREEWALKER_FILTERS_DESCRIPTION = FILTERS_DESCRIPTION_HEADER
+    private static final String TREEWALKER_FILTERS_DESCRIPTION = DESCRIPTION_HEADER
             + " <a href=\"http://checkstyle.sourceforge.net/config_filters.html"
             + "#SuppressWithNearbyCommentFilter\">"
             + "SuppressWithNearbyCommentFilter"
@@ -56,6 +56,16 @@ public final class CheckstylePlugin extends SonarPlugin {
             + "#SuppressionCommentFilter\">"
             + "SuppressionCommentFilter</a>: "
             + FILTERS_DESCRIPTION_FOOTER;
+
+    private static final String CHECKER_TAB_WIDTH_DESCRIPTION = DESCRIPTION_HEADER
+            + " the <a href=\"https://checkstyle.org/config.html#tabWidth\">"
+            + "tabWidth</a> property, representing the number of expanded spaces"
+            + "for a tab character ('\\t')."
+            + "The Checkstyle default's value is used"
+            + " if this property is not set. See the "
+            + "<a href='https://checkstyle.org/config.html'>"
+            + "Checkstyle</a> "
+            + "configuration for more information.";
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -77,6 +87,14 @@ public final class CheckstylePlugin extends SonarPlugin {
                                 .description(TREEWALKER_FILTERS_DESCRIPTION)
                                 .type(PropertyType.TEXT)
                                 .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE).build(),
+                        PropertyDefinition.builder(CheckstyleConstants.CHECKER_TAB_WIDTH)
+                                .category(CoreProperties.CATEGORY_JAVA)
+                                .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
+                                .name("Tab Width")
+                                .description(CHECKER_TAB_WIDTH_DESCRIPTION)
+                                .type(PropertyType.INTEGER)
+                                .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
+                                .build(),
                         PropertyDefinition.builder(CheckstyleConfiguration.PROPERTY_GENERATE_XML)
                                 .defaultValue("false").category(CoreProperties.CATEGORY_JAVA)
                                 .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
