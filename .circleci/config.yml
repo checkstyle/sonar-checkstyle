@@ -35,7 +35,7 @@ jobs:
           echo "creation of jar is skipped as it was created on previous step"
           #mvn package -Pno-validations
           echo "coping jar to sonarqube ..."
-          cp checkstyle-sonar-plugin/target/checkstyle-sonar-plugin-$POM_VERSION.jar /opt/sonarqube/extensions/plugins/
+          cp target/checkstyle-sonar-plugin-$POM_VERSION.jar /opt/sonarqube/extensions/plugins/
           cd /opt/sonarqube/
           echo "remove existing logs ..."
           rm -f logs/*.*
