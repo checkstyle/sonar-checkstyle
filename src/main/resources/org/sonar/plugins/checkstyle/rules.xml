@@ -938,6 +938,24 @@
     <status>READY</status>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocTypeCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Missing Javadoc Type]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/MissingJavadocType]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
+    <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
+      <defaultValue>public</defaultValue>
+    </param>
+    <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
+    </param>
+    <param key="skipAnnotations" type="s{}">
+    </param>
+    <param key="tokens" type="s[INTERFACE_DEF,CLASS_DEF,ENUM_DEF,ANNOTATION_DEF]">
+      <defaultValue>INTERFACE_DEF,CLASS_DEF,ENUM_DEF,ANNOTATION_DEF</defaultValue>
+    </param>
+    <status>READY</status>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Left Curly]]></name>
