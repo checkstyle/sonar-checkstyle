@@ -93,5 +93,6 @@ In the quality profile, activate some rules from Checkstyle and run an analysis 
 [circleci]: https://circleci.com/gh/checkstyle/sonar-checkstyle/tree/master
 [circleci img]: https://circleci.com/gh/checkstyle/sonar-checkstyle/tree/master.svg?style=svg
 
-[snyk-sonar]: https://snyk.io/test/github/checkstyle/sonar-checkstyle?targetFile=checkstyle-sonar-plugin/pom.xml
-[snyk-sonar img]: https://snyk.io/test/github/checkstyle/sonar-checkstyle/badge.svg?targetFile=checkstyle-sonar-plugin/pom.xml
+[snyk-sonar]: https://snyk.io/test/github/checkstyle/sonar-checkstyle?targetFile=pom.xml
+[snyk-sonar img]: https://snyk.io/test/github/checkstyle/sonar-checkstyle/badge.svg?targetFile=pom.xml
+
