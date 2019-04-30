@@ -10,7 +10,14 @@ ci)
 
 sonar)
   if [[ $TRAVIS_PULL_REQUEST =~ ^([0-9]*)$ ]]; then exit 0; fi
-  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.login=$SONAR_TOKEN
+  mvn clean \
+    org.jacoco:jacoco-maven-plugin:prepare-agent \
+    package \
+    sonar:sonar \
+    -Dsonar.projectKey=checkstyle_sonar-checkstyle \
+    -Dsonar.organization=checkstyle \
+    -Dsonar.host.url=https://sonarcloud.io \
+    -Dsonar.login=$SONAR_TOKEN
   ;;
 
 nondex)
