@@ -4,7 +4,7 @@
 [![][teamcity img]][teamcity]
 [![][sonar img]][sonar]
 
-[![sonar-checkstyle vulnerabilities][snyk-sonar img]][snyk-sonar] at sonar-checkstyle
+[![sonar-checkstyle vulnerabilities][snyk-sonar img]][snyk-sonar]
 
 Sonar Checkstyle
 ==========
