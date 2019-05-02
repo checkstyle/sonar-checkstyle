@@ -85,8 +85,8 @@ In the quality profile, activate some rules from Checkstyle and run an analysis 
 [teamcity]:https://teamcity.jetbrains.com/viewType.html?buildTypeId=Checkstyle_SonarCheckstyleIdeaInspectionsMaster
 [teamcity img]:https://teamcity.jetbrains.com/app/rest/builds/buildType:(id:Checkstyle_SonarCheckstyleIdeaInspectionsMaster)/statusIcon
 
-[sonar]:https://sonarcloud.io/dashboard?id=com.github.checkstyle%3Acheckstyle-sonar-plugin
-[sonar img]:https://sonarcloud.io/api/project_badges/measure?project=com.github.checkstyle%3Acheckstyle-sonar-plugin&metric=alert_status
+[sonar]:https://sonarcloud.io/dashboard?id=checkstyle_sonar-checkstyle
+[sonar img]:https://sonarcloud.io/api/project_badges/measure?project=checkstyle_sonar-checkstyle&metric=alert_status
 
 [wercker]: https://app.wercker.com/project/bykey/ece513d8a6eb70207dd3b805b63e8d1c
 [wercker img]: https://app.wercker.com/status/ece513d8a6eb70207dd3b805b63e8d1c/s/master
