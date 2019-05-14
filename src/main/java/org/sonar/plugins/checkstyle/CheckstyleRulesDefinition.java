@@ -21,14 +21,16 @@ package org.sonar.plugins.checkstyle;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Objects;
 import java.util.Properties;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
-import org.sonar.squidbridge.rules.ExternalDescriptionLoader;
 import org.sonar.squidbridge.rules.SqaleXmlLoader;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -61,12 +63,28 @@ public final class CheckstyleRulesDefinition implements RulesDefinition {
                 .getResourceAsStream(xmlRulesFilePath)) {
             ruleLoader.load(repository, resource, "UTF-8");
         }
-        ExternalDescriptionLoader.loadHtmlDescriptions(repository, htmlDescriptionFolder);
+        loadHtmlDescriptions(repository, htmlDescriptionFolder);
         try (InputStream resource = CheckstyleRulesDefinition.class
                 .getResourceAsStream("/org/sonar/l10n/checkstyle.properties")) {
             loadNames(repository, resource);
         }
         SqaleXmlLoader.load(repository, "/com/sonar/sqale/checkstyle-model.xml");
+    }
+
+    private static void loadHtmlDescriptions(NewRepository repository, String htmlDescriptionFolder) {
+        // code adapted from:
+        // https://github.com/SonarSource/sslr-squid-bridge/blob/2.7.0.377/
+        // src/main/java/org/sonar/squidbridge/rules/ExternalDescriptionLoader.java
+        for (NewRule rule : repository.rules()) {
+            final URL resource = CheckstyleRulesDefinition.class.getResource(htmlDescriptionFolder
+                    + "/" + rule.key() + ".html");
+            try {
+                rule.setHtmlDescription(Resources.toString(resource, Charsets.UTF_8));
+            }
+            catch(IOException e) {
+                throw new IllegalStateException("Failed to read: " + resource, e);
+            }
+        }
     }
 
     private static void loadNames(NewRepository repository, InputStream stream) {

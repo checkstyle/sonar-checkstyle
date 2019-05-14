@@ -123,7 +123,7 @@ public class CheckstyleConfigurationTest {
     public void getCheckstyleConfiguration() throws Exception {
         fileSystem.setEncoding(StandardCharsets.UTF_8);
         final MapSettings mapSettings = new MapSettings(new PropertyDefinitions(
-                new CheckstylePlugin().getExtensions()));
+                new CheckstylePlugin().getCheckstyleExtensions()));
         mapSettings.setProperty(CheckstyleConstants.CHECKER_FILTERS_KEY,
                 CheckstyleConstants.CHECKER_FILTERS_DEFAULT_VALUE);
         final org.sonar.api.config.Configuration settings = new ConfigurationBridge(mapSettings);

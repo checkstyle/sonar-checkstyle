@@ -22,13 +22,19 @@ package org.sonar.plugins.checkstyle;
 import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.sonar.api.Plugin;
+import org.sonar.api.SonarRuntime;
 
 public class CheckstylePluginTest {
 
     @Test
     public void testGetExtensions() {
+        final SonarRuntime sonarRuntime = Mockito.mock(SonarRuntime.class);
         final CheckstylePlugin plugin = new CheckstylePlugin();
-        assertThat(plugin.getExtensions().size()).isGreaterThan(1);
+        final Plugin.Context context = new Plugin.Context(sonarRuntime);
+        plugin.define(context);
+        assertThat(context.getExtensions().size()).isGreaterThan(1);
     }
 
 }

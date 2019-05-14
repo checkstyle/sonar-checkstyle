@@ -34,6 +34,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +52,7 @@ import com.puppycrawl.tools.checkstyle.XMLLogger;
 @ExtensionPoint
 @ScannerSide
 public class CheckstyleExecutor {
-    public static final String PROPERTIES_PATH =
+    public static final String PROPERTIES_LOCATION =
             "/org/sonar/plugins/checkstyle/checkstyle-plugin.properties";
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleExecutor.class);
@@ -103,7 +104,7 @@ public class CheckstyleExecutor {
             if (xmlReport != null) {
                 LOG.info("Checkstyle output report: {}", xmlReport.getAbsolutePath());
                 xmlOutput = FileUtils.openOutputStream(xmlReport);
-                checker.addListener(new XMLLogger(xmlOutput, true));
+                checker.addListener(new XMLLogger(xmlOutput, AutomaticBean.OutputStreamOptions.CLOSE));
             }
 
             checker.setCharset(configuration.getCharset().name());
@@ -111,7 +112,8 @@ public class CheckstyleExecutor {
             checker.process(configuration
                     .getSourceFiles()
                     .stream()
-                    .map(InputFile::file)
+                    .map(InputFile::uri)
+                    .map(File::new)
                     .collect(Collectors.toList()));
         }
         catch (Exception ex) {

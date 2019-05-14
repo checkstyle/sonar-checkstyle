@@ -121,7 +121,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
 
     private void appendTabWidth(Writer writer) throws IOException {
         final String tabWidth = configuration.get(CheckstyleConstants.CHECKER_TAB_WIDTH)
-                .orElse(null);
+                .orElse("");
         appendModuleProperty(writer, "tabWidth", tabWidth);
     }
 

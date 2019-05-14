@@ -32,7 +32,7 @@ public class CheckstyleVersionTest {
 
     @Test
     public void getCheckstyleVersion() {
-        final String version = CheckstyleExecutor.PROPERTIES_PATH;
+        final String version = CheckstyleExecutor.PROPERTIES_LOCATION;
         assertThat(new CheckstyleVersion().getVersion(version).length()).isGreaterThan(1);
     }
 

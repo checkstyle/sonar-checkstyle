@@ -22,13 +22,12 @@ package org.sonar.plugins.checkstyle;
 import java.util.Arrays;
 import java.util.List;
 
-import org.sonar.api.CoreProperties;
+import org.sonar.api.Plugin;
 import org.sonar.api.PropertyType;
-import org.sonar.api.SonarPlugin;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.resources.Qualifiers;
 
-public final class CheckstylePlugin extends SonarPlugin {
+public final class CheckstylePlugin implements Plugin {
 
     private static final String CHECKSTYLE_SUB_CATEGORY_NAME = "Checkstyle";
 
@@ -67,13 +66,17 @@ public final class CheckstylePlugin extends SonarPlugin {
             + "Checkstyle</a> "
             + "configuration for more information.";
 
-    @SuppressWarnings("rawtypes")
     @Override
-    public List getExtensions() {
+    public void define(Context context) {
+        context.addExtensions(getCheckstyleExtensions());
+    }
+
+    @SuppressWarnings("rawtypes")
+    public List getCheckstyleExtensions() {
         return Arrays
                 .asList(PropertyDefinition.builder(CheckstyleConstants.CHECKER_FILTERS_KEY)
                                 .defaultValue(CheckstyleConstants.CHECKER_FILTERS_DEFAULT_VALUE)
-                                .category(CoreProperties.CATEGORY_JAVA)
+                                .category(CheckstyleConstants.JAVA_KEY)
                                 .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
                                 .name("Checker Filters")
                                 .description(CHECKER_FILTERS_DESCRIPTION)
@@ -81,14 +84,14 @@ public final class CheckstylePlugin extends SonarPlugin {
                                 .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE).build(),
                         PropertyDefinition.builder(CheckstyleConstants.TREEWALKER_FILTERS_KEY)
                                 .defaultValue(CheckstyleConstants.TREEWALKER_FILTERS_DEFAULT_VALUE)
-                                .category(CoreProperties.CATEGORY_JAVA)
+                                .category(CheckstyleConstants.JAVA_KEY)
                                 .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
                                 .name("Treewalker Filters")
                                 .description(TREEWALKER_FILTERS_DESCRIPTION)
                                 .type(PropertyType.TEXT)
                                 .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE).build(),
                         PropertyDefinition.builder(CheckstyleConstants.CHECKER_TAB_WIDTH)
-                                .category(CoreProperties.CATEGORY_JAVA)
+                                .category(CheckstyleConstants.JAVA_KEY)
                                 .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
                                 .name("Tab Width")
                                 .description(CHECKER_TAB_WIDTH_DESCRIPTION)
@@ -96,15 +99,13 @@ public final class CheckstylePlugin extends SonarPlugin {
                                 .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
                                 .build(),
                         PropertyDefinition.builder(CheckstyleConfiguration.PROPERTY_GENERATE_XML)
-                                .defaultValue("false").category(CoreProperties.CATEGORY_JAVA)
+                                .defaultValue("false").category(CheckstyleConstants.JAVA_KEY)
                                 .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
                                 .name("Generate XML Report").type(PropertyType.BOOLEAN).hidden()
                                 .build(),
-
                         CheckstyleSensor.class, CheckstyleConfiguration.class,
                         CheckstyleExecutor.class, CheckstyleAuditListener.class,
                         CheckstyleProfileExporter.class, CheckstyleProfileImporter.class,
                         CheckstyleRulesDefinition.class);
     }
-
 }
