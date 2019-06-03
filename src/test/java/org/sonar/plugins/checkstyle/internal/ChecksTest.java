@@ -452,7 +452,7 @@ public class ChecksTest {
         final PropertyDescriptor[] map = PropertyUtils.getPropertyDescriptors(clss);
 
         for (PropertyDescriptor p : map) {
-            if (p.getWriteMethod() != null) {
+            if (p.getWriteMethod() != null && !p.getWriteMethod().isAnnotationPresent(Deprecated.class)) {
                 result.add(p.getName());
             }
         }
