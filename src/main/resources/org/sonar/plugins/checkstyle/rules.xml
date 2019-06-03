@@ -814,9 +814,6 @@
     <tag>comment</tag>
     <configKey><![CDATA[Checker/TreeWalker/JavadocMethod]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="minLineCount" type="INTEGER">
-      <defaultValue>-1</defaultValue>
-    </param>
     <param key="allowedAnnotations" type="s{}">
       <defaultValue>Override</defaultValue>
     </param>
@@ -843,12 +840,6 @@
     <param key="allowMissingReturnTag" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="allowMissingJavadoc" type="BOOLEAN">
-      <defaultValue>false</defaultValue>
-    </param>
-    <param key="allowMissingPropertyJavadoc" type="BOOLEAN">
-      <defaultValue>false</defaultValue>
-    </param>
     <param key="logLoadErrors" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
@@ -858,6 +849,32 @@
     <param key="suppressLoadErrors" type="BOOLEAN">
       <!-- Note that default value in Checkstyle 5.5 is false -->
       <defaultValue>true</defaultValue>
+    </param>
+    <status>READY</status>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Missing Javadoc Method]]></name>
+    <tag>comment</tag>
+    <configKey><![CDATA[Checker/TreeWalker/MissingJavadocMethod]]></configKey>
+    <cardinality>MULTIPLE</cardinality>
+    <param key="minLineCount" type="INTEGER">
+      <defaultValue>-1</defaultValue>
+    </param>
+    <param key="allowMissingPropertyJavadoc" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
+    <param key="allowedAnnotations" type="s{}">
+      <defaultValue>Override</defaultValue>
+    </param>
+    <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
+      <defaultValue>public</defaultValue>
+    </param>
+    <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
+    </param>
+    <param key="tokens" type="s[METHOD_DEF,CTOR_DEF,ANNOTATION_FIELD_DEF]">
+      <defaultValue>METHOD_DEF,CTOR_DEF,ANNOTATION_FIELD_DEF</defaultValue>
     </param>
     <param key="ignoreMethodNamesRegex" type="REGULAR_EXPRESSION">
     </param>
@@ -1240,7 +1257,7 @@
     <name><![CDATA[Newline At End Of File]]></name>
     <configKey><![CDATA[Checker/NewlineAtEndOfFile]]></configKey>
     <param key="lineSeparator" type="s[system,crlf,cr,lf,lf_cr_crlf]">
-        <defaultValue>system</defaultValue>
+        <defaultValue>lf_cr_crlf</defaultValue>
     </param>
     <param key="fileExtensions" type="s{}">
     </param>
@@ -1956,7 +1973,7 @@
     <param key="allowSamelineParameterizedAnnotation" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,PACKAGE_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF,PARAMETER_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF]">
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,PACKAGE_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF]">
       <defaultValue>CLASS_DEF,INTERFACE_DEF,PACKAGE_DEF,ENUM_CONSTANT_DEF,ENUM_DEF,METHOD_DEF,CTOR_DEF,VARIABLE_DEF</defaultValue>
     </param>
   </rule>
