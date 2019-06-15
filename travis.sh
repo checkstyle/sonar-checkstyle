@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-case "$TEST" in
+case "$1" in
 
 ci)
   mvn -e clean install
@@ -30,7 +30,7 @@ nondex)
   ;;
 
 *)
-  echo "Unexpected TEST mode: $TEST"
+  echo "Unexpected mode: $1"
   exit "1"
   ;;
 
