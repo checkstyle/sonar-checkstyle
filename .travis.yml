@@ -5,6 +5,10 @@ install: true
 script: ./travis.sh
 
 addons:
+  apt:
+    packages:
+      - xsltproc
+      - xmlstarlet
   sonarqube:
     organization: "checkstyle"
     token:
@@ -15,12 +19,6 @@ cache:
   directories:
     - ~/.m2
     - '$HOME/.sonar/cache'
-
-addons:
-  apt:
-    packages:
-      - xsltproc
-      - xmlstarlet
 
 matrix:
   fast_finish: true
