@@ -17,7 +17,7 @@ sonar)
     -Dsonar.projectKey=checkstyle_sonar-checkstyle \
     -Dsonar.organization=checkstyle \
     -Dsonar.host.url=https://sonarcloud.io \
-    -Dsonar.login="$SONAR_TOKEN"
+    -Dsonar.login=$SONAR_TOKEN
   ;;
 
 nondex)
