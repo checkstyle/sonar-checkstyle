@@ -17,12 +17,12 @@ sonar)
     -Dsonar.projectKey=checkstyle_sonar-checkstyle \
     -Dsonar.organization=checkstyle \
     -Dsonar.host.url=https://sonarcloud.io \
-    -Dsonar.login=${SONAR_TOKEN}
+    -Dsonar.login="$SONAR_TOKEN"
   ;;
 
 nondex)
   mvn --fail-never clean nondex:nondex -Dcheckstyle.skip=true
-  cat "`grep -RlE 'td class=.x' .nondex/ | cat`" < /dev/null > output.txt
+  cat `grep -RlE 'td class=.x' .nondex/ | cat` < /dev/null > output.txt
   RESULT="$(cat output.txt | wc -c)"
   cat output.txt
   echo 'Size of output:'${RESULT}
