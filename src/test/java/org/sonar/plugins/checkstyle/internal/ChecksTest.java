@@ -87,7 +87,7 @@ public class ChecksTest {
     public void verifyTestConfigurationFiles() throws Exception {
         final Set<Class<?>> modules = CheckUtil.getCheckstyleModules();
 
-        Assert.assertTrue("no modules", !modules.isEmpty());
+        Assert.assertFalse("no modules", modules.isEmpty());
 
         validateSonarRules(new HashSet<>(modules));
         validateSonarProperties(new HashSet<>(modules));
