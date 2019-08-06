@@ -26,13 +26,13 @@ matrix:
   fast_finish: true
   include:
     # verify
-    - jdk: oraclejdk8
+    - jdk: openjdk8
       env: CMD="./travis.sh ci"
 
     # package
-    - jdk: oraclejdk8
+    - jdk: openjdk8
       env: CMD="./travis.sh nondex"
 
     # sonar
-    - jdk: oraclejdk8
+    - jdk: openjdk8
       env: CMD="./travis.sh sonar"
