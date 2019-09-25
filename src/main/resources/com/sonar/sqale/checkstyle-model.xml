@@ -1364,6 +1364,19 @@
       </chc>
       <chc>
         <rule-repo>checkstyle</rule-repo>
+        <rule-key>com.puppycrawl.tools.checkstyle.checks.javadoc.InvalidJavadocPositionCheck</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>30</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
