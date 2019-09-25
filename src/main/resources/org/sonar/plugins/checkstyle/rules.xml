@@ -136,6 +136,14 @@
     <status>READY</status>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.InvalidJavadocPositionCheck">
+    <priority>MINOR</priority>
+    <name><![CDATA[Invalid Javadoc Position]]></name>
+    <tag>comment</tag>
+    <configKey><![CDATA[Checker/TreeWalker/InvalidJavadocPosition]]></configKey>
+    <status>READY</status>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Regexp Multiline]]></name>
@@ -1066,6 +1074,9 @@
     <param key="ignoreFieldDeclaration" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
+    <param key="ignoreAnnotationElementDefaults" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
     <status>READY</status>
   </rule>
 
@@ -1811,6 +1822,9 @@
     <priority>MAJOR</priority>
     <name><![CDATA[One Statement Per Line]]></name>
     <configKey><![CDATA[Checker/TreeWalker/OneStatementPerLine]]></configKey>
+    <param key="treatTryResourcesAsStatement" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
     <status>READY</status>
   </rule>
 

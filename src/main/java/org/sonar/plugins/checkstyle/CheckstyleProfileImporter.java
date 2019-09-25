@@ -61,6 +61,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
         "SuppressionCommentFilter",
         "SuppressWithNearbyCommentFilter",
         "SuppressionXpathSingleFilter",
+        "SuppressionSingleFilter",
     };
     private final RuleFinder ruleFinder;
 
