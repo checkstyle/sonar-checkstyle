@@ -102,11 +102,6 @@ public class CheckstyleProfileExporterTest {
                         "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck",
                         "Javadoc").setConfigKey("Checker/JavadocPackage"), RulePriority.MAJOR);
         profile.activateRule(
-                Rule.create("checkstyle",
-                        "com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck",
-                        "Line Length").setConfigKey("Checker/TreeWalker/LineLength"),
-                RulePriority.CRITICAL);
-        profile.activateRule(
                 Rule.create(
                         "checkstyle",
                         "com.puppycrawl.tools.checkstyle.checks.naming.LocalFinalVariableNameCheck",
