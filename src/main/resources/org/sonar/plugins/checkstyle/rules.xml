@@ -52,9 +52,6 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Missing Deprecated]]></name>
     <configKey><![CDATA[Checker/TreeWalker/MissingDeprecated]]></configKey>
-    <param key="skipNoJavadoc" type="BOOLEAN">
-    </param>
-    <status>READY</status>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.MissingOverrideCheck">
@@ -897,6 +894,16 @@
     <status>READY</status>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocBlockTagLocationCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Javadoc Block Tag Location]]></name>
+    <tag>comment</tag>
+    <configKey><![CDATA[Checker/TreeWalker/JavadocBlockTagLocation]]></configKey>
+    <param key="tags" type="s[author,deprecated,exception,hidden,param,provides,return,see,serial,serialData,serialField,since,throws,uses,version]">
+      <defaultValue>author,deprecated,exception,hidden,param,provides,return,see,serial,serialData,serialField,since,throws,uses,version</defaultValue>
+    </param>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Javadoc Style]]></name>
@@ -1012,9 +1019,11 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Line Length]]></name>
     <tag>size</tag>
-    <configKey><![CDATA[Checker/TreeWalker/LineLength]]></configKey>
+    <configKey><![CDATA[Checker/LineLength]]></configKey>
     <param key="tabWidth" type="INTEGER">
       <defaultValue>8</defaultValue>
+    </param>
+    <param key="fileExtensions" type="STRING">
     </param>
     <param key="ignorePattern" type="REGULAR_EXPRESSION">
     </param>
@@ -2004,6 +2013,15 @@
     <name><![CDATA[Unnecessary Semicolon in Enumeration]]></name>
     <priority>MAJOR</priority>
     <configKey><![CDATA[Checker/TreeWalker/UnnecessarySemicolonInEnumeration]]></configKey>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonAfterTypeMemberDeclarationCheck">
+    <name><![CDATA[Unnecessary Semicolon in Enumeration]]></name>
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/UnnecessarySemicolonAfterTypeMemberDeclaration]]></configKey>
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,STATIC_INIT,INSTANCE_INIT,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF]">
+      <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,STATIC_INIT,INSTANCE_INIT,CTOR_DEF,METHOD_DEF,ENUM_CONSTANT_DEF</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck">
