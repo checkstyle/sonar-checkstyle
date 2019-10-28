@@ -156,6 +156,9 @@
     </param>
     <param key="maximum" type="INTEGER">
     </param>
+    <param key="matchAcrossLines" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
     <param key="fileExtensions" type="s{}">
       <defaultValue/>
     </param>
