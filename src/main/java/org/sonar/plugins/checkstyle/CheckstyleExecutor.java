@@ -34,6 +34,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,7 +104,7 @@ public class CheckstyleExecutor {
             if (xmlReport != null) {
                 LOG.info("Checkstyle output report: {}", xmlReport.getAbsolutePath());
                 xmlOutput = FileUtils.openOutputStream(xmlReport);
-                checker.addListener(new XMLLogger(xmlOutput, true));
+                checker.addListener(new XMLLogger(xmlOutput, AutomaticBean.OutputStreamOptions.CLOSE));
             }
 
             checker.setCharset(configuration.getCharset().name());
