@@ -24,11 +24,19 @@
 
   <developers>
     <developer>
+      <id>muhlba91</id>
+      <name>Daniel Muehlbachler</name>
+      <roles>
+        <role>lead developer</role>
+      </roles>
+    </developer>
+    <developer>
       <id>romani</id>
       <name>Roman Ivanov</name>
       <organization>Checkstyle</organization>
       <roles>
-        <role>project admin, lead developer</role>
+        <role>project admin</role>
+        <role>developer</role>
       </roles>
     </developer>
     <developer>
@@ -36,6 +44,7 @@
       <name>Richard Veach</name>
       <organization>Checkstyle</organization>
       <roles>
+        <role>project admin</role>
         <role>developer</role>
       </roles>
     </developer>
