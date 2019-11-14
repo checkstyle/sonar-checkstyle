@@ -856,15 +856,8 @@
     <param key="allowMissingReturnTag" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="logLoadErrors" type="BOOLEAN">
-      <defaultValue>true</defaultValue>
-    </param>
     <param key="tokens" type="s[METHOD_DEF,CTOR_DEF,ANNOTATION_FIELD_DEF]">
       <defaultValue>METHOD_DEF,CTOR_DEF,ANNOTATION_FIELD_DEF</defaultValue>
-    </param>
-    <param key="suppressLoadErrors" type="BOOLEAN">
-      <!-- Note that default value in Checkstyle 5.5 is false -->
-      <defaultValue>true</defaultValue>
     </param>
     <status>READY</status>
   </rule>
