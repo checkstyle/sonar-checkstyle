@@ -47,9 +47,7 @@ import org.mockito.Mockito;
 import org.sonar.api.batch.fs.internal.DefaultIndexedFile;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.sensor.SensorContext;
-import org.sonar.plugins.java.api.JavaResourceLocator;
 
-import com.google.common.collect.ImmutableList;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
@@ -64,8 +62,7 @@ public class CheckstyleExecutorTest {
     public void execute() throws CheckstyleException {
         final CheckstyleConfiguration conf = mockConf();
         final CheckstyleAuditListener listener = mockListener();
-        final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
-                createJavaResourceLocator());
+        final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener);
         executor.execute(context);
 
         verify(listener, times(1)).auditStarted(any(AuditEvent.class));
@@ -93,8 +90,7 @@ public class CheckstyleExecutorTest {
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Can not execute Checkstyle");
         final CheckstyleConfiguration conf = mockConf();
-        final CheckstyleExecutor executor = new CheckstyleExecutor(conf, null,
-                createJavaResourceLocator());
+        final CheckstyleExecutor executor = new CheckstyleExecutor(conf, null);
         executor.execute(context);
     }
 
@@ -103,15 +99,8 @@ public class CheckstyleExecutorTest {
         thrown.expect(IllegalStateException.class);
         thrown.expectMessage("Fail to create the project classloader. "
                 + "Classpath element is invalid: htp://aa");
-        final CheckstyleExecutor executor = new CheckstyleExecutor(null, mockListener(),
-                createJavaResourceLocator());
+        final CheckstyleExecutor executor = new CheckstyleExecutor(null, mockListener());
         executor.getUrl(new URI("htp://aa"));
-    }
-
-    private static JavaResourceLocator createJavaResourceLocator() {
-        final JavaResourceLocator javaResourceLocator = mock(JavaResourceLocator.class);
-        when(javaResourceLocator.classpath()).thenReturn(ImmutableList.of(new File(".")));
-        return javaResourceLocator;
     }
 
     /**
@@ -130,8 +119,7 @@ public class CheckstyleExecutorTest {
             report.delete();
             when(conf.getTargetXmlReport()).thenReturn(report);
             final CheckstyleAuditListener listener = mockListener();
-            final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
-                    createJavaResourceLocator());
+            final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener);
             executor.execute(context);
 
             Assert.assertTrue("Report should exists", report.exists());
@@ -154,8 +142,7 @@ public class CheckstyleExecutorTest {
         report.delete();
         when(conf.getTargetXmlReport()).thenReturn(null);
         final CheckstyleAuditListener listener = mockListener();
-        final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener,
-                createJavaResourceLocator());
+        final CheckstyleExecutor executor = new CheckstyleExecutor(conf, listener);
         executor.execute(context);
 
         Assert.assertFalse("Report should NOT exists", report.exists());

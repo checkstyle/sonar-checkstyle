@@ -26,10 +26,6 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -42,7 +38,6 @@ import org.sonar.api.ExtensionPoint;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
-import org.sonar.plugins.java.api.JavaResourceLocator;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.puppycrawl.tools.checkstyle.Checker;
@@ -59,13 +54,11 @@ public class CheckstyleExecutor {
 
     private final CheckstyleConfiguration configuration;
     private final CheckstyleAuditListener listener;
-    private final JavaResourceLocator javaResourceLocator;
 
     public CheckstyleExecutor(CheckstyleConfiguration configuration,
-            CheckstyleAuditListener listener, JavaResourceLocator javaResourceLocator) {
+            CheckstyleAuditListener listener) {
         this.configuration = configuration;
         this.listener = listener;
-        this.javaResourceLocator = javaResourceLocator;
     }
 
     /**
@@ -81,22 +74,19 @@ public class CheckstyleExecutor {
         Locale.setDefault(Locale.ENGLISH);
         final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(PackageNamesLoader.class.getClassLoader());
-        final URLClassLoader projectClassloader = createClassloader();
         try {
-            executeWithClassLoader(projectClassloader);
+            executeWithClassLoader();
         }
         finally {
             Thread.currentThread().setContextClassLoader(initialClassLoader);
             Locale.setDefault(initialLocale);
-            close(projectClassloader);
         }
     }
 
-    private void executeWithClassLoader(URLClassLoader projectClassloader) {
+    private void executeWithClassLoader() {
         final Checker checker = new Checker();
         OutputStream xmlOutput = null;
         try {
-            checker.setClassLoader(projectClassloader);
             checker.setModuleClassLoader(Thread.currentThread().getContextClassLoader());
             checker.addListener(listener);
 
@@ -146,14 +136,4 @@ public class CheckstyleExecutor {
                     + "Classpath element is invalid: " + uri, ex);
         }
     }
-
-    private URLClassLoader createClassloader() {
-        final Collection<File> classpathElements = javaResourceLocator.classpath();
-        final List<URL> urls = new ArrayList<>(classpathElements.size());
-        for (File file : classpathElements) {
-            urls.add(getUrl(file.toURI()));
-        }
-        return new URLClassLoader(urls.toArray(new URL[0]), null);
-    }
-
 }
