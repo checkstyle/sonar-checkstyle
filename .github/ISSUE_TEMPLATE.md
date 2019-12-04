@@ -1,5 +1,5 @@
 Sonar version: [[YOUR VERSION]]
-Checkstyle sonar plugin verson: [[YOUR VERSION]]
+Checkstyle sonar plugin version: [[YOUR VERSION]]
 
 Steps to reproduce or description of problem:
 
