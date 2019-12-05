@@ -900,6 +900,16 @@
     </param>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocContentLocationCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Javadoc Content Location]]></name>
+    <tag>comment</tag>
+    <configKey><![CDATA[Checker/TreeWalker/JavadocContentLocation]]></configKey>
+    <param key="location" type="s[first_line,second_line]">
+      <defaultValue>second_line</defaultValue>
+    </param>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Javadoc Style]]></name>
