@@ -408,8 +408,8 @@
   </inspection_tool>
   <inspection_tool class="ConstantOnLHSOfComparison" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="ConstantOnLHSOfComparisonJS" enabled="true" level="ERROR" enabled_by_default="true" />
-  <inspection_tool class="ConstantOnRHSOfComparison" enabled="false" level="ERROR" enabled_by_default="false" />
-  <inspection_tool class="ConstantOnRHSOfComparisonJS" enabled="true" level="ERROR" enabled_by_default="true" />
+  <inspection_tool class="ConstantOnWrongSideOfComparison" enabled="false" level="ERROR" enabled_by_default="false" />
+  <inspection_tool class="ConstantOnWrongSideOfComparisonJS" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="ConstantStringIntern" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="ConstantValueVariableUse" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="ConstraintValidatorCreator" enabled="true" level="ERROR" enabled_by_default="true" />
@@ -539,7 +539,7 @@
   <inspection_tool class="DuplicateThrows" enabled="true" level="ERROR" enabled_by_default="true" />
   <inspection_tool class="DuplicatedBeanNamesInspection" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="DuplicatedDataProviderNames" enabled="true" level="WARNING" enabled_by_default="true" />
-  <inspection_tool class="Duplicates" enabled="false" level="ERROR" enabled_by_default="false" />
+  <inspection_tool class="DuplicatedCode" enabled="false" level="ERROR" enabled_by_default="false" />
   <inspection_tool class="DynamicRegexReplaceableByCompiledPattern" enabled="true" level="WARNING" enabled_by_default="true">
     <scope name="Tests" level="WARNING" enabled="false" />
   </inspection_tool>
