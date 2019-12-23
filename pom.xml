@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.checkstyle</groupId>
@@ -8,11 +10,14 @@
   <packaging>sonar-plugin</packaging>
 
   <name>Checkstyle SonarQube Plugin</name>
-  <description>Checkstyle is a code analyser to help programmers write Java code that adheres to a coding standard.</description>
+  <description>
+    Checkstyle is a code analyser to help programmers write Java code
+    that adheres to a coding standard.
+  </description>
   <inceptionYear>2012</inceptionYear>
   <organization>
     <name>Checkstyle</name>
-    <url>http://checkstyle.sourceforge.net</url>
+    <url>https://checkstyle.org</url>
   </organization>
   <licenses>
     <license>
