@@ -36,23 +36,23 @@ public final class CheckstylePlugin extends SonarPlugin {
     private static final String FILTERS_DESCRIPTION_FOOTER = "This property"
             + " allows the configuration of those filters with a "
             + "native XML format. See the "
-            + "<a href='http://checkstyle.sourceforge.net/config.html'>"
+            + "<a href='https://checkstyle.org/config.html'>"
             + "Checkstyle</a> "
             + "configuration for more information.";
 
     private static final String CHECKER_FILTERS_DESCRIPTION = DESCRIPTION_HEADER
-            + " <a href=\"http://checkstyle.sourceforge.net/config_filefilters.html\">file filter"
+            + " <a href=\"https://checkstyle.org/config_filefilters.html\">file filter"
             + "</a> and several "
-            + "<a href=\"http://checkstyle.sourceforge.net/config_filters.html\">"
+            + "<a href=\"https://checkstyle.org/config_filters.html\">"
             + "violation filtering mechanisms</a>: "
             + FILTERS_DESCRIPTION_FOOTER;
 
     private static final String TREEWALKER_FILTERS_DESCRIPTION = DESCRIPTION_HEADER
-            + " <a href=\"http://checkstyle.sourceforge.net/config_filters.html"
+            + " <a href=\"https://checkstyle.org/config_filters.html"
             + "#SuppressWithNearbyCommentFilter\">"
             + "SuppressWithNearbyCommentFilter"
             + "</a> and "
-            + " <a href=\"http://checkstyle.sourceforge.net/config_filters.html"
+            + " <a href=\"https://checkstyle.org/config_filters.html"
             + "#SuppressionCommentFilter\">"
             + "SuppressionCommentFilter</a>: "
             + FILTERS_DESCRIPTION_FOOTER;

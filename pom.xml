@@ -328,9 +328,6 @@
               <failOnViolation>true</failOnViolation>
               <headerLocation>I just need to put here smth to let it not use default - LICENSE.txt</headerLocation>
               <propertiesLocation>config/checkstyle.properties</propertiesLocation>
-              <sourceDirectories>
-                <sourceDirectory>../src</sourceDirectory>
-              </sourceDirectories>
               <includeTestResources>false</includeTestResources>
             </configuration>
           </execution>
@@ -349,9 +346,6 @@
               <maxAllowedViolations>0</maxAllowedViolations>
               <violationSeverity>error</violationSeverity>
               <propertyExpansion>project.basedir=${project.basedir}</propertyExpansion>
-              <sourceDirectories>
-                <sourceDirectory>../src</sourceDirectory>
-              </sourceDirectories>
             </configuration>
           </execution>
         </executions>
