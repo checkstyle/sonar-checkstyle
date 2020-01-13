@@ -98,11 +98,11 @@
     <checkstyle.version>8.27</checkstyle.version>
     <sonar.version>6.7</sonar.version>
     <sonar-java.version>5.12.0.17701</sonar-java.version>
-    <maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
-    <maven.sevntu.checkstyle.plugin.version>1.35.0</maven.sevntu.checkstyle.plugin.version>
+    <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
+    <maven.sevntu.checkstyle.plugin.version>1.37.0</maven.sevntu.checkstyle.plugin.version>
     <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
     <maven.sevntu.checkstyle.plugin.checkstyle.version>
-      8.18
+      8.28
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -328,7 +328,9 @@
               <failOnViolation>true</failOnViolation>
               <headerLocation>I just need to put here smth to let it not use default - LICENSE.txt</headerLocation>
               <propertiesLocation>config/checkstyle.properties</propertiesLocation>
-              <sourceDirectory>../src</sourceDirectory>
+              <sourceDirectories>
+                <sourceDirectory>../src</sourceDirectory>
+              </sourceDirectories>
               <includeTestResources>false</includeTestResources>
             </configuration>
           </execution>
@@ -347,7 +349,9 @@
               <maxAllowedViolations>0</maxAllowedViolations>
               <violationSeverity>error</violationSeverity>
               <propertyExpansion>project.basedir=${project.basedir}</propertyExpansion>
-              <sourceDirectory>../src</sourceDirectory>
+              <sourceDirectories>
+                <sourceDirectory>../src</sourceDirectory>
+              </sourceDirectories>
             </configuration>
           </execution>
         </executions>

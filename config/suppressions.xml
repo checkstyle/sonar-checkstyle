@@ -5,12 +5,13 @@
     "https://checkstyle.org/dtds/suppressions_1_2_xpath_experimental.dtd">
 
 <suppressions>
-    <!-- START of legacy code, all violations will be resolved during transition to main project -->
+    <!-- START of legacy code, all violations will be resolved eventually -->
     <suppress checks="Javadoc*" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="ImportControl" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="DesignForExtension" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="WriteTag" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="IllegalCatch" files=".*[\\/]src[\\/]main[\\/]"/>
+    <suppress checks="OrderedProperties" files=".*[\\/]src[\\/]main[\\/]"/>
 
     <suppress checks="ImportControl" files=".*[\\/]src[\\/]test[\\/]"/>
     <!-- END of legacy code -->
