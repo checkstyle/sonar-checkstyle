@@ -4,7 +4,7 @@ set -euo pipefail
 
 case "$1" in
 
-ci)
+install)
   mvn -e clean install
   ;;
 
