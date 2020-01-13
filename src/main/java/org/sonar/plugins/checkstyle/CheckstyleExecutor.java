@@ -30,7 +30,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +42,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
 import com.puppycrawl.tools.checkstyle.XMLLogger;
+import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 
 @ExtensionPoint
 @ScannerSide
@@ -94,7 +94,8 @@ public class CheckstyleExecutor {
             if (xmlReport != null) {
                 LOG.info("Checkstyle output report: {}", xmlReport.getAbsolutePath());
                 xmlOutput = FileUtils.openOutputStream(xmlReport);
-                checker.addListener(new XMLLogger(xmlOutput, AutomaticBean.OutputStreamOptions.CLOSE));
+                checker.addListener(
+                        new XMLLogger(xmlOutput, AutomaticBean.OutputStreamOptions.CLOSE));
             }
 
             checker.setCharset(configuration.getCharset().name());

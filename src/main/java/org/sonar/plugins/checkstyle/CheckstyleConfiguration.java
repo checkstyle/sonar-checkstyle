@@ -100,8 +100,9 @@ public class CheckstyleConfiguration {
 
     public File getTargetXmlReport() {
         return conf.getBoolean(PROPERTY_GENERATE_XML)
-                .map(aBoolean -> new File(fileSystem.workDir(),
-                        "checkstyle-result.xml"))
+                .map(aBoolean -> {
+                    return new File(fileSystem.workDir(), "checkstyle-result.xml");
+                })
                 .orElse(null);
     }
 
