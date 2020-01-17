@@ -1,38 +1,47 @@
-box: checkstyle/sonarqube-maven-git:6.7.5
+box: maven:3.5.2-jdk-8
 
 build:
   steps:
   - script:
-      name: setup mvn local repo
-      code: |-
+      name: setup maven local repo
+      code: |
         export MAVEN_OPTS="-Dmaven.repo.local=${WERCKER_CACHE_DIR}"
         mvn -version
+        echo "------"
+        if [[ $(grep "pull" .git/FETCH_HEAD | cat | wc -l) > 0 ]]; then
+          export PR=$(cat .git/FETCH_HEAD | cut -d ' ' -f 1 | cut -d '/' -f 3)
+          echo "PR:"$PR
+        fi
+        echo "------"
+        echo "Link ${WERCKER_CACHE_DIR} to /root/.m2/repository for Gradle builds"
+        mkdir -p /root/.m2
+        ln -s ${WERCKER_CACHE_DIR} /root/.m2/repository
         echo "------"
         du -hs ${WERCKER_CACHE_DIR}
         echo "------"
         du -hs ${WERCKER_CACHE_DIR}/* | sort -h
+        echo "------"
+        export RUN_JOB=1
 
-  # Build Checkstyle
   - script:
-      name: Package plugin, install to sonar
-      code: |-
-        POM_VERSION=$(grep "<version>" pom.xml | head -n 1 | sed -E "s/.*<version>//" | sed "s/<.*//")
-        echo "POM_VERSION="$POM_VERSION
-        mvn package -Pno-validations
-        cp target/checkstyle-sonar-plugin-$POM_VERSION.jar /opt/sonarqube/extensions/plugins/
-        cd /opt/sonarqube/
-        rm -f logs/*.*
-        ./bin/run.sh &
-        echo "sleeping 75 to let sonar start up"
-        sleep 75
-        cd -
-        mvn sonar:sonar
-        grep "ERROR" /opt/sonarqube/logs/* | cat
+      name: install jq
+      code: |
+        curl -L http://stedolan.github.io/jq/download/linux64/jq -o /usr/local/bin/jq
+        chmod +x /usr/local/bin/jq
 
-  # Cleanup
+  - script:
+      name: Sonarqube validation
+      code: |
+        if [[ $RUN_JOB == 1 ]]; then
+          echo "Command: ./.ci/wercker.sh sonarqube"
+          ./.ci/wercker.sh sonarqube
+        else
+          echo "build is skipped ..."
+        fi
+
   - script:
       name: Cleanup maven local repo
-      code:  |-
+      code: |
         find ${WERCKER_CACHE_DIR} -type d -name "*SNAPSHOT" -ls -exec rm -rf {} +
         echo "------"
         du -hs ${WERCKER_CACHE_DIR}

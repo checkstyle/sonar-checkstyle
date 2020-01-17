@@ -4,17 +4,10 @@ install: true
 
 script: eval $CMD;
 
-addons:
-  sonarqube:
-    organization: "checkstyle"
-    token:
-      secure: "CTOzP3DCtl6GotoLEiKjLcmw2aJ4bw6hpxp/sskmFg+6qq/u1lt8VSueJIcDdpRqt5azpyvM6+yEM+9Rlm2SmJ08pmRcCL/WDPB4r2q5aQ8pyqOLUvVcdfiDoB3opWYNJKLHW3OQRfVxxDoNOWkhdvMlhndXQmjbmEJkMOY9cuv54hy/ypEwp0MGynHc/mJ4sC+tI5q+jpDldYLaEiGJiraULQmie5L+1SXUBBHkxQiPOEJ+ZcbjqfZzUzU8Z1Nyie4n9seozBhh2eFiGzsYp015IpTZ8YnddE7mklxSj5bzQewpcKmGlepRjCA221ifpmcw9QoW6EMh8IXwAg0F89EmVh5twa3BIEwC35OhNTfjb/TAWtmDpyUskrkiRZN6RnqpN5LU9/gAKOcnV5d5u5o3qVzQfyVZ6qEzubt5w8yx20h9mwWi3FXAXQUUkSI9thjD+Fqs+zZ2h7FWImKxma/cTVoTO9bjyYlvOlNMK3SgWUJeZXfqSAas2p+DtNbbP4eYcQdEyAKGKqBU3X7GZezCbxSeODXEgy0eLXmxLJCOg4RBbV08k1pqbZ0YaSZsag1mO2Lc8UlOkeUB3MxHP5GCFPYxM8MNsYuZfshXbUAEeUGathJbScmTBfbDJb/Xsb2HP/CPkiCGgbLHXV3SJKJjmQvjdG+DcuJ3rZKTBG8="
-
 cache:
   apt: true
   directories:
     - ~/.m2
-    - '$HOME/.sonar/cache'
 
 addons:
   apt:
@@ -36,7 +29,3 @@ matrix:
     # package
     - jdk: openjdk8
       env: CMD="./travis.sh nondex"
-
-    # sonar
-    - jdk: openjdk8
-      env: CMD="./travis.sh sonar"

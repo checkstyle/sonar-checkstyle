@@ -1,6 +1,9 @@
 # ---- Maven
 target/
 
+# ---- Checkstyle CI
+.ci-temp/
+
 # ---- IntelliJ IDEA
 *.iws
 *.iml
@@ -24,7 +27,7 @@ _support/
 
 # ---- Windows
 # Windows image file caches
-Thumbs.db 
+Thumbs.db
 # Folder config file
 Desktop.ini
 
