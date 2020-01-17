@@ -22,6 +22,10 @@ addons:
       - xsltproc
       - xmlstarlet
 
+branches:
+  only:
+    - master
+
 matrix:
   fast_finish: true
   include:
