@@ -24,8 +24,8 @@ matrix:
   include:
     # verify
     - jdk: openjdk8
-      env: CMD="./travis.sh install"
+      env: CMD="./.ci/travis.sh install"
 
     # package
     - jdk: openjdk8
-      env: CMD="./travis.sh nondex"
+      env: CMD="./.ci/travis.sh nondex"
