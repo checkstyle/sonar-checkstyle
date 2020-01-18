@@ -10,4 +10,9 @@
       <Class name="org.sonar.plugins.checkstyle.CheckstyleExecutor" />
       <Bug pattern="REC_CATCH_EXCEPTION" />
     </Match>
+    <Match>
+      <!-- till https://github.com/spotbugs/spotbugs/issues/259 -->
+      <Class name="org.sonar.plugins.checkstyle.CheckstyleRulesDefinition" />
+      <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
+    </Match>
 </FindBugsFilter>
