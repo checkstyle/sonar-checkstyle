@@ -476,7 +476,7 @@
               </regex>
               <regex>
                 <pattern>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</pattern>
-                <branchRate>50</branchRate>
+                <branchRate>35</branchRate>
                 <lineRate>90</lineRate>
               </regex>
               <regex>
