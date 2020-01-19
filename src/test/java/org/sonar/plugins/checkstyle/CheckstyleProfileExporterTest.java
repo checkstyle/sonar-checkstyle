@@ -318,6 +318,12 @@ public class CheckstyleProfileExporterTest {
             return null;
         }
 
+        @CheckForNull
+        @Override
+        public String qpKey() {
+            return null;
+        }
+
         @Override
         public Map<String, String> params() {
             return new HashMap<>();

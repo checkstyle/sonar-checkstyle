@@ -15,6 +15,7 @@ integration-tests)
     URL=$URL"sonar-application/$SONAR_APP_VERSION/sonar-application-$SONAR_APP_VERSION.zip"
     wget $URL -O ~/.m2/sonar-application-$SONAR_APP_VERSION.zip
   fi
+  mkdir -p target/temp-downloads && cp ~/.m2/sonar-application-$SONAR_APP_VERSION.zip target/temp-downloads/
   mvn -e integration-test -DskipITs=false
   ;;
 
