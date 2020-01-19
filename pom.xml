@@ -398,13 +398,13 @@
         </dependencies>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>3.0.4</version>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>3.1.12.2</version>
         <configuration>
           <effort>Max</effort>
           <threshold>Low</threshold>
-          <excludeFilterFile>config/findbugs-exclude.xml</excludeFilterFile>
+          <excludeFilterFile>config/spotbugs-exclude.xml</excludeFilterFile>
         </configuration>
         <executions>
           <execution>
@@ -567,7 +567,7 @@
         <skipTests>true</skipTests>
         <checkstyle.skip>true</checkstyle.skip>
         <pmd.skip>true</pmd.skip>
-        <findbugs.skip>true</findbugs.skip>
+        <spotbugs.skip>true</spotbugs.skip>
         <xml.skip>true</xml.skip>
         <forbiddenapis.skip>true</forbiddenapis.skip>
         <cobertura.skip>true</cobertura.skip>
