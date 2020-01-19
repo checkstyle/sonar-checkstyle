@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Stop logback output INFO at start -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="console">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} --- [%15.15t] %-40.40C : %m%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <root level="OFF">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>
