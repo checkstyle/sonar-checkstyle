@@ -104,6 +104,7 @@
     <maven.sevntu.checkstyle.plugin.checkstyle.version>
       8.28
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
+    <maven.jacoco.plugin.version>0.8.5</maven.jacoco.plugin.version>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- we disable ITs by default as it need download of 200MB sonar application jar -->
@@ -241,6 +242,13 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.jacoco</groupId>
+      <artifactId>org.jacoco.agent</artifactId>
+      <version>${maven.jacoco.plugin.version}</version>
+      <classifier>runtime</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>com.puppycrawl.tools</groupId>
       <artifactId>checkstyle</artifactId>
       <version>${checkstyle.version}</version>
@@ -321,6 +329,9 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.1</version>
         <configuration>
+          <systemPropertyVariables>
+            <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
+          </systemPropertyVariables>
           <includes>
             <include>org/sonar/**/*.java</include>
           </includes>
@@ -483,64 +494,189 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.7</version>
-        <configuration>
-          <formats>
-            <format>xml</format>
-            <format>html</format>
-          </formats>
-          <check>
-            <haltOnFailure>true</haltOnFailure>
-            <branchRate>100</branchRate>
-            <lineRate>100</lineRate>
-            <totalBranchRate>82</totalBranchRate>
-            <totalLineRate>96</totalLineRate>
-            <regexes>
-              <regex>
-                <pattern>org.sonar.plugins.checkstyle.CheckstyleAuditListener</pattern>
-                <branchRate>71</branchRate>
-                <lineRate>86</lineRate>
-              </regex>
-              <regex>
-                <pattern>org.sonar.plugins.checkstyle.CheckstyleConfiguration</pattern>
-                <branchRate>60</branchRate>
-                <lineRate>93</lineRate>
-              </regex>
-              <regex>
-                <pattern>org.sonar.plugins.checkstyle.CheckstyleProfileExporter</pattern>
-                <branchRate>87</branchRate>
-                <lineRate>97</lineRate>
-              </regex>
-              <regex>
-                <pattern>org.sonar.plugins.checkstyle.CheckstyleProfileImporter</pattern>
-                <branchRate>96</branchRate>
-                <lineRate>100</lineRate>
-              </regex>
-              <regex>
-                <pattern>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</pattern>
-                <branchRate>35</branchRate>
-                <lineRate>90</lineRate>
-              </regex>
-              <regex>
-                <pattern>org.sonar.plugins.checkstyle.CheckstyleSensor</pattern>
-                <branchRate>100</branchRate>
-                <lineRate>87</lineRate>
-              </regex>
-              <regex>
-                <pattern>org.sonar.plugins.checkstyle.CheckstyleSeverityUtils</pattern>
-                <branchRate>75</branchRate>
-                <lineRate>96</lineRate>
-              </regex>
-            </regexes>
-          </check>
-        </configuration>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${maven.jacoco.plugin.version}</version>
         <executions>
           <execution>
+            <id>default-instrument</id>
+            <goals>
+              <goal>instrument</goal>
+            </goals>
+            <phase>test-compile</phase>
+          </execution>
+          <execution>
+            <id>default-restore-instrumented-classes</id>
+            <goals>
+              <goal>restore-instrumented-classes</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-report</id>
+            <phase>site</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-check</id>
             <goals>
               <goal>check</goal>
             </goals>
+            <configuration>
+              <rules>
+                <rule>
+                  <element>CLASS</element>
+                  <excludes>
+                    <exclude>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</exclude>
+                    <exclude>org.sonar.plugins.checkstyle.CheckstyleAuditListener</exclude>
+                    <exclude>org.sonar.plugins.checkstyle.CheckstyleProfileExporter</exclude>
+                    <exclude>org.sonar.plugins.checkstyle.CheckstyleExecutor</exclude>
+                    <exclude>org.sonar.plugins.checkstyle.CheckstyleSeverityUtils</exclude>
+                    <exclude>org.sonar.plugins.checkstyle.CheckstyleConfiguration</exclude>
+                    <exclude>org.sonar.plugins.checkstyle.CheckstyleProfileImporter</exclude>
+                  </excludes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.00</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.00</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.89</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.5</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>org.sonar.plugins.checkstyle.CheckstyleAuditListener</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.90</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.78</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>org.sonar.plugins.checkstyle.CheckstyleProfileExporter</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.0</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.91</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>org.sonar.plugins.checkstyle.CheckstyleExecutor</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.97</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.0</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>org.sonar.plugins.checkstyle.CheckstyleSeverityUtils</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.0</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.87</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>org.sonar.plugins.checkstyle.CheckstyleConfiguration</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.93</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.8</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>org.sonar.plugins.checkstyle.CheckstyleProfileImporter</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.0</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.96</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -630,7 +766,7 @@
         <spotbugs.skip>true</spotbugs.skip>
         <xml.skip>true</xml.skip>
         <forbiddenapis.skip>true</forbiddenapis.skip>
-        <cobertura.skip>true</cobertura.skip>
+        <jacoco.skip>true</jacoco.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
       </properties>
     </profile>
