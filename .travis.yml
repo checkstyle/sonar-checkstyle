@@ -22,11 +22,11 @@ branches:
 matrix:
   fast_finish: true
   include:
-    - jdk: openjdk8
+    - jdk: openjdk11
       env: CMD="./.ci/travis.sh install"
 
-    - jdk: openjdk8
+    - jdk: openjdk11
       env: CMD="./.ci/travis.sh integration-tests"
 
-    - jdk: openjdk8
+    - jdk: openjdk11
       env: CMD="./.ci/travis.sh nondex"
