@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.sonar.api.ExtensionPoint;
@@ -224,7 +226,7 @@ public class CheckstyleProfileExporter extends ProfileExporter {
     }
 
     private static void appendModuleProperty(Writer writer, String propertyKey,
-            String propertyValue) throws IOException {
+            @Nullable String propertyValue) throws IOException {
         if (StringUtils.isNotBlank(propertyValue)) {
             writer.append("<property name=\"");
             StringEscapeUtils.escapeXml(writer, propertyKey);
