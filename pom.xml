@@ -408,6 +408,7 @@
               <headerLocation>I just need to put here smth to let it not use default - LICENSE.txt</headerLocation>
               <propertiesLocation>config/checkstyle.properties</propertiesLocation>
               <includeTestResources>false</includeTestResources>
+              <includeTestSourceDirectory>true</includeTestSourceDirectory>
             </configuration>
           </execution>
           <execution>
