@@ -27,6 +27,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -241,7 +242,8 @@ public class RunPluginTest {
                     .setParam("repositories", "checkstyle")
                     .executeUnsafely();
             if (!activateRulesResponse.isSuccessful()) {
-                fail(String.format("Failed to activate all rules. %s",
+                fail(String.format(Locale.ROOT,
+                        "Failed to activate all rules. %s",
                         activateRulesResponse.getBodyAsString()));
             }
             // deactivate some rules for test project
@@ -254,7 +256,8 @@ public class RunPluginTest {
                         .setParam("profile_key", profileKey)
                         .executeUnsafely();
                 if (!deactivateRulesResponse.isSuccessful()) {
-                    fail(String.format("Failed to deactivate rule %s. %s",
+                    fail(String.format(Locale.ROOT,
+                            "Failed to deactivate rule %s. %s",
                             ruleKey,
                             deactivateRulesResponse.getBodyAsString()));
                 }
@@ -272,7 +275,8 @@ public class RunPluginTest {
                 .setParam("projectKey", PROJECT_KEY)
                 .executeUnsafely();
         if (!assignQpResponse.isSuccessful()) {
-            fail(String.format("Failed to add project to quality profile. %s",
+            fail(String.format(Locale.ROOT,
+                    "Failed to add project to quality profile. %s",
                     assignQpResponse.getBodyAsString()));
         }
 

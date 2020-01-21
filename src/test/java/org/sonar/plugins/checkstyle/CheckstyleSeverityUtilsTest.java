@@ -71,7 +71,7 @@ public class CheckstyleSeverityUtilsTest {
     public void privateConstructor() throws ReflectiveOperationException {
         final Constructor<CheckstyleSeverityUtils> constructor = CheckstyleSeverityUtils.class
                 .getDeclaredConstructor();
-        assertThat(constructor.isAccessible()).isFalse();
+        assertThat(constructor.canAccess(null)).isFalse();
         constructor.setAccessible(true);
         constructor.newInstance();
     }
