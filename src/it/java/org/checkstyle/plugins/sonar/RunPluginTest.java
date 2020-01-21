@@ -1,16 +1,35 @@
+////////////////////////////////////////////////////////////////////////////////
+// checkstyle: Checks Java source code for adherence to a set of rules.
+// Copyright (C) 2001-2020 the original author or authors.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 3 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+////////////////////////////////////////////////////////////////////////////////
+
 package org.checkstyle.plugins.sonar;
 
-import com.google.gson.Gson;
-import com.sonar.orchestrator.Orchestrator;
-import com.sonar.orchestrator.build.Build;
-import com.sonar.orchestrator.build.BuildResult;
-import com.sonar.orchestrator.build.MavenBuild;
-import com.sonar.orchestrator.container.Edition;
-import com.sonar.orchestrator.container.Server;
-import com.sonar.orchestrator.http.HttpMethod;
-import com.sonar.orchestrator.http.HttpResponse;
-import com.sonar.orchestrator.locator.FileLocation;
-import com.sonar.orchestrator.locator.MavenLocation;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.assertj.core.api.Assertions;
@@ -23,16 +42,17 @@ import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import static org.junit.Assert.fail;
+import com.google.gson.Gson;
+import com.sonar.orchestrator.Orchestrator;
+import com.sonar.orchestrator.build.Build;
+import com.sonar.orchestrator.build.BuildResult;
+import com.sonar.orchestrator.build.MavenBuild;
+import com.sonar.orchestrator.container.Edition;
+import com.sonar.orchestrator.container.Server;
+import com.sonar.orchestrator.http.HttpMethod;
+import com.sonar.orchestrator.http.HttpResponse;
+import com.sonar.orchestrator.locator.FileLocation;
+import com.sonar.orchestrator.locator.MavenLocation;
 
 /**
  * Integration testing of plugin jar inside of sonar.
@@ -87,9 +107,10 @@ public class RunPluginTest {
     @Test
     public void testSonarExecution() {
         try {
-            MavenBuild build = testProjectBuild();
+            final MavenBuild build = testProjectBuild();
             executeBuildWithCommonProperties(build, true);
-        } catch(IOException exception) {
+        }
+        catch (IOException exception) {
             LOG.error("Build execution error.", exception);
             fail("Failed to execute build.");
         }
@@ -115,17 +136,19 @@ public class RunPluginTest {
                 .setProperty("sonar.java.xfile", TRUE)
                 .setProperty("sonar.java.failOnException", TRUE);
 
-        BuildResult buildResult;
+        final BuildResult buildResult;
         // if build fail, job is not violently interrupted, allowing time to dump SQ logs
-        if(buildQuietly) {
+        if (buildQuietly) {
             buildResult = orchestrator.executeBuildQuietly(build);
-        } else {
+        }
+        else {
             buildResult = orchestrator.executeBuild(build);
         }
 
-        if(buildResult.isSuccess()) {
+        if (buildResult.isSuccess()) {
             assertNoDifferences();
-        } else {
+        }
+        else {
             dumpServerLogs();
             fail("Build failure for project: " + PROJECT_NAME);
         }
@@ -133,10 +156,11 @@ public class RunPluginTest {
 
     private static void assertNoDifferences() {
         try {
-            String differences = Files.readString(Paths.get(litsDifferencesPath()));
+            final String differences = Files.readString(Paths.get(litsDifferencesPath()));
             Assertions.assertThat(differences)
                     .isEmpty();
-        } catch(IOException exception) {
+        }
+        catch (IOException exception) {
             LOG.error("Failed to read LITS differences.", exception);
             fail("LITS differences not computed.");
         }
@@ -149,7 +173,7 @@ public class RunPluginTest {
     }
 
     private static void dumpServerLogs() throws IOException {
-        Server server = orchestrator.getServer();
+        final Server server = orchestrator.getServer();
         LOG.error(":::::::::::::::: DUMPING SERVER LOGS ::::::::::::::::");
         dumpServerLogLastLines(server.getAppLogs());
         dumpServerLogLastLines(server.getCeLogs());
@@ -158,31 +182,29 @@ public class RunPluginTest {
     }
 
     private static void dumpServerLogLastLines(File logFile) throws IOException {
-        if(!logFile.exists()) {
-            return;
-        }
+        if (logFile.exists()) {
+            List<String> logs = Files.readAllLines(logFile.toPath());
+            final int nbLines = logs.size();
+            if (nbLines > LOGS_NUMBER_LINES) {
+                logs = logs.subList(nbLines - LOGS_NUMBER_LINES, nbLines);
+            }
+            final String collectedLogs = logs.stream()
+                    .collect(Collectors.joining(System.lineSeparator()));
 
-        List<String> logs = Files.readAllLines(logFile.toPath());
-        int nbLines = logs.size();
-        if(nbLines > LOGS_NUMBER_LINES) {
-            logs = logs.subList(nbLines - LOGS_NUMBER_LINES, nbLines);
+            LOG.error("============= START {} =============", logFile.getName());
+            LOG.error("{} {}", System.lineSeparator(), collectedLogs);
+            LOG.error("============= END {} =============", logFile.getName());
         }
-        String collectedLogs = logs.stream()
-                .collect(Collectors.joining(System.lineSeparator()));
-
-        LOG.error("============= START {} =============", logFile.getName());
-        LOG.error("{} {}", System.lineSeparator(), collectedLogs);
-        LOG.error("============= END {} =============", logFile.getName());
     }
 
     private MavenBuild testProjectBuild() throws IOException {
-        File targetDir = prepareProject();
+        final File targetDir = prepareProject();
 
-        String pomLocation = targetDir.getCanonicalPath() + "/pom.xml";
-        File pomFile = FileLocation.of(pomLocation)
+        final String pomLocation = targetDir.getCanonicalPath() + "/pom.xml";
+        final File pomFile = FileLocation.of(pomLocation)
                 .getFile()
                 .getCanonicalFile();
-        MavenBuild mavenBuild = MavenBuild.create()
+        final MavenBuild mavenBuild = MavenBuild.create()
                 .setPom(pomFile)
                 .setCleanPackageSonarGoals()
                 .addArgument("-Dmaven.test.skip=true")
@@ -195,7 +217,7 @@ public class RunPluginTest {
     @SuppressWarnings("unchecked")
     private File prepareProject() throws IOException {
         // set severities of all active rules to INFO
-        String profilesResponse = orchestrator.getServer()
+        final String profilesResponse = orchestrator.getServer()
                 .newHttpCall("api/qualityprofiles/create")
                 .setAdminCredentials()
                 .setMethod(HttpMethod.POST)
@@ -203,12 +225,13 @@ public class RunPluginTest {
                 .setParam("name", "checkstyle")
                 .execute()
                 .getBodyAsString();
-        Map<String, Object> map = new Gson().fromJson(profilesResponse, Map.class);
-        String profileKey = ((Map<String, String>) map.get("profile")).get("key");
-        if(StringUtils.isEmpty(profileKey)) {
+        final Map<String, Object> map = new Gson().fromJson(profilesResponse, Map.class);
+        final String profileKey = ((Map<String, String>) map.get("profile")).get("key");
+        if (StringUtils.isEmpty(profileKey)) {
             fail("Could not retrieve profile key: setting up quality profile failed.");
-        } else {
-            HttpResponse activateRulesResponse = orchestrator.getServer()
+        }
+        else {
+            final HttpResponse activateRulesResponse = orchestrator.getServer()
                     .newHttpCall("api/qualityprofiles/activate_rules")
                     .setAdminCredentials()
                     .setMethod(HttpMethod.POST)
@@ -217,20 +240,20 @@ public class RunPluginTest {
                     .setParam("profile_key", profileKey)
                     .setParam("repositories", "checkstyle")
                     .executeUnsafely();
-            if(!activateRulesResponse.isSuccessful()) {
+            if (!activateRulesResponse.isSuccessful()) {
                 fail(String.format("Failed to activate all rules. %s",
                         activateRulesResponse.getBodyAsString()));
             }
             // deactivate some rules for test project
-            for(String ruleKey : DEACTIVATED_RULES) {
-                HttpResponse deactivateRulesResponse = orchestrator.getServer()
+            for (String ruleKey : DEACTIVATED_RULES) {
+                final HttpResponse deactivateRulesResponse = orchestrator.getServer()
                         .newHttpCall("api/qualityprofiles/deactivate_rule")
                         .setAdminCredentials()
                         .setMethod(HttpMethod.POST)
                         .setParam("rule_key", "checkstyle:" + ruleKey)
                         .setParam("profile_key", profileKey)
                         .executeUnsafely();
-                if(!deactivateRulesResponse.isSuccessful()) {
+                if (!deactivateRulesResponse.isSuccessful()) {
                     fail(String.format("Failed to deactivate rule %s. %s",
                             ruleKey,
                             deactivateRulesResponse.getBodyAsString()));
@@ -240,7 +263,7 @@ public class RunPluginTest {
 
         // associate CS profile
         orchestrator.getServer().provisionProject(PROJECT_KEY, PROJECT_NAME);
-        HttpResponse assignQPResponse = orchestrator.getServer()
+        final HttpResponse assignQpResponse = orchestrator.getServer()
                 .newHttpCall("api/qualityprofiles/add_project")
                 .setAdminCredentials()
                 .setMethod(HttpMethod.POST)
@@ -248,14 +271,14 @@ public class RunPluginTest {
                 .setParam("profileName", "checkstyle")
                 .setParam("projectKey", PROJECT_KEY)
                 .executeUnsafely();
-        if(!assignQPResponse.isSuccessful()) {
+        if (!assignQpResponse.isSuccessful()) {
             fail(String.format("Failed to add project to quality profile. %s",
-                    assignQPResponse.getBodyAsString()));
+                    assignQpResponse.getBodyAsString()));
         }
 
         // copy project to analysis space
-        Path projectRoot = Paths.get("src/it/resources/" + PROJECT_NAME);
-        File targetDir = temp.newFolder(PROJECT_NAME);
+        final Path projectRoot = Paths.get("src/it/resources/" + PROJECT_NAME);
+        final File targetDir = temp.newFolder(PROJECT_NAME);
         FileUtils.copyDirectory(projectRoot.toFile(), targetDir);
         return targetDir;
     }
