@@ -32,11 +32,12 @@ sonarqube)
   fi
   if [[ -z $SONAR_TOKEN ]]; then echo "SONAR_TOKEN is not set"; sleep 5s; exit 1; fi
   export MAVEN_OPTS='-Xmx2000m'
-  mvn -e -Pno-validations clean package sonar:sonar $SONAR_PR_VARIABLES \
+  mvn -e -Psonarqube-validations clean package jacoco:report sonar:sonar $SONAR_PR_VARIABLES \
        -Dsonar.host.url=https://sonarcloud.io \
        -Dsonar.login=$SONAR_TOKEN \
        -Dsonar.projectKey=checkstyle_sonar-checkstyle \
-       -Dsonar.organization=checkstyle
+       -Dsonar.organization=checkstyle \
+       -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
   echo "report-task.txt:"
   cat target/sonar/report-task.txt
   echo "Verification of sonar gate status"
