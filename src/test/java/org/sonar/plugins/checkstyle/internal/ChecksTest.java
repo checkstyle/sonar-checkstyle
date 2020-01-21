@@ -101,7 +101,8 @@ public class ChecksTest {
             final String input = Files.readString(rulesFile.toPath());
             final Document document = XmlUtil.getRawXml(rulesFile.getAbsolutePath(), input, input);
             validateSonarRules(document, modules);
-        } catch(IOException ignored) {
+        }
+        catch (IOException ignored) {
             Assert.fail("Failed to read rulesFile.");
         }
     }
@@ -396,8 +397,8 @@ public class ChecksTest {
         // remove undocumented properties
         new HashSet<>(properties)
                 .stream()
-                .filter(property -> UNDOCUMENTED_PROPERTIES.contains(clss
-                    .getSimpleName() + "." + property))
+                .filter(property -> UNDOCUMENTED_PROPERTIES
+                        .contains(clss.getSimpleName() + "." + property))
                 .forEach(properties::remove);
 
         if (AbstractCheck.class.isAssignableFrom(clss)) {
@@ -452,7 +453,8 @@ public class ChecksTest {
         final PropertyDescriptor[] map = PropertyUtils.getPropertyDescriptors(clss);
 
         for (PropertyDescriptor p : map) {
-            if (p.getWriteMethod() != null && !p.getWriteMethod().isAnnotationPresent(Deprecated.class)) {
+            if (p.getWriteMethod() != null
+                    && !p.getWriteMethod().isAnnotationPresent(Deprecated.class)) {
                 result.add(p.getName());
             }
         }
