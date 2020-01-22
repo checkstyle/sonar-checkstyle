@@ -841,16 +841,7 @@
     </param>
     <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
     </param>
-    <param key="allowUndeclaredRTE" type="BOOLEAN">
-      <defaultValue>false</defaultValue>
-    </param>
-    <param key="allowThrowsTagsForSubclasses" type="BOOLEAN">
-      <defaultValue>false</defaultValue>
-    </param>
     <param key="allowMissingParamTags" type="BOOLEAN">
-      <defaultValue>false</defaultValue>
-    </param>
-    <param key="allowMissingThrowsTags" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
     <param key="allowMissingReturnTag" type="BOOLEAN">
@@ -1286,6 +1277,13 @@
     <status>READY</status>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.coding.NoArrayTrailingCommaCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[No Array Trailing Comma]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/NoArrayTrailingComma]]></configKey>
+    <status>READY</status>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Newline At End Of File]]></name>
@@ -1490,7 +1488,7 @@
     <param key="option" type="s[same,alone,alone_or_singleline]">
       <defaultValue>same</defaultValue>
     </param>
-    <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE,CLASS_DEF,METHOD_DEF,CTOR_DEF,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,STATIC_INIT,INSTANCE_INIT]">
+    <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE,CLASS_DEF,METHOD_DEF,CTOR_DEF,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,STATIC_INIT,INSTANCE_INIT,ANNOTATION_DEF]">
       <defaultValue>LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE</defaultValue>
     </param>
     <status>READY</status>

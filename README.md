@@ -21,6 +21,7 @@ Compatibility matrix from checkstyle team:
 
 Checkstyle Plugin|Sonar min|Sonar max|Checkstyle|Jdk
 -----------------|---------|---------|----------|---
+4.28|7.9  |7.9+|8.28|11
 4.27|6.7  |7.7+|8.27|1.8
 4.26|6.7  |7.7+|8.26|1.8
 4.25|6.7  |7.7+|8.25|1.8
@@ -73,7 +74,7 @@ Jdk version depends on checkstyle's and sonar's jdk version:
 
 checkstyle:6.0 use jdk6, checkstyle:6.2 use jdk7, checkstyle:7.0 use jdk8.
 
-sonar:3.6 used jdk6, sonar:4.5 use jdk6, sonar:5.6-latest use jdk8.
+sonar:3.6 used jdk6, sonar:4.5 use jdk6, sonar:5.6-7.8 use jdk8, sonar:7.9-latest use jdk11.
 
 ## Usage
 Install it from Sonar Update Center:
