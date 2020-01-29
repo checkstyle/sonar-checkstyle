@@ -19,6 +19,8 @@
 
 package org.sonar.plugins.checkstyle.internal;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.FileInputStream;
@@ -98,7 +100,7 @@ public class ChecksTest {
         Assert.assertTrue(RULES_PATH + " must exist", rulesFile.exists());
 
         try {
-            final String input = Files.readString(rulesFile.toPath());
+            final String input = new String(Files.readAllBytes(rulesFile.toPath()), UTF_8);
             final Document document = XmlUtil.getRawXml(rulesFile.getAbsolutePath(), input, input);
             validateSonarRules(document, modules);
         }
