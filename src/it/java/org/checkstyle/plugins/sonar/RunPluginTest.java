@@ -19,6 +19,7 @@
 
 package org.checkstyle.plugins.sonar;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -157,7 +158,9 @@ public class RunPluginTest {
 
     private static void assertNoDifferences() {
         try {
-            final String differences = Files.readString(Paths.get(litsDifferencesPath()));
+            final String differences = new String(Files
+                    .readAllBytes(new File(litsDifferencesPath()).toPath()), UTF_8);
+
             Assertions.assertThat(differences)
                     .isEmpty();
         }

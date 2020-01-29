@@ -31,7 +31,7 @@ public class CheckstyleConstantsTest {
     public void privateConstructor() throws ReflectiveOperationException {
         final Constructor<CheckstyleConstants> constructor = CheckstyleConstants.class
                 .getDeclaredConstructor();
-        assertThat(constructor.canAccess(null)).isFalse();
+        assertThat(constructor.isAccessible()).isFalse();
         constructor.setAccessible(true);
         constructor.newInstance();
     }
