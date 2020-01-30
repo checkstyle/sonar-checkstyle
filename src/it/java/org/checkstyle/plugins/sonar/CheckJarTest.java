@@ -26,10 +26,15 @@ import java.io.File;
 import org.junit.Test;
 
 public class CheckJarTest {
+    private static final String VERSION = "4.29";
 
     @Test
     public void testJarPresence() {
+        final boolean snapshotExists = new File("target/checkstyle-sonar-plugin-"
+                                                + VERSION + "-SNAPSHOT.jar").exists();
+        final boolean releaseExists = new File("target/checkstyle-sonar-plugin-"
+                                               + VERSION + ".jar").exists();
         assertTrue("Jar should exists",
-                new File("target/checkstyle-sonar-plugin-4.28-SNAPSHOT.jar").exists());
+                   snapshotExists || releaseExists);
     }
 }

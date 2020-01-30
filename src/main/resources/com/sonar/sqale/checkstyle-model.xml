@@ -1453,6 +1453,19 @@
           <txt>min</txt>
         </prop>
       </chc>
+      <chc>
+        <rule-repo>checkstyle</rule-repo>
+        <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.AvoidNoArgumentSuperConstructorCallCheck</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>15</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
     </chc>
   </chc>
   <chc>
@@ -2013,6 +2026,19 @@
       <chc>
         <rule-repo>checkstyle</rule-repo>
         <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.NoCloneCheck</rule-key>
+        <prop>
+          <key>remediationFunction</key>
+          <txt>CONSTANT_ISSUE</txt>
+        </prop>
+        <prop>
+          <key>offset</key>
+          <val>20</val>
+          <txt>min</txt>
+        </prop>
+      </chc>
+      <chc>
+        <rule-repo>checkstyle</rule-repo>
+        <rule-key>com.puppycrawl.tools.checkstyle.checks.coding.NoEnumTrailingCommaCheck</rule-key>
         <prop>
           <key>remediationFunction</key>
           <txt>CONSTANT_ISSUE</txt>

@@ -97,6 +97,12 @@
     <configKey><![CDATA[Checker/TreeWalker/NoClone]]></configKey>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.coding.NoEnumTrailingCommaCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[No Enum Trailing Comma]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/NoEnumTrailingComma]]></configKey>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.coding.NoFinalizerCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[No Finalizer]]></name>
@@ -318,6 +324,13 @@
     <priority>MINOR</priority>
     <name><![CDATA[Avoid Inline Conditionals]]></name>
     <configKey><![CDATA[Checker/TreeWalker/AvoidInlineConditionals]]></configKey>
+    <status>READY</status>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.coding.AvoidNoArgumentSuperConstructorCallCheck">
+    <priority>MINOR</priority>
+    <name><![CDATA[Avoid No Argument Super Constructor Call]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/AvoidNoArgumentSuperConstructorCall]]></configKey>
     <status>READY</status>
   </rule>
 
@@ -552,8 +565,10 @@
     <name><![CDATA[Fall Through]]></name>
     <configKey><![CDATA[Checker/TreeWalker/FallThrough]]></configKey>
     <param key="checkLastCaseGroup" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
     </param>
     <param key="reliefPattern" type="REGULAR_EXPRESSION">
+      <defaultValue>falls?[ -]?thr(u|ough)</defaultValue>
     </param>
     <status>READY</status>
   </rule>
@@ -1488,7 +1503,7 @@
     <param key="option" type="s[same,alone,alone_or_singleline]">
       <defaultValue>same</defaultValue>
     </param>
-    <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE,CLASS_DEF,METHOD_DEF,CTOR_DEF,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,STATIC_INIT,INSTANCE_INIT,ANNOTATION_DEF]">
+    <param key="tokens" type="s[LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE,CLASS_DEF,METHOD_DEF,CTOR_DEF,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,STATIC_INIT,INSTANCE_INIT,ANNOTATION_DEF,ENUM_DEF]">
       <defaultValue>LITERAL_TRY,LITERAL_CATCH,LITERAL_FINALLY,LITERAL_IF,LITERAL_ELSE</defaultValue>
     </param>
     <status>READY</status>
