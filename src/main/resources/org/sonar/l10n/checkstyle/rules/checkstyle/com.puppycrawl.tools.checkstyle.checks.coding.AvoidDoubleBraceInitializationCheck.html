@@ -1,0 +1,7 @@
+<p>
+    Detects double brace initialization.
+    <br>
+    Rationale: Double brace initialization (set of Instance Initializers in class body) may look cool, but it is
+    considered as anti-pattern and should be avoided. This is also can lead to a hard-to-detect memory leak, if the
+    anonymous class instance is returned outside and other object(s) hold reference to it.
+</p>

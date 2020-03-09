@@ -26,7 +26,7 @@ import java.io.File;
 import org.junit.Test;
 
 public class CheckJarTest {
-    private static final String VERSION = "4.29";
+    private static final String VERSION = "4.30";
 
     @Test
     public void testJarPresence() {
