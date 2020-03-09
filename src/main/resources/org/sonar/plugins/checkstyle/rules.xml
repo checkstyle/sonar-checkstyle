@@ -1299,6 +1299,13 @@
     <status>READY</status>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.coding.AvoidDoubleBraceInitializationCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Avoid Double Brace Initialization]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/AvoidDoubleBraceInitialization]]></configKey>
+    <status>READY</status>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck">
     <priority>MINOR</priority>
     <name><![CDATA[Newline At End Of File]]></name>
