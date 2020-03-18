@@ -19,22 +19,30 @@
 
 package org.checkstyle.plugins.sonar;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
 public class CheckJarTest {
-    private static final String VERSION = "4.30";
+    private static final String MATCHER = ".*checkstyle-sonar-plugin-\\d+\\.\\d+(-SNAPSHOT)?\\.jar";
 
     @Test
-    public void testJarPresence() {
-        final boolean snapshotExists = new File("target/checkstyle-sonar-plugin-"
-                                                + VERSION + "-SNAPSHOT.jar").exists();
-        final boolean releaseExists = new File("target/checkstyle-sonar-plugin-"
-                                               + VERSION + ".jar").exists();
-        assertTrue("Jar should exists",
-                   snapshotExists || releaseExists);
+    public void testJarPresence() throws IOException {
+        final BiPredicate<Path, BasicFileAttributes> matcher = (path, basicFileAttributes) -> {
+            return path.toString()
+                    .matches(MATCHER);
+        };
+        final List<Path> files = Files.find(Paths.get("target"), 1, matcher)
+                .collect(Collectors.toList());
+        assertFalse("Jar should exists", files.isEmpty());
     }
 }
