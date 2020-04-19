@@ -2050,6 +2050,15 @@
     </param>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonAfterOuterTypeDeclarationCheck">
+    <name><![CDATA[Unnecessary Semicolon After Outer Type Declaration]]></name>
+    <priority>MAJOR</priority>
+    <configKey><![CDATA[Checker/TreeWalker/UnnecessarySemicolonAfterOuterTypeDeclaration]]></configKey>
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF]">
+      <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF</defaultValue>
+    </param>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck">
     <name><![CDATA[Annotation Location]]></name>
     <priority>MAJOR</priority>
