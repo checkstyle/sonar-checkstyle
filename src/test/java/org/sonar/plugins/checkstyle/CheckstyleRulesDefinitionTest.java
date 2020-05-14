@@ -61,7 +61,7 @@ public class CheckstyleRulesDefinitionTest {
         assertThat(repository.language()).isEqualTo("java");
 
         final List<RulesDefinition.Rule> rules = repository.rules();
-        assertThat(rules).hasSize(172);
+        assertThat(rules).hasSize(173);
 
         for (RulesDefinition.Rule rule : rules) {
             assertThat(rule.key()).isNotNull();

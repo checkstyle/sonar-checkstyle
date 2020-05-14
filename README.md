@@ -21,6 +21,7 @@ Compatibility matrix from checkstyle team:
 
 Checkstyle Plugin|Sonar min|Sonar max|Checkstyle|Jdk
 -----------------|---------|---------|----------|---
+4.32|7.9  |7.9+|8.32|1.8
 4.31|7.9  |7.9+|8.31|1.8
 4.30|7.9  |7.9+|8.30|1.8
 4.29|7.9  |7.9+|8.29|1.8
