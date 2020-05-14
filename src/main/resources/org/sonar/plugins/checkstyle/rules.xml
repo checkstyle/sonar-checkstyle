@@ -868,6 +868,14 @@
     <status>READY</status>
   </rule>
 
+  <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMissingWhitespaceAfterAsteriskCheck">
+    <priority>MAJOR</priority>
+    <name><![CDATA[Javadoc Missing Whitespace After Asterisk]]></name>
+    <tag>comment</tag>
+    <configKey><![CDATA[Checker/TreeWalker/JavadocMissingWhitespaceAfterAsterisk]]></configKey>
+    <status>READY</status>
+  </rule>
+
   <rule key="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck">
     <priority>MAJOR</priority>
     <name><![CDATA[Missing Javadoc Method]]></name>
@@ -1339,8 +1347,8 @@
     <param key="allowLineBreaks" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[COMMA,SEMI,POST_INC,POST_DEC,DOT,GENERIC_START,GENERIC_END,ELLIPSIS,METHOD_REF]">
-      <defaultValue>COMMA,SEMI,POST_INC,POST_DEC,ELLIPSIS</defaultValue>
+    <param key="tokens" type="s[COMMA,SEMI,POST_INC,POST_DEC,DOT,GENERIC_START,GENERIC_END,ELLIPSIS,LABELED_STAT,METHOD_REF]">
+      <defaultValue>COMMA,SEMI,POST_INC,POST_DEC,ELLIPSIS,LABELED_STAT</defaultValue>
     </param>
   </rule>
 
@@ -1908,6 +1916,9 @@
       <defaultValue>true</defaultValue>
     </param>
     <param key="ignoreStatic" type="BOOLEAN">
+      <defaultValue>true</defaultValue>
+    </param>
+    <param key="ignoreStaticFinal" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
     <param key="ignoreOverriddenMethods" type="BOOLEAN">
