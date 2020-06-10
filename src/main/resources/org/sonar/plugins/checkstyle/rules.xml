@@ -309,6 +309,9 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Array Trailing Comma]]></name>
     <configKey><![CDATA[Checker/TreeWalker/ArrayTrailingComma]]></configKey>
+    <param key="alwaysDemandTrailingComma" type="BOOLEAN">
+      <defaultValue>false</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.ArrayTypeStyleCheck">
@@ -1323,6 +1326,13 @@
     </param>
     <param key="fileExtensions" type="s{}">
     </param>
+    <status>READY</status>
+  </rule>
+
+  <rule key="com.puppycrawl.tools.checkstyle.checks.NoCodeInFileCheck">
+    <priority>MINOR</priority>
+    <name><![CDATA[No Code In File]]></name>
+    <configKey><![CDATA[Checker/TreeWalker/NoCodeInFile]]></configKey>
     <status>READY</status>
   </rule>
 
