@@ -28,6 +28,7 @@ import org.sonar.api.ExtensionPoint;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
+import org.sonar.plugins.checkstyle.metadata.CheckstyleMetadata;
 import org.sonar.squidbridge.rules.ExternalDescriptionLoader;
 import org.sonar.squidbridge.rules.SqaleXmlLoader;
 
@@ -36,19 +37,35 @@ import com.google.common.annotations.VisibleForTesting;
 @ExtensionPoint
 @ScannerSide
 public final class CheckstyleRulesDefinition implements RulesDefinition {
+    private String xmlFile = "rules.xml";
+    private String repoKey = CheckstyleConstants.REPOSITORY_KEY;
+
+    public CheckstyleRulesDefinition() {
+        // Needed by Sonar to instantiate this plugin, the parametrized constructor is being
+        // used for testing.
+    }
+
+    public CheckstyleRulesDefinition(String xmlFile, String repoKey) {
+        this.xmlFile = xmlFile;
+        this.repoKey = repoKey;
+    }
 
     @Override
     public void define(Context context) {
         final NewRepository repository = context.createRepository(
-                CheckstyleConstants.REPOSITORY_KEY, "java").setName(
+                repoKey, "java").setName(
                 CheckstyleConstants.REPOSITORY_NAME);
         try {
-            extractRulesData(repository, "/org/sonar/plugins/checkstyle/rules.xml",
+            extractRulesData(repository, "/org/sonar/plugins/checkstyle/" + xmlFile,
                     "/org/sonar/l10n/checkstyle/rules/checkstyle");
         }
         catch (IOException ex) {
             throw new IllegalStateException("Exception during extractRulesData", ex);
         }
+
+        final CheckstyleMetadata checkstyleMetadata = new CheckstyleMetadata(repository);
+        checkstyleMetadata.updateRulesWithMetadata();
+        checkstyleMetadata.createRulesWithMetadata();
 
         repository.done();
     }
