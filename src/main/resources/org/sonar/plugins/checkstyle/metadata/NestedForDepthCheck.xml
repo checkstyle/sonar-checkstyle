@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle-metadata>
+  <module>
+    <check name="NestedForDepthCheck"
+           fullyQualifiedName="com.puppycrawl.tools.checkstyle.checks.coding.NestedForDepthCheck"
+           parent="TreeWalker">
+      <description><![CDATA[<p>Restricts nested <code>for</code> blocks to a specified depth.</p>]]></description>
+      <properties>
+        <property name="max" type="Integer" default-value="1" value-type="scalar">
+          <description><![CDATA[Specify maximum allowed nesting depth.]]></description>
+        </property>
+      </properties>
+      <message-keys>
+        <message-key key="nested.for.depth" />
+      </message-keys>
+    </check>
+  </module>
+</checkstyle-metadata>
