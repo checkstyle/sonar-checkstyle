@@ -2,7 +2,10 @@ language: java
 sudo: false
 install: true
 
-script: eval $CMD;
+script:
+  - |
+    set -e
+    eval $CMD;
 
 cache:
   apt: true
@@ -24,10 +27,10 @@ matrix:
   include:
     - jdk: openjdk11
       env: CMD="./.ci/travis.sh install"
-   
+
     - jdk: openjdk8
       env: CMD="./.ci/travis.sh install"
-    
+
     - jdk: openjdk11
       env: CMD="./.ci/travis.sh integration-tests"
 
