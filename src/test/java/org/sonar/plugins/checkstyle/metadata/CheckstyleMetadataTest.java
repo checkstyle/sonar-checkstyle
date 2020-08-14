@@ -21,15 +21,15 @@ package org.sonar.plugins.checkstyle.metadata;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.example.ModuleDetails;
 import org.example.ModulePropertyDetails;
 import org.example.ModuleType;
-import org.example.XMLReader;
+import org.example.XMLMetaReader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition;
@@ -39,6 +39,7 @@ import org.sonar.plugins.checkstyle.CheckstyleRulesDefinition;
 public class CheckstyleMetadataTest {
     private static RulesDefinition.Repository repository;
     private static List<String> checkSet;
+    private static Map<String, ModuleDetails> metadataRepo;
 
     @BeforeClass
     public static void getPreparedRepository() {
@@ -53,6 +54,12 @@ public class CheckstyleMetadataTest {
                 "com.puppycrawl.tools.checkstyle.checks.coding.NestedForDepthCheck",
                 "com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck",
                 "com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck");
+        metadataRepo = new HashMap<>();
+        new XMLMetaReader().readAllModulesIncludingThirdPartyIfAny()
+                .forEach(moduleDetails -> {
+                    metadataRepo.put(moduleDetails.getFullQualifiedName(),
+                            moduleDetails);
+                });
     }
 
     @Test
@@ -60,12 +67,10 @@ public class CheckstyleMetadataTest {
         checkSet.forEach(fullyQualifiedCheckName -> {
             final RulesDefinition.Rule sampleCheckRule = repository.rule(fullyQualifiedCheckName);
 
-            final ModuleDetails moduleDetails = loadMeta(
-                    fullyQualifiedCheckName.substring(
-                            fullyQualifiedCheckName.lastIndexOf('.') + 1));
+            final ModuleDetails moduleDetails = metadataRepo.get(fullyQualifiedCheckName);
             assertEquals("HTML Descriptions don't match", moduleDetails.getDescription(),
                     sampleCheckRule.htmlDescription());
-            assertEquals("Name doesn't match", convertName(moduleDetails.getName()),
+            assertEquals("Name doesn't match", convertName(moduleDetails.getName() + "Check"),
                     sampleCheckRule.name());
             assertEquals("InternalKey doesn't match", convertInternalKey(moduleDetails),
                     sampleCheckRule.internalKey());
@@ -116,24 +121,12 @@ public class CheckstyleMetadataTest {
         });
     }
 
-    private ModuleDetails loadMeta(String checkName) {
-        final ModuleDetails moduleDetails;
-        try (InputStream inputStream = getClass().getResourceAsStream(checkName + ".xml")) {
-            moduleDetails = new XMLReader().read(inputStream, ModuleType.CHECK);
-        }
-        catch (IOException ex) {
-            throw new IllegalStateException("exception occured during loadMeta of " + checkName,
-                    ex);
-        }
-        return moduleDetails;
-    }
-
-    private static String convertName(String name) {
+    private static String convertName(String checkName) {
         final int capacity = 1024;
         final StringBuilder result = new StringBuilder(capacity);
-        for (int i = 0; i < name.length(); i++) {
-            result.append(name.charAt(i));
-            if (i + 1 < name.length() && Character.isUpperCase(name.charAt(i + 1))) {
+        for (int i = 0; i < checkName.length(); i++) {
+            result.append(checkName.charAt(i));
+            if (i + 1 < checkName.length() && Character.isUpperCase(checkName.charAt(i + 1))) {
                 result.append(' ');
             }
         }
@@ -142,11 +135,14 @@ public class CheckstyleMetadataTest {
 
     private static String convertInternalKey(ModuleDetails moduleDetails) {
         String result = "Checker/";
-        if ("Checker".equals(moduleDetails.getParent())) {
+        if (moduleDetails.getParent().contains("Checker")) {
             result += moduleDetails.getName();
         }
         else {
             result += "TreeWalker/" + moduleDetails.getName();
+        }
+        if (moduleDetails.getModuleType() == ModuleType.CHECK) {
+            result += "Check";
         }
         return result;
     }
