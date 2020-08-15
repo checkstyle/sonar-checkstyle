@@ -63,6 +63,9 @@ public class CheckstyleMetadata {
                 });
     }
 
+    /**
+     * Update all the metadata from sonar rule database with checkstyle metadata.
+     */
     public void updateRulesWithMetadata() {
         repository.rules().forEach(rule -> {
             final ModuleDetails moduleDetails = metadataRepo.get(rule.key());
@@ -82,6 +85,9 @@ public class CheckstyleMetadata {
         });
     }
 
+    /**
+     * Create checkstyle metadata for checks which are not present in rules.xml.
+     */
     public void createRulesWithMetadata() {
         final Set<String> existingChecks = repository.rules().stream()
                 .map(RulesDefinition.NewRule::key)
@@ -134,6 +140,12 @@ public class CheckstyleMetadata {
                 });
     }
 
+    /**
+     * Get class with the given check name.
+     *
+     * @param checkName check name
+     * @return check class
+     */
     private Class<?> getClass(String checkName) {
         final ClassLoader loader = getClass().getClassLoader();
         try {
@@ -145,11 +157,23 @@ public class CheckstyleMetadata {
         }
     }
 
+    /**
+     * Determine whether the check is a template rule based on the method types of the check.
+     *
+     * @param checkName check name
+     * @return true if check is a template rule
+     */
     private boolean isTemplateRule(String checkName) {
         return Arrays.stream(getClass(checkName).getMethods())
                 .anyMatch(CheckstyleMetadata::isSetter);
     }
 
+    /**
+     * Get enum values for the provided enum class name.
+     *
+     * @param enumName enum class name
+     * @return enum values
+     */
     private List<String> getEnumValues(String enumName) {
         final Class<?> loadedClass = getClass(enumName);
         final Object[] vals = loadedClass.getEnumConstants();
@@ -160,6 +184,13 @@ public class CheckstyleMetadata {
         return enumVals;
     }
 
+    /**
+     * Construct check parameter metadata.
+     *
+     * @param checkName check name
+     * @param param parameter details fetched from sonar database
+     * @param modulePropertyDetails constructed new parameter metadata
+     */
     private void constructParams(String checkName, RulesDefinition.NewParam param,
                                         ModulePropertyDetails modulePropertyDetails) {
         param.setDescription(modulePropertyDetails.getDescription())
@@ -203,6 +234,13 @@ public class CheckstyleMetadata {
         }
     }
 
+    /**
+     * Get rule tags for checks, either based on package type or from the YML config(if provided).
+     *
+     * @param checkPackage check name
+     * @param configData additional metadata from YML config
+     * @return the determined rule tag
+     */
     private static String getRuleTag(String checkPackage,
                               SonarRulePropertyLoader.AdditionalRuleProperties configData) {
         String result = null;
@@ -224,6 +262,12 @@ public class CheckstyleMetadata {
         return result;
     }
 
+    /**
+     * Fetch additional module details from a YML config.
+     *
+     * @param fileName YML config file
+     * @return map of additional metadata
+     */
     private static Map<String, SonarRulePropertyLoader.AdditionalRuleProperties>
         getAdditionalDetails(String fileName) {
 
@@ -245,6 +289,12 @@ public class CheckstyleMetadata {
         return additionalDetails;
     }
 
+    /**
+     * Check if the provided method is a setter.
+     *
+     * @param method class method
+     * @return true if the method is a setter
+     */
     public static boolean isSetter(Method method) {
         return method.getName().startsWith("set")
                 && method.getParameterTypes().length == 1;
@@ -269,6 +319,12 @@ public class CheckstyleMetadata {
         return result.toString();
     }
 
+    /**
+     * Create internal key composed of parents of module.
+     *
+     * @param moduleDetails module metadata
+     * @return internalKey
+     */
     public static String getInternalKey(ModuleDetails moduleDetails) {
         String result = "Checker/";
         if ("com.puppycrawl.tools.checkstyle.Checker".equals(moduleDetails.getParent())) {
