@@ -70,10 +70,10 @@ public class CheckstyleMetadataTest {
             assertEquals("HTML Descriptions don't match", moduleDetails.getDescription(),
                     sampleCheckRule.htmlDescription());
             assertEquals("Name doesn't match",
-                    CheckstyleMetadata.convertName(moduleDetails.getName() + "Check"),
+                    CheckstyleMetadata.getFullCheckName(moduleDetails.getName() + "Check"),
                     sampleCheckRule.name());
             assertEquals("InternalKey doesn't match",
-                    CheckstyleMetadata.convertInternalKey(moduleDetails),
+                    CheckstyleMetadata.getInternalKey(moduleDetails),
                     sampleCheckRule.internalKey());
             sampleCheckRule.params().forEach(param -> {
                 if (!"tabWidth".equals(param.key())) {

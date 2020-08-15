@@ -68,8 +68,8 @@ public class CheckstyleMetadata {
             final ModuleDetails moduleDetails = metadataRepo.get(rule.key());
             if (moduleDetails != null) {
                 rule.setHtmlDescription(moduleDetails.getDescription());
-                rule.setName(convertName(moduleDetails.getName() + CHECK_STRING));
-                rule.setInternalKey(convertInternalKey(moduleDetails));
+                rule.setName(getFullCheckName(moduleDetails.getName() + CHECK_STRING));
+                rule.setInternalKey(getInternalKey(moduleDetails));
 
                 rule.params().forEach(param -> { //NOSONAR
                     if (!"tabWidth".equals(param.key())) {
@@ -110,8 +110,8 @@ public class CheckstyleMetadata {
                         final RulesDefinition.NewRule rule =
                                 repository.createRule(moduleDetails.getFullQualifiedName());
                         rule.setHtmlDescription(moduleDetails.getDescription())
-                                .setName(convertName(moduleDetails.getName() + CHECK_STRING))
-                                .setInternalKey(convertInternalKey(moduleDetails))
+                                .setName(getFullCheckName(moduleDetails.getName() + CHECK_STRING))
+                                .setInternalKey(getInternalKey(moduleDetails))
                                 .setDebtRemediationFunction(debtRemediationFunction)
                                 .setSeverity("MINOR")
                                 .setStatus(RuleStatus.READY);
@@ -150,8 +150,8 @@ public class CheckstyleMetadata {
                 .anyMatch(CheckstyleMetadata::isSetter);
     }
 
-    private List<String> getEnumValues(String checkName) {
-        final Class<?> loadedClass = getClass(checkName);
+    private List<String> getEnumValues(String enumName) {
+        final Class<?> loadedClass = getClass(enumName);
         final Object[] vals = loadedClass.getEnumConstants();
         final List<String> enumVals = new ArrayList<>();
         for (Object val : vals) {
@@ -254,22 +254,22 @@ public class CheckstyleMetadata {
      * It converts the name received from ModuleDetails to Sonar rule name format
      * e.g. RightCurlyCheck -> Right Curly Check
      *
-     * @param name the name fetched from ModuleDetails
+     * @param checkName the name fetched from ModuleDetails
      * @return modifiedName
      */
-    public static String convertName(String name) {
+    public static String getFullCheckName(String checkName) {
         final int capacity = 1024;
         final StringBuilder result = new StringBuilder(capacity);
-        for (int i = 0; i < name.length(); i++) {
-            result.append(name.charAt(i));
-            if (i + 1 < name.length() && Character.isUpperCase(name.charAt(i + 1))) {
+        for (int i = 0; i < checkName.length(); i++) {
+            result.append(checkName.charAt(i));
+            if (i + 1 < checkName.length() && Character.isUpperCase(checkName.charAt(i + 1))) {
                 result.append(' ');
             }
         }
         return result.toString();
     }
 
-    public static String convertInternalKey(ModuleDetails moduleDetails) {
+    public static String getInternalKey(ModuleDetails moduleDetails) {
         String result = "Checker/";
         if ("com.puppycrawl.tools.checkstyle.Checker".equals(moduleDetails.getParent())) {
             result += moduleDetails.getName();
