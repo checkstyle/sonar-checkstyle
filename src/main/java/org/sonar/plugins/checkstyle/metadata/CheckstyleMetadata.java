@@ -22,21 +22,19 @@ package org.sonar.plugins.checkstyle.metadata;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.example.ModuleDetails;
 import org.example.ModulePropertyDetails;
 import org.example.ModuleType;
-import org.example.XMLReader;
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
+import org.example.XMLMetaReader;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.debt.internal.DefaultDebtRemediationFunction;
@@ -48,24 +46,34 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 public class CheckstyleMetadata {
+    private static final String CHECK_STRING = "Check";
+    private static final String OPTION_STRING = "Option";
+    private static final String COMMA_STRING = ",";
+    private static final int PARAM_TYPE_DB_COLUMN_TYPE_SIZE_LIMIT = 512;
     private final RulesDefinition.NewRepository repository;
+    private final Map<String, ModuleDetails> metadataRepo;
 
     public CheckstyleMetadata(RulesDefinition.NewRepository repository) {
         this.repository = repository;
+        metadataRepo = new HashMap<>();
+        new XMLMetaReader().readAllModulesIncludingThirdPartyIfAny()
+                .forEach(moduleDetails -> { //NOSONAR
+                    metadataRepo.put(moduleDetails.getFullQualifiedName(),
+                            moduleDetails);
+                });
     }
 
     public void updateRulesWithMetadata() {
         repository.rules().forEach(rule -> {
-            final String checkName = rule.key().substring(rule.key().lastIndexOf('.') + 1);
-            final ModuleDetails moduleDetails = loadMeta(checkName);
+            final ModuleDetails moduleDetails = metadataRepo.get(rule.key());
             if (moduleDetails != null) {
                 rule.setHtmlDescription(moduleDetails.getDescription());
-                rule.setName(convertName(moduleDetails.getName()));
+                rule.setName(convertName(moduleDetails.getName() + CHECK_STRING));
                 rule.setInternalKey(convertInternalKey(moduleDetails));
 
                 rule.params().forEach(param -> { //NOSONAR
                     if (!"tabWidth".equals(param.key())) {
-                        constructParams(checkName, param,
+                        constructParams(moduleDetails.getName(), param,
                                 moduleDetails.getModulePropertyByKey(param.key()));
                     }
                     }
@@ -76,17 +84,7 @@ public class CheckstyleMetadata {
 
     public void createRulesWithMetadata() {
         final Set<String> existingChecks = repository.rules().stream()
-                .map(rule -> rule.key().substring(rule.key().lastIndexOf('.') + 1))
-                .collect(Collectors.toSet());
-        final Reflections reflections = new Reflections("org.sonar.plugins.checkstyle.metadata",
-                new ResourcesScanner());
-        final Set<String> fileNames = reflections.getResources(Pattern.compile(".*\\.xml"));
-        final Set<String> newChecks = fileNames.stream()
-                .map(fileName -> { //NOSONAR
-                    return fileName.substring(fileName.lastIndexOf('/') + 1,
-                            fileName.lastIndexOf('.'));
-                })
-                .filter(check -> !existingChecks.contains(check))
+                .map(RulesDefinition.NewRule::key)
                 .collect(Collectors.toSet());
 
         final Map<String, SonarRulePropertyLoader.AdditionalRuleProperties> additionalRuleData =
@@ -95,33 +93,45 @@ public class CheckstyleMetadata {
                 new DefaultDebtRemediationFunction(DebtRemediationFunction.Type.CONSTANT_ISSUE,
                         null, "0d 0h 5min");
 
-        for (String checkName : newChecks) {
-            final ModuleDetails moduleDetails = loadMeta(checkName);
-            if (moduleDetails != null) {
-                final SonarRulePropertyLoader.AdditionalRuleProperties additionalDetails =
-                        additionalRuleData.get(checkName);
-                final RulesDefinition.NewRule rule =
-                        repository.createRule(moduleDetails.getFullQualifiedName());
-                rule.setHtmlDescription(moduleDetails.getDescription())
-                        .setName(convertName(moduleDetails.getName()))
-                        .setInternalKey(convertInternalKey(moduleDetails))
-                        .setDebtRemediationFunction(debtRemediationFunction)
-                        .setSeverity("MINOR")
-                        .setStatus(RuleStatus.READY);
-                final String tag = getRuleTag(moduleDetails.getFullQualifiedName(),
-                        additionalDetails);
-                if (tag != null) {
-                    rule.setTags(tag);
-                }
-                if (isTemplateRule(moduleDetails.getFullQualifiedName())) {
-                    rule.setTemplate(true);
-                }
+        metadataRepo.keySet().stream()
+                .filter(check -> { //NOSONAR
+                    return !existingChecks.contains(check)
+                            && metadataRepo.get(check).getModuleType() == ModuleType.CHECK
+                            // these checks are not available in checkstyle 8.35, these conditions
+                            // should be removed when upgrading to 8.36
+                            && !check.contains("RecordTypeParameterNameCheck")
+                            && !check.contains("PatternVariableNameCheck");
+                })
+                .forEach(newCheck -> {
+                    final ModuleDetails moduleDetails = metadataRepo.get(newCheck);
+                    if (moduleDetails != null) {
+                        final SonarRulePropertyLoader.AdditionalRuleProperties additionalDetails =
+                                additionalRuleData.get(newCheck);
+                        final RulesDefinition.NewRule rule =
+                                repository.createRule(moduleDetails.getFullQualifiedName());
+                        rule.setHtmlDescription(moduleDetails.getDescription())
+                                .setName(convertName(moduleDetails.getName() + CHECK_STRING))
+                                .setInternalKey(convertInternalKey(moduleDetails))
+                                .setDebtRemediationFunction(debtRemediationFunction)
+                                .setSeverity("MINOR")
+                                .setStatus(RuleStatus.READY);
+                        final String tag = getRuleTag(moduleDetails.getFullQualifiedName(),
+                                additionalDetails);
+                        if (tag != null) {
+                            rule.setTags(tag);
+                        }
+                        if (isTemplateRule(moduleDetails.getFullQualifiedName())) {
+                            rule.setTemplate(true);
+                        }
 
-                for (ModulePropertyDetails property : moduleDetails.getProperties()) {
-                    constructParams(checkName, rule.createParam(property.getName()), property);
-                }
-            }
-        }
+                        for (ModulePropertyDetails property : moduleDetails.getProperties()) {
+                            constructParams(moduleDetails.getName(),
+                                    rule.createParam(property.getName()),
+                                    property);
+                        }
+                    }
+
+                });
     }
 
     private Class<?> getClass(String checkName) {
@@ -154,13 +164,36 @@ public class CheckstyleMetadata {
                                         ModulePropertyDetails modulePropertyDetails) {
         param.setDescription(modulePropertyDetails.getDescription())
                 .setDefaultValue(modulePropertyDetails.getDefaultValue());
-        final String paramType = modulePropertyDetails.getType();
-        if ("tokens".equals(paramType) || "javadocTokens".equals(paramType)) {
-            final Object[] valuesArray = CheckUtil.getAcceptableTokens(checkName).split(",");
-            param.setType(RuleParamType.multipleListOfValues(Arrays.copyOf(
-                    valuesArray, valuesArray.length, String[].class)));
+        String paramType = modulePropertyDetails.getType();
+        if (modulePropertyDetails.getValidationType() != null
+            && "tokenSet".equals(modulePropertyDetails.getValidationType())) {
+            final Object[] valuesArray = CheckUtil.getAcceptableTokens(checkName)
+                    .split(COMMA_STRING);
+            final String[] valuesStringArray = Arrays.copyOf(valuesArray, valuesArray.length,
+                    String[].class);
+
+            int totalByteSize = 0;
+            for (String x : valuesStringArray) {
+                final String tokenString = x + COMMA_STRING;
+                totalByteSize += tokenString.getBytes(StandardCharsets.UTF_8).length;
+            }
+            totalByteSize += "'SINGLE_SELECT_LIST,multiple=true,values=\""
+                    .getBytes(StandardCharsets.UTF_8).length;
+            // This check is required since the PARAM_TYPE column has size 512, and exceeding it
+            // will result in an error in DB updates
+            if (totalByteSize > PARAM_TYPE_DB_COLUMN_TYPE_SIZE_LIMIT) {
+                param.setType(RuleParamType.STRING);
+            }
+            else {
+                param.setType(RuleParamType.multipleListOfValues(valuesStringArray));
+            }
         }
-        else if (paramType.endsWith("Option")) {
+        else if (paramType.endsWith(OPTION_STRING)) {
+            // the enum class names have been updated in later releases.
+            // this condition should be removed when upgraded to 8.35
+            if (paramType.contains("AnnotationUseStyleCheck")) {
+                paramType = paramType.substring(0, paramType.length() - OPTION_STRING.length());
+            }
             final Object[] valuesArray = getEnumValues(paramType).toArray();
             param.setType(RuleParamType.singleListOfValues(Arrays.copyOf(
                     valuesArray, valuesArray.length, String[].class)));
@@ -212,24 +245,6 @@ public class CheckstyleMetadata {
         return additionalDetails;
     }
 
-    private ModuleDetails loadMeta(String checkName) {
-        ModuleDetails moduleDetails = null;
-        try {
-            final InputStream inputStream = getClass()
-                    .getResourceAsStream(checkName + ".xml");
-            if (inputStream != null) {
-                moduleDetails = new XMLReader().read(inputStream, ModuleType.CHECK);
-                inputStream.close();
-            }
-        }
-        catch (IOException ex) {
-            throw new IllegalStateException("exception occured during loadMeta of " + checkName,
-                    ex);
-        }
-
-        return moduleDetails;
-    }
-
     public static boolean isSetter(Method method) {
         return method.getName().startsWith("set")
                 && method.getParameterTypes().length == 1;
@@ -242,7 +257,7 @@ public class CheckstyleMetadata {
      * @param name the name fetched from ModuleDetails
      * @return modifiedName
      */
-    private static String convertName(String name) {
+    public static String convertName(String name) {
         final int capacity = 1024;
         final StringBuilder result = new StringBuilder(capacity);
         for (int i = 0; i < name.length(); i++) {
@@ -254,15 +269,17 @@ public class CheckstyleMetadata {
         return result.toString();
     }
 
-    private static String convertInternalKey(ModuleDetails moduleDetails) {
+    public static String convertInternalKey(ModuleDetails moduleDetails) {
         String result = "Checker/";
-        if ("Checker".equals(moduleDetails.getParent())) {
+        if ("com.puppycrawl.tools.checkstyle.Checker".equals(moduleDetails.getParent())) {
             result += moduleDetails.getName();
         }
         else {
             result += "TreeWalker/" + moduleDetails.getName();
         }
+        if (moduleDetails.getModuleType() == ModuleType.CHECK) {
+            result += CHECK_STRING;
+        }
         return result;
     }
-
 }

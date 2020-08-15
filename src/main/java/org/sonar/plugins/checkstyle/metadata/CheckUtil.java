@@ -38,7 +38,7 @@ public final class CheckUtil {
         try {
             final Set<String> packageNames = PackageNamesLoader.getPackageNames(classLoader);
             return new PackageObjectFactory(packageNames, classLoader)
-                    .createModule(checkName.substring(0, checkName.length() - "Check".length()));
+                    .createModule(checkName);
         }
         catch (CheckstyleException ex) {
             throw new IllegalStateException("exception occured during load of " + checkName, ex);
