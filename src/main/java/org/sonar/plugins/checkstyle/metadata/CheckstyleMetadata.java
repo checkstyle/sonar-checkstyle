@@ -69,19 +69,17 @@ public class CheckstyleMetadata {
     public void updateRulesWithMetadata() {
         repository.rules().forEach(rule -> {
             final ModuleDetails moduleDetails = metadataRepo.get(rule.key());
-            if (moduleDetails != null) {
-                rule.setHtmlDescription(moduleDetails.getDescription());
-                rule.setName(getFullCheckName(moduleDetails.getName() + CHECK_STRING));
-                rule.setInternalKey(getInternalKey(moduleDetails));
+            rule.setHtmlDescription(moduleDetails.getDescription());
+            rule.setName(getFullCheckName(moduleDetails.getName() + CHECK_STRING));
+            rule.setInternalKey(getInternalKey(moduleDetails));
 
-                rule.params().forEach(param -> { //NOSONAR
+            rule.params().forEach(param -> { //NOSONAR
                     if (!"tabWidth".equals(param.key())) {
                         constructParams(moduleDetails.getName(), param,
                                 moduleDetails.getModulePropertyByKey(param.key()));
                     }
-                    }
-                );
-            }
+                }
+            );
         });
     }
 
@@ -102,41 +100,34 @@ public class CheckstyleMetadata {
         metadataRepo.keySet().stream()
                 .filter(check -> { //NOSONAR
                     return !existingChecks.contains(check)
-                            && metadataRepo.get(check).getModuleType() == ModuleType.CHECK
-                            // these checks are not available in checkstyle 8.35, these conditions
-                            // should be removed when upgrading to 8.36
-                            && !check.contains("RecordTypeParameterNameCheck")
-                            && !check.contains("PatternVariableNameCheck");
+                            && metadataRepo.get(check).getModuleType() == ModuleType.CHECK;
                 })
                 .forEach(newCheck -> {
                     final ModuleDetails moduleDetails = metadataRepo.get(newCheck);
-                    if (moduleDetails != null) {
-                        final SonarRulePropertyLoader.AdditionalRuleProperties additionalDetails =
-                                additionalRuleData.get(newCheck);
-                        final RulesDefinition.NewRule rule =
-                                repository.createRule(moduleDetails.getFullQualifiedName());
-                        rule.setHtmlDescription(moduleDetails.getDescription())
-                                .setName(getFullCheckName(moduleDetails.getName() + CHECK_STRING))
-                                .setInternalKey(getInternalKey(moduleDetails))
-                                .setDebtRemediationFunction(debtRemediationFunction)
-                                .setSeverity("MINOR")
-                                .setStatus(RuleStatus.READY);
-                        final String tag = getRuleTag(moduleDetails.getFullQualifiedName(),
-                                additionalDetails);
-                        if (tag != null) {
-                            rule.setTags(tag);
-                        }
-                        if (isTemplateRule(moduleDetails.getFullQualifiedName())) {
-                            rule.setTemplate(true);
-                        }
-
-                        for (ModulePropertyDetails property : moduleDetails.getProperties()) {
-                            constructParams(moduleDetails.getName(),
-                                    rule.createParam(property.getName()),
-                                    property);
-                        }
+                    final SonarRulePropertyLoader.AdditionalRuleProperties additionalDetails =
+                            additionalRuleData.get(newCheck);
+                    final RulesDefinition.NewRule rule =
+                            repository.createRule(moduleDetails.getFullQualifiedName());
+                    rule.setHtmlDescription(moduleDetails.getDescription())
+                            .setName(getFullCheckName(moduleDetails.getName() + CHECK_STRING))
+                            .setInternalKey(getInternalKey(moduleDetails))
+                            .setDebtRemediationFunction(debtRemediationFunction)
+                            .setSeverity("MINOR")
+                            .setStatus(RuleStatus.READY);
+                    final String tag = getRuleTag(moduleDetails.getFullQualifiedName(),
+                            additionalDetails);
+                    if (tag != null) {
+                        rule.setTags(tag);
+                    }
+                    if (isTemplateRule(moduleDetails.getFullQualifiedName())) {
+                        rule.setTemplate(true);
                     }
 
+                    for (ModulePropertyDetails property : moduleDetails.getProperties()) {
+                        constructParams(moduleDetails.getName(),
+                                rule.createParam(property.getName()),
+                                property);
+                    }
                 });
     }
 
@@ -328,9 +319,7 @@ public class CheckstyleMetadata {
         else {
             result += "TreeWalker/" + moduleDetails.getName();
         }
-        if (moduleDetails.getModuleType() == ModuleType.CHECK) {
-            result += CHECK_STRING;
-        }
+        result += CHECK_STRING;
         return result;
     }
 }
