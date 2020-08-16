@@ -195,7 +195,7 @@ public class CheckstyleMetadata {
                                         ModulePropertyDetails modulePropertyDetails) {
         param.setDescription(modulePropertyDetails.getDescription())
                 .setDefaultValue(modulePropertyDetails.getDefaultValue());
-        String paramType = modulePropertyDetails.getType();
+        final String paramType = modulePropertyDetails.getType();
         if (modulePropertyDetails.getValidationType() != null
             && "tokenSet".equals(modulePropertyDetails.getValidationType())) {
             final Object[] valuesArray = CheckUtil.getAcceptableTokens(checkName)
@@ -220,11 +220,6 @@ public class CheckstyleMetadata {
             }
         }
         else if (paramType.endsWith(OPTION_STRING)) {
-            // the enum class names have been updated in later releases.
-            // this condition should be removed when upgraded to 8.35
-            if (paramType.contains("AnnotationUseStyleCheck")) {
-                paramType = paramType.substring(0, paramType.length() - OPTION_STRING.length());
-            }
             final Object[] valuesArray = getEnumValues(paramType).toArray();
             param.setType(RuleParamType.singleListOfValues(Arrays.copyOf(
                     valuesArray, valuesArray.length, String[].class)));
