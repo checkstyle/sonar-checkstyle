@@ -628,8 +628,8 @@
     <name><![CDATA[Hidden Field]]></name>
     <configKey><![CDATA[Checker/TreeWalker/HiddenField]]></configKey>
     <cardinality>MULTIPLE</cardinality>
-    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF,LAMBDA]">
-      <defaultValue>VARIABLE_DEF,PARAMETER_DEF,LAMBDA</defaultValue>
+    <param key="tokens" type="s[VARIABLE_DEF,PARAMETER_DEF,PATTERN_VARIABLE_DEF,LAMBDA]">
+      <defaultValue>VARIABLE_DEF,PARAMETER_DEF,PATTERN_VARIABLE_DEF,LAMBDA</defaultValue>
     </param>
     <param key="ignoreFormat" type="REGULAR_EXPRESSION">
     </param>
@@ -738,8 +738,8 @@
     <param key="validateAbstractClassNames" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="tokens" type="s[ANNOTATION_FIELD_DEF,CLASS_DEF,INTERFACE_DEF,METHOD_CALL,METHOD_DEF,METHOD_REF,PARAMETER_DEF,VARIABLE_DEF]">
-      <defaultValue>ANNOTATION_FIELD_DEF,CLASS_DEF,INTERFACE_DEF,METHOD_CALL,METHOD_DEF,METHOD_REF,PARAMETER_DEF,VARIABLE_DEF</defaultValue>
+    <param key="tokens" type="s[ANNOTATION_FIELD_DEF,CLASS_DEF,INTERFACE_DEF,METHOD_CALL,METHOD_DEF,METHOD_REF,PARAMETER_DEF,VARIABLE_DEF,PATTERN_VARIABLE_DEF]">
+      <defaultValue>ANNOTATION_FIELD_DEF,CLASS_DEF,INTERFACE_DEF,METHOD_CALL,METHOD_DEF,METHOD_REF,PARAMETER_DEF,VARIABLE_DEF,PATTERN_VARIABLE_DEF</defaultValue>
     </param>
     <param key="illegalClassNames" type="s{}">
       <defaultValue>"java.util.HashSet,java.util.HashMap,java.util.LinkedHashMap,java.util.LinkedHashSet,java.util.TreeSet,java.util.TreeMap"</defaultValue>
@@ -1934,8 +1934,8 @@
     <param key="ignoreOverriddenMethods" type="BOOLEAN">
       <defaultValue>true</defaultValue>
     </param>
-    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF,ENUM_CONSTANT_DEF]">
-      <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF</defaultValue>
+    <param key="tokens" type="s[CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF,ENUM_CONSTANT_DEF,PATTERN_VARIABLE_DEF]">
+      <defaultValue>CLASS_DEF,INTERFACE_DEF,ENUM_DEF,ANNOTATION_DEF,ANNOTATION_FIELD_DEF,PARAMETER_DEF,VARIABLE_DEF,METHOD_DEF,PATTERN_VARIABLE_DEF</defaultValue>
     </param>
   </rule>
 
