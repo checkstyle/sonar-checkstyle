@@ -2083,6 +2083,7 @@
   <rule key="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck">
     <name><![CDATA[Annotation Location]]></name>
     <priority>MAJOR</priority>
+    <cardinality>MULTIPLE</cardinality>
     <configKey><![CDATA[Checker/TreeWalker/AnnotationLocation]]></configKey>
     <param key="allowSamelineMultipleAnnotations" type="BOOLEAN">
       <defaultValue>false</defaultValue>
