@@ -46,7 +46,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 public class CheckstyleMetadata {
-    private static final String CHECK_STRING = "Check";
     private static final String OPTION_STRING = "Option";
     private static final String COMMA_STRING = ",";
     private static final int PARAM_TYPE_DB_COLUMN_TYPE_SIZE_LIMIT = 512;
@@ -70,7 +69,7 @@ public class CheckstyleMetadata {
         repository.rules().forEach(rule -> {
             final ModuleDetails moduleDetails = metadataRepo.get(rule.key());
             rule.setHtmlDescription(moduleDetails.getDescription());
-            rule.setName(getFullCheckName(moduleDetails.getName() + CHECK_STRING));
+            rule.setName(getFullCheckName(moduleDetails.getName()));
             rule.setInternalKey(getInternalKey(moduleDetails));
 
             rule.params().forEach(param -> { //NOSONAR
@@ -109,7 +108,7 @@ public class CheckstyleMetadata {
                     final RulesDefinition.NewRule rule =
                             repository.createRule(moduleDetails.getFullQualifiedName());
                     rule.setHtmlDescription(moduleDetails.getDescription())
-                            .setName(getFullCheckName(moduleDetails.getName() + CHECK_STRING))
+                            .setName(getFullCheckName(moduleDetails.getName()))
                             .setInternalKey(getInternalKey(moduleDetails))
                             .setDebtRemediationFunction(debtRemediationFunction)
                             .setSeverity("MINOR")
@@ -319,7 +318,6 @@ public class CheckstyleMetadata {
         else {
             result += "TreeWalker/" + moduleDetails.getName();
         }
-        result += CHECK_STRING;
         return result;
     }
 }

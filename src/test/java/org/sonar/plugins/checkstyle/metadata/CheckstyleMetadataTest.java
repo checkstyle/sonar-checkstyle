@@ -70,7 +70,7 @@ public class CheckstyleMetadataTest {
             assertEquals("HTML Descriptions don't match", moduleDetails.getDescription(),
                     sampleCheckRule.htmlDescription());
             assertEquals("Name doesn't match",
-                    CheckstyleMetadata.getFullCheckName(moduleDetails.getName() + "Check"),
+                    CheckstyleMetadata.getFullCheckName(moduleDetails.getName()),
                     sampleCheckRule.name());
             assertEquals("InternalKey doesn't match",
                     CheckstyleMetadata.getInternalKey(moduleDetails),
