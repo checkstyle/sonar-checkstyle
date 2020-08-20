@@ -19,7 +19,11 @@
 
 package org.sonar.plugins.checkstyle.metadata;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
 import com.puppycrawl.tools.checkstyle.PackageObjectFactory;
@@ -33,11 +37,33 @@ public final class CheckUtil {
     private CheckUtil() {
     }
 
-    public static Object getCheck(String checkName) {
+    public static String getModifiableTokens(String checkName) {
+        final AbstractCheck checkResult = getCheck(checkName);
+        final String result;
+        if (AbstractJavadocCheck.class.isAssignableFrom(checkResult.getClass())) {
+            final AbstractJavadocCheck javadocCheck = (AbstractJavadocCheck) checkResult;
+            final List<Integer> modifiableJavadocTokens =
+                    subtractTokens(javadocCheck.getAcceptableJavadocTokens(),
+                            javadocCheck.getRequiredJavadocTokens());
+            result = getTokens(JavadocUtil::getTokenName, modifiableJavadocTokens);
+        }
+        else if (AbstractCheck.class.isAssignableFrom(checkResult.getClass())) {
+            final List<Integer> modifiableTokens = subtractTokens(checkResult.getAcceptableTokens(),
+                  checkResult.getRequiredTokens());
+            result = getTokens(TokenUtil::getTokenName, modifiableTokens);
+        }
+        else {
+            throw new IllegalStateException("Exception caused in CheckUtil.getCheck, "
+                    + "method executed in wrong context, heirarchy of check class missing");
+        }
+        return result;
+    }
+
+    private static AbstractCheck getCheck(String checkName) {
         final ClassLoader classLoader = CheckstyleMetadata.class.getClassLoader();
         try {
             final Set<String> packageNames = PackageNamesLoader.getPackageNames(classLoader);
-            return new PackageObjectFactory(packageNames, classLoader)
+            return (AbstractCheck) new PackageObjectFactory(packageNames, classLoader)
                     .createModule(checkName);
         }
         catch (CheckstyleException ex) {
@@ -45,55 +71,19 @@ public final class CheckUtil {
         }
     }
 
-    public static String getAcceptableTokens(String checkName) {
-        final Object checkResult = getCheck(checkName);
-        String result = null;
-        if (AbstractJavadocCheck.class.isAssignableFrom(checkResult.getClass())) {
-            final AbstractJavadocCheck javadocCheck = (AbstractJavadocCheck) checkResult;
-            result = getTokenText(true, javadocCheck.getAcceptableJavadocTokens(),
-                    javadocCheck.getRequiredJavadocTokens());
-        }
-        else if (AbstractCheck.class.isAssignableFrom(checkResult.getClass())) {
-            final AbstractCheck check = (AbstractCheck) checkResult;
-            result = getTokenText(false, check.getAcceptableTokens(),
-                    check.getRequiredTokens());
-        }
-        return result;
+    private static List<Integer> subtractTokens(int[] tokens, int... requiredTokens) {
+        final Set<Integer> requiredTokensSet = Arrays.stream(requiredTokens)
+              .boxed().collect(Collectors.toSet());
+        return Arrays.stream(tokens)
+              .boxed()
+              .filter(token -> !requiredTokensSet.contains(token))
+              .collect(Collectors.toList());
     }
 
-    public static String getTokenText(boolean isJavadocCheck, int[] tokens, int... requiredTokens) {
-        final StringBuilder result = new StringBuilder();
-        boolean first = true;
-
-        for (int token : tokens) {
-            boolean found = false;
-
-            for (int subtraction : requiredTokens) {
-                if (subtraction == token) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (found) {
-                continue;
-            }
-
-            if (first) {
-                first = false;
-            }
-            else {
-                result.append(',');
-            }
-
-            if (isJavadocCheck) {
-                result.append(JavadocUtil.getTokenName(token));
-            }
-            else {
-                result.append(TokenUtil.getTokenName(token));
-            }
-        }
-
-        return result.toString();
+    private static String getTokens(Function<Integer, String> function,
+                                    List<Integer> modifiableTokens) {
+        return modifiableTokens.stream()
+            .map(function)
+            .collect(Collectors.joining(","));
     }
 }
