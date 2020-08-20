@@ -188,7 +188,7 @@ public class CheckstyleMetadata {
         final String paramType = modulePropertyDetails.getType();
         if (modulePropertyDetails.getValidationType() != null
             && "tokenSet".equals(modulePropertyDetails.getValidationType())) {
-            final Object[] valuesArray = CheckUtil.getAcceptableTokens(checkName)
+            final Object[] valuesArray = CheckUtil.getModifiableTokens(checkName)
                     .split(COMMA_STRING);
             final String[] valuesStringArray = Arrays.copyOf(valuesArray, valuesArray.length,
                     String[].class);
