@@ -85,7 +85,6 @@ public class RunPluginTest {
                 .setZipFile(new File("target/temp-downloads/sonar-application-"
                                      + SONAR_APP_VERSION
                                      + ".zip"))
-                //.setSonarVersion(System.getProperty("sonar.runtimeVersion", SONAR_APP_VERSION))
                 .setEdition(Edition.COMMUNITY)
                 .addPlugin(FileLocation.byWildcardMavenFilename(new File("target"),
                         "checkstyle-sonar-plugin-*.jar"))

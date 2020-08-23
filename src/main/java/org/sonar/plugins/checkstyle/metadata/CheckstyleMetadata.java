@@ -56,7 +56,7 @@ public class CheckstyleMetadata {
         this.repository = repository;
         metadataRepo = new HashMap<>();
         new XMLMetaReader().readAllModulesIncludingThirdPartyIfAny()
-                .forEach(moduleDetails -> { //NOSONAR
+                .forEach(moduleDetails -> { // NOSONAR
                     metadataRepo.put(moduleDetails.getFullQualifiedName(),
                             moduleDetails);
                 });
@@ -72,7 +72,7 @@ public class CheckstyleMetadata {
             rule.setName(getFullCheckName(moduleDetails.getName()));
             rule.setInternalKey(getInternalKey(moduleDetails));
 
-            rule.params().forEach(param -> { //NOSONAR
+            rule.params().forEach(param -> { // NOSONAR
                     if (!"tabWidth".equals(param.key())) {
                         constructParams(moduleDetails.getName(), param,
                                 moduleDetails.getModulePropertyByKey(param.key()));
@@ -97,7 +97,7 @@ public class CheckstyleMetadata {
                         null, "0d 0h 5min");
 
         metadataRepo.keySet().stream()
-                .filter(check -> { //NOSONAR
+                .filter(check -> { // NOSONAR
                     return !existingChecks.contains(check)
                             && metadataRepo.get(check).getModuleType() == ModuleType.CHECK;
                 })
