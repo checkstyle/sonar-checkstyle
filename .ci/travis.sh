@@ -2,11 +2,6 @@
 
 set -euo pipefail
 
-git clone https://github.com/checkstyle/metadata-gen.git
-cd metadata-gen
-mvn install
-cd ../
-
 case "$1" in
 
 install)

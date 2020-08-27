@@ -31,10 +31,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.example.ModuleDetails;
-import org.example.ModulePropertyDetails;
-import org.example.ModuleType;
-import org.example.XMLMetaReader;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.debt.internal.DefaultDebtRemediationFunction;
@@ -44,6 +40,10 @@ import org.sonar.api.server.rule.RulesDefinition;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.puppycrawl.tools.checkstyle.meta.ModuleDetails;
+import com.puppycrawl.tools.checkstyle.meta.ModulePropertyDetails;
+import com.puppycrawl.tools.checkstyle.meta.ModuleType;
+import com.puppycrawl.tools.checkstyle.meta.XmlMetaReader;
 
 public class CheckstyleMetadata {
     private static final String OPTION_STRING = "Option";
@@ -55,7 +55,7 @@ public class CheckstyleMetadata {
     public CheckstyleMetadata(RulesDefinition.NewRepository repository) {
         this.repository = repository;
         metadataRepo = new HashMap<>();
-        new XMLMetaReader().readAllModulesIncludingThirdPartyIfAny()
+        XmlMetaReader.readAllModulesIncludingThirdPartyIfAny()
                 .forEach(moduleDetails -> { // NOSONAR
                     metadataRepo.put(moduleDetails.getFullQualifiedName(),
                             moduleDetails);

@@ -26,14 +26,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.example.ModuleDetails;
-import org.example.ModulePropertyDetails;
-import org.example.XMLMetaReader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.plugins.checkstyle.CheckstyleConstants;
 import org.sonar.plugins.checkstyle.CheckstyleRulesDefinition;
+
+import com.puppycrawl.tools.checkstyle.meta.ModuleDetails;
+import com.puppycrawl.tools.checkstyle.meta.ModulePropertyDetails;
+import com.puppycrawl.tools.checkstyle.meta.XmlMetaReader;
 
 public class CheckstyleMetadataTest {
     private static RulesDefinition.Repository repository;
@@ -54,7 +55,7 @@ public class CheckstyleMetadataTest {
                 "com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck",
                 "com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck");
         metadataRepo = new HashMap<>();
-        new XMLMetaReader().readAllModulesIncludingThirdPartyIfAny()
+        XmlMetaReader.readAllModulesIncludingThirdPartyIfAny()
                 .forEach(moduleDetails -> {
                     metadataRepo.put(moduleDetails.getFullQualifiedName(),
                             moduleDetails);

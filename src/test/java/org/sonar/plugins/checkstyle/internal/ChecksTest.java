@@ -53,6 +53,7 @@ import com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck;
 import com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck;
 import com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheck;
 import com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck;
+import com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraper;
 
 public class ChecksTest {
     private static final String RULES_PATH =
@@ -67,7 +68,8 @@ public class ChecksTest {
 
     private static final Set<Class<?>> UNDOCUMENTED_MODULES = Collections.set(
             TreeWalker.class,
-            Checker.class
+            Checker.class,
+            JavadocMetadataScraper.class
     );
 
     private static final List<String> UNDOCUMENTED_PROPERTIES = Arrays.asList(
@@ -82,6 +84,155 @@ public class ChecksTest {
             "SuppressWithNearbyCommentFilter.fileContents",
             "SuppressionCommentFilter.fileContents"
     );
+
+    private static final Set<String> PRE_CHECKSTYLE_8_36_MODULES =
+            java.util.Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+        "com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck",
+        "com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck",
+        "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck",
+        "com.puppycrawl.tools.checkstyle.checks.annotation.MissingDeprecatedCheck",
+        "com.puppycrawl.tools.checkstyle.checks.annotation.MissingOverrideCheck",
+        "com.puppycrawl.tools.checkstyle.checks.annotation.PackageAnnotationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.EqualsAvoidNullCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.NoCloneCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.NoEnumTrailingCommaCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.NoFinalizerCheck",
+        "com.puppycrawl.tools.checkstyle.checks.imports.AvoidStaticImportCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocPackageCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.InvalidJavadocPositionCheck",
+        "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheck",
+        "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpOnFilenameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck",
+        "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck",
+        "com.puppycrawl.tools.checkstyle.checks.sizes.OuterTypeNumberCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.GenericWhitespaceCheck",
+        "com.puppycrawl.tools.checkstyle.checks.imports.RedundantImportCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.AbstractClassNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.sizes.AnonInnerLengthCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.ArrayTrailingCommaCheck",
+        "com.puppycrawl.tools.checkstyle.checks.ArrayTypeStyleCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.AvoidInlineConditionalsCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.AvoidNoArgumentSuperConstructorCallCheck",
+        "com.puppycrawl.tools.checkstyle.checks.blocks.AvoidNestedBlocksCheck",
+        "com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck",
+        "com.puppycrawl.tools.checkstyle.checks.metrics.BooleanExpressionComplexityCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.CatchParameterNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.metrics.ClassDataAbstractionCouplingCheck",
+        "com.puppycrawl.tools.checkstyle.checks.metrics.ClassFanOutComplexityCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.CovariantEqualsCheck",
+        "com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.DeclarationOrderCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.DefaultComesLastCheck",
+        "com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck",
+        "com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyForInitializerPadCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyForIteratorPadCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.EqualsHashCodeCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.ExplicitInitializationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.FallThroughCheck",
+        "com.puppycrawl.tools.checkstyle.checks.sizes.FileLengthCheck",
+        "com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.FinalLocalVariableCheck",
+        "com.puppycrawl.tools.checkstyle.checks.FinalParametersCheck",
+        "com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.IllegalCatchCheck",
+        "com.puppycrawl.tools.checkstyle.checks.imports.IllegalImportCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.IllegalInstantiationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.IllegalThrowsCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.IllegalTokenCheck",
+        "com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck",
+        "com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.InnerAssignmentCheck",
+        "com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMissingWhitespaceAfterAsteriskCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocBlockTagLocationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocContentLocationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck",
+        "com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.LocalFinalVariableNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.LocalVariableNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.MethodNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.MissingCtorCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.MissingSwitchDefaultCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.ModifiedControlVariableCheck",
+        "com.puppycrawl.tools.checkstyle.checks.modifier.ModifierOrderCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.MultipleStringLiteralsCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.MultipleVariableDeclarationsCheck",
+        "com.puppycrawl.tools.checkstyle.checks.design.MutableExceptionCheck",
+        "com.puppycrawl.tools.checkstyle.checks.metrics.NPathComplexityCheck",
+        "com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.NestedIfDepthCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.NestedTryDepthCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.NoArrayTrailingCommaCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.AvoidDoubleBraceInitializationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck",
+        "com.puppycrawl.tools.checkstyle.checks.NoCodeInFileCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.OperatorWrapCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.PackageDeclarationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.PackageNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.ParameterAssignmentCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.LambdaParameterNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.sizes.ParameterNumberCheck",
+        "com.puppycrawl.tools.checkstyle.checks.modifier.RedundantModifierCheck",
+        "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.ReturnCountCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanReturnCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.StaticVariableNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.StringLiteralEqualityCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.SuperCloneCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.SuperFinalizeCheck",
+        "com.puppycrawl.tools.checkstyle.checks.design.ThrowsCountCheck",
+        "com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck",
+        "com.puppycrawl.tools.checkstyle.checks.TrailingCommentCheck",
+        "com.puppycrawl.tools.checkstyle.checks.TranslationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.SingleSpaceSeparatorCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.TypecastParenPadCheck",
+        "com.puppycrawl.tools.checkstyle.checks.UncommentedMainCheck",
+        "com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck",
+        "com.puppycrawl.tools.checkstyle.checks.UpperEllCheck",
+        "com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck",
+        "com.puppycrawl.tools.checkstyle.checks.design.InnerTypeLastCheck",
+        "com.puppycrawl.tools.checkstyle.checks.OuterTypeFilenameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.OrderedPropertiesCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.NestedForDepthCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.OneStatementPerLineCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.ClassTypeParameterNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.MethodTypeParameterNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.UniquePropertiesCheck",
+        "com.puppycrawl.tools.checkstyle.checks.AvoidEscapedUnicodeCharactersCheck",
+        "com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck",
+        "com.puppycrawl.tools.checkstyle.checks.naming.InterfaceTypeParameterNameCheck",
+        "com.puppycrawl.tools.checkstyle.checks.design.OneTopLevelClassCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.OverloadMethodsDeclarationOrderCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonInTryWithResourcesCheck",
+        "com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonInEnumerationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocParagraphCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheck",
+        "com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck",
+        "com.puppycrawl.tools.checkstyle.checks.blocks.EmptyCatchBlockCheck",
+        "com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheck",
+        "com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck",
+        "com.puppycrawl.tools.checkstyle.checks.whitespace.SeparatorWrapCheck",
+        "com.puppycrawl.tools.checkstyle.checks.DescendantTokenCheck",
+        "com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder"
+        )));
 
     @Test
     public void verifyTestConfigurationFiles() throws Exception {
@@ -117,6 +268,10 @@ public class ChecksTest {
             final Set<Node> children = XmlUtil.getChildrenElements(rule);
 
             final String key = rule.getAttributes().getNamedItem("key").getTextContent();
+
+            if (!PRE_CHECKSTYLE_8_36_MODULES.contains(key)) {
+                continue;
+            }
 
             final Class<?> module = findModule(modules, key);
 
@@ -162,7 +317,8 @@ public class ChecksTest {
 
         for (Class<?> module : modules) {
             if (!UNDOCUMENTED_MODULES.contains(module) && !CheckUtil.isFilterModule(module)
-                    && !CheckUtil.isFileFilterModule(module)) {
+                    && !CheckUtil.isFileFilterModule(module)
+                    && PRE_CHECKSTYLE_8_36_MODULES.contains(module.getName())) {
                 Assert.fail("Module not found in sonar rules: " + module.getCanonicalName());
             }
         }
@@ -321,9 +477,11 @@ public class ChecksTest {
                 }
                 if (moduleProperties != null) {
                     for (String property : moduleProperties) {
-                        Assert.fail(lastModule.getCanonicalName()
-                                + " property not found in sonar properties"
-                                + " (" + MODULE_PROPERTIES_PATH + ")" + ": " + property);
+                        if (PRE_CHECKSTYLE_8_36_MODULES.contains(lastModule.getCanonicalName())) {
+                            Assert.fail(lastModule.getCanonicalName()
+                                    + " property not found in sonar properties"
+                                    + " (" + MODULE_PROPERTIES_PATH + ")" + ": " + property);
+                        }
                     }
                 }
 
@@ -342,7 +500,8 @@ public class ChecksTest {
 
         for (Class<?> module : modules) {
             if (!UNDOCUMENTED_MODULES.contains(module) && !CheckUtil.isFilterModule(module)
-                    && !CheckUtil.isFileFilterModule(module)) {
+                    && !CheckUtil.isFileFilterModule(module)
+                    && PRE_CHECKSTYLE_8_36_MODULES.contains(module.getName())) {
                 Assert.fail("Module not found in sonar properties"
                         + " (" + MODULE_PROPERTIES_PATH + ")" + ": " + module.getCanonicalName());
             }
