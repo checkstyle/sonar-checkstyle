@@ -93,7 +93,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>8.35</checkstyle.version>
+    <checkstyle.version>8.36</checkstyle.version>
     <sonar.version>7.9</sonar.version>
     <sonar-java.version>6.0.0.20538</sonar-java.version>
     <maven.checkstyle.plugin.version>3.1.1</maven.checkstyle.plugin.version>
@@ -307,11 +307,6 @@
         <groupId>org.reflections</groupId>
         <artifactId>reflections</artifactId>
         <version>0.9.12</version>
-    </dependency>
-    <dependency>
-      <groupId>org.example</groupId>
-      <artifactId>metadata-gen</artifactId>
-      <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
@@ -870,5 +865,4 @@
       </properties>
     </profile>
   </profiles>
-
 </project>
