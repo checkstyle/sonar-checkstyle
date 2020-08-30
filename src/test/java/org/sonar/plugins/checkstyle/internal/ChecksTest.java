@@ -85,6 +85,12 @@ public class ChecksTest {
             "SuppressionCommentFilter.fileContents"
     );
 
+    /**
+     * From Checkstyle 8.36 onwards metadata would be fetched directly from checkstyle and won't
+     * be manually edited any more in org/sonar/plugins/checkstyle/rules.xml.
+     * So, these are modules which were not updated in 8.36, and hence data is consistent with
+     * the XML file.
+     */
     private static final Set<String> PRE_CHECKSTYLE_8_36_MODULES =
             java.util.Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
         "com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck",
@@ -269,6 +275,8 @@ public class ChecksTest {
 
             final String key = rule.getAttributes().getNamedItem("key").getTextContent();
 
+            // if the module present in rules.xml was modified in 8.36 onwards, continue, as
+            // rules.xml data was not updated, so asserts will fail.
             if (!PRE_CHECKSTYLE_8_36_MODULES.contains(key)) {
                 continue;
             }
@@ -318,6 +326,8 @@ public class ChecksTest {
         for (Class<?> module : modules) {
             if (!UNDOCUMENTED_MODULES.contains(module) && !CheckUtil.isFilterModule(module)
                     && !CheckUtil.isFileFilterModule(module)
+                    // Skip checking for newly introduced modules in checkstyle 8.36, as rules.xml
+                    // was not updated.
                     && PRE_CHECKSTYLE_8_36_MODULES.contains(module.getName())) {
                 Assert.fail("Module not found in sonar rules: " + module.getCanonicalName());
             }
@@ -477,6 +487,8 @@ public class ChecksTest {
                 }
                 if (moduleProperties != null) {
                     for (String property : moduleProperties) {
+                        // If the module's property was modified in checkstyle 8.36, then skip as
+                        // rules.xml was not updated
                         if (PRE_CHECKSTYLE_8_36_MODULES.contains(lastModule.getCanonicalName())) {
                             Assert.fail(lastModule.getCanonicalName()
                                     + " property not found in sonar properties"
@@ -501,6 +513,8 @@ public class ChecksTest {
         for (Class<?> module : modules) {
             if (!UNDOCUMENTED_MODULES.contains(module) && !CheckUtil.isFilterModule(module)
                     && !CheckUtil.isFileFilterModule(module)
+                    // Skip checking for newly introduced modules in checkstyle 8.36, as rules.xml
+                    // was not updated.
                     && PRE_CHECKSTYLE_8_36_MODULES.contains(module.getName())) {
                 Assert.fail("Module not found in sonar properties"
                         + " (" + MODULE_PROPERTIES_PATH + ")" + ": " + module.getCanonicalName());
