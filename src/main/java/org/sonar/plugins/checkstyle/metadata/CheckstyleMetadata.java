@@ -215,8 +215,29 @@ public class CheckstyleMetadata {
                     valuesArray, valuesArray.length, String[].class)));
         }
         else {
-            param.setType(RuleParamType.STRING);
+            param.setType(getPropertyType(modulePropertyDetails));
         }
+    }
+
+    /**
+     * Get Sonar specific property type from module property type.
+     *
+     * @param modulePropertyDetails module property details
+     * @return sonar property type
+     */
+    private static RuleParamType getPropertyType(ModulePropertyDetails modulePropertyDetails) {
+        final RuleParamType result;
+        switch (modulePropertyDetails.getType()) {
+            case "boolean":
+                result = RuleParamType.BOOLEAN;
+                break;
+            case "int":
+                result = RuleParamType.INTEGER;
+                break;
+            default:
+                result = RuleParamType.STRING;
+        }
+        return result;
     }
 
     /**
