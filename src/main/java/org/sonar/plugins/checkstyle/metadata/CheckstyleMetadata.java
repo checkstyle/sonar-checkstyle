@@ -232,7 +232,12 @@ public class CheckstyleMetadata {
                 result = RuleParamType.BOOLEAN;
                 break;
             case "int":
+            case "long":
                 result = RuleParamType.INTEGER;
+                break;
+            case "float":
+            case "double":
+                result = RuleParamType.FLOAT;
                 break;
             default:
                 result = RuleParamType.STRING;
