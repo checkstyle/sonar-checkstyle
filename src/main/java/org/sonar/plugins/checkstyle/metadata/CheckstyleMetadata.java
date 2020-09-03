@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -170,6 +171,7 @@ public class CheckstyleMetadata {
         final List<String> enumVals = new ArrayList<>();
         for (Object val : vals) {
             enumVals.add(val.toString());
+            enumVals.add(val.toString().toLowerCase(Locale.ENGLISH));
         }
         return enumVals;
     }
