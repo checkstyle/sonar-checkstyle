@@ -93,7 +93,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>8.36</checkstyle.version>
+    <checkstyle.version>8.36.1</checkstyle.version>
     <sonar.version>7.9</sonar.version>
     <sonar-java.version>6.0.0.20538</sonar-java.version>
     <maven.checkstyle.plugin.version>3.1.1</maven.checkstyle.plugin.version>
@@ -570,7 +570,6 @@
                 <rule>
                   <element>CLASS</element>
                   <excludes>
-                    <exclude>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</exclude>
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleAuditListener</exclude>
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleProfileExporter</exclude>
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleExecutor</exclude>
@@ -590,24 +589,6 @@
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
                       <minimum>1.00</minimum>
-                    </limit>
-                  </limits>
-                </rule>
-                <rule>
-                  <element>CLASS</element>
-                  <includes>
-                    <include>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</include>
-                  </includes>
-                  <limits>
-                    <limit>
-                      <counter>LINE</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.89</minimum>
-                    </limit>
-                    <limit>
-                      <counter>BRANCH</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.5</minimum>
                     </limit>
                   </limits>
                 </rule>
@@ -728,12 +709,12 @@
                     <limit>
                       <counter>LINE</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.94</minimum>
+                      <minimum>0.95</minimum>
                     </limit>
                     <limit>
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.86</minimum>
+                      <minimum>0.89</minimum>
                     </limit>
                   </limits>
                 </rule>

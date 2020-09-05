@@ -29,8 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.server.debt.DebtRemediationFunction;
@@ -41,14 +39,27 @@ import org.sonar.api.server.rule.RulesDefinition;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.google.common.collect.ImmutableList;
 import com.puppycrawl.tools.checkstyle.meta.ModuleDetails;
 import com.puppycrawl.tools.checkstyle.meta.ModulePropertyDetails;
-import com.puppycrawl.tools.checkstyle.meta.ModuleType;
 import com.puppycrawl.tools.checkstyle.meta.XmlMetaReader;
 
 public class CheckstyleMetadata {
     private static final String OPTION_STRING = "Option";
     private static final String COMMA_STRING = ",";
+    private static final List<String> NO_SQALE = ImmutableList.of(
+            "com.puppycrawl.tools.checkstyle.checks.TranslationCheck",
+            "com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck",
+            "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck",
+            "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck",
+            "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheck",
+            "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpOnFilenameCheck",
+            "com.puppycrawl.tools.checkstyle.checks.regexp.RegexpCheck",
+            "com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck",
+            "com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheck",
+            "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck",
+            "com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder"
+    );
     private static final int PARAM_TYPE_DB_COLUMN_TYPE_SIZE_LIMIT = 512;
     private final RulesDefinition.NewRepository repository;
     private final Map<String, ModuleDetails> metadataRepo;
@@ -64,32 +75,9 @@ public class CheckstyleMetadata {
     }
 
     /**
-     * Update all the metadata from sonar rule database with checkstyle metadata.
-     */
-    public void updateRulesWithMetadata() {
-        repository.rules().forEach(rule -> {
-            final ModuleDetails moduleDetails = metadataRepo.get(rule.key());
-            rule.setHtmlDescription(moduleDetails.getDescription());
-            rule.setName(getFullCheckName(moduleDetails.getName()));
-            rule.setInternalKey(getInternalKey(moduleDetails));
-
-            rule.params().forEach(param -> { // NOSONAR
-                    if (!"tabWidth".equals(param.key())) {
-                        constructParams(moduleDetails.getName(), param,
-                                moduleDetails.getModulePropertyByKey(param.key()));
-                    }
-                }
-            );
-        });
-    }
-
-    /**
-     * Create checkstyle metadata for checks which are not present in rules.xml.
+     * Create checkstyle metadata for checks.
      */
     public void createRulesWithMetadata() {
-        final Set<String> existingChecks = repository.rules().stream()
-                .map(RulesDefinition.NewRule::key)
-                .collect(Collectors.toSet());
 
         final Map<String, SonarRulePropertyLoader.AdditionalRuleProperties> additionalRuleData =
                 getAdditionalDetails("rules-meta.yml");
@@ -97,23 +85,21 @@ public class CheckstyleMetadata {
                 new DefaultDebtRemediationFunction(DebtRemediationFunction.Type.CONSTANT_ISSUE,
                         null, "0d 0h 5min");
 
-        metadataRepo.keySet().stream()
-                .filter(check -> { // NOSONAR
-                    return !existingChecks.contains(check)
-                            && metadataRepo.get(check).getModuleType() == ModuleType.CHECK;
-                })
-                .forEach(newCheck -> {
-                    final ModuleDetails moduleDetails = metadataRepo.get(newCheck);
+        metadataRepo
+                .forEach((checkKey, metadata) -> {
+                    final ModuleDetails moduleDetails = metadataRepo.get(checkKey);
                     final SonarRulePropertyLoader.AdditionalRuleProperties additionalDetails =
-                            additionalRuleData.get(newCheck);
+                            additionalRuleData.get(checkKey);
                     final RulesDefinition.NewRule rule =
                             repository.createRule(moduleDetails.getFullQualifiedName());
                     rule.setHtmlDescription(moduleDetails.getDescription())
                             .setName(getFullCheckName(moduleDetails.getName()))
                             .setInternalKey(getInternalKey(moduleDetails))
-                            .setDebtRemediationFunction(debtRemediationFunction)
                             .setSeverity("MINOR")
                             .setStatus(RuleStatus.READY);
+                    if (!NO_SQALE.contains(rule.key())) {
+                        rule.setDebtRemediationFunction(debtRemediationFunction);
+                    }
                     final String tag = getRuleTag(moduleDetails.getFullQualifiedName(),
                             additionalDetails);
                     if (tag != null) {
@@ -195,16 +181,7 @@ public class CheckstyleMetadata {
             final String[] valuesStringArray = Arrays.copyOf(valuesArray, valuesArray.length,
                     String[].class);
 
-            int totalByteSize = 0;
-            for (String x : valuesStringArray) {
-                final String tokenString = x + COMMA_STRING;
-                totalByteSize += tokenString.getBytes(StandardCharsets.UTF_8).length;
-            }
-            totalByteSize += "'SINGLE_SELECT_LIST,multiple=true,values=\""
-                    .getBytes(StandardCharsets.UTF_8).length;
-            // This check is required since the PARAM_TYPE column has size 512, and exceeding it
-            // will result in an error in DB updates
-            if (totalByteSize > PARAM_TYPE_DB_COLUMN_TYPE_SIZE_LIMIT) {
+            if (isMoreThanVarCharSizeLimit(valuesStringArray)) {
                 param.setType(RuleParamType.STRING);
             }
             else {
@@ -216,9 +193,33 @@ public class CheckstyleMetadata {
             param.setType(RuleParamType.singleListOfValues(Arrays.copyOf(
                     valuesArray, valuesArray.length, String[].class)));
         }
+        else if ("anyTokenTypesSet".equals(paramType)) {
+            param.setType(RuleParamType.STRING);
+        }
         else {
             param.setType(getPropertyType(modulePropertyDetails));
         }
+    }
+
+    /**
+     * This check is required since the PARAM_TYPE column has size 512, and exceeding it
+     * will result in an error in DB updates
+     * @param values array of values
+     * @return true if the size has exceeded the limit
+     */
+    private static boolean isMoreThanVarCharSizeLimit(String... values) {
+        int totalByteSize = 0;
+        for (String x : values) {
+            final String tokenString = x + COMMA_STRING;
+            totalByteSize += tokenString.getBytes(StandardCharsets.UTF_8).length;
+        }
+        totalByteSize += "'SINGLE_SELECT_LIST,multiple=true,values=\""
+                .getBytes(StandardCharsets.UTF_8).length;
+        boolean result = false;
+        if (totalByteSize > PARAM_TYPE_DB_COLUMN_TYPE_SIZE_LIMIT) {
+            result = true;
+        }
+        return result;
     }
 
     /**
