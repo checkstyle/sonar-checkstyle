@@ -236,7 +236,6 @@ public class ChecksTest {
         "com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheck",
         "com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck",
         "com.puppycrawl.tools.checkstyle.checks.whitespace.SeparatorWrapCheck",
-        "com.puppycrawl.tools.checkstyle.checks.DescendantTokenCheck",
         "com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder"
         )));
 

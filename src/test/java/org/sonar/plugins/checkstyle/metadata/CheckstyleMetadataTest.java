@@ -33,7 +33,6 @@ import org.sonar.plugins.checkstyle.CheckstyleConstants;
 import org.sonar.plugins.checkstyle.CheckstyleRulesDefinition;
 
 import com.puppycrawl.tools.checkstyle.meta.ModuleDetails;
-import com.puppycrawl.tools.checkstyle.meta.ModulePropertyDetails;
 import com.puppycrawl.tools.checkstyle.meta.XmlMetaReader;
 
 public class CheckstyleMetadataTest {
@@ -43,8 +42,7 @@ public class CheckstyleMetadataTest {
 
     @BeforeClass
     public static void getPreparedRepository() {
-        final CheckstyleRulesDefinition definition = new CheckstyleRulesDefinition("rules.xml",
-                CheckstyleConstants.REPOSITORY_KEY);
+        final CheckstyleRulesDefinition definition = new CheckstyleRulesDefinition();
         final RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
         repository = context.repository(CheckstyleConstants.REPOSITORY_KEY);
@@ -63,42 +61,12 @@ public class CheckstyleMetadataTest {
     }
 
     @Test
-    public void testUpdate() {
-        checkSet.forEach(fullyQualifiedCheckName -> {
-            final RulesDefinition.Rule sampleCheckRule = repository.rule(fullyQualifiedCheckName);
-
-            final ModuleDetails moduleDetails = metadataRepo.get(fullyQualifiedCheckName);
-            assertEquals("HTML Descriptions don't match", moduleDetails.getDescription(),
-                    sampleCheckRule.htmlDescription());
-            assertEquals("Name doesn't match",
-                    CheckstyleMetadata.getFullCheckName(moduleDetails.getName()),
-                    sampleCheckRule.name());
-            assertEquals("InternalKey doesn't match",
-                    CheckstyleMetadata.getInternalKey(moduleDetails),
-                    sampleCheckRule.internalKey());
-            sampleCheckRule.params().forEach(param -> {
-                if (!"tabWidth".equals(param.key())) {
-                    final String key = param.key();
-                    final ModulePropertyDetails modulePropertyDetails =
-                            moduleDetails.getModulePropertyByKey(key);
-                    assertEquals("Description doesn't match for param: " + key,
-                            modulePropertyDetails.getDescription(),
-                            param.description());
-                    assertEquals("Default value doesn't match for param: " + key,
-                            modulePropertyDetails.getDefaultValue(),
-                            param.defaultValue());
-                }
-            });
-        });
-    }
-
-    @Test
     public void testCreate() {
-        final CheckstyleRulesDefinition definition = new CheckstyleRulesDefinition(
-                "rule-deletedChecks.xml", "test");
+        final CheckstyleRulesDefinition definition = new CheckstyleRulesDefinition();
         final RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
-        final RulesDefinition.Repository modRepo = context.repository("test");
+        final RulesDefinition.Repository modRepo =
+                context.repository(CheckstyleConstants.REPOSITORY_KEY);
         checkSet.forEach(fullyQualifiedCheckName -> {
             final RulesDefinition.Rule origRule = repository.rule(fullyQualifiedCheckName);
             final RulesDefinition.Rule modRule = modRepo.rule(fullyQualifiedCheckName);
