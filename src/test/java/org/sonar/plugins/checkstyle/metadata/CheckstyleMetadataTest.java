@@ -46,12 +46,15 @@ public class CheckstyleMetadataTest {
         final RulesDefinition.Context context = new RulesDefinition.Context();
         definition.define(context);
         repository = context.repository(CheckstyleConstants.REPOSITORY_KEY);
-        checkSet = Arrays.asList("com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck",
+        checkSet = Arrays.asList(
+                "com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck",
                 "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck",
                 "com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck",
                 "com.puppycrawl.tools.checkstyle.checks.coding.NestedForDepthCheck",
                 "com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck",
-                "com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck");
+                "com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck",
+                "com.puppycrawl.tools.checkstyle.checks.coding.AvoidInlineConditionalsCheck"
+        );
         metadataRepo = new HashMap<>();
         XmlMetaReader.readAllModulesIncludingThirdPartyIfAny()
                 .forEach(moduleDetails -> {
