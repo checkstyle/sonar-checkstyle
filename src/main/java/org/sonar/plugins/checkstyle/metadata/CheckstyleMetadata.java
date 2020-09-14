@@ -21,7 +21,6 @@ package org.sonar.plugins.checkstyle.metadata;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +41,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.collect.ImmutableList;
 import com.puppycrawl.tools.checkstyle.meta.ModuleDetails;
 import com.puppycrawl.tools.checkstyle.meta.ModulePropertyDetails;
+import com.puppycrawl.tools.checkstyle.meta.ModuleType;
 import com.puppycrawl.tools.checkstyle.meta.XmlMetaReader;
 
 public class CheckstyleMetadata {
@@ -85,11 +85,12 @@ public class CheckstyleMetadata {
                 new DefaultDebtRemediationFunction(DebtRemediationFunction.Type.CONSTANT_ISSUE,
                         null, "0d 0h 5min");
 
-        metadataRepo
-                .forEach((checkKey, metadata) -> {
-                    final ModuleDetails moduleDetails = metadataRepo.get(checkKey);
+        metadataRepo.entrySet().stream()
+                .filter(entry -> entry.getValue().getModuleType() == ModuleType.CHECK)
+                .forEach(check -> {
+                    final ModuleDetails moduleDetails = check.getValue();
                     final SonarRulePropertyLoader.AdditionalRuleProperties additionalDetails =
-                            additionalRuleData.get(checkKey);
+                            additionalRuleData.get(check.getKey());
                     final RulesDefinition.NewRule rule =
                             repository.createRule(moduleDetails.getFullQualifiedName());
                     rule.setHtmlDescription(moduleDetails.getDescription())
@@ -105,7 +106,7 @@ public class CheckstyleMetadata {
                     if (tag != null) {
                         rule.setTags(tag);
                     }
-                    if (isTemplateRule(moduleDetails.getFullQualifiedName())) {
+                    if (isTemplateRule(moduleDetails)) {
                         rule.setTemplate(true);
                     }
 
@@ -135,14 +136,14 @@ public class CheckstyleMetadata {
     }
 
     /**
-     * Determine whether the check is a template rule based on the method types of the check.
+     * Determine whether the check is a template rule based on the number of the properties of
+     * check.
      *
-     * @param checkName check name
+     * @param moduleDetails module
      * @return true if check is a template rule
      */
-    private boolean isTemplateRule(String checkName) {
-        return Arrays.stream(getClass(checkName).getMethods())
-                .anyMatch(CheckstyleMetadata::isSetter);
+    private static boolean isTemplateRule(ModuleDetails moduleDetails) {
+        return !moduleDetails.getProperties().isEmpty();
     }
 
     /**
@@ -301,17 +302,6 @@ public class CheckstyleMetadata {
             additionalDetails.put(additionalRuleProperties.getRule(), additionalRuleProperties);
         }
         return additionalDetails;
-    }
-
-    /**
-     * Check if the provided method is a setter.
-     *
-     * @param method class method
-     * @return true if the method is a setter
-     */
-    public static boolean isSetter(Method method) {
-        return method.getName().startsWith("set")
-                && method.getParameterTypes().length == 1;
     }
 
     /**
