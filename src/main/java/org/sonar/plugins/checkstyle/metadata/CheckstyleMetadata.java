@@ -39,14 +39,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.puppycrawl.tools.checkstyle.meta.ModuleDetails;
 import com.puppycrawl.tools.checkstyle.meta.ModulePropertyDetails;
 import com.puppycrawl.tools.checkstyle.meta.ModuleType;
 import com.puppycrawl.tools.checkstyle.meta.XmlMetaReader;
 
 public class CheckstyleMetadata {
-    private static final String OPTION_STRING = "Option";
-    private static final String COMMA_STRING = ",";
     private static final List<String> NO_SQALE = ImmutableList.of(
             "com.puppycrawl.tools.checkstyle.checks.TranslationCheck",
             "com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck",
@@ -60,7 +59,16 @@ public class CheckstyleMetadata {
             "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck",
             "com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder"
     );
+
+    private static final Map<String, String> MODULE_NAME_EXCEPTIONS = ImmutableMap.of(
+            "JavaNCSS", "Java NCSS",
+            "NPathComplexity", "NPath Complexity"
+    );
+
+    private static final String OPTION_STRING = "Option";
+    private static final String COMMA_STRING = ",";
     private static final int PARAM_TYPE_DB_COLUMN_TYPE_SIZE_LIMIT = 512;
+
     private final RulesDefinition.NewRepository repository;
     private final Map<String, ModuleDetails> metadataRepo;
 
@@ -314,10 +322,16 @@ public class CheckstyleMetadata {
     public static String getFullCheckName(String checkName) {
         final int capacity = 1024;
         final StringBuilder result = new StringBuilder(capacity);
-        for (int i = 0; i < checkName.length(); i++) {
-            result.append(checkName.charAt(i));
-            if (i + 1 < checkName.length() && Character.isUpperCase(checkName.charAt(i + 1))) {
-                result.append(' ');
+
+        if (MODULE_NAME_EXCEPTIONS.containsKey(checkName)) {
+            result.append(MODULE_NAME_EXCEPTIONS.get(checkName));
+        }
+        else {
+            for (int i = 0; i < checkName.length(); i++) {
+                result.append(checkName.charAt(i));
+                if (i + 1 < checkName.length() && Character.isUpperCase(checkName.charAt(i + 1))) {
+                    result.append(' ');
+                }
             }
         }
         return result.toString();
