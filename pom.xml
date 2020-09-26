@@ -576,6 +576,7 @@
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleSeverityUtils</exclude>
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleConfiguration</exclude>
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleProfileImporter</exclude>
+                    <exclude>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</exclude>
                     <exclude>org.sonar.plugins.checkstyle.metadata.CheckstyleMetadata</exclude>
                     <exclude>org.sonar.plugins.checkstyle.metadata.CheckUtil</exclude>
                   </excludes>
@@ -703,6 +704,24 @@
                 <rule>
                   <element>CLASS</element>
                   <includes>
+                    <include>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.90</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.5</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
                     <include>org.sonar.plugins.checkstyle.metadata.CheckstyleMetadata</include>
                   </includes>
                   <limits>
@@ -714,7 +733,7 @@
                     <limit>
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.92</minimum>
+                      <minimum>0.90</minimum>
                     </limit>
                   </limits>
                 </rule>

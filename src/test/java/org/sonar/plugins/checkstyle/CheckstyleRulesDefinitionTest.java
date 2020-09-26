@@ -21,7 +21,10 @@ package org.sonar.plugins.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,7 +64,23 @@ public class CheckstyleRulesDefinitionTest {
         assertThat(repository.language()).isEqualTo("java");
 
         final List<RulesDefinition.Rule> rules = repository.rules();
-        assertThat(rules).hasSize(179);
+        final Map<String, Integer> ruleCounts = new HashMap<>();
+        rules.forEach(rule -> {
+            final String name = rule.key().replace("template", "");
+            ruleCounts.merge(name, 1, Integer::sum);
+        });
+        final List<String> duplicatedRuleWithTemplate = ruleCounts.entrySet().stream()
+                .filter(entry -> entry.getValue() > 1)
+                .map(entry -> entry.getKey())
+                .collect(Collectors.toList());
+        final List<String> rulesWithDuplicateTemplate = ruleCounts.entrySet().stream()
+                .filter(entry -> entry.getValue() == 1)
+                .map(entry -> entry.getKey())
+                .collect(Collectors.toList());
+        // such number should not change during checkstyle version upgrade
+        assertThat(duplicatedRuleWithTemplate).hasSize(174);
+        // all new Rules should fall in this group
+        assertThat(rulesWithDuplicateTemplate).hasSize(5);
 
         for (RulesDefinition.Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
