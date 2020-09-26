@@ -100,9 +100,10 @@ public class CheckstyleMetadata {
                     final SonarRulePropertyLoader.AdditionalRuleProperties additionalDetails =
                             additionalRuleData.get(check.getKey());
                     final RulesDefinition.NewRule rule =
-                            repository.createRule(moduleDetails.getFullQualifiedName());
+                            repository.createRule(moduleDetails.getFullQualifiedName()
+                                    + "template");
                     rule.setHtmlDescription(moduleDetails.getDescription())
-                            .setName(getFullCheckName(moduleDetails.getName()))
+                            .setName(getFullCheckName(moduleDetails.getName()) + " Template")
                             .setInternalKey(getInternalKey(moduleDetails))
                             .setSeverity("MINOR")
                             .setStatus(RuleStatus.READY);
