@@ -493,6 +493,9 @@
     <param key="ignoredAnnotations" type="s{}">
       <defaultValue>Test,Before,After,BeforeClass,AfterClass</defaultValue>
     </param>
+    <param key="requiredJavadocPhrase" type="REGULAR_EXPRESSION">
+      <defaultValue>.*</defaultValue>
+    </param>
   </rule>
 
   <rule key="com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck">
