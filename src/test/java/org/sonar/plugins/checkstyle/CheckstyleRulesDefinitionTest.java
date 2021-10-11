@@ -78,9 +78,9 @@ public class CheckstyleRulesDefinitionTest {
                 .map(entry -> entry.getKey())
                 .collect(Collectors.toList());
         // such number should not change during checkstyle version upgrade
-        assertThat(duplicatedRuleWithTemplate).hasSize(174);
+        assertThat(duplicatedRuleWithTemplate).hasSize(0);
         // all new Rules should fall in this group
-        assertThat(rulesWithDuplicateTemplate).hasSize(9);
+        assertThat(rulesWithDuplicateTemplate).hasSize(183);
 
         for (RulesDefinition.Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
