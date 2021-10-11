@@ -436,7 +436,7 @@
               <goal>check</goal>
             </goals>
             <configuration>
-              <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_sevntu_checks.xml</configLocation>
+              <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-8.41/config/checkstyle_sevntu_checks.xml</configLocation>
               <failOnViolation>true</failOnViolation>
               <includeResources>false</includeResources>
               <includeTestResources>false</includeTestResources>
