@@ -50,13 +50,13 @@ import org.sonar.api.rule.RuleKey;
 
 import com.puppycrawl.tools.checkstyle.TreeWalker;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
-import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
+import com.puppycrawl.tools.checkstyle.api.Violation;
 
 public class CheckstyleAuditListenerTest {
 
     private final File file = new File("file1");
     private final AuditEvent event = new AuditEvent(this, file.getAbsolutePath(),
-            new LocalizedMessage(42, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
+            new Violation(42, "", "", null, "", CheckstyleAuditListenerTest.class, "msg"));
     private ActiveRules ruleFinder;
     private InputFile inputFile;
     private SensorContext context;
@@ -84,14 +84,14 @@ public class CheckstyleAuditListenerTest {
     public void testUtilityMethods() {
         AuditEvent eventTest;
 
-        eventTest = new AuditEvent(this, "", new LocalizedMessage(0, "", "", null, "",
+        eventTest = new AuditEvent(this, "", new Violation(0, "", "", null, "",
                 CheckstyleAuditListenerTest.class, "msg"));
         assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
         assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
         assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isEqualTo(
                 CheckstyleAuditListenerTest.class.getName());
 
-        eventTest = new AuditEvent(this, "", new LocalizedMessage(1, "", "", null, "",
+        eventTest = new AuditEvent(this, "", new Violation(1, "", "", null, "",
                 CheckstyleAuditListenerTest.class, "msg"));
         assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
         assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
@@ -103,7 +103,7 @@ public class CheckstyleAuditListenerTest {
         assertThat(CheckstyleAuditListener.getMessage(eventTest)).isNull();
         assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isNull();
 
-        eventTest = new AuditEvent(this, "", new LocalizedMessage(0, "", "", null, "module",
+        eventTest = new AuditEvent(this, "", new Violation(0, "", "", null, "module",
                 CheckstyleAuditListenerTest.class, "msg"));
         assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
         assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
@@ -142,7 +142,7 @@ public class CheckstyleAuditListenerTest {
             new DefaultTextPointer(1, 1), new DefaultTextPointer(1, 2)));
 
         final AuditEvent eventAdded = new AuditEvent(this, file.getAbsolutePath(),
-            new LocalizedMessage(pLineNo, "", "", null, "", CheckstyleAuditListenerTest.class,
+            new Violation(pLineNo, "", "", null, "", CheckstyleAuditListenerTest.class,
                 "msg"));
         addErrorToListener(eventAdded);
 
@@ -167,7 +167,7 @@ public class CheckstyleAuditListenerTest {
         final AuditEvent treeWalkerEvent = new AuditEvent(
                 this,
                 file.getAbsolutePath(),
-                new LocalizedMessage(42, "", "", null, "",
+                new Violation(42, "", "", null, "",
                         TreeWalker.class, "msg"));
 
         when(context.newIssue()).thenReturn(null);
