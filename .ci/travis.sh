@@ -5,6 +5,13 @@ set -euo pipefail
 case "$1" in
 
 install)
+  mkdir -p .ci-temp
+  cd .ci-temp
+  git clone "https://github.com/nmancus1/checkstyle.git"
+  cd checkstyle
+  git checkout "sonar-investigation"
+  mvn -e --no-transfer-progress clean install -Pno-validations
+  cd ../..
   mvn -e clean install
   ;;
 
