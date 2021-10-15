@@ -4,7 +4,7 @@
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin</artifactId>
-  <version>8.41-SNAPSHOT</version>
+  <version>8.41.1-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Checkstyle SonarQube Plugin</name>
@@ -93,7 +93,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>8.40</checkstyle.version>
+    <checkstyle.version>8.41.1</checkstyle.version>
     <sonar.version>7.9</sonar.version>
     <sonar-java.version>6.0.0.20538</sonar-java.version>
     <maven.checkstyle.plugin.version>3.1.1</maven.checkstyle.plugin.version>
@@ -372,6 +372,10 @@
         <configuration>
           <systemPropertyVariables>
             <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
+            <javax.xml.parsers.DocumentBuilderFactory>
+              <!-- We specify internal class here, as it is required by Checkstyle -->
+              com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl
+            </javax.xml.parsers.DocumentBuilderFactory>
           </systemPropertyVariables>
           <includes>
             <include>org/sonar/**/*.java</include>
