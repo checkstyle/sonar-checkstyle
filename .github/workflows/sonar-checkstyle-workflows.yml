@@ -1,0 +1,53 @@
+name: sonar-checkstyle-workflows
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  mvn-install-java-8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - name: install
+        run: "./.ci/travis.sh install"
+
+  mvn-install-java-11:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: install
+        run: "./.ci/travis.sh install"
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: run integration tests
+        run: "./.ci/travis.sh integration-tests"
+
+  nondex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: install
+        run: "./.ci/travis.sh nondex"
+
