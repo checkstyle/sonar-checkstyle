@@ -16,7 +16,7 @@ jobs:
         with:
           java-version: 8
       - name: install
-        run: "./.ci/travis.sh install"
+        run: "./.ci/ci.sh install"
 
   mvn-install-java-11:
     runs-on: ubuntu-latest
@@ -27,7 +27,7 @@ jobs:
         with:
           java-version: 11
       - name: install
-        run: "./.ci/travis.sh install"
+        run: "./.ci/ci.sh install"
 
   integration-tests:
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
         with:
           java-version: 11
       - name: run integration tests
-        run: "./.ci/travis.sh integration-tests"
+        run: "./.ci/ci.sh integration-tests"
 
   nondex:
     runs-on: ubuntu-latest
@@ -49,5 +49,5 @@ jobs:
         with:
           java-version: 11
       - name: install
-        run: "./.ci/travis.sh nondex"
+        run: "./.ci/ci.sh nondex"
 

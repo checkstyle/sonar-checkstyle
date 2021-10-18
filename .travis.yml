@@ -27,13 +27,13 @@
 #  fast_finish: true
 #  include:
 #    - jdk: openjdk11
-#      env: CMD="./.ci/travis.sh install"
+#      env: CMD="./.ci/ci.sh install"
 #
 #    - jdk: openjdk8
-#      env: CMD="./.ci/travis.sh install"
+#      env: CMD="./.ci/ci.sh install"
 #
 #    - jdk: openjdk11
-#      env: CMD="./.ci/travis.sh integration-tests"
+#      env: CMD="./.ci/ci.sh integration-tests"
 #
 #    - jdk: openjdk11
-#      env: CMD="./.ci/travis.sh nondex"
+#      env: CMD="./.ci/ci.sh nondex"
