@@ -857,10 +857,8 @@
     <param key="validateThrows" type="BOOLEAN">
       <defaultValue>false</defaultValue>
     </param>
-    <param key="scope" type="s[nothing,public,protected,package,private,anoninner]">
+    <param key="accessModifiers" type="s[nothing,public,protected,package,private,anoninner]">
       <defaultValue>private</defaultValue>
-    </param>
-    <param key="excludeScope" type="s[nothing,public,protected,package,private,anoninner]">
     </param>
     <param key="allowMissingParamTags" type="BOOLEAN">
       <defaultValue>false</defaultValue>
