@@ -97,13 +97,21 @@ public class CheckstyleMetadata {
                 .filter(entry -> entry.getValue().getModuleType() == ModuleType.CHECK)
                 .forEach(check -> {
                     final ModuleDetails moduleDetails = check.getValue();
-                    final SonarRulePropertyLoader.AdditionalRuleProperties additionalDetails =
-                            additionalRuleData.get(check.getKey());
-                    final RulesDefinition.NewRule rule =
-                            repository.createRule(moduleDetails.getFullQualifiedName()
-                                    + "template");
+                    final boolean isTemplate = isTemplateRule(moduleDetails);
+                    final String fullCheckName = getFullCheckName(moduleDetails.getName());
+                    final String fullQualifiedName = moduleDetails.getFullQualifiedName();
+                    final RulesDefinition.NewRule rule;
+                    if (isTemplate) {
+                        rule = repository
+                                .createRule(fullQualifiedName + "template")
+                                .setName(fullCheckName + " Template");
+                    }
+                    else {
+                        rule = repository
+                                .createRule(fullQualifiedName)
+                                .setName(fullCheckName);
+                    }
                     rule.setHtmlDescription(moduleDetails.getDescription())
-                            .setName(getFullCheckName(moduleDetails.getName()) + " Template")
                             .setInternalKey(getInternalKey(moduleDetails))
                             .setSeverity("MINOR")
                             .setStatus(RuleStatus.READY);
@@ -111,11 +119,11 @@ public class CheckstyleMetadata {
                         rule.setDebtRemediationFunction(debtRemediationFunction);
                     }
                     final String tag = getRuleTag(moduleDetails.getFullQualifiedName(),
-                            additionalDetails);
+                            additionalRuleData.get(check.getKey()));
                     if (tag != null) {
                         rule.setTags(tag);
                     }
-                    if (isTemplateRule(moduleDetails)) {
+                    if (isTemplate) {
                         rule.setTemplate(true);
                     }
 
