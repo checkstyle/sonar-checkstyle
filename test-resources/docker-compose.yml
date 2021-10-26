@@ -4,6 +4,8 @@ version: "3"
 services:
   sonarqube:
     image: sonarqube:7.9-community
+    # next line is for arm64 devices when testing since SQ does not officially release multi-arch images
+    #image: mwizner/sonarqube:8.7.1-community
     restart: unless-stopped
     depends_on:
       - db
