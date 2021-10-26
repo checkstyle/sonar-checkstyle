@@ -1,39 +1,36 @@
-# travis is disabled, all jobs moved to GitHub actions
-#language: java
-#sudo: false
-#install: true
-#
-#script:
-#  - |
-#    set -e
-#    eval $CMD;
-#
-#cache:
-#  apt: true
-#  directories:
-#    - ~/.m2
-#
-#addons:
-#  apt:
-#    packages:
-#      - xsltproc
-#      - xmlstarlet
-#
-#branches:
-#  only:
-#    - master
-#
-#matrix:
-#  fast_finish: true
-#  include:
-#    - jdk: openjdk11
-#      env: CMD="./.ci/ci.sh install"
-#
-#    - jdk: openjdk8
-#      env: CMD="./.ci/ci.sh install"
-#
-#    - jdk: openjdk11
-#      env: CMD="./.ci/ci.sh integration-tests"
-#
-#    - jdk: openjdk11
-#      env: CMD="./.ci/ci.sh nondex"
+version: ~> 1.0
+dist: focal
+# this arch is required as is for Partner Queue Solution - DO NOT MODIFY
+arch: ppc64le
+
+language: java
+sudo: false
+
+cache:
+ apt: true
+ directories:
+   - ~/.m2
+
+addons:
+ apt:
+   packages:
+     - xsltproc
+     - xmlstarlet
+
+branches:
+ only:
+   - master
+
+install:
+  -
+
+matrix:
+ fast_finish: true
+ include:
+   - jdk: openjdk11
+     env: CMD="./.ci/ci.sh install"
+
+script:
+ - |
+   set -e
+   eval $CMD;
