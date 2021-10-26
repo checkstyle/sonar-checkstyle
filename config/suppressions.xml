@@ -16,8 +16,6 @@
     <suppress checks="ImportControl" files=".*[\\/]src[\\/]test[\\/]"/>
     <!-- END of legacy code -->
 
-    <!-- empty file is needed for backwards compatibility -->
-    <suppress checks="RegexpMultiline" files="checkstyle\.properties"/>
     <!-- parsing of xml imply reference attribute names, does not make sense to move all to special variables -->
     <suppress checks="MultipleStringLiterals" files="CheckstyleProfileImporter\.java"/>
     <!-- till https://github.com/checkstyle/sonar-checkstyle/issues/135 -->
