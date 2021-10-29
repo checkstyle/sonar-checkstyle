@@ -33,7 +33,8 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 public class CheckJarTest {
-    private static final String MATCHER = ".*checkstyle-sonar-plugin-\\d+\\.\\d+(-SNAPSHOT)?\\.jar";
+    private static final String MATCHER = ".*checkstyle-sonar-plugin-"
+                                          + "\\d+\\.\\d+(.\\d+)?(-SNAPSHOT)?\\.jar";
 
     @Test
     public void testJarPresence() throws IOException {

@@ -20,8 +20,13 @@
 package org.sonar.plugins.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
+import org.sonar.api.Plugin;
 
 public class CheckstylePluginTest {
 
@@ -29,6 +34,15 @@ public class CheckstylePluginTest {
     public void testGetExtensions() {
         final CheckstylePlugin plugin = new CheckstylePlugin();
         assertThat(plugin.getExtensions().size()).isGreaterThan(1);
+    }
+
+    @Test
+    public void testDefine() {
+        final Plugin.Context context = mock(Plugin.Context.class);
+
+        final CheckstylePlugin plugin = new CheckstylePlugin();
+        plugin.define(context);
+        verify(context, times(1)).addExtensions(anyList());
     }
 
 }

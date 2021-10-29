@@ -43,6 +43,7 @@ import org.sonar.api.config.internal.ConfigurationBridge;
 import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
+import org.sonar.api.utils.System2;
 
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
@@ -123,7 +124,7 @@ public class CheckstyleConfigurationTest {
     public void getCheckstyleConfiguration() throws Exception {
         fileSystem.setEncoding(StandardCharsets.UTF_8);
         final MapSettings mapSettings = new MapSettings(new PropertyDefinitions(
-                new CheckstylePlugin().getExtensions()));
+                System2.INSTANCE, new CheckstylePlugin().getExtensions()));
         mapSettings.setProperty(CheckstyleConstants.CHECKER_FILTERS_KEY,
                 CheckstyleConstants.CHECKER_FILTERS_DEFAULT_VALUE);
         final org.sonar.api.config.Configuration settings = new ConfigurationBridge(mapSettings);

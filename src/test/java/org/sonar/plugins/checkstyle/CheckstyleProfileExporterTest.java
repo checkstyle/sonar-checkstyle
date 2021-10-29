@@ -48,6 +48,7 @@ import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RulePriority;
+import org.sonar.api.utils.System2;
 
 public class CheckstyleProfileExporterTest {
 
@@ -253,7 +254,7 @@ public class CheckstyleProfileExporterTest {
     @SuppressWarnings("unchecked")
     private void initSettings(@Nullable String key, @Nullable String property) {
         final MapSettings mapSettings = new MapSettings(
-                new PropertyDefinitions(new CheckstylePlugin().getExtensions()));
+                new PropertyDefinitions(System2.INSTANCE, new CheckstylePlugin().getExtensions()));
         if (Objects.nonNull(key)) {
             mapSettings.setProperty(key, property);
         }
