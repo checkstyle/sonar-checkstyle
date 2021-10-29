@@ -61,7 +61,7 @@ import com.sonar.orchestrator.locator.MavenLocation;
  */
 public class RunPluginTest {
     private static final Logger LOG = LoggerFactory.getLogger(RunPluginTest.class);
-    private static final String SONAR_APP_VERSION = "7.9.2";
+    private static final String SONAR_APP_VERSION = "8.9.3.48735";
     private static final int LOGS_NUMBER_LINES = 200;
     private static final String TRUE = "true";
     private static final String PROJECT_KEY = "com.puppycrows.tools:checkstyle";
@@ -91,9 +91,6 @@ public class RunPluginTest {
                 .addPlugin(MavenLocation.of("org.sonarsource.sonar-lits-plugin",
                         "sonar-lits-plugin",
                         "0.8.0.1209"))
-                .addPlugin(MavenLocation.of("org.sonarsource.java",
-                        "sonar-java-plugin",
-                        "6.0.0.20538"))
                 .setServerProperty("sonar.web.javaOpts", "-Xmx1G")
                 .build();
 

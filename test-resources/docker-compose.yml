@@ -3,9 +3,9 @@ version: "3"
 
 services:
   sonarqube:
-    image: sonarqube:7.9-community
+    image: sonarqube:8.9.3-community
     # next line is for arm64 devices when testing since SQ does not officially release multi-arch images
-    #image: mwizner/sonarqube:8.7.1-community
+    #image: stevefan1999/sonarqube:9.0.1-community
     restart: unless-stopped
     depends_on:
       - db
@@ -16,10 +16,11 @@ services:
       SONAR_JDBC_USERNAME: sonar
       SONAR_JDBC_PASSWORD: sonar
     volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
       - ./tmp/extensions/:/opt/sonarqube/extensions
+      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
       - sonarqube_logs:/opt/sonarqube/logs
-      - sonarqube_temp:/opt/sonarqube/temp
   db:
     image: postgres
     restart: unless-stopped
@@ -31,8 +32,9 @@ services:
       - postgresql_data:/var/lib/postgresql/data
 
 volumes:
+  sonarqube_conf:
   sonarqube_data:
   sonarqube_logs:
-  sonarqube_temp:
+  sonarqube_bundled-plugins:
   postgresql:
   postgresql_data:

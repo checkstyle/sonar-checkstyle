@@ -9,13 +9,14 @@ install)
   ;;
 
 integration-tests)
-  SONAR_APP_VERSION="7.9.2"
+  SONAR_APP_VERSION="8.9.3.48735"
   if [[ ! -f ~/.m2/sonar-application-$SONAR_APP_VERSION.zip ]]; then
     URL="https://repox.jfrog.io/repox/sonarsource/org/sonarsource/sonarqube/"
     URL=$URL"sonar-application/$SONAR_APP_VERSION/sonar-application-$SONAR_APP_VERSION.zip"
     wget $URL -O ~/.m2/sonar-application-$SONAR_APP_VERSION.zip
   fi
-  mkdir -p target/temp-downloads && cp ~/.m2/sonar-application-$SONAR_APP_VERSION.zip target/temp-downloads/
+  mkdir -p target/temp-downloads
+  cp ~/.m2/sonar-application-$SONAR_APP_VERSION.zip target/temp-downloads/
   mvn -e integration-test -DskipITs=false
   ;;
 
