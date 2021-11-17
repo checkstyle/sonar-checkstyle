@@ -4,7 +4,9 @@ version: "3"
 services:
   sonarqube:
     image: sonarqube:8.9.3-community
-    # next line is for arm64 devices when testing since SQ does not officially release multi-arch images
+    # alternatively, to test with 9.1, use the next line
+    #image: sonarqube:9.1-community
+    # next line is for arm64 devices (e.g. Mac M1) when testing since SQ does not officially release multi-arch images
     #image: stevefan1999/sonarqube:9.0.1-community
     restart: unless-stopped
     depends_on:

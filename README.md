@@ -15,12 +15,13 @@ Official announcement of project transfer - https://groups.google.com/d/topic/so
 
 This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforge.net/).
 
-Compatibility matrix from Sonar team: https://docs.sonarqube.org/display/PLUG/Plugin+Version+Matrix
+Compatibility matrix from Sonar team: https://docs.sonarqube.org/latest/instance-administration/plugin-version-matrix/
 
 Compatibility matrix from checkstyle team:
 
 Checkstyle Plugin|Sonar min|Sonar max|Checkstyle|Jdk
 -----------------|---------|---------|----------|---
+9.1|8.9  |8.9+|9.1|1.8
 9.0.1|8.9  |8.9+|9.0.1|1.8
 8.45.1|7.9  |7.9+|8.45.1|1.8
 8.42|7.9  |7.9+|8.42|1.8
