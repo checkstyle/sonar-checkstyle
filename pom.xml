@@ -4,7 +4,7 @@
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin</artifactId>
-  <version>9.3-SNAPSHOT</version>
+  <version>9.2.1-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Checkstyle SonarQube Plugin</name>
@@ -93,7 +93,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>9.2</checkstyle.version>
+    <checkstyle.version>9.2.1</checkstyle.version>
     <sonar.version>8.9.3.48735</sonar.version>
     <sonar-java.version>7.2.0.26923</sonar-java.version>
     <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
