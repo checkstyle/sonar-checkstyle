@@ -154,8 +154,8 @@ public class RunPluginTest {
 
     private static void assertNoDifferences() {
         try {
-            final String differences = new String(Files
-                    .readAllBytes(new File(litsDifferencesPath()).toPath()), UTF_8);
+            final String differences = Files
+                    .readString(new File(litsDifferencesPath()).toPath(), UTF_8);
 
             Assertions.assertThat(differences)
                     .isEmpty();

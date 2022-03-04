@@ -7,17 +7,6 @@ on:
   pull_request:
 
 jobs:
-  mvn-install-java-8:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 8
-      - name: install
-        run: "./.ci/ci.sh install"
-
   mvn-install-java-11:
     runs-on: ubuntu-latest
     steps:

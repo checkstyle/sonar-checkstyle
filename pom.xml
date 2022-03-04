@@ -4,7 +4,7 @@
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin</artifactId>
-  <version>9.4-SNAPSHOT</version>
+  <version>10.0-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Checkstyle SonarQube Plugin</name>
@@ -93,7 +93,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>9.3</checkstyle.version>
+    <checkstyle.version>10.0</checkstyle.version>
     <sonar.version>8.9.0.43852</sonar.version>
     <sonar-java.version>7.2.0.26923</sonar-java.version>
     <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
@@ -103,7 +103,7 @@
       8.35
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
     <maven.jacoco.plugin.version>0.8.5</maven.jacoco.plugin.version>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- we disable ITs by default as it need download of 200MB sonar application jar -->
     <skipITs>true</skipITs>

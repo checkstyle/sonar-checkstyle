@@ -23,6 +23,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.lang.reflect.Constructor;
 
+import org.eclipse.jdt.core.dom.Modifier;
 import org.junit.Assert;
 import org.junit.Test;
 import org.sonar.api.rules.RulePriority;
@@ -72,7 +73,7 @@ public class CheckstyleSeverityUtilsTest {
         final Constructor<CheckstyleSeverityUtils> constructor = CheckstyleSeverityUtils.class
                 .getDeclaredConstructor();
 
-        assertThat(constructor.isAccessible()).isFalse();
+        assertThat(Modifier.isPrivate(constructor.getModifiers())).isTrue();
         constructor.setAccessible(true);
         constructor.newInstance();
     }
