@@ -23,6 +23,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.lang.reflect.Constructor;
 
+import org.eclipse.jdt.core.dom.Modifier;
 import org.junit.Test;
 
 public class CheckstyleConstantsTest {
@@ -31,7 +32,7 @@ public class CheckstyleConstantsTest {
     public void privateConstructor() throws ReflectiveOperationException {
         final Constructor<CheckstyleConstants> constructor = CheckstyleConstants.class
                 .getDeclaredConstructor();
-        assertThat(constructor.isAccessible()).isFalse();
+        assertThat(Modifier.isPrivate(constructor.getModifiers())).isTrue();
         constructor.setAccessible(true);
         constructor.newInstance();
     }
