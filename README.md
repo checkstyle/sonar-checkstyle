@@ -9,7 +9,7 @@
 Sonar Checkstyle
 ==========
 
-Official announcement of project transfer - https://groups.google.com/d/topic/sonarqube/HXXxOWS_sOs/discussion
+An Official announcement of project transfer - https://groups.google.com/d/topic/sonarqube/HXXxOWS_sOs/discussion
 
 ## Description / Features
 
