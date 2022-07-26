@@ -1,16 +1,21 @@
+---
 #############################################################################
 # GitHub Action to bump license year
 #
 # Workflow starts every new year.
 #
 #############################################################################
+
 name: "Bump license year"
+
 on:
   schedule:
     - cron: '0 8 1 1 *'
+
 permissions:
   contents: write
   pull-requests: write
+
 jobs:
   bump:
     name: Bump license year
