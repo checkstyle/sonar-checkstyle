@@ -28,14 +28,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
 import org.assertj.core.api.Assertions;
-import org.fest.util.Collections;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -44,15 +40,12 @@ import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.build.Build;
 import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.build.MavenBuild;
 import com.sonar.orchestrator.container.Edition;
 import com.sonar.orchestrator.container.Server;
-import com.sonar.orchestrator.http.HttpMethod;
-import com.sonar.orchestrator.http.HttpResponse;
 import com.sonar.orchestrator.locator.FileLocation;
 import com.sonar.orchestrator.locator.MavenLocation;
 
@@ -61,18 +54,11 @@ import com.sonar.orchestrator.locator.MavenLocation;
  */
 public class RunPluginTest {
     private static final Logger LOG = LoggerFactory.getLogger(RunPluginTest.class);
-    private static final String SONAR_APP_VERSION = "8.9.3.48735";
+    private static final String SONAR_APP_VERSION = "9.0.1.46107";
     private static final int LOGS_NUMBER_LINES = 200;
     private static final String TRUE = "true";
     private static final String PROJECT_KEY = "com.puppycrows.tools:checkstyle";
     private static final String PROJECT_NAME = "integration-test-project";
-    private static final List<String> DEACTIVATED_RULES = Collections.list(
-            "com.puppycrawl.tools.checkstyle.checks.coding.MissingCtorCheck",
-            "com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck",
-            "com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheck",
-            "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck",
-            "com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheck",
-            "com.puppycrawl.tools.checkstyle.checks.UncommentedMainCheck");
 
     private static Orchestrator orchestrator;
 
@@ -83,14 +69,14 @@ public class RunPluginTest {
     public static void beforeAll() {
         orchestrator = Orchestrator.builderEnv()
                 .setZipFile(new File("target/temp-downloads/sonar-application-"
-                                     + SONAR_APP_VERSION
-                                     + ".zip"))
+                        + SONAR_APP_VERSION
+                        + ".zip"))
                 .setEdition(Edition.COMMUNITY)
                 .addPlugin(FileLocation.byWildcardMavenFilename(new File("target"),
                         "checkstyle-sonar-plugin-*.jar"))
                 .addPlugin(MavenLocation.of("org.sonarsource.sonar-lits-plugin",
                         "sonar-lits-plugin",
-                        "0.8.0.1209"))
+                        "0.10.0.2181"))
                 .setServerProperty("sonar.web.javaOpts", "-Xmx1G")
                 .build();
 
@@ -135,7 +121,8 @@ public class RunPluginTest {
                 .setProperty("sonar.java.failOnException", TRUE);
 
         final BuildResult buildResult;
-        // if build fail, job is not violently interrupted, allowing time to dump SQ logs
+        // if build fail, job is not violently interrupted, allowing time to dump SQ
+        // logs
         if (buildQuietly) {
             buildResult = orchestrator.executeBuildQuietly(build);
         }
@@ -214,70 +201,17 @@ public class RunPluginTest {
         return mavenBuild;
     }
 
-    @SuppressWarnings("unchecked")
     private File prepareProject() throws IOException {
-        // set severities of all active rules to INFO
-        final String profilesResponse = orchestrator.getServer()
-                .newHttpCall("api/qualityprofiles/create")
-                .setAdminCredentials()
-                .setMethod(HttpMethod.POST)
-                .setParam("language", "java")
-                .setParam("name", "checkstyle")
-                .execute()
-                .getBodyAsString();
-        final Map<String, Object> map = new Gson().fromJson(profilesResponse, Map.class);
-        final String profileKey = ((Map<String, String>) map.get("profile")).get("key");
-        if (StringUtils.isEmpty(profileKey)) {
-            fail("Could not retrieve profile key: setting up quality profile failed.");
-        }
-        else {
-            final HttpResponse activateRulesResponse = orchestrator.getServer()
-                    .newHttpCall("api/qualityprofiles/activate_rules")
-                    .setAdminCredentials()
-                    .setMethod(HttpMethod.POST)
-                    .setParam("activation_severity", "INFO")
-                    .setParam("languages", "java")
-                    .setParam("profile_key", profileKey)
-                    .setParam("repositories", "checkstyle")
-                    .executeUnsafely();
-            if (!activateRulesResponse.isSuccessful()) {
-                fail(String.format(Locale.ROOT,
-                        "Failed to activate all rules. %s",
-                        activateRulesResponse.getBodyAsString()));
-            }
-            // deactivate some rules for test project
-            for (String ruleKey : DEACTIVATED_RULES) {
-                final HttpResponse deactivateRulesResponse = orchestrator.getServer()
-                        .newHttpCall("api/qualityprofiles/deactivate_rule")
-                        .setAdminCredentials()
-                        .setMethod(HttpMethod.POST)
-                        .setParam("rule_key", "checkstyle:" + ruleKey)
-                        .setParam("profile_key", profileKey)
-                        .executeUnsafely();
-                if (!deactivateRulesResponse.isSuccessful()) {
-                    fail(String.format(Locale.ROOT,
-                            "Failed to deactivate rule %s. %s",
-                            ruleKey,
-                            deactivateRulesResponse.getBodyAsString()));
-                }
-            }
-        }
+        // restore quality profile
+        orchestrator
+                .getServer()
+                .restoreProfile(FileLocation.of(
+                    Paths.get("src/it/resources/integration-test-profile.xml").toFile()));
 
-        // associate CS profile
+        // associate profile
         orchestrator.getServer().provisionProject(PROJECT_KEY, PROJECT_NAME);
-        final HttpResponse assignQpResponse = orchestrator.getServer()
-                .newHttpCall("api/qualityprofiles/add_project")
-                .setAdminCredentials()
-                .setMethod(HttpMethod.POST)
-                .setParam("language", "java")
-                .setParam("profileName", "checkstyle")
-                .setParam("projectKey", PROJECT_KEY)
-                .executeUnsafely();
-        if (!assignQpResponse.isSuccessful()) {
-            fail(String.format(Locale.ROOT,
-                    "Failed to add project to quality profile. %s",
-                    assignQpResponse.getBodyAsString()));
-        }
+        orchestrator.getServer()
+                .associateProjectToQualityProfile(PROJECT_KEY, "java", "checkstyle");
 
         // copy project to analysis space
         final Path projectRoot = Paths.get("src/it/resources/" + PROJECT_NAME);

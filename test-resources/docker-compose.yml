@@ -3,7 +3,7 @@ version: "3"
 
 services:
   sonarqube:
-    image: sonarqube:8.9.3-community
+    image: sonarqube:9.0-community
     # alternatively, to test with 9.1, use the next line
     #image: sonarqube:9.1-community
     # next line is for arm64 devices (e.g. Mac M1) when testing since SQ does not officially release multi-arch images

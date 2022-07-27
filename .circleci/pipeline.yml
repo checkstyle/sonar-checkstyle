@@ -1,0 +1,61 @@
+---
+version: 2.1
+
+parameters:
+  is_pr:
+    type: boolean
+    default: false 
+
+jobs:
+  sonarqube-validation:
+    docker:
+      - image: checkstyle/jdk-11-groovy-git-mvn:11.0.13__3.0.9__2.25.1__3.6.3
+    steps:
+      - checkout
+      - run:
+          name: Break Build if SONAR_TOKEN is not set
+          command: |
+            if [[ -z "${SONAR_TOKEN}" ]]; then
+              echo "SONAR_TOKEN is not set."
+              exit 1
+            fi
+      - when:
+          condition:
+            equal: [ true, << pipeline.parameters.is_pr >> ]
+          steps:
+            - run:
+                name: Set Sonar PR Variables
+                command: |
+                  SONAR_PR_VARIABLES="-Dsonar.pullrequest.key=${{ github.event.number }}"
+                  SONAR_PR_VARIABLES+=" -Dsonar.pullrequest.branch=${{ env.GITHUB_REF_NAME }}"
+                  SONAR_PR_VARIABLES+=" -Dsonar.pullrequest.base=master"
+                  echo "SONAR_PR_VARIABLES=${SONAR_PR_VARIABLES}" >> $GITHUB_ENV
+      - run:
+          name: Run Validation
+          environment:
+            MAVEN_OPTS: '-Xmx2000m'
+          command: |
+            mvn -e -Psonarqube-validations clean package jacoco:report sonar:sonar ${{ env.SONAR_PR_VARIABLES }} \
+                -Dsonar.host.url=https://sonarcloud.io \
+                -Dsonar.login=${SONAR_TOKEN} \
+                -Dsonar.projectKey=checkstyle_sonar-checkstyle \
+                -Dsonar.organization=checkstyle \
+                -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+            cat target/sonar/report-task.txt
+      - run:
+          name: Checkout Build Breaker
+          command: |
+            git clone https://github.com/viesure/blog-sonar-build-breaker.git .ci-build-breaker
+      - run:
+          name: Verify Sonar Gate Status
+          environment:
+            SONAR_API_TOKEN: '${SONAR_TOKEN}'
+          command: |
+            sed -i'' "s|our.sonar.server|sonarcloud.io|" .ci-build-breaker/sonar_break_build.sh
+            .ci-build-breaker/sonar_break_build.sh
+
+workflows:
+  version: 2
+  sonarqube:
+    jobs:
+      - sonarqube-validation
