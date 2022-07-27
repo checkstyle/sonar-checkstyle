@@ -73,11 +73,9 @@ public class CheckstyleConfiguration {
         final File xmlFile = new File(fileSystem.workDir(), "checkstyle.xml");
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false),
                 StandardCharsets.UTF_8)) {
-
             confExporter.exportProfile(activeRules, writer);
             writer.flush();
             return xmlFile;
-
         }
         catch (IOException ex) {
             throw new IllegalStateException("Fail to save the Checkstyle configuration to "
@@ -129,11 +127,11 @@ public class CheckstyleConfiguration {
     private void defineModuleCharset(Configuration module) {
         if (module instanceof DefaultConfiguration
                 && ("Checker".equals(module.getName())
-                    || "com.puppycrawl.tools.checkstyle.Checker".equals(module.getName()))) {
+                        || "com.puppycrawl.tools.checkstyle.Checker".equals(module.getName()))) {
             final Charset charset = getCharset();
             final String charsetName = charset.name();
             LOG.info("Checkstyle charset: {}", charsetName);
-            ((DefaultConfiguration) module).addAttribute("charset", charsetName);
+            ((DefaultConfiguration) module).addProperty("charset", charsetName);
         }
     }
 
