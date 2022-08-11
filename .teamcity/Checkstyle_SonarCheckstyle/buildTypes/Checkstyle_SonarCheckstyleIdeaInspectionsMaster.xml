@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="c8690d21-d8ce-4556-b58c-9849d71c0ba6" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2021.1/project-config.xsd">
+  <name>IDEA Inspections Master</name>
+  <description />
+  <settings>
+    <parameters>
+      <param name="env.MAVEN_OPTS" value="" />
+    </parameters>
+    <build-runners>
+      <runner id="RUNNER_910" name="Inspections (IntelliJ IDEA)" type="Inspection">
+        <parameters>
+          <param name="idea.app.home" value="%teamcity.tool.intellij.ideaIU-2020.1.1%" />
+          <param name="includeExclude.patterns"><![CDATA[-:target//*
+-:src/test/resources/org/sonar/plugins/checkstyle/bad-checkstyle-pugin.properties]]></param>
+          <param name="inspection.profile.file" value="config/intellij-idea-inspections.xml" />
+          <param name="iprInfoRunParam" value="&lt;iprInfo path-to-ipr=&quot;pom.xml&quot; /&gt;" />
+          <param name="jvmArgs" value="-Xmx512m -XX:ReservedCodeCacheSize=240m" />
+          <param name="target.jdk.home" value="%env.JDK_18%" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="Checkstyle_HttpsGithubComCheckstyleSonarCheckstyleRefsHeadsMaster" />
+    </vcs-settings>
+    <requirements>
+      <contains id="RQ_339" name="teamcity.agent.jvm.os.name" value="Linux" />
+    </requirements>
+    <build-triggers>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters>
+          <param name="enableQueueOptimization" value="true" />
+          <param name="quietPeriodMode" value="DO_NOT_USE" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_135" type="BuildFailureOnMetric">
+        <parameters>
+          <param name="anchorBuild" value="lastSuccessful" />
+          <param name="metricKey" value="InspectionStatsE" />
+          <param name="metricThreshold" value="0" />
+          <param name="metricUnits" value="metricUnitsDefault" />
+          <param name="moreOrLess" value="more" />
+          <param name="withBuildAnchor" value="false" />
+        </parameters>
+      </extension>
+      <extension id="BUILD_EXT_136" type="BuildFailureOnMetric">
+        <parameters>
+          <param name="anchorBuild" value="lastSuccessful" />
+          <param name="metricKey" value="InspectionStatsW" />
+          <param name="metricThreshold" value="0" />
+          <param name="metricUnits" value="metricUnitsDefault" />
+          <param name="moreOrLess" value="more" />
+          <param name="withBuildAnchor" value="false" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup />
+  </settings>
+</build-type>
+
