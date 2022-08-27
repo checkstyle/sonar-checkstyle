@@ -233,11 +233,7 @@ public class CheckstyleMetadata {
         }
         totalByteSize += "'SINGLE_SELECT_LIST,multiple=true,values=\""
                 .getBytes(StandardCharsets.UTF_8).length;
-        boolean result = false;
-        if (totalByteSize > PARAM_TYPE_DB_COLUMN_TYPE_SIZE_LIMIT) {
-            result = true;
-        }
-        return result;
+        return totalByteSize > PARAM_TYPE_DB_COLUMN_TYPE_SIZE_LIMIT;
     }
 
     /**
