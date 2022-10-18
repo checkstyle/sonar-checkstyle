@@ -98,10 +98,10 @@
     <sonar.version>8.9.0.43852</sonar.version>
     <sonar-java.version>7.2.0.26923</sonar-java.version>
     <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
-    <maven.sevntu.checkstyle.plugin.version>1.40.0</maven.sevntu.checkstyle.plugin.version>
+    <maven.sevntu.checkstyle.plugin.version>1.42.0</maven.sevntu.checkstyle.plugin.version>
     <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
     <maven.sevntu.checkstyle.plugin.checkstyle.version>
-      8.35
+      10.0
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
     <maven.jacoco.plugin.version>0.8.5</maven.jacoco.plugin.version>
     <java.version>11</java.version>

@@ -63,6 +63,7 @@ public class CheckstyleExecutor {
 
     /**
      * Execute Checkstyle and return the generated XML report.
+     *
      * @noinspection TooBroadScope
      */
     public void execute(SensorContext context) {

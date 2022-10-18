@@ -34,6 +34,7 @@ import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.debt.internal.DefaultDebtRemediationFunction;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.plugins.checkstyle.metadata.SonarRulePropertyLoader.AdditionalRuleProperties;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -95,44 +96,55 @@ public class CheckstyleMetadata {
 
         metadataRepo.entrySet().stream()
                 .filter(entry -> entry.getValue().getModuleType() == ModuleType.CHECK)
-                .forEach(check -> {
-                    final ModuleDetails moduleDetails = check.getValue();
-                    final boolean isTemplate = isTemplateRule(moduleDetails);
-                    final String fullCheckName = getFullCheckName(moduleDetails.getName());
-                    final String fullQualifiedName = moduleDetails.getFullQualifiedName();
-                    final RulesDefinition.NewRule rule;
-                    if (isTemplate) {
-                        rule = repository
-                                .createRule(fullQualifiedName + "template")
-                                .setName(fullCheckName + " Template");
-                    }
-                    else {
-                        rule = repository
-                                .createRule(fullQualifiedName)
-                                .setName(fullCheckName);
-                    }
-                    rule.setHtmlDescription(moduleDetails.getDescription())
-                            .setInternalKey(getInternalKey(moduleDetails))
-                            .setSeverity("MINOR")
-                            .setStatus(RuleStatus.READY);
-                    if (!NO_SQALE.contains(rule.key())) {
-                        rule.setDebtRemediationFunction(debtRemediationFunction);
-                    }
-                    final String tag = getRuleTag(moduleDetails.getFullQualifiedName(),
-                            additionalRuleData.get(check.getKey()));
-                    if (tag != null) {
-                        rule.setTags(tag);
-                    }
-                    if (isTemplate) {
-                        rule.setTemplate(true);
-                    }
+                .forEach(check -> forEachCheck(check, additionalRuleData, debtRemediationFunction));
+    }
 
-                    for (ModulePropertyDetails property : moduleDetails.getProperties()) {
-                        constructParams(moduleDetails.getName(),
-                                rule.createParam(property.getName()),
-                                property);
-                    }
-                });
+    /**
+     * Processing to do when examining each check found.
+     *
+     * @param check The check to do processing on.
+     * @param additionalRuleData The additional rule data to save.
+     * @param debtRemediationFunction The remediation function to use.
+     */
+    private void forEachCheck(Map.Entry<String, ModuleDetails> check,
+            Map<String, AdditionalRuleProperties> additionalRuleData,
+            DebtRemediationFunction debtRemediationFunction) {
+        final ModuleDetails moduleDetails = check.getValue();
+        final boolean isTemplate = isTemplateRule(moduleDetails);
+        final String fullCheckName = getFullCheckName(moduleDetails.getName());
+        final String fullQualifiedName = moduleDetails.getFullQualifiedName();
+        final RulesDefinition.NewRule rule;
+        if (isTemplate) {
+            rule = repository
+                    .createRule(fullQualifiedName + "template")
+                    .setName(fullCheckName + " Template");
+        }
+        else {
+            rule = repository
+                    .createRule(fullQualifiedName)
+                    .setName(fullCheckName);
+        }
+        rule.setHtmlDescription(moduleDetails.getDescription())
+                .setInternalKey(getInternalKey(moduleDetails))
+                .setSeverity("MINOR")
+                .setStatus(RuleStatus.READY);
+        if (!NO_SQALE.contains(rule.key())) {
+            rule.setDebtRemediationFunction(debtRemediationFunction);
+        }
+        final String tag = getRuleTag(moduleDetails.getFullQualifiedName(),
+                additionalRuleData.get(check.getKey()));
+        if (tag != null) {
+            rule.setTags(tag);
+        }
+        if (isTemplate) {
+            rule.setTemplate(true);
+        }
+
+        for (ModulePropertyDetails property : moduleDetails.getProperties()) {
+            constructParams(moduleDetails.getName(),
+                    rule.createParam(property.getName()),
+                    property);
+        }
     }
 
     /**
@@ -222,6 +234,7 @@ public class CheckstyleMetadata {
     /**
      * This check is required since the PARAM_TYPE column has size 512, and exceeding it
      * will result in an error in DB updates
+     *
      * @param values array of values
      * @return true if the size has exceeded the limit
      */
