@@ -22,8 +22,8 @@ package org.sonar.plugins.checkstyle;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 
-import org.eclipse.jdt.core.dom.Modifier;
 import org.junit.Test;
 
 public class CheckstyleConstantsTest {
