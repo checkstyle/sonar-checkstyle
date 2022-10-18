@@ -105,6 +105,7 @@ public class CheckstyleExecutorTest {
 
     /**
      * We do suppression as we need to cache value initialLocale
+     *
      * @noinspection TooBroadScope
      */
     @Test

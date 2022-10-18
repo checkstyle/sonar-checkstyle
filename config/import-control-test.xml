@@ -3,7 +3,11 @@
     "-//Checkstyle//DTD ImportControl Configuration 1.4//EN"
     "https://checkstyle.org/dtds/import_control_1_4.dtd">
 
-<import-control pkg="org.sonar.plugins.checkstyle">
+<import-control
+        pkg="(|
+        |org\.sonar\.plugins\.checkstyle|
+        |org\.checkstyle\.plugins\.sonar)"
+        regex="true">
 
   <allow pkg=".*" regex="true" />
 

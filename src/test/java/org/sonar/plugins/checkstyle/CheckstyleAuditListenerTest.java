@@ -78,6 +78,7 @@ public class CheckstyleAuditListenerTest {
 
     /**
      * We do suppression to keep code the same in view
+     *
      * @noinspection TooBroadScope
      */
     @Test
