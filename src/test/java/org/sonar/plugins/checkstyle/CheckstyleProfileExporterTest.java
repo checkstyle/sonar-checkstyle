@@ -254,7 +254,7 @@ public class CheckstyleProfileExporterTest {
     @SuppressWarnings("unchecked")
     private void initSettings(@Nullable String key, @Nullable String property) {
         final MapSettings mapSettings = new MapSettings(
-                new PropertyDefinitions(System2.INSTANCE, new CheckstylePlugin().getExtensions()));
+                new PropertyDefinitions(System2.INSTANCE, CheckstylePlugin.getExtensions()));
         if (Objects.nonNull(key)) {
             mapSettings.setProperty(key, property);
         }

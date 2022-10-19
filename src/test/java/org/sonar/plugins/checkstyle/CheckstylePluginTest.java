@@ -32,8 +32,7 @@ public class CheckstylePluginTest {
 
     @Test
     public void testGetExtensions() {
-        final CheckstylePlugin plugin = new CheckstylePlugin();
-        assertThat(plugin.getExtensions().size()).isGreaterThan(1);
+        assertThat(CheckstylePlugin.getExtensions().size()).isGreaterThan(1);
     }
 
     @Test
