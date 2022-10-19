@@ -67,7 +67,7 @@ public final class CheckstylePlugin implements Plugin {
             + "configuration for more information.";
 
     @SuppressWarnings("rawtypes")
-    public List getExtensions() {
+    public static List getExtensions() {
         return Arrays
                 .asList(PropertyDefinition.builder(CheckstyleConstants.CHECKER_FILTERS_KEY)
                                 .defaultValue(CheckstyleConstants.CHECKER_FILTERS_DEFAULT_VALUE)
