@@ -22,7 +22,6 @@ package org.sonar.plugins.checkstyle;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
-import org.sonar.plugins.java.Java;
 
 public class CheckstyleSensor implements Sensor {
 
@@ -34,7 +33,7 @@ public class CheckstyleSensor implements Sensor {
 
     @Override
     public void describe(SensorDescriptor descriptor) {
-        descriptor.onlyOnLanguage(Java.KEY).name("CheckstyleSensor");
+        descriptor.onlyOnLanguage("java").name("CheckstyleSensor");
     }
 
     @Override

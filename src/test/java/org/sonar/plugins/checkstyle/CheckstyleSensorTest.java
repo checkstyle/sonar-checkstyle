@@ -27,7 +27,6 @@ import static org.mockito.Mockito.verify;
 import org.junit.Test;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
-import org.sonar.plugins.java.Java;
 
 public class CheckstyleSensorTest {
 
@@ -37,7 +36,7 @@ public class CheckstyleSensorTest {
         final CheckstyleSensor sensor = new CheckstyleSensor(null);
 
         sensor.describe(descriptor);
-        assertThat(descriptor.languages()).containsOnly(Java.KEY);
+        assertThat(descriptor.languages()).containsOnly("java");
         assertThat(descriptor.name()).isNotEmpty();
     }
 
