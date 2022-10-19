@@ -111,19 +111,11 @@
   </properties>
 
   <dependencies>
-    <!-- till https://github.com/checkstyle/sonar-checkstyle/issues/40 -->
     <dependency>
-      <groupId>org.sonarsource.java</groupId>
-      <artifactId>sonar-java-plugin</artifactId>
-      <version>${sonar-java.version}</version>
+      <groupId>com.fasterxml.staxmate</groupId>
+      <artifactId>staxmate</artifactId>
+      <version>2.4.0</version>
       <scope>provided</scope>
-      <!-- to avoid 4.5.1 api pickup -->
-      <exclusions>
-        <exclusion>
-          <groupId>org.codehaus.sonar</groupId>
-          <artifactId>sonar-plugin-api</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <!-- required to load external descriptiona, see CheckstyleRulesDefinition -->
     <dependency>
