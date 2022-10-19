@@ -11,9 +11,6 @@
     <suppress checks="DesignForExtension" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="WriteTag" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="IllegalCatch" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="OrderedProperties" files=".*[\\/]src[\\/]main[\\/]"/>
-
-    <suppress checks="ImportControl" files=".*[\\/]src[\\/]test[\\/]"/>
     <!-- END of legacy code -->
 
     <!-- parsing of xml imply reference attribute names, does not make sense to move all to special variables -->
