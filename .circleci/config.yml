@@ -46,6 +46,8 @@ jobs:
             # this step, as we would kill web server when step is complete.
             cd /root/project
             mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
+      - store_artifacts:
+          path: /root/project/target/sonar/checkstyle-result.xml
       - run:
           name: Check logs for error
           command: grep "ERROR" /opt/sonarqube/logs/* || test $? = 1
