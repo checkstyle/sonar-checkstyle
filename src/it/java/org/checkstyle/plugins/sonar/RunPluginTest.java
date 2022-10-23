@@ -103,15 +103,9 @@ public class RunPluginTest {
     }
 
     @Test
-    public void testSonarExecution() {
-        try {
-            final MavenBuild build = testProjectBuild();
-            executeBuildWithCommonProperties(build, true);
-        }
-        catch (IOException exception) {
-            LOG.error("Build execution error.", exception);
-            fail("Failed to execute build.");
-        }
+    public void testSonarExecution() throws IOException {
+        final MavenBuild build = testProjectBuild();
+        executeBuildWithCommonProperties(build, true);
     }
 
     private static void executeBuildWithCommonProperties(Build<?> build, boolean buildQuietly)

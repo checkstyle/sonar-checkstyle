@@ -24,6 +24,7 @@ import static org.fest.assertions.Assertions.assertThat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -71,11 +72,11 @@ public class CheckstyleRulesDefinitionTest {
         });
         final List<String> duplicatedRuleWithTemplate = ruleCounts.entrySet().stream()
                 .filter(entry -> entry.getValue() > 1)
-                .map(entry -> entry.getKey())
+                .map(Entry::getKey)
                 .collect(Collectors.toList());
         final List<String> rulesWithDuplicateTemplate = ruleCounts.entrySet().stream()
                 .filter(entry -> entry.getValue() == 1)
-                .map(entry -> entry.getKey())
+                .map(Entry::getKey)
                 .collect(Collectors.toList());
         // such number should not change during checkstyle version upgrade
         assertThat(duplicatedRuleWithTemplate).hasSize(0);
