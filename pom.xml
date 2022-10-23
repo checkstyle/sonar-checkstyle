@@ -97,12 +97,14 @@
     <checkstyle.version>10.3.3</checkstyle.version>
     <sonar.version>8.9.0.43852</sonar.version>
     <sonar-java.version>7.2.0.26923</sonar-java.version>
-    <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
     <maven.sevntu.checkstyle.plugin.version>1.42.0</maven.sevntu.checkstyle.plugin.version>
     <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
     <maven.sevntu.checkstyle.plugin.checkstyle.version>
       10.0
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
+    <antrun.plugin.version>3.1.0</antrun.plugin.version>
+    <checkstyle.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${maven.sevntu.checkstyle.plugin.checkstyle.version}/config/checkstyle_checks.xml</checkstyle.configLocation>
+    <checkstyle.sevntu.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_sevntu_checks.xml</checkstyle.sevntu.configLocation>
     <maven.jacoco.plugin.version>0.8.5</maven.jacoco.plugin.version>
     <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -408,8 +410,40 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven.checkstyle.plugin.version}</version>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>${antrun.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>ant-phase-verify</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <property name="mvn.project.build.directory" value="${project.build.directory}" />
+                <property name="checkstyle.configLocation" value="${checkstyle.configLocation}" />
+                <ant antfile="config/ant-phase-verify.xml" />
+              </target>
+            </configuration>
+          </execution>
+          <execution>
+            <id>ant-phase-verify-sevntu</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <property name="mvn.project.build.directory" value="${project.build.directory}" />
+                <property name="project.basedir" value="${project.basedir}" />
+                <property name="checkstyle.sevntu.configLocation"
+                  value="${checkstyle.sevntu.configLocation}" />
+                <ant antfile="config/ant-phase-verify-sevntu.xml" />
+              </target>
+            </configuration>
+          </execution>
+        </executions>
         <dependencies>
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
@@ -422,40 +456,6 @@
             <version>${maven.sevntu.checkstyle.plugin.version}</version>
           </dependency>
         </dependencies>
-        <executions>
-          <execution>
-            <id>checkstyle-check</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${maven.sevntu.checkstyle.plugin.checkstyle.version}/config/checkstyle_checks.xml</configLocation>
-              <failOnViolation>true</failOnViolation>
-              <headerLocation>I just need to put here smth to let it not use default - LICENSE.txt</headerLocation>
-              <propertiesLocation>config/checkstyle.properties</propertiesLocation>
-              <includeTestResources>false</includeTestResources>
-              <includeTestSourceDirectory>true</includeTestSourceDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>sevntu-checkstyle-check</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_sevntu_checks.xml</configLocation>
-              <failOnViolation>true</failOnViolation>
-              <includeResources>false</includeResources>
-              <includeTestResources>false</includeTestResources>
-              <logViolationsToConsole>true</logViolationsToConsole>
-              <maxAllowedViolations>0</maxAllowedViolations>
-              <violationSeverity>error</violationSeverity>
-              <propertyExpansion>project.basedir=${project.basedir}</propertyExpansion>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -851,7 +851,7 @@
       <properties>
         <skipTests>true</skipTests>
         <skipITs>true</skipITs>
-        <checkstyle.skip>true</checkstyle.skip>
+        <checkstyle.ant.skip>true</checkstyle.ant.skip>
         <pmd.skip>true</pmd.skip>
         <spotbugs.skip>true</spotbugs.skip>
         <xml.skip>true</xml.skip>
@@ -865,7 +865,7 @@
       <id>sonarqube-validations</id>
       <properties>
         <skipITs>true</skipITs>
-        <checkstyle.skip>true</checkstyle.skip>
+        <checkstyle.ant.skip>true</checkstyle.ant.skip>
         <pmd.skip>true</pmd.skip>
         <spotbugs.skip>true</spotbugs.skip>
         <xml.skip>true</xml.skip>
