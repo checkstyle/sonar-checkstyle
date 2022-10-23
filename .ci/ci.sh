@@ -21,7 +21,7 @@ integration-tests)
   ;;
 
 nondex)
-  mvn --fail-never clean nondex:nondex -Dcheckstyle.skip=true
+  mvn --fail-never clean nondex:nondex -Dcheckstyle.ant.skip=true
   cat `grep -RlE 'td class=.x' .nondex/ | cat` < /dev/null > output.txt
   RESULT="$(cat output.txt | wc -c)"
   cat output.txt
