@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin</artifactId>
-  <version>10.3.3-SNAPSHOT</version>
+  <version>10.3.4-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Checkstyle SonarQube Plugin</name>
@@ -437,8 +436,7 @@
               <target>
                 <property name="mvn.project.build.directory" value="${project.build.directory}" />
                 <property name="project.basedir" value="${project.basedir}" />
-                <property name="checkstyle.sevntu.configLocation"
-                  value="${checkstyle.sevntu.configLocation}" />
+                <property name="checkstyle.sevntu.configLocation" value="${checkstyle.sevntu.configLocation}" />
                 <ant antfile="config/ant-phase-verify-sevntu.xml" />
               </target>
             </configuration>
