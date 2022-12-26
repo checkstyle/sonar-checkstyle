@@ -6,7 +6,7 @@ jobs:
 
     steps:
       - checkout
-      - run: mvn package -Pno-validations
+      - run: mvn -e --no-transfer-progress package -Pno-validations
       - persist_to_workspace:
           root: /home/circleci
           paths:
@@ -45,7 +45,7 @@ jobs:
             # Note that we cannot separate "start SonarQube web server" above from
             # this step, as we would kill web server when step is complete.
             cd /root/project
-            mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
+            mvn -e --no-transfer-progress sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
       - store_artifacts:
           path: /root/project/target/sonar/checkstyle-result.xml
       - run:
