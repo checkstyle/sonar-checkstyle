@@ -107,6 +107,7 @@ public class CheckstyleExecutorTest {
      * We do suppression as we need to cache value initialLocale
      *
      * @noinspection TooBroadScope
+     * @noinspectionreason Cache the value of the default locale.
      */
     @Test
     public void generateXmlReportInEnglish() throws Exception {

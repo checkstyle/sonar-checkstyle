@@ -76,39 +76,32 @@ public class CheckstyleAuditListenerTest {
         when(predicates.hasAbsolutePath(anyString())).thenReturn(filePredicate);
     }
 
-    /**
-     * We do suppression to keep code the same in view
-     *
-     * @noinspection TooBroadScope
-     */
     @Test
     public void testUtilityMethods() {
-        AuditEvent eventTest;
-
-        eventTest = new AuditEvent(this, "", new Violation(0, "", "", null, "",
+        final AuditEvent event1 = new AuditEvent(this, "", new Violation(0, "", "", null, "",
                 CheckstyleAuditListenerTest.class, "msg"));
-        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
-        assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
-        assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isEqualTo(
+        assertThat(CheckstyleAuditListener.getLineId(event1)).isEqualTo(1);
+        assertThat(CheckstyleAuditListener.getMessage(event1)).isEqualTo("msg");
+        assertThat(CheckstyleAuditListener.getRuleKey(event1)).isEqualTo(
                 CheckstyleAuditListenerTest.class.getName());
 
-        eventTest = new AuditEvent(this, "", new Violation(1, "", "", null, "",
+        final AuditEvent event2 = new AuditEvent(this, "", new Violation(1, "", "", null, "",
                 CheckstyleAuditListenerTest.class, "msg"));
-        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
-        assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
-        assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isEqualTo(
+        assertThat(CheckstyleAuditListener.getLineId(event2)).isEqualTo(1);
+        assertThat(CheckstyleAuditListener.getMessage(event2)).isEqualTo("msg");
+        assertThat(CheckstyleAuditListener.getRuleKey(event2)).isEqualTo(
                 CheckstyleAuditListenerTest.class.getName());
 
-        eventTest = new AuditEvent(this);
-        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
-        assertThat(CheckstyleAuditListener.getMessage(eventTest)).isNull();
-        assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isNull();
+        final AuditEvent event3 = new AuditEvent(this);
+        assertThat(CheckstyleAuditListener.getLineId(event3)).isEqualTo(1);
+        assertThat(CheckstyleAuditListener.getMessage(event3)).isNull();
+        assertThat(CheckstyleAuditListener.getRuleKey(event3)).isNull();
 
-        eventTest = new AuditEvent(this, "", new Violation(0, "", "", null, "module",
+        final AuditEvent event4 = new AuditEvent(this, "", new Violation(0, "", "", null, "module",
                 CheckstyleAuditListenerTest.class, "msg"));
-        assertThat(CheckstyleAuditListener.getLineId(eventTest)).isEqualTo(1);
-        assertThat(CheckstyleAuditListener.getMessage(eventTest)).isEqualTo("msg");
-        assertThat(CheckstyleAuditListener.getRuleKey(eventTest)).isEqualTo("module");
+        assertThat(CheckstyleAuditListener.getLineId(event4)).isEqualTo(1);
+        assertThat(CheckstyleAuditListener.getMessage(event4)).isEqualTo("msg");
+        assertThat(CheckstyleAuditListener.getRuleKey(event4)).isEqualTo("module");
     }
 
     @Test

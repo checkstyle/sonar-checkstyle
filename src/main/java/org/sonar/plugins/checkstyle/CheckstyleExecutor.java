@@ -65,6 +65,7 @@ public class CheckstyleExecutor {
      * Execute Checkstyle and return the generated XML report.
      *
      * @noinspection TooBroadScope
+     * @noinspectionreason Cache the value of the default locale.
      */
     public void execute(SensorContext context) {
         if (Objects.nonNull(listener)) {

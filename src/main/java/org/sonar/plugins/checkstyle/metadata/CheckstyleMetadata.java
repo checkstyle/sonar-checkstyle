@@ -240,8 +240,8 @@ public class CheckstyleMetadata {
      */
     private static boolean isMoreThanVarCharSizeLimit(String... values) {
         int totalByteSize = 0;
-        for (String x : values) {
-            final String tokenString = x + COMMA_STRING;
+        for (String value : values) {
+            final String tokenString = value + COMMA_STRING;
             totalByteSize += tokenString.getBytes(StandardCharsets.UTF_8).length;
         }
         totalByteSize += "'SINGLE_SELECT_LIST,multiple=true,values=\""
@@ -345,9 +345,10 @@ public class CheckstyleMetadata {
             result.append(MODULE_NAME_EXCEPTIONS.get(checkName));
         }
         else {
-            for (int i = 0; i < checkName.length(); i++) {
-                result.append(checkName.charAt(i));
-                if (i + 1 < checkName.length() && Character.isUpperCase(checkName.charAt(i + 1))) {
+            for (int index = 0; index < checkName.length(); index++) {
+                result.append(checkName.charAt(index));
+                if (index + 1 < checkName.length()
+                        && Character.isUpperCase(checkName.charAt(index + 1))) {
                     result.append(' ');
                 }
             }
