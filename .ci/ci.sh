@@ -5,7 +5,7 @@ set -euo pipefail
 case "$1" in
 
 install)
-  mvn -e clean install
+  mvn -e --no-transfer-progress clean install
   ;;
 
 integration-tests)
@@ -17,11 +17,11 @@ integration-tests)
   fi
   mkdir -p target/temp-downloads
   cp ~/.m2/sonar-application-$SONAR_APP_VERSION.zip target/temp-downloads/
-  mvn -e integration-test -DskipITs=false
+  mvn -e --no-transfer-progress integration-test -DskipITs=false
   ;;
 
 nondex)
-  mvn --fail-never clean nondex:nondex -Dcheckstyle.ant.skip=true
+  mvn -e --no-transfer-progress --fail-never clean nondex:nondex -Dcheckstyle.ant.skip=true
   cat `grep -RlE 'td class=.x' .nondex/ | cat` < /dev/null > output.txt
   RESULT="$(cat output.txt | wc -c)"
   cat output.txt
