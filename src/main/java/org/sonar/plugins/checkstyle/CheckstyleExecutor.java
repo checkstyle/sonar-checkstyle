@@ -130,6 +130,13 @@ public class CheckstyleExecutor {
         }
     }
 
+    /**
+     * Retrieves the URL from the URI.
+     *
+     * @param uri The URI to generate the URL from.
+     * @return The generated URL.
+     * @throws IllegalStateException if the conversion of the URI failed.
+     */
     @VisibleForTesting
     URL getUrl(URI uri) {
         try {

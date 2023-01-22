@@ -69,6 +69,12 @@ public class CheckstyleConfiguration {
         this.fileSystem = fileSystem;
     }
 
+    /**
+     * Creates and retrieves the Checkstyle configuration file with the rules from sonar.
+     *
+     * @return The location of the created Checkstyle configuration file.
+     * @throws IllegalStateException if the Checkstyle configuration file failed to save.
+     */
     public File getXmlDefinitionFile() {
         final File xmlFile = new File(fileSystem.workDir(), "checkstyle.xml");
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(xmlFile, false),
@@ -84,6 +90,11 @@ public class CheckstyleConfiguration {
         }
     }
 
+    /**
+     * Obtains the list of input source files for Checkstyle to run against.
+     *
+     * @return The list of source files.
+     */
     public List<InputFile> getSourceFiles() {
         final FilePredicates predicates = fileSystem.predicates();
         final Iterable<InputFile> files = fileSystem.inputFiles(predicates.and(
@@ -96,12 +107,25 @@ public class CheckstyleConfiguration {
         return fileList;
     }
 
+    /**
+     * Obtains the file location of the xml report from Checkstyle.
+     * This location is only valid if {@link #PROPERTY_GENERATE_XML}
+     * is turned on.
+     *
+     * @return The file location or {@code null}.
+     */
     public File getTargetXmlReport() {
         return conf.getBoolean(PROPERTY_GENERATE_XML)
                 .map(aBoolean -> new File(fileSystem.workDir(), "checkstyle-result.xml"))
                 .orElse(null);
     }
 
+    /**
+     * Generates the checkstyle configuration with the rules from sonar.
+     *
+     * @return The Checkstyle configuration.
+     * @throws CheckstyleException if there is an error  generating the Checkstyle configuration.
+     */
     public Configuration getCheckstyleConfiguration() throws CheckstyleException {
         final File xmlConfig = getXmlDefinitionFile();
 
@@ -135,6 +159,11 @@ public class CheckstyleConfiguration {
         }
     }
 
+    /**
+     * Retrieves the charset of the underlying file system.
+     *
+     * @return The charset.
+     */
     public Charset getCharset() {
         return fileSystem.encoding();
     }
