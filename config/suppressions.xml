@@ -6,7 +6,9 @@
 
 <suppressions>
     <!-- START of legacy code, all violations will be resolved eventually -->
-    <suppress checks="Javadoc*" files=".*[\\/]src[\\/]main[\\/]"/>
+    <suppress checks="Javadoc*" files=".*[\\/]src[\\/]main[\\/]" message="Summary javadoc is missing"/>
+    <suppress checks="Javadoc*" files=".*[\\/]src[\\/]main[\\/]" message="Missing a Javadoc comment"/>
+    <suppress checks="Javadoc*" files=".*[\\/]src[\\/]main[\\/]" message="Missing package-info.java file"/>
     <suppress checks="DesignForExtension" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="WriteTag" files=".*[\\/]src[\\/]main[\\/]"/>
     <suppress checks="IllegalCatch" files=".*[\\/]src[\\/]main[\\/]"/>

@@ -64,6 +64,7 @@ public class CheckstyleExecutor {
     /**
      * Execute Checkstyle and return the generated XML report.
      *
+     * @param context The context of the execution.
      * @noinspection TooBroadScope
      * @noinspectionreason Cache the value of the default locale.
      */
