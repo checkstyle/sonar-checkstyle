@@ -83,6 +83,13 @@ public class CheckstyleProfileExporter extends ProfileExporter {
         }
     }
 
+    /**
+     * Exports the active rules to the specified writer.
+     *
+     * @param activeRules The rules to export.
+     * @param writer The destination of the export.
+     * @throws IllegalStateException if the rules failed to export.
+     */
     public void exportProfile(ActiveRules activeRules, Writer writer) {
         try {
             final List<ActiveRuleWrapper> activeRuleWrappers = new ArrayList<>();

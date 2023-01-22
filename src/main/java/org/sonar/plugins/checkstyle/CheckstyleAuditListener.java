@@ -59,6 +59,11 @@ public class CheckstyleAuditListener implements AuditListener {
         this.fileSystem = fileSystem;
     }
 
+    /**
+     * Sets the sensor context for the listener.
+     *
+     * @param context The context.
+     */
     public void setContext(SensorContext context) {
         this.context = context;
     }

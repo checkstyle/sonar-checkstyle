@@ -26,10 +26,20 @@ import java.util.List;
 public class SonarRulePropertyLoader {
     private List<AdditionalRuleProperties> rules;
 
+    /**
+     * Retrieves the list of rules.
+     *
+     * @return The list of rules.
+     */
     public List<AdditionalRuleProperties> getRules() {
         return Collections.unmodifiableList(rules);
     }
 
+    /**
+     * Populates the list of rules.
+     *
+     * @param rules The list of rules.
+     */
     public void setRules(List<AdditionalRuleProperties> rules) {
         this.rules = new ArrayList<>(rules);
     }
@@ -38,18 +48,38 @@ public class SonarRulePropertyLoader {
         private String rule;
         private String tag;
 
+        /**
+         * Retrieves the rule.
+         *
+         * @return The rule.
+         */
         public String getRule() {
             return rule;
         }
 
+        /**
+         * Populates the rule.
+         *
+         * @param rule The rule.
+         */
         public void setRule(String rule) {
             this.rule = rule;
         }
 
+        /**
+         * Retrieves the tag.
+         *
+         * @return The tag.
+         */
         public String getTag() {
             return tag;
         }
 
+        /**
+         * Populates the tag.
+         *
+         * @param tag The tag.
+         */
         public void setTag(String tag) {
             this.tag = tag;
         }
