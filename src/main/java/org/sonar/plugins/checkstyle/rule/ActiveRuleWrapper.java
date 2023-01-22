@@ -26,9 +26,11 @@ import java.util.Map;
  * on the {@link org.sonar.api.batch.ScannerSide} for generating CheckStyle configurations,
  * we must make it compatible for the new {@link org.sonar.api.batch.rule.ActiveRules}.
  *
+ * <p>
  * Hence, to gain compatibility with server and scanner side in the exporter,
  * we have to wrap either {@link org.sonar.api.batch.rule.ActiveRule} or
  * {@link org.sonar.api.rules.ActiveRule} for usage in the exporter.
+ * </p>
  */
 public interface ActiveRuleWrapper {
     String getInternalKey();

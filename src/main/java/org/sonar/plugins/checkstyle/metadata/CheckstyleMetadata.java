@@ -152,6 +152,7 @@ public class CheckstyleMetadata {
      *
      * @param checkName check name
      * @return check class
+     * @throws IllegalStateException if the class cannot be found.
      */
     private Class<?> getClass(String checkName) {
         final ClassLoader loader = getClass().getClassLoader();
@@ -233,7 +234,7 @@ public class CheckstyleMetadata {
 
     /**
      * This check is required since the PARAM_TYPE column has size 512, and exceeding it
-     * will result in an error in DB updates
+     * will result in an error in DB updates.
      *
      * @param values array of values
      * @return true if the size has exceeded the limit
@@ -308,6 +309,7 @@ public class CheckstyleMetadata {
      *
      * @param fileName YML config file
      * @return map of additional metadata
+     * @throws IllegalStateException if there is an issue loading the file.
      */
     private static Map<String, SonarRulePropertyLoader.AdditionalRuleProperties>
         getAdditionalDetails(String fileName) {
