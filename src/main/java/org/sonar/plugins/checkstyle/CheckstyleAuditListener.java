@@ -40,6 +40,9 @@ import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
 
 /**
+ * Custom Checkstyle Listener which captures the output of Checkstyle and
+ * converts it into sonar's format.
+ *
  * @since 2.3
  */
 @ExtensionPoint
