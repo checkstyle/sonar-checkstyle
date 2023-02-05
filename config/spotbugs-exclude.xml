@@ -15,4 +15,9 @@
       <Class name="org.sonar.plugins.checkstyle.CheckstyleRulesDefinition" />
       <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
     </Match>
+    <Match>
+      <!-- Checkstyle is not thread safe till https://github.com/checkstyle/checkstyle/projects/5. -->
+      <Class name="org.sonar.plugins.checkstyle.metadata.ModuleFactory" />
+      <Bug pattern="LI_LAZY_INIT_STATIC" />
+    </Match>
 </FindBugsFilter>
