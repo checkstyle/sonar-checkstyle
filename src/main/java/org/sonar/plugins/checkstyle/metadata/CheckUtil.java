@@ -25,10 +25,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
-import com.puppycrawl.tools.checkstyle.PackageObjectFactory;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheck;
 import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
 import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
@@ -38,7 +35,7 @@ public final class CheckUtil {
     }
 
     public static String getModifiableTokens(String checkName) {
-        final AbstractCheck checkResult = getCheck(checkName);
+        final AbstractCheck checkResult = ModuleFactory.getCheck(checkName);
         final String result;
         if (AbstractJavadocCheck.class.isAssignableFrom(checkResult.getClass())) {
             final AbstractJavadocCheck javadocCheck = (AbstractJavadocCheck) checkResult;
@@ -57,18 +54,6 @@ public final class CheckUtil {
                     + "method executed in wrong context, heirarchy of check class missing");
         }
         return result;
-    }
-
-    private static AbstractCheck getCheck(String checkName) {
-        final ClassLoader classLoader = CheckstyleMetadata.class.getClassLoader();
-        try {
-            final Set<String> packageNames = PackageNamesLoader.getPackageNames(classLoader);
-            return (AbstractCheck) new PackageObjectFactory(packageNames, classLoader)
-                    .createModule(checkName);
-        }
-        catch (CheckstyleException ex) {
-            throw new IllegalStateException("exception occured during load of " + checkName, ex);
-        }
     }
 
     private static List<Integer> subtractTokens(int[] tokens, int... requiredTokens) {
