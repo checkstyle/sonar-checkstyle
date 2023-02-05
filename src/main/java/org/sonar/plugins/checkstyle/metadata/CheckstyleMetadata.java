@@ -339,7 +339,7 @@ public class CheckstyleMetadata {
      * @param checkName the name fetched from ModuleDetails
      * @return modifiedName
      */
-    public static String getFullCheckName(String checkName) {
+    private static String getFullCheckName(String checkName) {
         final int capacity = 1024;
         final StringBuilder result = new StringBuilder(capacity);
 
@@ -364,7 +364,7 @@ public class CheckstyleMetadata {
      * @param moduleDetails module metadata
      * @return internalKey
      */
-    public static String getInternalKey(ModuleDetails moduleDetails) {
+    private static String getInternalKey(ModuleDetails moduleDetails) {
         String result = "Checker/";
         if ("com.puppycrawl.tools.checkstyle.Checker".equals(moduleDetails.getParent())) {
             result += moduleDetails.getName();
