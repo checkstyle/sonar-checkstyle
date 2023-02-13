@@ -267,7 +267,7 @@ public class CheckstyleProfileExporterTest {
         return StringUtils.remove(xml, CheckstyleProfileExporter.DOCTYPE_DECLARATION);
     }
 
-    private static class IoExceptionWriter extends Writer {
+    private static final class IoExceptionWriter extends Writer {
 
         @Override
         public void write(char[] cbuf, int off, int len) throws IOException {
@@ -295,7 +295,7 @@ public class CheckstyleProfileExporterTest {
      * Once we increase compatibility to 7.X LTS,
      * we can remove this class and use the builder pattern directly.
      */
-    private static class TestActiveRule implements ActiveRule {
+    private static final class TestActiveRule implements ActiveRule {
 
         @Override
         public RuleKey ruleKey() {
