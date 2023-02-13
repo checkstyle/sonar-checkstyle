@@ -181,7 +181,7 @@ public class CheckstyleProfileImporterTest {
         return ruleFinder;
     }
 
-    private static class RuleAnswer implements Answer<Rule> {
+    private static final class RuleAnswer implements Answer<Rule> {
         @Override
         public Rule answer(InvocationOnMock iom) {
             final RuleQuery query = (RuleQuery) iom.getArguments()[0];

@@ -210,7 +210,7 @@ public class CheckstyleProfileImporter extends ProfileImporter {
         }
     }
 
-    private static class Module {
+    private static final class Module {
         private final Map<String, String> properties = new HashMap<>();
         private final List<Module> modules = new ArrayList<>();
         private String name;
