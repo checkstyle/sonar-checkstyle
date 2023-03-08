@@ -21,6 +21,7 @@ Compatibility matrix from checkstyle team:
 
 | Checkstyle Plugin | Sonar min | Sonar max | Checkstyle | Jdk |
 |-------------------|-----------|-----------|------------|-----|
+| 10.8.0            | 9.0       | 9.0+      | 10.8.0     | 11  |
 | 10.7.0            | 9.0       | 9.0+      | 10.7.0     | 11  |
 | 10.6.0            | 9.0       | 9.0+      | 10.6.0     | 11  |
 | 10.5              | 9.0       | 9.0+      | 10.5       | 11  |

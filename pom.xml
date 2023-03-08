@@ -93,7 +93,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>10.7.0</checkstyle.version>
+    <checkstyle.version>10.8.0</checkstyle.version>
     <sonar.version>8.9.0.43852</sonar.version>
     <sonar-java.version>7.2.0.26923</sonar-java.version>
     <maven.sevntu.checkstyle.plugin.version>1.44.1</maven.sevntu.checkstyle.plugin.version>
@@ -102,7 +102,7 @@
       10.4
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
     <antrun.plugin.version>3.1.0</antrun.plugin.version>
-    <checkstyle.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle_checks.xml</checkstyle.configLocation>
+    <checkstyle.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle-checks.xml</checkstyle.configLocation>
     <checkstyle.sevntu.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${maven.sevntu.checkstyle.plugin.checkstyle.version}/config/checkstyle_sevntu_checks.xml</checkstyle.sevntu.configLocation>
     <maven.jacoco.plugin.version>0.8.5</maven.jacoco.plugin.version>
     <java.version>11</java.version>
