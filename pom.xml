@@ -4,7 +4,7 @@
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin</artifactId>
-  <version>10.10.0-SNAPSHOT</version>
+  <version>10.11.0-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Checkstyle SonarQube Plugin</name>
@@ -93,13 +93,13 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>10.9.3</checkstyle.version>
+    <checkstyle.version>10.11.0</checkstyle.version>
     <sonar.version>8.9.0.43852</sonar.version>
     <sonar-java.version>7.2.0.26923</sonar-java.version>
     <maven.sevntu.checkstyle.plugin.version>1.44.1</maven.sevntu.checkstyle.plugin.version>
     <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
     <maven.sevntu.checkstyle.plugin.checkstyle.version>
-      10.9.3
+      10.11.0
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
     <antrun.plugin.version>3.1.0</antrun.plugin.version>
     <checkstyle.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle-checks.xml</checkstyle.configLocation>
