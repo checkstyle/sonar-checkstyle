@@ -46,7 +46,6 @@
         <!--conflicts with checkstyle rule-->
         <exclude name="JUnitUseExpected"/>
         <!--will be addressed in https://github.com/checkstyle/checkstyle/projects/5-->
-        <exclude name="NonThreadSafeSingleton"/>
         <!-- too much false positives -->
         <exclude name="JUnitAssertionsShouldIncludeMessage"/>
         <!-- verify from another library is used -->
