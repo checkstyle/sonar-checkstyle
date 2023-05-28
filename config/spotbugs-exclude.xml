@@ -20,4 +20,8 @@
       <Class name="org.sonar.plugins.checkstyle.metadata.ModuleFactory" />
       <Bug pattern="LI_LAZY_INIT_STATIC" />
     </Match>
+    <Match>
+      <!-- to investigate: many others seem to have issues with this rule as well -->
+      <Bug pattern="EI_EXPOSE_REP2" />
+    </Match>
 </FindBugsFilter>
