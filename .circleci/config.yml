@@ -1,4 +1,5 @@
 version: 2
+
 jobs:
   build-project:
     docker:
@@ -52,8 +53,29 @@ jobs:
           name: Check logs for error
           command: grep "ERROR" /opt/sonarqube/logs/* || test $? = 1
 
+  sonarqube:
+    docker:
+      - image: checkstyle/jdk-11-groovy-git-mvn:11.0.13__3.0.9__2.25.1__3.6.3
+
+    steps:
+      - checkout
+      - run: apt-get install -y jq
+      - run:
+          name: Run sonarqube
+          command: |
+            export PR_NUMBER=$CIRCLE_PR_NUMBER
+            export PR_BRANCH_NAME=$CIRCLE_BRANCH
+            export SONAR_API_TOKEN=$SONAR_TOKEN
+            ./.ci/sonarqube.sh
+
 workflows:
   version: 2
+
+  sonarqube:
+    jobs:
+      - sonarqube:
+          context:
+            - sonarqube
 
   build-sonar:
     jobs:
