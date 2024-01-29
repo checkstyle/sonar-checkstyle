@@ -93,8 +93,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>10.12.5</checkstyle.version>
-    <sonar.version>8.9.0.43852</sonar.version>
+    <checkstyle.version>10.13.0</checkstyle.version>
     <sonar-java.version>7.2.0.26923</sonar-java.version>
     <maven.sevntu.checkstyle.plugin.version>1.44.1</maven.sevntu.checkstyle.plugin.version>
     <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
@@ -158,15 +157,15 @@
       <version>32.0.0-jre</version>
     </dependency>
     <dependency>
-      <groupId>org.sonarsource.sonarqube</groupId>
+      <groupId>org.sonarsource.api.plugin</groupId>
       <artifactId>sonar-plugin-api</artifactId>
-      <version>${sonar.version}</version>
+      <version>9.9.0.229</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api-impl</artifactId>
-      <version>${sonar.version}</version>
+      <version>9.9.0.65466</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -225,7 +224,7 @@
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-testing-harness</artifactId>
       <scope>test</scope>
-      <version>${sonar.version}</version>
+      <version>9.9.0.65466</version>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.orchestrator</groupId>
@@ -266,7 +265,7 @@
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-ws</artifactId>
-      <version>${sonar.version}</version>
+      <version>9.9.0.65466</version>
       <scope>test</scope>
     </dependency>
     <dependency>

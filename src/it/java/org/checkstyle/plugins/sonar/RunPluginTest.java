@@ -61,7 +61,7 @@ import com.sonar.orchestrator.locator.MavenLocation;
  */
 public class RunPluginTest {
     private static final Logger LOG = LoggerFactory.getLogger(RunPluginTest.class);
-    private static final String SONAR_APP_VERSION = "8.9.3.48735";
+    private static final String SONAR_APP_VERSION = "9.9.0.65466";
     private static final int LOGS_NUMBER_LINES = 200;
     private static final String TRUE = "true";
     private static final String PROJECT_KEY = "com.puppycrows.tools:checkstyle";

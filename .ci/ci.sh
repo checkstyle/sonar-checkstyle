@@ -9,7 +9,7 @@ install)
   ;;
 
 integration-tests)
-  SONAR_APP_VERSION="8.9.3.48735"
+  SONAR_APP_VERSION="9.9.0.65466"
   if [[ ! -f ~/.m2/sonar-application-$SONAR_APP_VERSION.zip ]]; then
     URL="https://repox.jfrog.io/repox/sonarsource/org/sonarsource/sonarqube/"
     URL=$URL"sonar-application/$SONAR_APP_VERSION/sonar-application-$SONAR_APP_VERSION.zip"

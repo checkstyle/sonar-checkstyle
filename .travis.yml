@@ -27,7 +27,7 @@ install:
 matrix:
  fast_finish: true
  include:
-   - jdk: openjdk11
+   - jdk: openjdk21
      env: CMD="./.ci/ci.sh install"
 
 script:

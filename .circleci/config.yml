@@ -3,7 +3,7 @@ version: 2
 jobs:
   build-project:
     docker:
-      - image: cimg/openjdk:11.0.16
+      - image: cimg/openjdk:21.0.2
 
     steps:
       - checkout
@@ -15,7 +15,7 @@ jobs:
 
   execute-sonar:
     docker:
-      - image: sonarqube:9.0-community
+      - image: sonarqube:9.9-community
     working_directory: ~/repo
 
     environment:
