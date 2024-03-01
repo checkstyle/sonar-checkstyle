@@ -15,7 +15,7 @@ An Official announcement of project transfer - https://groups.google.com/d/topic
 
 This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforge.net/).
 
-Compatibility matrix from Sonar team: https://docs.sonarqube.org/latest/instance-administration/plugin-version-matrix/
+Compatibility matrix from Sonar team: https://docs.sonarsource.com/sonarqube/latest/instance-administration/plugin-version-matrix/
 
 Compatibility matrix from checkstyle team:
 

@@ -80,6 +80,15 @@ public class CheckstyleConfigurationTest {
     }
 
     @Test
+    public void getSourceFilesWithDefaultExporter() {
+        final CheckstyleConfiguration configuration = new CheckstyleConfiguration(null,
+                null, fileSystem);
+        assertThat(configuration.getSourceFiles()).hasSize(1);
+        assertThat(configuration.getSourceFiles().iterator().next().toString())
+                .contains("mainFile");
+    }
+
+    @Test
     public void getSourceFiles() {
         final CheckstyleProfileExporter exporter = new FakeExporter();
         final CheckstyleConfiguration configuration = new CheckstyleConfiguration(null, exporter,
@@ -140,7 +149,7 @@ public class CheckstyleConfigurationTest {
                 new DefaultActiveRules(Collections.emptyList()), fileSystem);
         final Configuration checkstyleConfiguration = configuration.getCheckstyleConfiguration();
         assertThat(checkstyleConfiguration).isNotNull();
-        assertThat(checkstyleConfiguration.getAttribute("charset")).isEqualTo("UTF-8");
+        assertThat(checkstyleConfiguration.getProperty("charset")).isEqualTo("UTF-8");
         final File xmlFile = new File("checkstyle.xml");
         assertThat(xmlFile.exists()).isTrue();
 

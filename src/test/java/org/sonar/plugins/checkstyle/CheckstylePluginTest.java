@@ -32,7 +32,7 @@ public class CheckstylePluginTest {
 
     @Test
     public void testGetExtensions() {
-        assertThat(CheckstylePlugin.getExtensions().size()).isEqualTo(11);
+        assertThat(CheckstylePlugin.getExtensions().size()).isEqualTo(9);
     }
 
     @Test

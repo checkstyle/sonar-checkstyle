@@ -20,7 +20,7 @@
 package org.sonar.plugins.checkstyle;
 
 import org.sonar.api.ExtensionPoint;
-import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.plugins.checkstyle.metadata.CheckstyleMetadata;
 

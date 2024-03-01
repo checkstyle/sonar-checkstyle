@@ -7,36 +7,88 @@ on:
   pull_request:
 
 jobs:
-  mvn-install-java-11:
+  mvn-install:
+    name: Maven Install
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: install
-        run: "./.ci/ci.sh install"
+    strategy:
+      max-parallel: 4
+      matrix:
+        java-version: ['11', '17']
 
-  integration-tests:
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
         with:
-          java-version: 11
-      - name: run integration tests
-        run: "./.ci/ci.sh integration-tests"
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+
+      - run: "./.ci/ci.sh install"
+
+# depreacted for now since SQ removed the application ZIP files needed for the integration tests
+#   integration-tests:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Set up JDK 11
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: 11
+#       - name: run integration tests
+#         run: "./.ci/ci.sh integration-tests"
 
   nondex:
+    name: Maven Nondex
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: install
-        run: "./.ci/ci.sh nondex"
+    strategy:
+      max-parallel: 4
+      matrix:
+        java-version: ['11', '17']
 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+
+      - run: "./.ci/ci.sh nondex"
+
+  execute-sonarqube-plugin:
+    name: Execute SonarQube Plugin
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build Jar
+        run: mvn -e --no-transfer-progress package -Pno-validations
+
+      - name: Run SonarQube
+        run: docker run -d --name sonarqube -p 9000:9000 -v ${{ github.workspace }}/repo/target/:/opt/sonarqube/extensions/plugins/ sonarqube:9.9-community
+      - name: Check SonarQube is Up
+        run: |
+          while [[ ! `curl -s http://localhost:9000/api/system/status` =~ "UP" ]]; do
+            echo "Waiting for web server to come up..."
+            sleep 10
+          done
+
+      - name: Execute SonarQube analysis
+        run: |
+          mvn -e --no-transfer-progress sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
+
+      - name: Check logs for error
+        run: docker logs sonarqube | grep "ERROR" || test $? = 1
+    
+      - name: Cleanup
+        run: docker stop sonarqube

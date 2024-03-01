@@ -34,15 +34,14 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.ExtensionPoint;
-import org.sonar.api.batch.ScannerSide;
-import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.scanner.ScannerSide;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.puppycrawl.tools.checkstyle.AbstractAutomaticBean;
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
 import com.puppycrawl.tools.checkstyle.XMLLogger;
-import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 
 @ExtensionPoint
 @ScannerSide
@@ -98,16 +97,16 @@ public class CheckstyleExecutor {
                 LOG.info("Checkstyle output report: {}", xmlReport.getAbsolutePath());
                 xmlOutput = FileUtils.openOutputStream(xmlReport);
                 checker.addListener(
-                        new XMLLogger(xmlOutput, AutomaticBean.OutputStreamOptions.CLOSE));
+                        new XMLLogger(xmlOutput, AbstractAutomaticBean.OutputStreamOptions.CLOSE));
             }
 
             checker.setCharset(configuration.getCharset().name());
             checker.configure(configuration.getCheckstyleConfiguration());
             checker.process(configuration
                     .getSourceFiles()
-                    .stream()
-                    .map(InputFile::file)
-                    .collect(Collectors.toList()));
+                .stream()
+                .map(inputFile -> new File(inputFile.uri()))
+                .collect(Collectors.toList()));
         }
         catch (Exception ex) {
             throw new IllegalStateException("Can not execute Checkstyle", ex);

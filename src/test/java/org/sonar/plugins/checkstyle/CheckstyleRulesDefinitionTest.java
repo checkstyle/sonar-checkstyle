@@ -27,9 +27,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.sonar.api.server.rule.RulesDefinition;
 
 import com.google.common.collect.ImmutableList;
@@ -49,9 +47,6 @@ public class CheckstyleRulesDefinitionTest {
             "com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck",
             "com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder"
     );
-
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void test() {

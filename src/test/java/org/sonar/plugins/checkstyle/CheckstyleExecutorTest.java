@@ -20,6 +20,7 @@
 package org.sonar.plugins.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
@@ -38,9 +39,7 @@ import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -53,8 +52,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
 public class CheckstyleExecutorTest {
 
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
+    // Remove the 'thrown' field
 
     private final SensorContext context = mock(SensorContext.class);
 
@@ -87,20 +85,21 @@ public class CheckstyleExecutorTest {
 
     @Test
     public void executeException() throws CheckstyleException {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("Can not execute Checkstyle");
         final CheckstyleConfiguration conf = mockConf();
         final CheckstyleExecutor executor = new CheckstyleExecutor(conf, null);
-        executor.execute(context);
+        assertThrows("Can not execute Checkstyle",
+                            IllegalStateException.class,
+                            () -> executor.execute(context));
     }
 
     @Test
     public void getUrlException() throws URISyntaxException {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("Fail to create the project classloader. "
-                + "Classpath element is invalid: htp://aa");
         final CheckstyleExecutor executor = new CheckstyleExecutor(null, mockListener());
-        executor.getUrl(new URI("htp://aa"));
+        final URI uri = new URI("htp://aa");
+        assertThrows("Fail to create the project classloader. "
+                                + "Classpath element is invalid: htp://aa",
+                            IllegalStateException.class,
+                            () -> executor.getUrl(uri));
     }
 
     /**
@@ -126,7 +125,8 @@ public class CheckstyleExecutorTest {
 
             Assert.assertTrue("Report should exists", report.exists());
 
-            final String reportContents = FileUtils.readFileToString(report);
+            final String reportContents = FileUtils.readFileToString(report,
+                                                                    Charset.defaultCharset());
             assertThat(reportContents).contains("<error");
             assertThat(reportContents).contains("Empty statement.");
         }
@@ -165,8 +165,7 @@ public class CheckstyleExecutorTest {
         // using a static import pushes us above the PMD import limit
         Mockito.doThrow(IOException.class).when(closeable).close();
 
-        thrown.expect(IllegalStateException.class);
-        CheckstyleExecutor.close(closeable);
+        assertThrows(IllegalStateException.class, () -> CheckstyleExecutor.close(closeable));
     }
 
     private static CheckstyleAuditListener mockListener() {

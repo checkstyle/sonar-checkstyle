@@ -94,8 +94,8 @@
 
   <properties>
     <checkstyle.version>10.12.5</checkstyle.version>
-    <sonar.version>8.9.0.43852</sonar.version>
-    <sonar-java.version>7.2.0.26923</sonar-java.version>
+    <sonar.version>9.9.4.87374</sonar.version>
+    <sonar.api-version>9.9.0.229</sonar.api-version>
     <maven.sevntu.checkstyle.plugin.version>1.44.1</maven.sevntu.checkstyle.plugin.version>
     <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
     <maven.sevntu.checkstyle.plugin.checkstyle.version>
@@ -158,9 +158,9 @@
       <version>32.0.0-jre</version>
     </dependency>
     <dependency>
-      <groupId>org.sonarsource.sonarqube</groupId>
+      <groupId>org.sonarsource.api.plugin</groupId>
       <artifactId>sonar-plugin-api</artifactId>
-      <version>${sonar.version}</version>
+      <version>${sonar.api-version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -559,6 +559,13 @@
             </goals>
           </execution>
           <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+          <execution>
             <id>default-check</id>
             <goals>
               <goal>check</goal>
@@ -573,7 +580,6 @@
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleExecutor</exclude>
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleSeverityUtils</exclude>
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleConfiguration</exclude>
-                    <exclude>org.sonar.plugins.checkstyle.CheckstyleProfileImporter</exclude>
                     <exclude>org.sonar.plugins.checkstyle.CheckstyleRulesDefinition</exclude>
                     <exclude>org.sonar.plugins.checkstyle.metadata.CheckstyleMetadata</exclude>
                     <exclude>org.sonar.plugins.checkstyle.metadata.CheckUtil</exclude>
@@ -679,24 +685,6 @@
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
                       <minimum>0.8</minimum>
-                    </limit>
-                  </limits>
-                </rule>
-                <rule>
-                  <element>CLASS</element>
-                  <includes>
-                    <include>org.sonar.plugins.checkstyle.CheckstyleProfileImporter</include>
-                  </includes>
-                  <limits>
-                    <limit>
-                      <counter>LINE</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>1.0</minimum>
-                    </limit>
-                    <limit>
-                      <counter>BRANCH</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>0.96</minimum>
                     </limit>
                   </limits>
                 </rule>

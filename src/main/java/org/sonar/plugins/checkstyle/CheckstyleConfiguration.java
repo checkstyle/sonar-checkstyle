@@ -33,11 +33,11 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.ExtensionPoint;
-import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.rule.ActiveRules;
+import org.sonar.api.scanner.ScannerSide;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
@@ -59,6 +59,17 @@ public class CheckstyleConfiguration {
     private final FileSystem fileSystem;
 
     public CheckstyleConfiguration(
+            org.sonar.api.config.Configuration conf,
+            ActiveRules activeRules,
+            FileSystem fileSystem) {
+        this.conf = conf;
+        confExporter = new CheckstyleProfileExporter(conf);
+        this.activeRules = activeRules;
+        this.fileSystem = fileSystem;
+    }
+
+    // used for unit testing
+    protected CheckstyleConfiguration(
             org.sonar.api.config.Configuration conf,
             CheckstyleProfileExporter confExporter,
             ActiveRules activeRules,
