@@ -6,6 +6,11 @@
         <property name="severity" value="warning"/>
         <property name="format" value="abcde"/>
     </module>
+    <module name="JavadocPackage">
+        <property name="id" value="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
+        <property name="severity" value="warning"/>
+        <property name="format" value="fghij"/>
+    </module>
     <module name="TreeWalker">
         <module name="SuppressWarningsHolder"/>
         <module name="SuppressionCommentFilter" />

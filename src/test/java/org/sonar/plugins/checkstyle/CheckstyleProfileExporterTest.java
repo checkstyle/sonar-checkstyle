@@ -22,8 +22,10 @@ package org.sonar.plugins.checkstyle;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -44,13 +46,15 @@ import org.sonar.api.config.Configuration;
 import org.sonar.api.config.PropertyDefinitions;
 import org.sonar.api.config.internal.ConfigurationBridge;
 import org.sonar.api.config.internal.MapSettings;
-import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rule.RuleKey;
-import org.sonar.api.rules.Rule;
-import org.sonar.api.rules.RulePriority;
 import org.sonar.api.utils.System2;
 
 public class CheckstyleProfileExporterTest {
+
+    private final ActiveRule testActiveRule = new TestActiveRule(
+                    RuleKey.of(CheckstyleConstants.REPOSITORY_KEY,
+                    "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"),
+                    "Checker/JavadocPackage", "TEMPLATE", "abcde");
 
     private Configuration settings;
 
@@ -67,75 +71,25 @@ public class CheckstyleProfileExporterTest {
     }
 
     @Test
-    public void alwaysSetSuppressionCommentFilter() {
-        final RulesProfile profile = RulesProfile.create("sonar way", "java");
+    public void noCheckstyleActiveRulesToExport() {
+        final ActiveRules activeRules = Mockito.mock(ActiveRules.class);
+        Mockito.when(activeRules.findByRepository(CheckstyleConstants.REPOSITORY_KEY))
+                .thenReturn(Collections.emptyList());
 
         final StringWriter writer = new StringWriter();
-        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
+        new CheckstyleProfileExporter(settings).exportProfile(activeRules, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
                 "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
-                        + "alwaysSetSuppressionCommentFilter.xml",
+                        + "noCheckstyleActiveRulesToExport.xml",
                 sanitizeForTests(writer.toString()));
-    }
-
-    @Test
-    public void noCheckstyleRulesToExport() {
-        final RulesProfile profile = RulesProfile.create("sonar way", "java");
-
-        // this is a PMD rule
-        profile.activateRule(Rule.create("pmd", "PmdRule1", "PMD rule one"), null);
-
-        final StringWriter writer = new StringWriter();
-        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
-
-        CheckstyleTestUtils.assertSimilarXmlWithResource(
-                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
-                        + "noCheckstyleRulesToExport.xml", sanitizeForTests(writer.toString()));
-    }
-
-    @Test
-    public void singleCheckstyleRulesToExport() {
-        final RulesProfile profile = RulesProfile.create("sonar way", "java");
-        profile.activateRule(Rule.create("pmd", "PmdRule1", "PMD rule one"), null);
-        profile.activateRule(
-                Rule.create("checkstyle",
-                        "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck",
-                        "Javadoc").setConfigKey("Checker/JavadocPackage"), RulePriority.MAJOR);
-        profile.activateRule(
-                Rule.create(
-                        "checkstyle",
-                        "com.puppycrawl.tools.checkstyle.checks.naming.LocalFinalVariableNameCheck",
-                        "Local Variable").setConfigKey(
-                        "Checker/TreeWalker/Checker/TreeWalker/LocalFinalVariableName"),
-                RulePriority.MINOR);
-
-        final StringWriter writer = new StringWriter();
-        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
-
-        CheckstyleTestUtils.assertSimilarXmlWithResource(
-                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
-                        + "singleCheckstyleRulesToExport.xml", sanitizeForTests(writer.toString()));
-    }
-
-    @Test
-    public void ruleThrowsException() {
-        final RulesProfile profile = RulesProfile.create("sonar way", "java");
-        try {
-            new CheckstyleProfileExporter(settings).exportProfile(profile, new IoExceptionWriter());
-            Assert.fail("IOException while writing should not be ignored");
-        }
-        catch (IllegalStateException ex) {
-            Assertions.assertThat(ex.getMessage())
-                    .isEqualTo("Fail to export the profile " + profile);
-        }
     }
 
     @Test
     public void singleCheckstyleActiveRulesToExport() {
         final ActiveRules activeRules = Mockito.mock(ActiveRules.class);
         Mockito.when(activeRules.findByRepository(CheckstyleConstants.REPOSITORY_KEY))
-                .thenReturn(Collections.singletonList(new TestActiveRule()));
+                .thenReturn(Collections.singletonList(testActiveRule));
 
         final StringWriter writer = new StringWriter();
         new CheckstyleProfileExporter(settings).exportProfile(activeRules, writer);
@@ -143,6 +97,80 @@ public class CheckstyleProfileExporterTest {
         CheckstyleTestUtils.assertSimilarXmlWithResource(
                 "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
                         + "singleCheckstyleActiveRulesToExport.xml",
+                sanitizeForTests(writer.toString()));
+    }
+
+    @Test
+    public void treewalkerCheckstyleActiveRulesToExport() {
+        final ActiveRules activeRules = Mockito.mock(ActiveRules.class);
+        Mockito.when(activeRules.findByRepository(CheckstyleConstants.REPOSITORY_KEY))
+                .thenReturn(Collections.singletonList(new TestActiveRule(
+                    RuleKey.of(CheckstyleConstants.REPOSITORY_KEY,
+                    "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"),
+                    "Checker/TreeWalker/JavadocPackage", "TEMPLATE", null)));
+
+        final StringWriter writer = new StringWriter();
+        new CheckstyleProfileExporter(settings).exportProfile(activeRules, writer);
+
+        CheckstyleTestUtils.assertSimilarXmlWithResource(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+                        + "treewalkerCheckstyleActiveRulesToExport.xml",
+                sanitizeForTests(writer.toString()));
+    }
+
+    @Test
+    public void sameCheckstyleActiveRulesToExport() {
+        final List<ActiveRule> rules = new ArrayList<>();
+        rules.add(testActiveRule);
+        rules.add(new TestActiveRule(RuleKey.of(CheckstyleConstants.REPOSITORY_KEY,
+                    "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"),
+                    "Checker/JavadocPackage", "TEMPLATE", "fghij"));
+        final ActiveRules activeRules = Mockito.mock(ActiveRules.class);
+        Mockito.when(activeRules.findByRepository(CheckstyleConstants.REPOSITORY_KEY))
+                .thenReturn(rules);
+
+        final StringWriter writer = new StringWriter();
+        new CheckstyleProfileExporter(settings).exportProfile(activeRules, writer);
+
+        CheckstyleTestUtils.assertSimilarXmlWithResource(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+                        + "sameCheckstyleActiveRulesToExport.xml",
+                sanitizeForTests(writer.toString()));
+    }
+
+    @Test
+    public void noCheckstyleTemplateActiveRulesToExport() {
+        final ActiveRules activeRules = Mockito.mock(ActiveRules.class);
+        Mockito.when(activeRules.findByRepository(CheckstyleConstants.REPOSITORY_KEY))
+                .thenReturn(Collections.singletonList(new TestActiveRule(
+                    RuleKey.of(CheckstyleConstants.REPOSITORY_KEY,
+                    "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"),
+                    "Checker/JavadocPackage", null, "fghij")));
+
+        final StringWriter writer = new StringWriter();
+        new CheckstyleProfileExporter(settings).exportProfile(activeRules, writer);
+
+        CheckstyleTestUtils.assertSimilarXmlWithResource(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+                        + "noCheckstyleTemplateActiveRulesToExport.xml",
+                sanitizeForTests(writer.toString()));
+    }
+
+    @Test
+    public void blankParamCheckstyleActiveRulesToExport() {
+        final ActiveRules activeRules = Mockito.mock(ActiveRules.class);
+        Mockito.when(activeRules.findByRepository(CheckstyleConstants.REPOSITORY_KEY))
+                .thenReturn(Collections.singletonList(new TestActiveRule(
+                    RuleKey.of(CheckstyleConstants.REPOSITORY_KEY,
+                    "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"),
+                    "Checker/JavadocPackage", "TEMPLATE", "")));
+
+        final StringWriter writer = new StringWriter();
+        new CheckstyleProfileExporter(settings).exportProfile(activeRules, writer);
+
+        CheckstyleTestUtils.assertSimilarXmlWithResource(
+                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
+                        + "blankParamCheckstyleActiveRulesToExport.xml",
                 sanitizeForTests(writer.toString()));
     }
 
@@ -159,51 +187,6 @@ public class CheckstyleProfileExporterTest {
     }
 
     @Test
-    public void addTheIdPropertyWhenManyInstancesWithTheSameConfigKey() {
-        final RulesProfile profile = RulesProfile.create("sonar way", "java");
-        final Rule rule1 = Rule.create("checkstyle",
-                "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
-                .setConfigKey("Checker/JavadocPackage");
-        final Rule rule2 = Rule
-                .create("checkstyle",
-                        "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck_12345",
-                        "Javadoc").setConfigKey("Checker/JavadocPackage").setParent(rule1);
-
-        profile.activateRule(rule1, RulePriority.MAJOR);
-        profile.activateRule(rule2, RulePriority.CRITICAL);
-
-        final StringWriter writer = new StringWriter();
-        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
-
-        CheckstyleTestUtils.assertSimilarXmlWithResource(
-                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
-                        + "addTheIdPropertyWhenManyInstancesWithTheSameConfigKey.xml",
-                sanitizeForTests(writer.toString()));
-    }
-
-    @Test
-    public void exportParameters() {
-        final RulesProfile profile = RulesProfile.create("sonar way", "java");
-        final Rule rule = Rule.create("checkstyle",
-                "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "Javadoc")
-                .setConfigKey("Checker/JavadocPackage");
-        rule.createParameter("format");
-        // not set in the profile and no default value => not exported in
-        // checkstyle
-        rule.createParameter("message");
-        rule.createParameter("ignore");
-
-        profile.activateRule(rule, RulePriority.MAJOR).setParameter("format", "abcde");
-
-        final StringWriter writer = new StringWriter();
-        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
-
-        CheckstyleTestUtils.assertSimilarXmlWithResource(
-                "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
-                        + "exportParameters.xml", sanitizeForTests(writer.toString()));
-    }
-
-    @Test
     public void addCustomCheckerFilters() {
         initSettings(CheckstyleConstants.CHECKER_FILTERS_KEY,
                 "<module name=\"SuppressionCommentFilter\">"
@@ -215,9 +198,11 @@ public class CheckstyleProfileExporterTest {
                         + "<property name=\"checkFormat\" value=\"$1\"/>"
                         + "<property name=\"messageFormat\" value=\"$2\"/>" + "</module>");
 
-        final RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final ActiveRules activeRules = Mockito.mock(ActiveRules.class);
+        Mockito.when(activeRules.findByRepository(CheckstyleConstants.REPOSITORY_KEY))
+                .thenReturn(Collections.singletonList(testActiveRule));
         final StringWriter writer = new StringWriter();
-        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
+        new CheckstyleProfileExporter(settings).exportProfile(activeRules, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
                 "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
@@ -229,9 +214,11 @@ public class CheckstyleProfileExporterTest {
         initSettings(CheckstyleConstants.TREEWALKER_FILTERS_KEY,
                 "<module name=\"SuppressWithNearbyCommentFilter\"/>");
 
-        final RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final ActiveRules activeRules = Mockito.mock(ActiveRules.class);
+        Mockito.when(activeRules.findByRepository(CheckstyleConstants.REPOSITORY_KEY))
+                .thenReturn(Collections.singletonList(testActiveRule));
         final StringWriter writer = new StringWriter();
-        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
+        new CheckstyleProfileExporter(settings).exportProfile(activeRules, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
                 "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
@@ -242,9 +229,11 @@ public class CheckstyleProfileExporterTest {
     public void addTabWidthProperty() {
         initSettings(CheckstyleConstants.CHECKER_TAB_WIDTH, "8");
 
-        final RulesProfile profile = RulesProfile.create("sonar way", "java");
+        final ActiveRules activeRules = Mockito.mock(ActiveRules.class);
+        Mockito.when(activeRules.findByRepository(CheckstyleConstants.REPOSITORY_KEY))
+                .thenReturn(Collections.singletonList(testActiveRule));
         final StringWriter writer = new StringWriter();
-        new CheckstyleProfileExporter(settings).exportProfile(profile, writer);
+        new CheckstyleProfileExporter(settings).exportProfile(activeRules, writer);
 
         CheckstyleTestUtils.assertSimilarXmlWithResource(
                 "/org/sonar/plugins/checkstyle/CheckstyleProfileExporterTest/"
@@ -286,21 +275,27 @@ public class CheckstyleProfileExporterTest {
     }
 
     /**
-     * Creation of {@link ActiveRule} has changed with SQ 7.5
-     * to make use of a builder instead of direct instantiation.
-     * However, SQ < 7.5 doesn't support the builder yet and,
-     * to keep compatibility down, we have to create a dummy
-     * implementation for testing it.
-     *
-     * Once we increase compatibility to 7.X LTS,
-     * we can remove this class and use the builder pattern directly.
+     * Creation of {@link ActiveRule} for testing purposes.
      */
     private static final class TestActiveRule implements ActiveRule {
+        private final RuleKey activeRuleKey;
+        private final String ruleInternalKey;
+        private final String templateActiveRuleKey;
+        private final Map<String, String> parameters = new HashMap<>();
+
+        TestActiveRule(RuleKey activeRuleKey,
+                       String ruleInternalKey,
+                       String templateActiveRuleKey,
+                       String paramValue) {
+            this.activeRuleKey = activeRuleKey;
+            this.ruleInternalKey = ruleInternalKey;
+            this.templateActiveRuleKey = templateActiveRuleKey;
+            parameters.put("format", paramValue);
+        }
 
         @Override
         public RuleKey ruleKey() {
-            return RuleKey.of(CheckstyleConstants.REPOSITORY_KEY,
-                    "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck");
+            return activeRuleKey;
         }
 
         @Override
@@ -327,19 +322,19 @@ public class CheckstyleProfileExporterTest {
 
         @Override
         public Map<String, String> params() {
-            return new HashMap<>();
+            return Collections.unmodifiableMap(parameters);
         }
 
         @CheckForNull
         @Override
         public String internalKey() {
-            return "Checker/JavadocPackage";
+            return ruleInternalKey;
         }
 
         @CheckForNull
         @Override
         public String templateRuleKey() {
-            return "TEMPLATE";
+            return templateActiveRuleKey;
         }
     }
 }

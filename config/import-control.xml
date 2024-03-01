@@ -15,7 +15,7 @@
 
   <allow class="com.puppycrawl.tools.checkstyle.api.AuditEvent"/>
   <allow class="com.puppycrawl.tools.checkstyle.api.AuditListener"/>
-  <allow class="com.puppycrawl.tools.checkstyle.api.AutomaticBean"/>
+  <allow class="com.puppycrawl.tools.checkstyle.AbstractAutomaticBean"/>
   <allow class="com.puppycrawl.tools.checkstyle.api.CheckstyleException"/>
   <allow class="com.puppycrawl.tools.checkstyle.api.Configuration"/>
   <allow class="com.puppycrawl.tools.checkstyle.api.SeverityLevel"/>

@@ -26,18 +26,8 @@ import java.lang.reflect.Modifier;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.sonar.api.rules.RulePriority;
 
 public class CheckstyleSeverityUtilsTest {
-
-    @Test
-    public void testToSeverity() {
-        assertThat(CheckstyleSeverityUtils.toSeverity(RulePriority.BLOCKER)).isEqualTo("error");
-        assertThat(CheckstyleSeverityUtils.toSeverity(RulePriority.CRITICAL)).isEqualTo("error");
-        assertThat(CheckstyleSeverityUtils.toSeverity(RulePriority.MAJOR)).isEqualTo("warning");
-        assertThat(CheckstyleSeverityUtils.toSeverity(RulePriority.MINOR)).isEqualTo("info");
-        assertThat(CheckstyleSeverityUtils.toSeverity(RulePriority.INFO)).isEqualTo("info");
-    }
 
     @Test
     public void testToSeverityString() {
@@ -57,15 +47,6 @@ public class CheckstyleSeverityUtilsTest {
         catch (IllegalArgumentException ex) {
             assertThat(ex.getMessage()).isEqualTo("Priority not supported: nothing");
         }
-    }
-
-    @Test
-    public void testFromSeverity() {
-        assertThat(CheckstyleSeverityUtils.fromSeverity("error")).isEqualTo(RulePriority.BLOCKER);
-        assertThat(CheckstyleSeverityUtils.fromSeverity("warning")).isEqualTo(RulePriority.MAJOR);
-        assertThat(CheckstyleSeverityUtils.fromSeverity("info")).isEqualTo(RulePriority.INFO);
-        assertThat(CheckstyleSeverityUtils.fromSeverity("ignore")).isEqualTo(RulePriority.INFO);
-        assertThat(CheckstyleSeverityUtils.fromSeverity("")).isNull();
     }
 
     @Test
