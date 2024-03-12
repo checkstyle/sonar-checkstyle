@@ -4,7 +4,7 @@
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin</artifactId>
-  <version>10.13.0-SNAPSHOT</version>
+  <version>10.14.1-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Checkstyle SonarQube Plugin</name>
@@ -93,7 +93,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>10.12.5</checkstyle.version>
+    <checkstyle.version>10.14.1</checkstyle.version>
     <sonar.version>9.9.4.87374</sonar.version>
     <sonar.api-version>9.9.0.229</sonar.api-version>
     <maven.sevntu.checkstyle.plugin.version>1.44.1</maven.sevntu.checkstyle.plugin.version>
