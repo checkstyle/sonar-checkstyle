@@ -93,7 +93,7 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>10.14.1</checkstyle.version>
+    <checkstyle.version>10.14.2</checkstyle.version>
     <sonar.version>9.9.4.87374</sonar.version>
     <sonar.api-version>9.9.0.229</sonar.api-version>
     <maven.sevntu.checkstyle.plugin.version>1.44.1</maven.sevntu.checkstyle.plugin.version>
