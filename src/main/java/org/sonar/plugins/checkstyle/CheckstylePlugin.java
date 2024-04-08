@@ -76,7 +76,7 @@ public final class CheckstylePlugin implements Plugin {
                                 .name("Checker Filters")
                                 .description(CHECKER_FILTERS_DESCRIPTION)
                                 .type(PropertyType.TEXT)
-                                .onQualifiers(Qualifiers.PROJECT, Qualifiers.PROJECT).build(),
+                                .onQualifiers(Qualifiers.PROJECT).build(),
                         PropertyDefinition.builder(CheckstyleConstants.TREEWALKER_FILTERS_KEY)
                                 .defaultValue(CheckstyleConstants.TREEWALKER_FILTERS_DEFAULT_VALUE)
                                 .category(CHECKSTYLE_CATEGORY_NAME)
@@ -84,14 +84,14 @@ public final class CheckstylePlugin implements Plugin {
                                 .name("Treewalker Filters")
                                 .description(TREEWALKER_FILTERS_DESCRIPTION)
                                 .type(PropertyType.TEXT)
-                                .onQualifiers(Qualifiers.PROJECT, Qualifiers.PROJECT).build(),
+                                .onQualifiers(Qualifiers.PROJECT).build(),
                         PropertyDefinition.builder(CheckstyleConstants.CHECKER_TAB_WIDTH)
                                 .category(CHECKSTYLE_CATEGORY_NAME)
                                 .subCategory(CHECKSTYLE_SUB_CATEGORY_NAME)
                                 .name("Tab Width")
                                 .description(CHECKER_TAB_WIDTH_DESCRIPTION)
                                 .type(PropertyType.INTEGER)
-                                .onQualifiers(Qualifiers.PROJECT, Qualifiers.PROJECT)
+                                .onQualifiers(Qualifiers.PROJECT)
                                 .build(),
                         PropertyDefinition.builder(CheckstyleConfiguration.PROPERTY_GENERATE_XML)
                                 .defaultValue("false").category(CHECKSTYLE_CATEGORY_NAME)
