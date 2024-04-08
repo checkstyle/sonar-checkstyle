@@ -9,8 +9,6 @@
 Sonar Checkstyle
 ==========
 
-An Official announcement of project transfer - https://groups.google.com/d/topic/sonarqube/HXXxOWS_sOs/discussion
-
 ## Description / Features
 
 This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforge.net/).
