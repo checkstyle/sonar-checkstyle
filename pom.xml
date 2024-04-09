@@ -106,7 +106,7 @@
     <checkstyle.sevntu.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${maven.sevntu.checkstyle.plugin.checkstyle.version}/config/checkstyle-sevntu-checks.xml</checkstyle.sevntu.configLocation>
     <checkstyle.sevntu.cache.file>${project.build.outputDirectory}/sevntu.cache</checkstyle.sevntu.cache.file>
     <maven.jacoco.plugin.version>0.8.10</maven.jacoco.plugin.version>
-    <java.version>11</java.version>
+    <maven.compiler.release>11</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- we disable ITs by default as it need download of 200MB sonar application jar -->
     <skipITs>true</skipITs>
@@ -330,10 +330,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -452,7 +448,7 @@
         <version>3.13.0</version>
         <configuration>
           <analysisCache>false</analysisCache>
-          <targetJdk>${java.version}</targetJdk>
+          <targetJdk>${maven.compiler.release}</targetJdk>
           <minimumTokens>20</minimumTokens>
           <skipEmptyReport>false</skipEmptyReport>
           <failOnViolation>true</failOnViolation>
@@ -515,7 +511,7 @@
         <artifactId>forbiddenapis</artifactId>
         <version>3.5.1</version>
         <configuration>
-          <targetVersion>${java.version}</targetVersion>
+          <targetVersion>${maven.compiler.release}</targetVersion>
           <failOnUnsupportedJava>false</failOnUnsupportedJava>
           <bundledSignatures>
             <bundledSignature>jdk-unsafe</bundledSignature>
@@ -804,7 +800,7 @@
             <configuration>
               <rules>
                 <requireJavaVersion>
-                  <version>${java.version}</version>
+                  <version>${maven.compiler.release}</version>
                 </requireJavaVersion>
                 <requireMavenVersion>
                   <version>3.0.1</version>
