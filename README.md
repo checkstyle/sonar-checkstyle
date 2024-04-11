@@ -1,21 +1,19 @@
-[![][travis img]][travis]
-[![][wercker img]][wercker]
-[![][circleci img]][circleci]
-[![][teamcity img]][teamcity]
-[![][sonar img]][sonar]
+# Sonar Checkstyle
 
-[![sonar-checkstyle vulnerabilities][snyk-sonar img]][snyk-sonar]
+[![](https://secure.travis-ci.org/checkstyle/sonar-checkstyle.png)](https://travis-ci.org/checkstyle/sonar-checkstyle/builds)
+[![](https://teamcity.jetbrains.com/app/rest/builds/buildType:(id:Checkstyle_SonarCheckstyleIdeaInspectionsMaster)/statusIcon)](https://teamcity.jetbrains.com/app/rest/builds/buildType:(id:Checkstyle_SonarCheckstyleIdeaInspectionsMaster)/statusIcon)
+[![](https://sonarcloud.io/api/project_badges/measure?project=checkstyle_sonar-checkstyle&metric=alert_status)](https://sonarcloud.io/dashboard?id=checkstyle_sonar-checkstyle)
+[![](https://snyk.io/test/github/checkstyle/sonar-checkstyle/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/checkstyle/sonar-checkstyle?targetFile=pom.xml)
 
-Sonar Checkstyle
-==========
+This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforge.net/) for [Sonar](https://www.sonarsource.com).
 
-## Description / Features
+---
 
-This plugin provides coding rules from [Checkstyle](http://checkstyle.sourceforge.net/).
+## Compatiblity
 
-Compatibility matrix from Sonar team: https://docs.sonarsource.com/sonarqube/latest/instance-administration/plugin-version-matrix/
+Compatibility matrix from Sonar: [https://docs.sonarsource.com/sonarqube/latest/instance-administration/plugin-version-matrix/](https://docs.sonarsource.com/sonarqube/latest/instance-administration/plugin-version-matrix/)
 
-Compatibility matrix from checkstyle team:
+Compatibility matrix from Checkstyle:
 
 | Checkstyle Plugin | Sonar min | Sonar max | Checkstyle | Jdk |
 |-------------------|-----------|-----------|------------|-----|
@@ -108,38 +106,10 @@ Compatibility matrix from checkstyle team:
 | 2.1.1             | 3.6       | --        | 5.6        | 1.6 |
 | 2                 | 3.6       | --        | 5.6        | 1.6 |
 
-Jdk version depends on checkstyle's and sonar's jdk version:
+---
 
-checkstyle:6.0 use jdk6, checkstyle:6.2 use jdk7, checkstyle:7.0 use jdk8.
+## Installation
 
-sonar:3.6 used jdk6, sonar:4.5 use jdk6, sonar:5.6-7.8 use jdk8, sonar:7.9-latest use jdk11.
-
-## Usage
-Install it from Sonar Update Center:
-![Sonar Update Center](https://cloud.githubusercontent.com/assets/812984/23023964/e850b208-f40c-11e6-9577-a8e449de7e1d.png)
-
-or do it manually:
-Dowload latest or required version from https://github.com/checkstyle/sonar-checkstyle/releases .
-Place jar file to your sonar instance to "[YOUR_SONAR_PATH]/extensions/plugins", restart Sonar.
-
-In the quality profile, activate some rules from Checkstyle and run an analysis on your project.
-![checkstlye rules in sonar](https://github.com/checkstyle/resources/raw/master/img/sonar-wiki/sonar-in-docker.PNG)
-
-[travis]:https://travis-ci.org/checkstyle/sonar-checkstyle/builds
-[travis img]:https://secure.travis-ci.org/checkstyle/sonar-checkstyle.png
-
-[teamcity]:https://teamcity.jetbrains.com/viewType.html?buildTypeId=Checkstyle_SonarCheckstyleIdeaInspectionsMaster
-[teamcity img]:https://teamcity.jetbrains.com/app/rest/builds/buildType:(id:Checkstyle_SonarCheckstyleIdeaInspectionsMaster)/statusIcon
-
-[sonar]:https://sonarcloud.io/dashboard?id=checkstyle_sonar-checkstyle
-[sonar img]:https://sonarcloud.io/api/project_badges/measure?project=checkstyle_sonar-checkstyle&metric=alert_status
-
-[wercker]: https://app.wercker.com/project/bykey/ece513d8a6eb70207dd3b805b63e8d1c
-[wercker img]: https://app.wercker.com/status/ece513d8a6eb70207dd3b805b63e8d1c/s/master
-
-[circleci]: https://circleci.com/gh/checkstyle/sonar-checkstyle/tree/master
-[circleci img]: https://circleci.com/gh/checkstyle/sonar-checkstyle/tree/master.svg?style=svg
-
-[snyk-sonar]: https://snyk.io/test/github/checkstyle/sonar-checkstyle?targetFile=pom.xml
-[snyk-sonar img]: https://snyk.io/test/github/checkstyle/sonar-checkstyle/badge.svg?targetFile=pom.xml
-
+1. Follow the official [Sonar documentation](https://docs.sonarsource.com/sonarqube/9.8/setup-and-upgrade/install-a-plugin/) to install a plugin from the marketplace, or manually (pick your release from [https://github.com/checkstyle/sonar-checkstyle/releases](https://github.com/checkstyle/sonar-checkstyle/releases).
+2. Configure instances from template rules for the `Checkstyle` repository.
+3. Add rules/instances from the `Checkstyle` repository to your Quality Profile.
