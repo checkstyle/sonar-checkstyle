@@ -19,11 +19,11 @@
 
 package org.sonar.plugins.checkstyle;
 
-import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
+import org.sonar.api.scanner.sensor.ProjectSensor;
 
-public class CheckstyleSensor implements Sensor {
+public class CheckstyleSensor implements ProjectSensor {
 
     private final CheckstyleExecutor executor;
 
