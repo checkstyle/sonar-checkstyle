@@ -93,13 +93,13 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>10.19.0</checkstyle.version>
+    <checkstyle.version>10.20.1</checkstyle.version>
     <sonar.version>9.9.4.87374</sonar.version>
     <sonar.api-version>9.9.0.229</sonar.api-version>
     <maven.sevntu.checkstyle.plugin.version>1.44.1</maven.sevntu.checkstyle.plugin.version>
     <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
     <maven.sevntu.checkstyle.plugin.checkstyle.version>
-      10.19.0
+      10.20.1
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
     <antrun.plugin.version>3.1.0</antrun.plugin.version>
     <checkstyle.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle-checks.xml</checkstyle.configLocation>
