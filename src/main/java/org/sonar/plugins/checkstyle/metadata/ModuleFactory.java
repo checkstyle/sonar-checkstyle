@@ -39,17 +39,18 @@ public final class ModuleFactory {
                 final Set<String> packageNames = PackageNamesLoader.getPackageNames(classLoader);
                 packageObjectFactory = new PackageObjectFactory(packageNames, classLoader);
             }
-            catch (CheckstyleException ex) {
+            catch (CheckstyleException exception) {
                 throw new IllegalStateException("exception happened during initialization of"
-                        + " PackageObjectFactory while loading of " + checkName, ex);
+                        + " PackageObjectFactory while loading of " + checkName, exception);
             }
         }
 
         try {
             return (AbstractCheck) packageObjectFactory.createModule(checkName);
         }
-        catch (CheckstyleException ex) {
-            throw new IllegalStateException("exception occured during load of " + checkName, ex);
+        catch (CheckstyleException exception) {
+            throw new IllegalStateException("exception occured during load of " + checkName,
+                exception);
         }
     }
 }

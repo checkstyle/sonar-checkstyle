@@ -134,17 +134,17 @@ public class CheckstyleAuditListener implements AuditListener {
         try {
             key = event.getModuleId();
         }
-        catch (Exception ex) {
+        catch (Exception exception) {
             LOG.warn("AuditEvent is created incorrectly. Exception happen during getModuleId()",
-                    ex);
+                    exception);
         }
         if (StringUtils.isBlank(key)) {
             try {
                 key = event.getSourceName();
             }
-            catch (Exception ex) {
+            catch (Exception exception) {
                 LOG.warn("AuditEvent is created incorrectly."
-                        + "Exception happen during getSourceName()", ex);
+                        + "Exception happen during getSourceName()", exception);
             }
         }
         return key;
@@ -157,8 +157,9 @@ public class CheckstyleAuditListener implements AuditListener {
             result = event.getMessage();
 
         }
-        catch (Exception ex) {
-            LOG.warn("AuditEvent is created incorrectly. Exception happen during getMessage()", ex);
+        catch (Exception exception) {
+            LOG.warn("AuditEvent is created incorrectly. Exception happen during getMessage()",
+                exception);
             result = null;
         }
         return result;
@@ -173,8 +174,9 @@ public class CheckstyleAuditListener implements AuditListener {
                 result = eventLine;
             }
         }
-        catch (Exception ex) {
-            LOG.warn("AuditEvent is created incorrectly. Exception happen during getLine()", ex);
+        catch (Exception exception) {
+            LOG.warn("AuditEvent is created incorrectly. Exception happen during getLine()",
+                exception);
         }
         return result;
     }

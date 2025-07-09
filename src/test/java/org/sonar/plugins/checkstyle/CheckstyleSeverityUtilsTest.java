@@ -44,8 +44,8 @@ public class CheckstyleSeverityUtilsTest {
             CheckstyleSeverityUtils.toSeverity("nothing");
             Assert.fail("IOException while writing should not be ignored");
         }
-        catch (IllegalArgumentException ex) {
-            assertThat(ex.getMessage()).isEqualTo("Priority not supported: nothing");
+        catch (IllegalArgumentException exception) {
+            assertThat(exception.getMessage()).isEqualTo("Priority not supported: nothing");
         }
     }
 

@@ -159,9 +159,9 @@ public class CheckstyleMetadata {
         try {
             return Class.forName(checkName, true, loader);
         }
-        catch (ClassNotFoundException ex) {
+        catch (ClassNotFoundException exception) {
             throw new IllegalStateException("exception occured during getClass for " + checkName,
-                    ex);
+                    exception);
         }
     }
 
@@ -320,8 +320,9 @@ public class CheckstyleMetadata {
         try (InputStream inputStream = CheckstyleMetadata.class.getResourceAsStream(fileName)) {
             sonarRulePropertyLoader = mapper.readValue(inputStream, SonarRulePropertyLoader.class);
         }
-        catch (IOException ex) {
-            throw new IllegalStateException("Exception during yaml loading of " + fileName, ex);
+        catch (IOException exception) {
+            throw new IllegalStateException("Exception during yaml loading of " + fileName,
+                exception);
         }
         final Map<String, SonarRulePropertyLoader.AdditionalRuleProperties> additionalDetails =
                 new HashMap<>();

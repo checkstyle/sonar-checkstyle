@@ -181,8 +181,8 @@ public class CheckstyleProfileExporterTest {
                     new DefaultActiveRules(Collections.emptyList()), new IoExceptionWriter());
             Assert.fail("IOException while writing should not be ignored");
         }
-        catch (IllegalStateException ex) {
-            Assertions.assertThat(ex.getMessage()).isEqualTo("Fail to export active rules.");
+        catch (IllegalStateException exception) {
+            Assertions.assertThat(exception.getMessage()).isEqualTo("Fail to export active rules.");
         }
     }
 
