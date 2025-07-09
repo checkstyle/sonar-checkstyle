@@ -65,8 +65,8 @@ public class CheckstyleProfileExporter {
                     .findByRepository(CheckstyleConstants.REPOSITORY_KEY));
             generateXml(writer, activeRulesByConfigKey);
         }
-        catch (IOException ex) {
-            throw new IllegalStateException("Fail to export active rules.", ex);
+        catch (IOException exception) {
+            throw new IllegalStateException("Fail to export active rules.", exception);
         }
 
     }

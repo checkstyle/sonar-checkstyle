@@ -94,9 +94,9 @@ public class CheckstyleConfiguration {
             writer.flush();
             return xmlFile;
         }
-        catch (IOException ex) {
+        catch (IOException exception) {
             throw new IllegalStateException("Fail to save the Checkstyle configuration to "
-                    + xmlFile.getPath(), ex);
+                    + xmlFile.getPath(), exception);
 
         }
     }

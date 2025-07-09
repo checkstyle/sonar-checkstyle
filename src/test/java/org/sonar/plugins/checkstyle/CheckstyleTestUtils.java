@@ -42,8 +42,8 @@ public final class CheckstyleTestUtils {
             return Resources.toString(Resources.getResource(CheckstyleTestUtils.class, path),
                     Charsets.UTF_8);
         }
-        catch (IOException ex) {
-            throw new IllegalArgumentException("Could not load resource " + path, ex);
+        catch (IOException exception) {
+            throw new IllegalArgumentException("Could not load resource " + path, exception);
         }
     }
 
@@ -53,8 +53,8 @@ public final class CheckstyleTestUtils {
         try {
             diff = XMLUnit.compareXML(xml, expectedXml);
         }
-        catch (SAXException | IOException ex) {
-            throw new IllegalArgumentException("Could not run XML comparison", ex);
+        catch (SAXException | IOException exception) {
+            throw new IllegalArgumentException("Could not run XML comparison", exception);
         }
         final String message = "Diff: " + diff + CharUtils.LF + "XML: " + xml;
         assertTrue(message, diff.similar());

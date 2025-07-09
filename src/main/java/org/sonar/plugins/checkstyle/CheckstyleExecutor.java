@@ -108,8 +108,8 @@ public class CheckstyleExecutor {
                 .map(inputFile -> new File(inputFile.uri()))
                 .collect(Collectors.toList()));
         }
-        catch (Exception ex) {
-            throw new IllegalStateException("Can not execute Checkstyle", ex);
+        catch (Exception exception) {
+            throw new IllegalStateException("Can not execute Checkstyle", exception);
         }
         finally {
             checker.destroy();
@@ -124,8 +124,8 @@ public class CheckstyleExecutor {
         try {
             closeable.close();
         }
-        catch (IOException ex) {
-            throw new IllegalStateException("failed to close object", ex);
+        catch (IOException exception) {
+            throw new IllegalStateException("failed to close object", exception);
         }
     }
 
@@ -141,9 +141,9 @@ public class CheckstyleExecutor {
         try {
             return uri.toURL();
         }
-        catch (MalformedURLException ex) {
+        catch (MalformedURLException exception) {
             throw new IllegalStateException("Fail to create the project classloader. "
-                    + "Classpath element is invalid: " + uri, ex);
+                    + "Classpath element is invalid: " + uri, exception);
         }
     }
 }
