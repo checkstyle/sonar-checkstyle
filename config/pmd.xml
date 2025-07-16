@@ -135,7 +135,7 @@
   <rule name="CheckstyleCustomShortVariable"
         message="Avoid variables with short names that shorter than 2 symbols: {0}"
         language="java"
-        class="net.sourceforge.pmd.lang.rule.XPathRule"
+        class="net.sourceforge.pmd.lang.rule.xpath.XPathRule"
         externalInfoUrl="">
     <description>
       Fields, local variables, or parameter names that are very short are not helpful to the reader.
