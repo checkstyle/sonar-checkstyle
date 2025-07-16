@@ -106,7 +106,7 @@
     <checkstyle.sevntu.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${maven.sevntu.checkstyle.plugin.checkstyle.version}/config/checkstyle-sevntu-checks.xml</checkstyle.sevntu.configLocation>
     <checkstyle.sevntu.cache.file>${project.build.outputDirectory}/sevntu.cache</checkstyle.sevntu.cache.file>
     <maven.jacoco.plugin.version>0.8.10</maven.jacoco.plugin.version>
-    <maven.compiler.release>11</maven.compiler.release>
+    <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- we disable ITs by default as it need download of 200MB sonar application jar -->
     <skipITs>true</skipITs>
@@ -445,7 +445,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.13.0</version>
+        <version>3.27.0</version>
         <configuration>
           <analysisCache>false</analysisCache>
           <targetJdk>${maven.compiler.release}</targetJdk>
@@ -470,22 +470,22 @@
           <dependency>
             <groupId>net.sourceforge.pmd</groupId>
             <artifactId>pmd-java</artifactId>
-            <version>6.6.0</version>
+            <version>7.15.0</version>
           </dependency>
           <dependency>
             <groupId>net.sourceforge.pmd</groupId>
             <artifactId>pmd-core</artifactId>
-            <version>6.6.0</version>
+            <version>7.15.0</version>
           </dependency>
           <dependency>
             <groupId>net.sourceforge.pmd</groupId>
             <artifactId>pmd-javascript</artifactId>
-            <version>6.6.0</version>
+            <version>7.15.0</version>
           </dependency>
           <dependency>
             <groupId>net.sourceforge.pmd</groupId>
             <artifactId>pmd-jsp</artifactId>
-            <version>6.6.0</version>
+            <version>7.15.0</version>
           </dependency>
         </dependencies>
       </plugin>
