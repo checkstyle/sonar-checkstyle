@@ -4,7 +4,7 @@
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin</artifactId>
-  <version>10.27.0-SNAPSHOT</version>
+  <version>10.24.0-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Checkstyle SonarQube Plugin</name>
@@ -93,13 +93,13 @@
   </ciManagement>
 
   <properties>
-    <checkstyle.version>10.26.1</checkstyle.version>
+    <checkstyle.version>10.23.0</checkstyle.version>
     <sonar.version>9.9.4.87374</sonar.version>
     <sonar.api-version>9.9.0.229</sonar.api-version>
     <maven.sevntu.checkstyle.plugin.version>1.44.1</maven.sevntu.checkstyle.plugin.version>
     <!-- it should be a version of checkstyle that is compatible/compiled with sevntu -->
     <maven.sevntu.checkstyle.plugin.checkstyle.version>
-      10.26.1
+      10.23.0
     </maven.sevntu.checkstyle.plugin.checkstyle.version>
     <antrun.plugin.version>3.1.0</antrun.plugin.version>
     <checkstyle.configLocation>https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-${checkstyle.version}/config/checkstyle-checks.xml</checkstyle.configLocation>
@@ -155,18 +155,18 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>32.0.0-jre</version>
+      <version>32.0.1-jre</version>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.api.plugin</groupId>
       <artifactId>sonar-plugin-api</artifactId>
-      <version>${sonar.api-version}</version>
+      <version>9.9.0.229</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api-impl</artifactId>
-      <version>${sonar.version}</version>
+      <version>9.9.4.87374</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -225,7 +225,7 @@
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-testing-harness</artifactId>
       <scope>test</scope>
-      <version>${sonar.version}</version>
+      <version>10.4.0.87240</version>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.orchestrator</groupId>
@@ -266,20 +266,20 @@
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-ws</artifactId>
-      <version>${sonar.version}</version>
+      <version>9.9.4.87374</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jacoco</groupId>
       <artifactId>org.jacoco.agent</artifactId>
-      <version>${maven.jacoco.plugin.version}</version>
+      <version>0.8.10</version>
       <classifier>runtime</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.puppycrawl.tools</groupId>
       <artifactId>checkstyle</artifactId>
-      <version>${checkstyle.version}</version>
+      <version>10.23.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-cli</groupId>
@@ -298,7 +298,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-yaml</artifactId>
-      <version>2.14.0</version>
+      <version>1.2</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -308,7 +308,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.18.0</version>
+      <version>3.10</version>
     </dependency>
     <dependency>
       <groupId>org.reflections</groupId>
@@ -433,7 +433,7 @@
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>${maven.sevntu.checkstyle.plugin.checkstyle.version}</version>
+            <version>10.23.0</version>
           </dependency>
           <dependency>
             <groupId>com.github.sevntu-checkstyle</groupId>
