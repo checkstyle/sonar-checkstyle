@@ -22,7 +22,7 @@ export MAVEN_OPTS='-Xmx2000m'
 mvn -e --no-transfer-progress -Pno-validations clean package sonar:sonar \
  $SONAR_PR_VARIABLES \
  -Dsonar.host.url=https://sonarcloud.io \
- -Dsonar.login="$SONAR_TOKEN" \
+ -Dsonar.token="$SONAR_TOKEN" \
  -Dsonar.projectKey=checkstyle_sonar-checkstyle \
  -Dsonar.organization=checkstyle
 
