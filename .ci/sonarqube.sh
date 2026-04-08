@@ -30,5 +30,5 @@ echo "report-task.txt:"
 cat target/sonar/report-task.txt
 
 echo "Verification of sonar gate status"
-export SONAR_API_TOKEN=$SONAR_TOKEN
+export SONAR_TOKEN=$SONAR_TOKEN
 ./.ci/sonar-break-build.sh
