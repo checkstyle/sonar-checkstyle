@@ -25,8 +25,4 @@
     <suppress checks="AnonInnerLength" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="ClassDataAbstractionCoupling" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="TrailingComment" files=".*[\\/]Checkstyle(RulesDefinition|Metadata)\.java"/>
-
-    <!-- Suppress these checks until the plugin is upgraded to 13.4.1 and works with the dependency and Java upgrades. -->
-    <suppress checks="UseEnhancedSwitch" files=".*[\\/]src[\\/]main[\\/]"/>
-    <suppress checks="MissingNullCaseInSwitch" files=".*[\\/]src[\\/]main[\\/]"/>
 </suppressions>

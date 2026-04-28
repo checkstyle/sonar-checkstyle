@@ -257,23 +257,12 @@ public class CheckstyleMetadata {
      * @return sonar property type
      */
     private static RuleParamType getPropertyType(ModulePropertyDetails modulePropertyDetails) {
-        final RuleParamType result;
-        switch (modulePropertyDetails.getType()) {
-            case "boolean":
-                result = RuleParamType.BOOLEAN;
-                break;
-            case "int":
-            case "long":
-                result = RuleParamType.INTEGER;
-                break;
-            case "float":
-            case "double":
-                result = RuleParamType.FLOAT;
-                break;
-            default:
-                result = RuleParamType.STRING;
-        }
-        return result;
+        return switch (modulePropertyDetails.getType()) {
+            case "boolean" -> RuleParamType.BOOLEAN;
+            case "int", "long" -> RuleParamType.INTEGER;
+            case "float", "double" -> RuleParamType.FLOAT;
+            case null, default -> RuleParamType.STRING;
+        };
     }
 
     /**

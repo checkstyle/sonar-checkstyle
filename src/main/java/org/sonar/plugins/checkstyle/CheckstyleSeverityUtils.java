@@ -28,24 +28,12 @@ public final class CheckstyleSeverityUtils {
     }
 
     public static String toSeverity(String priority) {
-        final String result;
-
-        switch (priority) {
-            case "BLOCKER":
-            case "CRITICAL":
-                result = SeverityLevel.ERROR.getName();
-                break;
-            case "MAJOR":
-                result = SeverityLevel.WARNING.getName();
-                break;
-            case "MINOR":
-            case "INFO":
-                result = SeverityLevel.INFO.getName();
-                break;
-            default:
+        return switch (priority) {
+            case "BLOCKER", "CRITICAL" -> SeverityLevel.ERROR.getName();
+            case "MAJOR" -> SeverityLevel.WARNING.getName();
+            case "MINOR", "INFO" -> SeverityLevel.INFO.getName();
+            case null, default ->
                 throw new IllegalArgumentException("Priority not supported: " + priority);
-        }
-
-        return result;
+        };
     }
 }
