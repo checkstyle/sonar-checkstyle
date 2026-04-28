@@ -60,6 +60,9 @@ jobs:
   execute-sonarqube-plugin:
     name: Execute SonarQube Plugin
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sq-version: [ 'latest', '26.1.0.118079-community' ]
 
     steps:
       - name: Checkout code
@@ -76,22 +79,23 @@ jobs:
 
       - name: Run SonarQube
         run: |
-          docker run -d --name sonarqube \
-            -p 9000:9000 \
-            -v ${{ github.workspace }}/target/:/opt/sonarqube/extensions/plugins/ \
-            sonarqube:latest
+          docker run -d --name sonarqube -p 9000:9000 -v ${{ github.workspace }}/target/:/opt/sonarqube/extensions/plugins/ sonarqube:${{ matrix.sq-version }}
       - name: Check SonarQube is Up
         run: |
           timeout 300 bash -c 'until curl -s http://localhost:9000/api/system/status | grep -q "UP"; do echo "Waiting..."; sleep 5; done'
 
-      # sonar does not allow default credentials anymore, so we skip this for now
+      - name: Generate SonarQube token
+        run: |
+          SONAR_TOKEN=$(curl -s -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=github-actions" | python3 -c "import json,sys; print(json.load(sys.stdin)['token'])")
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "Failed to generate SonarQube token"
+            exit 1
+          fi
+          echo "SONAR_TOKEN=$SONAR_TOKEN" >> "$GITHUB_ENV"
+
       - name: Execute SonarQube analysis
         run: |
-          mvn -e --no-transfer-progress sonar:sonar \
-            -Dsonar.host.url=http://localhost:9000 \
-            -Dsonar.login=admin \
-            -Dsonar.password=admin
-        continue-on-error: true
+          mvn -e --no-transfer-progress sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.token=$SONAR_TOKEN
 
       - name: Check logs for error
         run: docker logs sonarqube | grep "ERROR" || test $? = 1
