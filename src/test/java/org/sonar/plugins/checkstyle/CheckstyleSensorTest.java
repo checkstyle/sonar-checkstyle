@@ -23,12 +23,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
+import org.sonar.api.config.Configuration;
 
 class CheckstyleSensorTest {
+    private static final String CHECKSTYLE_ENABLED = "sonar.checkstyle.enabled";
 
     @Test
     void shouldDescribePluginCorrectly() {
@@ -43,9 +48,14 @@ class CheckstyleSensorTest {
     @Test
     void shouldExecuteExecutorWithContext() {
         final SensorContext context = mock(SensorContext.class);
+        final Configuration configuration = mock(Configuration.class);
         final CheckstyleExecutor executor = mock(CheckstyleExecutor.class);
 
         final CheckstyleSensor sensor = new CheckstyleSensor(executor);
+
+        when(context.config()).thenReturn(configuration);
+        when(configuration.getBoolean(CHECKSTYLE_ENABLED)).thenReturn(Optional.of(true));
+
         sensor.execute(context);
 
         verify(executor, times(1)).execute(context);
