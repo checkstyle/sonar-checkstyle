@@ -4,7 +4,7 @@
 
   <groupId>com.github.checkstyle</groupId>
   <artifactId>checkstyle-sonar-plugin</artifactId>
-  <version>13.7.0-SNAPSHOT</version>
+  <version>13.7.0</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Checkstyle SonarQube Plugin</name>
@@ -329,9 +329,9 @@
             </goals>
             <configuration>
               <target>
-                <property name="mvn.project.build.directory" value="${project.build.directory}" />
-                <property name="checkstyle.configLocation" value="${checkstyle.configLocation}" />
-                <ant antfile="config/ant-phase-verify.xml" />
+                <property name="mvn.project.build.directory" value="${project.build.directory}"/>
+                <property name="checkstyle.configLocation" value="${checkstyle.configLocation}"/>
+                <ant antfile="config/ant-phase-verify.xml"/>
               </target>
             </configuration>
           </execution>
@@ -343,10 +343,10 @@
             </goals>
             <configuration>
               <target>
-                <property name="mvn.project.build.directory" value="${project.build.directory}" />
-                <property name="project.basedir" value="${project.basedir}" />
-                <property name="checkstyle.sevntu.configLocation" value="${checkstyle.sevntu.configLocation}" />
-                <ant antfile="config/ant-phase-verify-sevntu.xml" />
+                <property name="mvn.project.build.directory" value="${project.build.directory}"/>
+                <property name="project.basedir" value="${project.basedir}"/>
+                <property name="checkstyle.sevntu.configLocation" value="${checkstyle.sevntu.configLocation}"/>
+                <ant antfile="config/ant-phase-verify-sevntu.xml"/>
               </target>
             </configuration>
           </execution>
