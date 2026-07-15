@@ -3,5 +3,5 @@
   <groupId>fake.group</groupId>
   <artifactId>fake.artifactId</artifactId>
   <packaging>jar</packaging>
-  <version>13.7.0</version>
+  <version>13.8.0</version>
 </project>

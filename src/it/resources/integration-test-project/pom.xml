@@ -4,7 +4,7 @@
 
   <groupId>com.puppycrows.tools</groupId>
   <artifactId>checkstyle</artifactId>
-  <version>13.7.0</version>
+  <version>13.8.0</version>
 
   <name>integration-test-project</name>
 
