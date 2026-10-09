@@ -1,5 +1,13 @@
 # Changelog
 
+## [14.3.0](https://github.com/checkstyle/sonar-checkstyle/compare/checkstyle-sonar-plugin-13.7.0...checkstyle-sonar-plugin-14.3.0) (2026-10-09)
+
+
+### Features
+
+* update checkstyle to 13.8.0 ([6df5204](https://github.com/checkstyle/sonar-checkstyle/commit/6df5204bb0c1a578f1dfd9c43cb152ac692e1f66))
+* update checkstyle to 14.3.0 ([cfbf94b](https://github.com/checkstyle/sonar-checkstyle/commit/cfbf94b65e944a3453f8357c9e90f47fa838ae50))
+
 ## [13.7.0](https://github.com/checkstyle/sonar-checkstyle/compare/checkstyle-sonar-plugin-13.4.1...checkstyle-sonar-plugin-13.7.0) (2026-07-05)
 
 
