@@ -36,4 +36,5 @@ public final class CheckstyleSeverityUtils {
                 throw new IllegalArgumentException("Priority not supported: " + priority);
         };
     }
+
 }

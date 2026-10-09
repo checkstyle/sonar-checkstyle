@@ -26,6 +26,7 @@ import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.scanner.sensor.ProjectSensor;
 
 public class CheckstyleSensor implements ProjectSensor {
+
     private static final String CHECKSTYLE_ENABLED = "sonar.checkstyle.enabled";
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleSensor.class);
 
@@ -54,4 +55,5 @@ public class CheckstyleSensor implements ProjectSensor {
     public String toString() {
         return getClass().getSimpleName();
     }
+
 }

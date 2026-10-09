@@ -27,6 +27,7 @@ import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
 public final class ModuleFactory {
+
     private static PackageObjectFactory packageObjectFactory;
 
     private ModuleFactory() {
@@ -53,4 +54,5 @@ public final class ModuleFactory {
                 exception);
         }
     }
+
 }

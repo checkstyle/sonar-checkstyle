@@ -17,6 +17,8 @@
       <exclude name="AvoidFileStream"/>
       <exclude name="ClassNamingConventions"/>
       <exclude name="TooManyMethods"/>
+      <!-- Jackson instantiates SonarRulePropertyLoader through its private constructor -->
+      <exclude name="MissingStaticMethodInNonInstantiatableClass"/>
     </rule>
 
 </ruleset>

@@ -24,5 +24,7 @@
     <suppress checks="MagicNumber" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="AnonInnerLength" files=".*[\\/]src[\\/]test[\\/]"/>
     <suppress checks="ClassDataAbstractionCoupling" files=".*[\\/]src[\\/]test[\\/]"/>
+    <suppress checks="MissingCtor" files=".*[\\/]src[\\/]test[\\/]"/>
+    <suppress checks="MissingCtor" files=".*[\\/]src[\\/]it[\\/]"/>
     <suppress checks="TrailingComment" files=".*[\\/]Checkstyle(RulesDefinition|Metadata)\.java"/>
 </suppressions>

@@ -31,6 +31,7 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
 import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 public final class CheckUtil {
+
     private CheckUtil() {
     }
 
@@ -71,4 +72,5 @@ public final class CheckUtil {
             .map(function)
             .collect(Collectors.joining(","));
     }
+
 }

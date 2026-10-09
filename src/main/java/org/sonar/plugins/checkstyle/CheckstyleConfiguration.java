@@ -49,6 +49,7 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 @ExtensionPoint
 @ScannerSide
 public class CheckstyleConfiguration {
+
     public static final String PROPERTY_GENERATE_XML = "sonar.checkstyle.generateXml";
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckstyleConfiguration.class);

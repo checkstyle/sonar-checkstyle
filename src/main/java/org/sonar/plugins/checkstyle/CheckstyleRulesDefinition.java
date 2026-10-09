@@ -39,4 +39,5 @@ public final class CheckstyleRulesDefinition implements RulesDefinition {
 
         repository.done();
     }
+
 }

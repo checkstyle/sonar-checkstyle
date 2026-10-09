@@ -23,8 +23,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SonarRulePropertyLoader {
+public final class SonarRulePropertyLoader {
+
     private List<AdditionalRuleProperties> rules;
+
+    private SonarRulePropertyLoader() {
+    }
 
     /**
      * Retrieves the list of rules.
@@ -44,9 +48,12 @@ public class SonarRulePropertyLoader {
         this.rules = new ArrayList<>(rules);
     }
 
-    public static class AdditionalRuleProperties {
+    public static final class AdditionalRuleProperties {
         private String rule;
         private String tag;
+
+        private AdditionalRuleProperties() {
+        }
 
         /**
          * Retrieves the rule.
@@ -84,4 +91,5 @@ public class SonarRulePropertyLoader {
             this.tag = tag;
         }
     }
+
 }
