@@ -71,8 +71,9 @@ public class CheckstyleProfileExporter {
 
     }
 
-    private void generateXml(Writer writer, Map<String,
-            List<ActiveRule>> activeRulesByConfigKey) throws IOException {
+    private void generateXml(Writer writer,
+        Map<String, List<ActiveRule>> activeRulesByConfigKey)
+            throws IOException {
         appendXmlHeader(writer);
         appendTabWidth(writer);
         appendCustomFilters(writer);
@@ -99,7 +100,8 @@ public class CheckstyleProfileExporter {
     }
 
     private static void appendCheckerModules(Writer writer,
-            Map<String, List<ActiveRule>> activeRulesByConfigKey) throws IOException {
+        Map<String, List<ActiveRule>> activeRulesByConfigKey)
+            throws IOException {
         for (Map.Entry<String, List<ActiveRule>> entry : activeRulesByConfigKey.entrySet()) {
             final String configKey = entry.getKey();
             if (!isInTreeWalker(configKey)) {
@@ -112,7 +114,8 @@ public class CheckstyleProfileExporter {
     }
 
     private void appendTreeWalker(Writer writer,
-            Map<String, List<ActiveRule>> activeRulesByConfigKey) throws IOException {
+        Map<String, List<ActiveRule>> activeRulesByConfigKey)
+            throws IOException {
         writer.append("<module name=\"TreeWalker\">");
         if (isSuppressWarningsEnabled()) {
             writer.append("<module name=\"SuppressWarningsHolder\"/> ");
@@ -189,7 +192,8 @@ public class CheckstyleProfileExporter {
         writer.append(CLOSE_MODULE);
     }
 
-    private static void appendRuleParameters(Writer writer, ActiveRule activeRule)
+    private static void appendRuleParameters(Writer writer,
+        ActiveRule activeRule)
             throws IOException {
         for (Map.Entry<String, String> param : activeRule.params().entrySet()) {
             if (StringUtils.isNotBlank(param.getValue())) {
@@ -199,7 +203,8 @@ public class CheckstyleProfileExporter {
     }
 
     private static void appendModuleProperty(Writer writer, String propertyKey,
-            @Nullable String propertyValue) throws IOException {
+        @Nullable String propertyValue)
+            throws IOException {
         if (StringUtils.isNotBlank(propertyValue)) {
             writer.append("<property name=\"");
             writer.append(StringEscapeUtils.escapeXml10(propertyKey));

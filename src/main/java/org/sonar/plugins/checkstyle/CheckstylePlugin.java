@@ -28,6 +28,7 @@ import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.resources.Qualifiers;
 
 public final class CheckstylePlugin implements Plugin {
+
     private static final String CHECKSTYLE_CATEGORY_NAME = "java";
     private static final String CHECKSTYLE_SUB_CATEGORY_NAME = "Checkstyle";
 
@@ -108,4 +109,5 @@ public final class CheckstylePlugin implements Plugin {
     public void define(final Context context) {
         context.addExtensions(getExtensions());
     }
+
 }

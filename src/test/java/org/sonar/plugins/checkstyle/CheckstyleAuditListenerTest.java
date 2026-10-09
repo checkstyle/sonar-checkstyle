@@ -194,4 +194,5 @@ class CheckstyleAuditListenerTest {
                         CheckstyleAuditListenerTest.class.getCanonicalName()))).thenReturn(rule);
         return rule;
     }
+
 }

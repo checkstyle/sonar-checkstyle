@@ -33,6 +33,7 @@ import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.config.Configuration;
 
 class CheckstyleSensorTest {
+
     private static final String CHECKSTYLE_ENABLED = "sonar.checkstyle.enabled";
 
     @Test
@@ -68,4 +69,5 @@ class CheckstyleSensorTest {
     void testToString() {
         assertThat(new CheckstyleSensor(null).toString()).isEqualTo("CheckstyleSensor");
     }
+
 }

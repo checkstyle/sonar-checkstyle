@@ -337,4 +337,5 @@ class CheckstyleProfileExporterTest {
             return templateActiveRuleKey;
         }
     }
+
 }

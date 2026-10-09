@@ -46,6 +46,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 @ExtensionPoint
 @ScannerSide
 public class CheckstyleExecutor {
+
     public static final String PROPERTIES_PATH =
             "/org/sonar/plugins/checkstyle/checkstyle-plugin.properties";
 
@@ -150,4 +151,5 @@ public class CheckstyleExecutor {
                     + "Classpath element is invalid: " + uri, exception);
         }
     }
+
 }

@@ -32,6 +32,7 @@ import java.util.function.BiPredicate;
 import org.junit.jupiter.api.Test;
 
 class CheckJarTest {
+
     private static final String MATCHER = ".*checkstyle-sonar-plugin-"
                                           + "\\d+\\.\\d+(.\\d+)?(-SNAPSHOT)?\\.jar";
 
@@ -45,4 +46,5 @@ class CheckJarTest {
                 .toList();
         assertFalse(files.isEmpty(), "Jar should exists");
     }
+
 }

@@ -47,6 +47,7 @@ import com.puppycrawl.tools.checkstyle.meta.ModuleType;
 import com.puppycrawl.tools.checkstyle.meta.XmlMetaReader;
 
 public class CheckstyleMetadata {
+
     private static final List<String> NO_SQALE = ImmutableList.of(
             "com.puppycrawl.tools.checkstyle.checks.TranslationCheck",
             "com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck",
@@ -364,4 +365,5 @@ public class CheckstyleMetadata {
         }
         return result;
     }
+
 }
